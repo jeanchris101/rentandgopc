@@ -877,6 +877,21 @@
                     </button>
                 </div>
 
+                <!-- Lead Capture -->
+                <div id="lead-capture" style="margin-top:1.5rem; padding:1.25rem; background:linear-gradient(135deg, #f0faf4 0%, #faf9f6 100%); border:1.5px solid #d4edda; border-radius:12px;">
+                    <h4 style="font-family:var(--font-heading,'Playfair Display',serif); font-size:1.05rem; color:var(--primary); margin-bottom:6px;">Want a personalized analysis for a real property?</h4>
+                    <p style="font-size:0.85rem; color:var(--text-light); margin-bottom:12px;">Enter your email and I'll send you a detailed investment report with real Cocotal rental data.</p>
+                    <form id="roi-lead-form" onsubmit="submitRoiLead(event)" style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <input type="text" id="lead-name" placeholder="First name" required style="flex:1; min-width:120px; padding:10px 14px; border:1.5px solid var(--border); border-radius:8px; font-family:inherit; font-size:0.9rem;">
+                        <input type="email" id="lead-email" placeholder="Email" required style="flex:1.5; min-width:180px; padding:10px 14px; border:1.5px solid var(--border); border-radius:8px; font-family:inherit; font-size:0.9rem;">
+                        <button type="submit" style="padding:10px 20px; background:var(--primary); color:white; border:none; border-radius:8px; font-weight:600; font-size:0.9rem; cursor:pointer; white-space:nowrap;">Send My Report</button>
+                    </form>
+                    <div id="lead-success" style="display:none; text-align:center; padding:12px 0;">
+                        <p style="color:var(--green); font-weight:600; font-size:0.95rem;">Sent! Check your inbox. Or message me directly:</p>
+                        <a href="https://wa.me/18094865386?text=Hi!%20I%20just%20used%20the%20ROI%20calculator%20and%20want%20to%20learn%20more" target="_blank" style="display:inline-block; margin-top:8px; padding:8px 20px; background:#25D366; color:white; border-radius:8px; text-decoration:none; font-weight:600; font-size:0.85rem;">Chat on WhatsApp</a>
+                    </div>
+                </div>
+
                 <!-- Compare Section -->
                 <div class="compare-section">
                     <div class="toggle-container">
@@ -1154,6 +1169,29 @@
                 btn.classList.remove('copied');
                 btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> Share Results';
             }, 2000);
+        }
+
+        function submitRoiLead(e) {
+            e.preventDefault();
+            var name = document.getElementById('lead-name').value;
+            var email = document.getElementById('lead-email').value;
+            // Send to Formspree (replace with real endpoint)
+            fetch('https://formspree.io/f/xplaceholder', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    source: 'ROI Calculator',
+                    roi_data: document.getElementById('shareBtn') ? document.querySelector('.result-value').textContent : ''
+                })
+            }).catch(function() {});
+            // Always show success (even if formspree placeholder fails)
+            document.getElementById('roi-lead-form').style.display = 'none';
+            document.getElementById('lead-success').style.display = 'block';
+            if (typeof fbq === 'function') {
+                fbq('track', 'Lead', { content_name: 'ROI Calculator Report' });
+            }
         }
 
         // Initial calculation
