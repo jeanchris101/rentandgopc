@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punta Cana Neighborhoods Compared | Rent & Go PC</title>
+    <meta name="description" content="Compare 6 Punta Cana neighborhoods: Bavaro, Cocotal Golf, Cap Cana, Punta Cana Village, Vista Cana, Uvero Alto. Find the perfect zone for your investment.">
+
+    <!-- Meta Pixel -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'YOUR_PIXEL_ID_HERE');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"/></noscript>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #1a3a2a;
+            --primary-light: #2a5a40;
+            --accent: #c8a45e;
+            --accent-light: #d4b876;
+            --bg: #faf9f6;
+            --text: #2c2c2c;
+            --text-light: #6b6b6b;
+            --green: #2e7d32;
+            --green-light: #e8f5e9;
+            --border: #e0ddd5;
+            --white: #ffffff;
+            --shadow: 0 2px 16px rgba(26, 58, 42, 0.08);
+            --shadow-lg: 0 8px 32px rgba(26, 58, 42, 0.12);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary);
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo a {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--accent);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #2a5a40 100%);
+            padding: 3.5rem 2rem 3rem;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            opacity: 0.85;
+            max-width: 650px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        /* Main */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        /* Neighborhood Cards Grid */
+        .neighborhoods-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .neighborhood-card {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .neighborhood-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .neighborhood-card.selected {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px var(--accent), var(--shadow-lg);
+        }
+
+        .neighborhood-card.expanded {
+            border-color: var(--primary);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            padding: 1.25rem 1.5rem;
+            color: var(--white);
+            position: relative;
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.15rem;
+        }
+
+        .card-tagline {
+            font-size: 0.78rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        .card-price-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent);
+            color: var(--primary);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+        }
+
+        .card-body {
+            padding: 1.25rem 1.5rem;
+        }
+
+        .card-quick-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .quick-stat {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .quick-stat-icon {
+            font-size: 0.95rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .quick-stat strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .card-best-for {
+            font-size: 0.8rem;
+            color: var(--primary);
+            background: var(--green-light);
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .card-best-for strong {
+            font-weight: 600;
+        }
+
+        .card-ratings {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .rating-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.78rem;
+        }
+
+        .rating-label {
+            color: var(--text-light);
+            width: 100px;
+        }
+
+        .rating-bars {
+            flex: 1;
+            display: flex;
+            gap: 3px;
+            margin-left: 0.75rem;
+        }
+
+        .rating-bar {
+            width: 100%;
+            height: 6px;
+            background: #e8e5de;
+            border-radius: 3px;
+        }
+
+        .rating-bar.filled {
+            background: var(--accent);
+        }
+
+        .rating-bar.filled.high {
+            background: var(--green);
+        }
+
+        /* Expand/Collapse Details */
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 1.5rem;
+        }
+
+        .card-details.open {
+            max-height: 500px;
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        .details-divider {
+            height: 1px;
+            background: var(--border);
+            margin-bottom: 1rem;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .pros-col h4, .cons-col h4 {
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .pros-col h4 { color: var(--green); }
+        .cons-col h4 { color: #c0392b; }
+
+        .pros-col li, .cons-col li {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+            list-style: none;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .pros-col li::before {
+            content: "+";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        .cons-col li::before {
+            content: "-";
+            position: absolute;
+            left: 0;
+            color: #c0392b;
+            font-weight: 700;
+        }
+
+        .expand-btn {
+            display: block;
+            width: 100%;
+            background: none;
+            border: none;
+            border-top: 1px solid var(--border);
+            padding: 0.6rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--accent);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .expand-btn:hover {
+            background: #faf7f0;
+        }
+
+        .expand-btn .arrow {
+            display: inline-block;
+            transition: transform 0.3s;
+            margin-left: 4px;
+        }
+
+        .expand-btn.open .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Compare Section */
+        .compare-section {
+            margin-bottom: 3rem;
+        }
+
+        .compare-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .compare-select {
+            padding: 0.6rem 1.2rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            background: var(--white);
+            color: var(--text);
+            cursor: pointer;
+            min-width: 200px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236b6b6b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 2.2rem;
+        }
+
+        .compare-select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .compare-vs {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .compare-table-wrapper {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            animation: fadeSlideIn 0.3s ease;
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .compare-table thead th {
+            background: var(--primary);
+            color: var(--white);
+            padding: 1rem 1.25rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .compare-table thead th:first-child {
+            width: 180px;
+            color: var(--accent);
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+        }
+
+        .compare-table tbody tr {
+            border-bottom: 1px solid #f0ede6;
+            transition: background 0.15s;
+        }
+
+        .compare-table tbody tr:hover {
+            background: #faf7f0;
+        }
+
+        .compare-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .compare-table td {
+            padding: 0.75rem 1.25rem;
+            font-size: 0.85rem;
+        }
+
+        .compare-table td:first-child {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.82rem;
+        }
+
+        .compare-table .winner {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .compare-table .rating-dots {
+            display: inline-flex;
+            gap: 3px;
+        }
+
+        .compare-table .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #e0ddd5;
+            display: inline-block;
+        }
+
+        .compare-table .dot.filled {
+            background: var(--accent);
+        }
+
+        .compare-empty {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .compare-empty-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .quiz-section .section-title {
+            margin-bottom: 0.25rem;
+        }
+
+        .quiz-progress {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: all 0.3s;
+        }
+
+        .quiz-dot.active {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
+
+        .quiz-dot.done {
+            background: var(--green);
+        }
+
+        .quiz-question {
+            display: none;
+            animation: fadeSlideIn 0.3s ease;
+        }
+
+        .quiz-question.active {
+            display: block;
+        }
+
+        .quiz-question h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .quiz-option {
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background: var(--white);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            color: var(--text);
+        }
+
+        .quiz-option:hover {
+            border-color: var(--accent);
+            background: #faf7f0;
+        }
+
+        .quiz-option.selected {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, #faf7f0 0%, #f5ecd8 100%);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .quiz-option-icon {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 0.35rem;
+        }
+
+        .quiz-result {
+            display: none;
+            text-align: center;
+            animation: fadeSlideIn 0.4s ease;
+        }
+
+        .quiz-result.active {
+            display: block;
+        }
+
+        .quiz-result-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .quiz-result h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .quiz-result .result-tagline {
+            color: var(--accent);
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-result p {
+            color: var(--text-light);
+            max-width: 500px;
+            margin: 0 auto 1.5rem;
+            font-size: 0.92rem;
+        }
+
+        .quiz-result-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .result-stat {
+            text-align: center;
+        }
+
+        .result-stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .result-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .btn-restart {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .btn-restart:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, #2a5a40 100%);
+            color: var(--white);
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-section p {
+            font-size: 1rem;
+            opacity: 0.85;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.9rem 2rem;
+            background: #25D366;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.25s;
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp:hover {
+            background: #1fb855;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-whatsapp svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 1.5rem 2rem;
+            font-size: 0.82rem;
+        }
+
+        /* Animations */
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .neighborhoods-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1rem 2rem 1.5rem;
+                gap: 1rem;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .neighborhoods-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 2.5rem 1.25rem 2rem;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .main-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .compare-controls {
+                flex-direction: column;
+            }
+
+            .compare-select {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .compare-table thead th,
+            .compare-table td {
+                padding: 0.6rem 0.75rem;
+                font-size: 0.78rem;
+            }
+
+            .compare-table thead th:first-child {
+                width: 110px;
+            }
+
+            .quiz-section {
+                padding: 1.5rem;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section {
+                padding: 2.5rem 1.25rem;
+            }
+
+            .cta-section h2 {
+                font-size: 1.4rem;
+            }
+
+            .quiz-result-stats {
+                gap: 1rem;
+            }
+
+            .card-quick-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <a href="index.html">Rent & Go PC</a>
+            </div>
+            <button class="hamburger" onclick="document.querySelector('nav').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <nav>
+                <a href="index.html">Properties</a>
+                <a href="neighborhoods.html" class="active">Neighborhoods</a>
+                <a href="blog.html">Guide</a>
+                <a href="roi-calculator.html">ROI Calculator</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Punta Cana <span>Neighborhoods</span></h1>
+        <p>Six distinct zones, each with its own character. Compare them side by side to find the one that fits your lifestyle and investment goals.</p>
+    </section>
+
+    <div class="main-container">
+
+        <!-- Neighborhood Cards -->
+        <h2 class="section-title">Explore Each Zone</h2>
+        <p class="section-subtitle">Click any card to see full details. Select two to compare them below.</p>
+
+        <div class="neighborhoods-grid" id="neighborhoodsGrid">
+            <!-- Cards rendered by JS -->
+        </div>
+
+        <!-- Side-by-Side Compare -->
+        <div class="compare-section" id="compareSection">
+            <h2 class="section-title">Compare Two Zones</h2>
+            <p class="section-subtitle">Select neighborhoods from the dropdowns or click two cards above</p>
+
+            <div class="compare-controls">
+                <select class="compare-select" id="compareA" onchange="updateCompare()">
+                    <option value="">Select first zone...</option>
+                </select>
+                <span class="compare-vs">VS</span>
+                <select class="compare-select" id="compareB" onchange="updateCompare()">
+                    <option value="">Select second zone...</option>
+                </select>
+            </div>
+
+            <div id="compareResult">
+                <div class="compare-table-wrapper">
+                    <div class="compare-empty">
+                        <div class="compare-empty-icon">&#8596;</div>
+                        <p>Select two neighborhoods above to see a detailed comparison</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz -->
+        <div class="quiz-section" id="quizSection">
+            <h2 class="section-title">Which Zone Is Right for You?</h2>
+            <p class="section-subtitle">Answer 5 quick questions and we'll recommend the best fit</p>
+
+            <div class="quiz-progress" id="quizProgress">
+                <div class="quiz-dot active"></div>
+                <div class="quiz-dot"></div>
+                <div class="quiz-dot"></div>
+                <div class="quiz-dot"></div>
+                <div class="quiz-dot"></div>
+            </div>
+
+            <div id="quizQuestions">
+                <!-- Q1 -->
+                <div class="quiz-question active" data-q="0">
+                    <h3>What's your primary goal?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="answerQuiz(0, 'rental')">
+                            <span class="quiz-option-icon">&#128176;</span>
+                            Rental income (Airbnb)
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(0, 'lifestyle')">
+                            <span class="quiz-option-icon">&#127796;</span>
+                            Personal lifestyle
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(0, 'appreciation')">
+                            <span class="quiz-option-icon">&#128200;</span>
+                            Long-term appreciation
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(0, 'luxury')">
+                            <span class="quiz-option-icon">&#128142;</span>
+                            Luxury & exclusivity
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="quiz-question" data-q="1">
+                    <h3>What's your budget range?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="answerQuiz(1, 'budget')">
+                            <span class="quiz-option-icon">&#128181;</span>
+                            Under $150K
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(1, 'mid')">
+                            <span class="quiz-option-icon">&#128182;</span>
+                            $150K - $350K
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(1, 'high')">
+                            <span class="quiz-option-icon">&#127974;</span>
+                            $350K - $600K
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(1, 'luxury')">
+                            <span class="quiz-option-icon">&#127960;</span>
+                            $600K+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="quiz-question" data-q="2">
+                    <h3>How important is beach proximity?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="answerQuiz(2, 'beachfront')">
+                            <span class="quiz-option-icon">&#127754;</span>
+                            Must be beachfront
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(2, 'close')">
+                            <span class="quiz-option-icon">&#128694;</span>
+                            Walking distance (< 10 min)
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(2, 'drive')">
+                            <span class="quiz-option-icon">&#128663;</span>
+                            Short drive is fine
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(2, 'irrelevant')">
+                            <span class="quiz-option-icon">&#127969;</span>
+                            Not a priority
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="quiz-question" data-q="3">
+                    <h3>What kind of community do you prefer?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="answerQuiz(3, 'bustling')">
+                            <span class="quiz-option-icon">&#127879;</span>
+                            Bustling & social
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(3, 'resort')">
+                            <span class="quiz-option-icon">&#9971;</span>
+                            Resort/golf community
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(3, 'local')">
+                            <span class="quiz-option-icon">&#127963;</span>
+                            Local Dominican feel
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(3, 'secluded')">
+                            <span class="quiz-option-icon">&#127795;</span>
+                            Secluded & private
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="quiz-question" data-q="4">
+                    <h3>Are you buying to live in or purely investing?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="answerQuiz(4, 'live')">
+                            <span class="quiz-option-icon">&#127968;</span>
+                            I'll live there full-time
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(4, 'vacation')">
+                            <span class="quiz-option-icon">&#9992;&#65039;</span>
+                            Vacation home + rent out
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(4, 'invest')">
+                            <span class="quiz-option-icon">&#128202;</span>
+                            Pure investment
+                        </div>
+                        <div class="quiz-option" onclick="answerQuiz(4, 'retire')">
+                            <span class="quiz-option-icon">&#9728;&#65039;</span>
+                            Future retirement
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Result -->
+            <div class="quiz-result" id="quizResult">
+                <div class="quiz-result-icon" id="resultIcon"></div>
+                <h3 id="resultName"></h3>
+                <div class="result-tagline" id="resultTagline"></div>
+                <p id="resultDescription"></p>
+                <div class="quiz-result-stats" id="resultStats"></div>
+                <a id="resultWhatsApp" class="btn-whatsapp" href="#" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Ask me about this zone
+                </a>
+                <br>
+                <button class="btn-restart" onclick="restartQuiz()">Take the quiz again</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- WhatsApp CTA -->
+    <section class="cta-section" id="contact">
+        <h2>Not Sure Which Zone Fits?</h2>
+        <p>I know every neighborhood in Punta Cana personally. Let's talk and find the perfect match for you.</p>
+        <a href="https://wa.me/18094865386?text=Hello!%20I'm%20comparing%20Punta%20Cana%20neighborhoods%20and%20need%20your%20advice" class="btn-whatsapp" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp &mdash; I know every neighborhood
+        </a>
+    </section>
+
+    <footer>
+        <p>Rent & Go PC &mdash; Punta Cana, Dominican Republic</p>
+    </footer>
+
+<script>
+// ========== DATA ==========
+const neighborhoods = [
+    {
+        id: 'bavaro',
+        name: 'Bavaro',
+        tagline: 'Tourist Hub',
+        icon: '&#127958;',
+        priceRange: '$100K - $400K',
+        priceLow: 100, priceHigh: 400,
+        vibe: 'Busy, commercial, walking distance to everything',
+        bestFor: 'Airbnb investors, first-time buyers',
+        beach: '5 min walk',
+        beachMin: 5,
+        airport: '25 min',
+        airportMin: 25,
+        pros: ['High rental demand', 'Lots of restaurants & shops', 'Walkable area', 'Strong resale market'],
+        cons: ['Can feel touristy', 'Traffic congestion', 'Higher noise levels'],
+        ratings: { beach: 5, nightlife: 5, roi: 5, family: 3, luxury: 2 },
+        quizTags: ['rental', 'budget', 'mid', 'close', 'bustling', 'invest', 'vacation'],
+        description: 'The heart of Punta Cana tourism. Bavaro offers the best rental yields thanks to constant tourist flow. Ideal for Airbnb investors who want steady income and easy resale.'
+    },
+    {
+        id: 'cocotal',
+        name: 'Cocotal Golf',
+        tagline: 'Golf Community',
+        icon: '&#9971;',
+        priceRange: '$150K - $500K',
+        priceLow: 150, priceHigh: 500,
+        vibe: 'Quiet, residential, resort-style',
+        bestFor: 'Golfers, families, lifestyle buyers',
+        beach: '10 min (via Melia Hotel)',
+        beachMin: 10,
+        airport: '20 min',
+        airportMin: 20,
+        pros: ['Golf course living', 'Melia Hotel beach access', 'Peaceful environment', 'CONFOTUR eligible'],
+        cons: ['Need a car for shopping', 'Limited nightlife'],
+        ratings: { beach: 3, nightlife: 2, roi: 4, family: 5, luxury: 4 },
+        quizTags: ['lifestyle', 'mid', 'high', 'drive', 'resort', 'live', 'vacation', 'retire'],
+        description: 'A tranquil golf community inside the Melia Resort complex. Perfect for families and retirees who value peace, green surroundings, and CONFOTUR tax savings.'
+    },
+    {
+        id: 'capcana',
+        name: 'Cap Cana',
+        tagline: 'Luxury Enclave',
+        icon: '&#128142;',
+        priceRange: '$300K - $3M+',
+        priceLow: 300, priceHigh: 3000,
+        vibe: 'Exclusive, gated, high-end',
+        bestFor: 'High-net-worth, luxury seekers',
+        beach: 'Private (Juanillo)',
+        beachMin: 2,
+        airport: '15 min',
+        airportMin: 15,
+        pros: ['Private Juanillo Beach', 'Jack Nicklaus golf course', 'Marina & yacht club', 'Exclusive community'],
+        cons: ['Expensive entry point', 'Isolated from local life', 'Higher HOA fees'],
+        ratings: { beach: 5, nightlife: 3, roi: 3, family: 4, luxury: 5 },
+        quizTags: ['luxury', 'high', 'luxury', 'beachfront', 'close', 'secluded', 'live', 'vacation'],
+        description: 'The most exclusive address in Punta Cana. Cap Cana features private beaches, world-class marina, and Jack Nicklaus-designed golf. For those who demand the very best.'
+    },
+    {
+        id: 'village',
+        name: 'Punta Cana Village',
+        tagline: 'Local & Convenient',
+        icon: '&#127963;',
+        priceRange: '$80K - $250K',
+        priceLow: 80, priceHigh: 250,
+        vibe: 'Local community, convenient',
+        bestFor: 'Budget buyers, full-time residents',
+        beach: '15 min',
+        beachMin: 15,
+        airport: '5 min',
+        airportMin: 5,
+        pros: ['Most affordable zone', 'Closest to airport', 'Authentic DR life', 'Growing local services'],
+        cons: ['Less resort feel', 'Basic infrastructure', 'Limited tourist appeal'],
+        ratings: { beach: 2, nightlife: 2, roi: 3, family: 4, luxury: 1 },
+        quizTags: ['appreciation', 'budget', 'drive', 'irrelevant', 'local', 'live', 'retire'],
+        description: 'The most affordable entry into Punta Cana. Just 5 minutes from the airport, this is real Dominican life -- perfect for full-time residents and budget-conscious buyers.'
+    },
+    {
+        id: 'vistacana',
+        name: 'Vista Cana',
+        tagline: 'New Development',
+        icon: '&#127961;',
+        priceRange: '$90K - $300K',
+        priceLow: 90, priceHigh: 300,
+        vibe: 'Modern, growing, family-friendly',
+        bestFor: 'Long-term investors, families',
+        beach: '20 min',
+        beachMin: 20,
+        airport: '30 min',
+        airportMin: 30,
+        pros: ['New infrastructure', 'International schools', 'Affordable pricing', 'Highest growth potential'],
+        cons: ['Still developing', 'Far from beach', 'Limited entertainment'],
+        ratings: { beach: 1, nightlife: 1, roi: 4, family: 5, luxury: 2 },
+        quizTags: ['appreciation', 'budget', 'mid', 'irrelevant', 'drive', 'local', 'invest', 'live', 'retire'],
+        description: 'Punta Cana\'s fastest-growing zone. Brand new infrastructure, schools, and modern developments at accessible prices. The smart money is betting on Vista Cana\'s future.'
+    },
+    {
+        id: 'uveroalto',
+        name: 'Uvero Alto',
+        tagline: 'Secluded Paradise',
+        icon: '&#127796;',
+        priceRange: '$150K - $600K',
+        priceLow: 150, priceHigh: 600,
+        vibe: 'Remote, natural, undeveloped',
+        bestFor: 'Nature lovers, boutique resort investors',
+        beach: 'Beachfront',
+        beachMin: 0,
+        airport: '45 min',
+        airportMin: 45,
+        pros: ['Untouched beaches', 'Quiet & exclusive', 'Boutique resort potential', 'Natural beauty'],
+        cons: ['Remote location', 'Limited services', 'Need car everywhere'],
+        ratings: { beach: 5, nightlife: 1, roi: 3, family: 2, luxury: 4 },
+        quizTags: ['lifestyle', 'luxury', 'mid', 'high', 'beachfront', 'secluded', 'live', 'vacation'],
+        description: 'Miles of pristine, untouched coastline north of Punta Cana. Uvero Alto is where boutique resorts thrive and nature lovers find peace. Remote but unforgettable.'
+    }
+];
+
+const ratingLabels = {
+    beach: { label: 'Beach', icon: '&#127754;' },
+    nightlife: { label: 'Nightlife', icon: '&#127878;' },
+    roi: { label: 'Investment ROI', icon: '&#128200;' },
+    family: { label: 'Family-Friendly', icon: '&#128106;' },
+    luxury: { label: 'Luxury Level', icon: '&#128142;' }
+};
+
+// ========== RENDER CARDS ==========
+function renderCards() {
+    const grid = document.getElementById('neighborhoodsGrid');
+    grid.innerHTML = neighborhoods.map(n => `
+        <div class="neighborhood-card" id="card-${n.id}" onclick="toggleDetails('${n.id}')">
+            <div class="card-header">
+                <div class="card-icon">${n.icon}</div>
+                <h3>${n.name}</h3>
+                <div class="card-tagline">${n.tagline}</div>
+                <div class="card-price-badge">${n.priceRange}</div>
+            </div>
+            <div class="card-body">
+                <div class="card-quick-stats">
+                    <div class="quick-stat"><span class="quick-stat-icon">&#127958;</span> Beach: <strong>${n.beach}</strong></div>
+                    <div class="quick-stat"><span class="quick-stat-icon">&#9992;</span> Airport: <strong>${n.airport}</strong></div>
+                </div>
+                <div class="card-best-for"><strong>Best for:</strong> ${n.bestFor}</div>
+                <div class="card-ratings">
+                    ${Object.entries(n.ratings).map(([key, val]) => `
+                        <div class="rating-row">
+                            <span class="rating-label">${ratingLabels[key].icon} ${ratingLabels[key].label}</span>
+                            <div class="rating-bars">
+                                ${[1,2,3,4,5].map(i => `<div class="rating-bar${i <= val ? ' filled' : ''}${val >= 4 && i <= val ? ' high' : ''}"></div>`).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            <div class="card-details" id="details-${n.id}">
+                <div class="details-divider"></div>
+                <p style="font-size:0.83rem;color:var(--text-light);margin-bottom:0.75rem;line-height:1.55">${n.description}</p>
+                <div style="font-size:0.82rem;color:var(--text);margin-bottom:0.75rem"><strong>Vibe:</strong> ${n.vibe}</div>
+                <div class="pros-cons">
+                    <div class="pros-col">
+                        <h4>&#10003; Pros</h4>
+                        <ul>${n.pros.map(p => `<li>${p}</li>`).join('')}</ul>
+                    </div>
+                    <div class="cons-col">
+                        <h4>&#10007; Cons</h4>
+                        <ul>${n.cons.map(c => `<li>${c}</li>`).join('')}</ul>
+                    </div>
+                </div>
+            </div>
+            <button class="expand-btn" id="btn-${n.id}" onclick="event.stopPropagation(); toggleDetails('${n.id}')">
+                See details <span class="arrow">&#9660;</span>
+            </button>
+        </div>
+    `).join('');
+}
+
+function toggleDetails(id) {
+    const details = document.getElementById('details-' + id);
+    const btn = document.getElementById('btn-' + id);
+    const card = document.getElementById('card-' + id);
+    const isOpen = details.classList.contains('open');
+
+    details.classList.toggle('open');
+    btn.classList.toggle('open');
+    card.classList.toggle('expanded');
+    btn.innerHTML = isOpen
+        ? 'See details <span class="arrow">&#9660;</span>'
+        : 'Hide details <span class="arrow" style="transform:rotate(180deg)">&#9660;</span>';
+}
+
+// ========== COMPARE ==========
+let selectedForCompare = [];
+
+function populateSelects() {
+    const selA = document.getElementById('compareA');
+    const selB = document.getElementById('compareB');
+    neighborhoods.forEach(n => {
+        selA.innerHTML += `<option value="${n.id}">${n.icon.replace(/&#\d+;/g, '')} ${n.name} (${n.tagline})</option>`;
+        selB.innerHTML += `<option value="${n.id}">${n.icon.replace(/&#\d+;/g, '')} ${n.name} (${n.tagline})</option>`;
+    });
+}
+
+function updateCompare() {
+    const aId = document.getElementById('compareA').value;
+    const bId = document.getElementById('compareB').value;
+    const container = document.getElementById('compareResult');
+
+    if (!aId || !bId || aId === bId) {
+        container.innerHTML = `
+            <div class="compare-table-wrapper">
+                <div class="compare-empty">
+                    <div class="compare-empty-icon">&#8596;</div>
+                    <p>${aId === bId && aId ? 'Please select two different neighborhoods' : 'Select two neighborhoods above to see a detailed comparison'}</p>
+                </div>
+            </div>`;
+        return;
+    }
+
+    const a = neighborhoods.find(n => n.id === aId);
+    const b = neighborhoods.find(n => n.id === bId);
+
+    function dots(val) {
+        return [1,2,3,4,5].map(i => `<span class="dot${i <= val ? ' filled' : ''}"></span>`).join('');
+    }
+
+    function winnerClass(valA, valB, higher) {
+        if (higher) return valA > valB ? 'winner' : '';
+        return valA < valB ? 'winner' : '';
+    }
+
+    container.innerHTML = `
+        <div class="compare-table-wrapper">
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>${a.icon} ${a.name}</th>
+                        <th>${b.icon} ${b.name}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Price Range</td>
+                        <td>${a.priceRange}</td>
+                        <td>${b.priceRange}</td>
+                    </tr>
+                    <tr>
+                        <td>Beach</td>
+                        <td class="${winnerClass(a.beachMin, b.beachMin, false)}">${a.beach}</td>
+                        <td class="${winnerClass(b.beachMin, a.beachMin, false)}">${b.beach}</td>
+                    </tr>
+                    <tr>
+                        <td>Airport</td>
+                        <td class="${winnerClass(a.airportMin, b.airportMin, false)}">${a.airport}</td>
+                        <td class="${winnerClass(b.airportMin, a.airportMin, false)}">${b.airport}</td>
+                    </tr>
+                    <tr>
+                        <td>Vibe</td>
+                        <td>${a.vibe}</td>
+                        <td>${b.vibe}</td>
+                    </tr>
+                    <tr>
+                        <td>Best For</td>
+                        <td>${a.bestFor}</td>
+                        <td>${b.bestFor}</td>
+                    </tr>
+                    ${Object.entries(ratingLabels).map(([key, info]) => `
+                    <tr>
+                        <td>${info.icon} ${info.label}</td>
+                        <td class="${winnerClass(a.ratings[key], b.ratings[key], true)}"><span class="rating-dots">${dots(a.ratings[key])}</span></td>
+                        <td class="${winnerClass(b.ratings[key], a.ratings[key], true)}"><span class="rating-dots">${dots(b.ratings[key])}</span></td>
+                    </tr>
+                    `).join('')}
+                    <tr>
+                        <td>&#10003; Top Pro</td>
+                        <td style="color:var(--green)">${a.pros[0]}</td>
+                        <td style="color:var(--green)">${b.pros[0]}</td>
+                    </tr>
+                    <tr>
+                        <td>&#10007; Main Con</td>
+                        <td style="color:#c0392b">${a.cons[0]}</td>
+                        <td style="color:#c0392b">${b.cons[0]}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>`;
+}
+
+// ========== QUIZ ==========
+let quizAnswers = [];
+let currentQ = 0;
+
+function answerQuiz(qIndex, answer) {
+    quizAnswers[qIndex] = answer;
+
+    // Highlight selected option
+    const question = document.querySelector(`.quiz-question[data-q="${qIndex}"]`);
+    question.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+    event.currentTarget.classList.add('selected');
+
+    // Advance after short delay
+    setTimeout(() => {
+        if (qIndex < 4) {
+            currentQ = qIndex + 1;
+            showQuestion(currentQ);
+        } else {
+            showQuizResult();
+        }
+    }, 350);
+}
+
+function showQuestion(idx) {
+    document.querySelectorAll('.quiz-question').forEach(q => q.classList.remove('active'));
+    document.querySelectorAll('.quiz-question')[idx].classList.add('active');
+
+    document.querySelectorAll('.quiz-dot').forEach((dot, i) => {
+        dot.className = 'quiz-dot';
+        if (i < idx) dot.classList.add('done');
+        if (i === idx) dot.classList.add('active');
+    });
+}
+
+function showQuizResult() {
+    // Score each neighborhood
+    const scores = {};
+    neighborhoods.forEach(n => { scores[n.id] = 0; });
+
+    // Q0: goal
+    const goalMap = {
+        rental: { bavaro: 5, cocotal: 3, capcana: 2, village: 2, vistacana: 3, uveroalto: 2 },
+        lifestyle: { bavaro: 2, cocotal: 5, capcana: 4, village: 3, vistacana: 3, uveroalto: 5 },
+        appreciation: { bavaro: 3, cocotal: 3, capcana: 3, village: 4, vistacana: 5, uveroalto: 3 },
+        luxury: { bavaro: 1, cocotal: 3, capcana: 5, village: 0, vistacana: 1, uveroalto: 4 }
+    };
+
+    // Q1: budget
+    const budgetMap = {
+        budget: { bavaro: 4, cocotal: 2, capcana: 0, village: 5, vistacana: 5, uveroalto: 2 },
+        mid: { bavaro: 5, cocotal: 4, capcana: 1, village: 4, vistacana: 4, uveroalto: 3 },
+        high: { bavaro: 3, cocotal: 5, capcana: 3, village: 2, vistacana: 3, uveroalto: 5 },
+        luxury: { bavaro: 1, cocotal: 2, capcana: 5, village: 0, vistacana: 1, uveroalto: 3 }
+    };
+
+    // Q2: beach
+    const beachMap = {
+        beachfront: { bavaro: 3, cocotal: 1, capcana: 5, village: 1, vistacana: 0, uveroalto: 5 },
+        close: { bavaro: 5, cocotal: 3, capcana: 4, village: 2, vistacana: 1, uveroalto: 4 },
+        drive: { bavaro: 4, cocotal: 4, capcana: 3, village: 3, vistacana: 3, uveroalto: 3 },
+        irrelevant: { bavaro: 3, cocotal: 4, capcana: 2, village: 5, vistacana: 5, uveroalto: 2 }
+    };
+
+    // Q3: community
+    const communityMap = {
+        bustling: { bavaro: 5, cocotal: 1, capcana: 2, village: 3, vistacana: 2, uveroalto: 0 },
+        resort: { bavaro: 2, cocotal: 5, capcana: 4, village: 0, vistacana: 2, uveroalto: 3 },
+        local: { bavaro: 3, cocotal: 2, capcana: 0, village: 5, vistacana: 4, uveroalto: 2 },
+        secluded: { bavaro: 0, cocotal: 3, capcana: 3, village: 1, vistacana: 2, uveroalto: 5 }
+    };
+
+    // Q4: purpose
+    const purposeMap = {
+        live: { bavaro: 3, cocotal: 5, capcana: 3, village: 5, vistacana: 5, uveroalto: 3 },
+        vacation: { bavaro: 5, cocotal: 4, capcana: 5, village: 2, vistacana: 2, uveroalto: 4 },
+        invest: { bavaro: 5, cocotal: 3, capcana: 2, village: 3, vistacana: 4, uveroalto: 2 },
+        retire: { bavaro: 2, cocotal: 5, capcana: 3, village: 4, vistacana: 4, uveroalto: 4 }
+    };
+
+    const maps = [goalMap, budgetMap, beachMap, communityMap, purposeMap];
+    quizAnswers.forEach((answer, i) => {
+        if (answer && maps[i][answer]) {
+            Object.entries(maps[i][answer]).forEach(([id, score]) => {
+                scores[id] += score;
+            });
+        }
+    });
+
+    // Find winner
+    let winnerId = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
+    const winner = neighborhoods.find(n => n.id === winnerId);
+
+    // Update dots
+    document.querySelectorAll('.quiz-dot').forEach(d => { d.className = 'quiz-dot done'; });
+
+    // Hide questions, show result
+    document.querySelectorAll('.quiz-question').forEach(q => q.classList.remove('active'));
+    const result = document.getElementById('quizResult');
+    result.classList.add('active');
+
+    document.getElementById('resultIcon').innerHTML = winner.icon;
+    document.getElementById('resultName').textContent = winner.name;
+    document.getElementById('resultTagline').textContent = winner.tagline;
+    document.getElementById('resultDescription').textContent = winner.description;
+    document.getElementById('resultStats').innerHTML = `
+        <div class="result-stat">
+            <div class="result-stat-value">${winner.priceRange}</div>
+            <div class="result-stat-label">Price Range</div>
+        </div>
+        <div class="result-stat">
+            <div class="result-stat-value">${winner.beach}</div>
+            <div class="result-stat-label">Beach Distance</div>
+        </div>
+        <div class="result-stat">
+            <div class="result-stat-value">${winner.airport}</div>
+            <div class="result-stat-label">To Airport</div>
+        </div>
+    `;
+
+    const waText = encodeURIComponent(`Hello! I took the neighborhood quiz and got ${winner.name}. I'd like to know more about properties there.`);
+    document.getElementById('resultWhatsApp').href = `https://wa.me/18094865386?text=${waText}`;
+
+    // Also select in compare
+    document.getElementById('compareA').value = winnerId;
+    updateCompare();
+}
+
+function restartQuiz() {
+    quizAnswers = [];
+    currentQ = 0;
+    document.getElementById('quizResult').classList.remove('active');
+    showQuestion(0);
+    document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+}
+
+// ========== INIT ==========
+renderCards();
+populateSelects();
+</script>
+
+</body>
+</html>
