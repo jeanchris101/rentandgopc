@@ -1,0 +1,274 @@
+{
+  "translations": {
+    "nav_properties": "Proprietes",
+    "nav_why_pc": "Pourquoi Punta Cana?",
+    "nav_contact": "Nous joindre",
+    "hero_title": "Ta Propriete au Paradis",
+    "hero_subtitle": "Condos et villas exclusifs a Punta Cana, Republique dominicaine",
+    "hero_cta": "Voir les Proprietes",
+    "section_available": "Proprietes Disponibles",
+    "coming_soon": "Bientot Disponible",
+    "new_property_soon": "Nouvelle Propriete Bientot",
+    "featured": "Coup de Coeur",
+    "cocotal_title": "Condo 2 Chambres a Cocotal Golf",
+    "cocotal_location": "Cocotal Golf & Country Club, Bavaro, Punta Cana",
+    "cocotal_highlight": "Vue sur le golf | Acces Hotel Melia | Avantages fiscaux CONFOTUR inclus",
+    "spec_beds": "Chambres",
+    "spec_baths": "Salles de bain",
+    "spec_parking": "Stationnements",
+    "cocotal_desc_1": "Superbe condo de 2 chambres avec vue panoramique sur le parcours de golf de Cocotal. Avec 144 m2 au total, ce condo est exceptionnellement spacieux -- parfait pour y vivre ou comme investissement locatif.",
+    "cocotal_desc_2": "Situe au coeur de l'exclusif Cocotal Golf & Country Club a Bavaro, tu profites d'un acces complet a l'Hotel Melia et tous ses avantages : plage, restos, spa, et plus encore. Une occasion unique de vivre a Punta Cana avec tous les services d'un resort 5 etoiles.",
+    "features_title": "Caracteristiques",
+    "feat_golf_views": "Vue directe sur le parcours de golf",
+    "feat_terrace": "Grande terrasse",
+    "feat_parking": "2 places de stationnement couvertes",
+    "feat_melia": "Acces complet a l'Hotel Melia",
+    "feat_beach": "Plage, restos, spa du Melia",
+    "feat_spacious": "144 m2 au total -- tres spacieux",
+    "feat_security": "Securite 24/7",
+    "feat_cocotal": "Cocotal Golf & Country Club",
+    "confotur_title": "Avantages Fiscaux CONFOTUR Inclus",
+    "confotur_desc": "La loi CONFOTUR (Loi 158-01) donne 15 ans d'exemptions fiscales aux projets touristiques en Republique dominicaine. Cette propriete est admissible :",
+    "confotur_transfer": "0% de taxe de transfert (tu sauves environ 3% du prix)",
+    "confotur_property": "0% d'impot foncier (IPI) pendant 15 ans",
+    "confotur_capital": "0% d'impot sur le gain en capital",
+    "confotur_rental": "0% d'impot sur les revenus de location",
+    "confotur_itbis": "Exemption d'ITBIS sur les materiaux de construction",
+    "confotur_import": "Exemption de taxes d'importation",
+    "why_invest_title": "Pourquoi Investir a Punta Cana?",
+    "why_confotur_desc": "Exemption fiscale de 15 ans. Aucune taxe de transfert, aucun impot foncier (IPI), aucun impot sur le gain en capital.",
+    "why_connectivity": "Accessibilite",
+    "why_connectivity_desc": "Vols directs depuis Montreal, Toronto et Quebec. Aeroport international PUJ a quelques minutes.",
+    "why_roi_desc": "Appreciation constante. Rendement de 8 a 12% par annee en location saisonniere (Airbnb).",
+    "why_lifestyle": "Qualite de Vie",
+    "why_lifestyle_desc": "365 jours de soleil. Plages de classe mondiale. Communaute internationale grandissante.",
+    "contact_title": "Ca t'interesse? Jasons-en!",
+    "contact_subtitle": "Ecris-moi directement sur WhatsApp pour plus d'infos, des photos, ou pour planifier une visite.",
+    "whatsapp_msg": "Ecrire sur WhatsApp",
+    "detail_interested": "Ce condo t'interesse?",
+    "detail_contact": "Ecris-moi sur WhatsApp pour plus de photos, de details, ou pour planifier une visite.",
+    "detail_description": "Description",
+    "photos_coming": "Photos a Venir",
+    "golf_view": "Vue sur le Golf",
+    "terrace_label": "Terrasse",
+    "main_photo": "Photo Principale - Bientot",
+    "all_properties": "Toutes les Proprietes",
+    "details": "Details",
+    "footer": "Punta Cana, Republique dominicaine"
+  },
+  "changes_made": [
+    {
+      "key": "nav_contact",
+      "from": "Contact",
+      "to": "Nous joindre",
+      "reason": "In Quebec, 'Nous joindre' is the standard nav label for contact pages. 'Contact' feels France-corporate. Every major Quebec website (Desjardins, Hydro-Quebec, SAQ) uses 'Nous joindre'."
+    },
+    {
+      "key": "hero_title",
+      "from": "Votre Propriete au Paradis",
+      "to": "Ta Propriete au Paradis",
+      "reason": "Quebec real estate marketing to individuals (especially on social media / FB ads) uses 'tu' for a warm, direct tone. 'Votre' feels stiff and France-corporate. For luxury branding you could keep 'Votre' but for Caribbean lifestyle marketing to Quebecois snowbirds, 'tu' connects better."
+    },
+    {
+      "key": "hero_subtitle",
+      "from": "Appartements et villas exclusifs",
+      "to": "Condos et villas exclusifs",
+      "reason": "'Condo' is the dominant word in Quebec real estate. 'Appartement' is understood but sounds France French. Every Quebec listing site (Centris, DuProprio, RE/MAX Quebec) says 'condo'."
+    },
+    {
+      "key": "featured",
+      "from": "En Vedette",
+      "to": "Coup de Coeur",
+      "reason": "'Coup de coeur' is the standard Quebec real estate term for a featured/favorite listing. You see it everywhere on Centris and DuProprio. 'En vedette' is understood but less idiomatic for real estate."
+    },
+    {
+      "key": "cocotal_title",
+      "from": "Appartement 2 CH a Cocotal Golf",
+      "to": "Condo 2 Chambres a Cocotal Golf",
+      "reason": "Same as above -- 'condo' is the Quebec standard. Also spelled out 'Chambres' instead of abbreviation for clarity."
+    },
+    {
+      "key": "cocotal_desc_1",
+      "from": "...cet appartement est exceptionnellement spacieux -- ideal pour y vivre ou comme investissement locatif.",
+      "to": "...ce condo est exceptionnellement spacieux -- parfait pour y vivre ou comme investissement locatif.",
+      "reason": "Changed 'appartement' to 'condo' and 'ideal' to 'parfait' -- more natural Quebec phrasing. 'Parfait' is more conversational."
+    },
+    {
+      "key": "cocotal_desc_2",
+      "from": "...vous profiterez d'un acces complet... restaurants...",
+      "to": "...tu profites d'un acces complet... restos...",
+      "reason": "Switched to 'tu' form for consistency. Changed 'restaurants' to 'restos' -- very common Quebec shortform, makes it feel local. Changed future tense 'profiterez' to present 'profites' for immediacy. Changed 'opportunite' to 'occasion' -- 'opportunite' in the sense of opportunity is an anglicism frowned upon in Quebec (OQLF recommends 'occasion')."
+    },
+    {
+      "key": "feat_beach",
+      "from": "Plage, restaurants, spa du Melia",
+      "to": "Plage, restos, spa du Melia",
+      "reason": "'Restos' -- casual Quebec shortform, consistent with desc_2."
+    },
+    {
+      "key": "feat_security",
+      "from": "Securite 24h/24",
+      "to": "Securite 24/7",
+      "reason": "Quebec uses '24/7' (English borrowing that's fully integrated). '24h/24' is the France convention."
+    },
+    {
+      "key": "confotur_desc",
+      "from": "...accorde 15 ans... eligible",
+      "to": "...donne 15 ans... admissible",
+      "reason": "'Admissible' is the correct Quebec French term (OQLF recommendation). 'Eligible' is considered an anglicism in Quebec. 'Donne' is simpler and more direct than 'accorde'."
+    },
+    {
+      "key": "confotur_transfer",
+      "from": "...economie de ~3% du prix",
+      "to": "...tu sauves environ 3% du prix",
+      "reason": "Direct 'tu' address and 'tu sauves' (you save) is more impactful and conversational Quebec style. Replaced tilde with 'environ'."
+    },
+    {
+      "key": "confotur_capital",
+      "from": "...plus-values",
+      "to": "...gain en capital",
+      "reason": "'Gain en capital' is the standard Quebec tax term. 'Plus-values' is France French. Any Quebecois who's done their taxes knows 'gain en capital'."
+    },
+    {
+      "key": "confotur_rental",
+      "from": "...revenus locatifs",
+      "to": "...revenus de location",
+      "reason": "'Revenus de location' is more natural in Quebec. 'Revenus locatifs' is technically correct but sounds more France-formal."
+    },
+    {
+      "key": "why_confotur_desc",
+      "from": "...plus-values",
+      "to": "...gain en capital",
+      "reason": "Same as confotur_capital -- consistent Quebec tax terminology."
+    },
+    {
+      "key": "why_connectivity",
+      "from": "Connectivite",
+      "to": "Accessibilite",
+      "reason": "'Accessibilite' feels more natural in Quebec for describing how easy it is to get somewhere. 'Connectivite' sounds like internet/tech."
+    },
+    {
+      "key": "why_connectivity_desc",
+      "from": "Vols directs depuis les USA, le Canada, l'Europe",
+      "to": "Vols directs depuis Montreal, Toronto et Quebec",
+      "reason": "Critical change for Quebec audience. Name the cities THEY fly from. A Quebecois doesn't think 'I fly from Canada' -- they think 'I fly from Montreal' or 'from Quebec City'. This makes it immediately personal and relevant. Sunwing/Air Transat fly direct YUL-PUJ."
+    },
+    {
+      "key": "why_roi_desc",
+      "from": "ROI de 8 a 12%",
+      "to": "Rendement de 8 a 12%",
+      "reason": "'Rendement' is the standard Quebec financial term. While 'ROI' is understood, 'rendement' is more accessible and doesn't assume English financial jargon familiarity."
+    },
+    {
+      "key": "contact_title",
+      "from": "Interesse? Parlons-en",
+      "to": "Ca t'interesse? Jasons-en!",
+      "reason": "'Jaser' is quintessentially Quebec -- it means to chat/talk and every Quebecois uses it daily. 'Parlons-en' is correct but generic. 'Jasons-en' instantly signals 'this person knows us'. The exclamation point adds warmth."
+    },
+    {
+      "key": "contact_subtitle",
+      "from": "Ecrivez-moi...",
+      "to": "Ecris-moi...",
+      "reason": "Switched to 'tu' form for consistency with the rest of the page."
+    },
+    {
+      "key": "detail_interested",
+      "from": "Interesse par cet appartement?",
+      "to": "Ce condo t'interesse?",
+      "reason": "Changed to 'condo', used 'tu' form, and restructured to a more natural conversational question."
+    },
+    {
+      "key": "detail_contact",
+      "from": "Ecrivez-moi...",
+      "to": "Ecris-moi...",
+      "reason": "Switched to 'tu' form."
+    },
+    {
+      "key": "footer",
+      "from": "Republique Dominicaine",
+      "to": "Republique dominicaine",
+      "reason": "In Quebec French (following OQLF convention), only the first word of a country name is capitalized: 'Republique dominicaine', not 'Republique Dominicaine'. Minor but signals proper Quebec French."
+    }
+  ],
+  "cultural_notes": {
+    "quebec_snowbird_culture": {
+      "overview": "Quebec has the largest snowbird population in Canada. Hundreds of thousands of Quebecois head south every winter (November-April). Punta Cana is already a top destination -- Sunwing, Air Transat, and Air Canada Rouge run multiple weekly direct flights from Montreal (YUL) year-round, and seasonal from Quebec City (YQB). The audience is already warm to the DR.",
+      "key_insight": "Many Quebecois already own or rent in Sosua, Las Terrenas, Cabarete, or Juan Dolio. Punta Cana is seen as the 'resort zone' -- position it as having resort amenities WITHOUT the all-inclusive tourist trap feel. The Cocotal/Melia angle is perfect for this.",
+      "snowbird_season": "Peak interest is August-October (people planning their winter escape). Secondary peak in January-February (people already in DR wanting to upgrade from rental to ownership)."
+    },
+    "currency_and_pricing": {
+      "display_currency": "Always show prices in USD first, with an approximate CAD equivalent in parentheses. Quebec buyers think in CAD but know DR real estate is priced in USD. Example: '$US 315,000 (environ $CA 430,000)'. Use the $ sign BEFORE the number -- that's the Quebec convention.",
+      "exchange_rate_concern": "The CAD-USD exchange rate is a constant concern. Highlight that owning a USD-denominated asset is actually a hedge against CAD weakness. Many Quebec investors see USD real estate as portfolio diversification.",
+      "number_formatting": "Quebec uses spaces as thousands separators and comma for decimals: '$315 000' or '$315,000.00' becomes '$315 000,00'. For a website, either format works, but be consistent."
+    },
+    "tax_implications_canada": {
+      "foreign_property_reporting": "Canadian residents must report foreign property worth over $100,000 CAD on form T1135 (Foreign Income Verification Statement). This is NOT optional -- CRA penalties are harsh. Mentioning that you can connect buyers with a Quebec accountant who knows DR/Canada tax treaties builds massive trust.",
+      "rental_income": "Rental income from DR property must be declared in Canada even though CONFOTUR exempts it in DR. However, the CONFOTUR exemption means no double-taxation issue on the DR side. This is a strong selling point but needs to be explained clearly.",
+      "capital_gains": "Canada will tax capital gains on sale of foreign property. The CONFOTUR exemption only applies in DR. Buyers need to understand both sides. Again, offering a referral to a cross-border accountant is extremely valuable.",
+      "recommendation": "Add a small section or FAQ: 'Implications fiscales pour les Canadiens' -- even a brief mention shows you understand their reality and aren't just a local agent who doesn't get Canadian tax obligations."
+    },
+    "legal_considerations": {
+      "notary_system": "Quebec uses the civil law / notary system (like DR), unlike the rest of Canada which uses common law. This is actually an advantage -- Quebecois understand the role of a notary in real estate transactions. Mention that DR also uses a notary system; it feels familiar.",
+      "fideicomiso": "Foreign buyers in DR typically purchase through a 'fideicomiso' (trust) or directly via 'titulo' (title). Explain the process simply. Quebecois are used to dealing with notaires for property transactions, so frame the DR notario as the equivalent.",
+      "due_diligence": "Quebec buyers are cautious and well-informed. They WILL ask about: title insurance, property registration (Registro de Titulos), condominium fees (charges de condo), and property management if they're not living there full-time. Have answers ready."
+    },
+    "messaging_that_resonates": {
+      "lifestyle_over_investment": "Lead with lifestyle, support with numbers. Quebecois snowbirds dream of escaping -30C winters. Show the contrast: 'Pendant que Montreal pellete, tu es sur ta terrasse avec vue sur le golf.' Investment returns are important but secondary to the emotional pull.",
+      "community_angle": "Mention the existing Quebec/francophone community in Punta Cana. Quebecois want to know there are other Quebecois nearby -- for social life, for practical help, for feeling at home. 'Une communaute francophone deja bien etablie' is a strong line.",
+      "practical_details_matter": "Quebecois are practical. They want to know: How far is the airport? Is there high-speed internet (for remote work)? Can I get Quebec TV channels? Is there a Canadian consulate nearby? What about healthcare? Address these proactively.",
+      "airbnb_management": "Many Quebec buyers want a property that pays for itself when they're not there. Emphasize turnkey Airbnb management. 'Ton condo travaille pour toi meme quand tu es a Montreal' -- this resonates strongly.",
+      "direct_flights": "Hammer the direct flight angle: 'A 4h30 de Montreal, direct avec Sunwing ou Air Transat.' This is a massive selling point vs other Caribbean destinations that require connections.",
+      "avoid_these_mistakes": [
+        "Don't use 'vous' in social media ads -- it creates distance",
+        "Don't compare to Miami or Florida -- Quebecois go to DR specifically because it's NOT the US",
+        "Don't assume they speak English -- always have full French materials available",
+        "Don't use France French expressions like 'c'est top', 'c'est genial', 'nickel' -- these immediately signal you're not Quebec",
+        "Don't forget the accent marks -- Quebecois notice and it looks sloppy without them"
+      ]
+    },
+    "common_objections": {
+      "safety": "Number one concern. Address it directly: gated community, 24/7 security, Cocotal is one of the safest areas in Punta Cana. Mention that Bavaro/Punta Cana is a dedicated tourist zone with its own security infrastructure.",
+      "distance_and_management": "Who takes care of the property when I'm in Quebec? Offer or recommend a property management service. This is often the dealbreaker.",
+      "legal_trust": "Can I really own property as a foreigner? Explain that DR law allows 100% foreign ownership with full title. The fideicomiso process is straightforward. Mention Quebec-based lawyers or notaries who specialize in DR transactions if possible.",
+      "resale_value": "Is this a real investment or will I be stuck with it? Show market data -- Punta Cana appreciation rates, growing tourism numbers, infrastructure investments (new highways, hospital, etc.).",
+      "hidden_costs": "Quebecois are very sensitive to hidden fees (they deal with Quebec's famously complex tax system). Be upfront about: closing costs, monthly condo fees, property management fees, utilities, insurance. Transparency builds trust fast.",
+      "healthcare": "Many snowbirds are retirees. They want to know about healthcare options: private clinics, hospitals (Hospiten, HOMS), travel insurance requirements, proximity to medical facilities."
+    },
+    "marketing_channels": {
+      "facebook_groups": [
+        "Quebecois en Republique Dominicaine (largest group, very active)",
+        "Snowbirds Quebecois",
+        "Expatries Quebecois en Republique Dominicaine",
+        "Immobilier Republique Dominicaine - Quebec",
+        "Punta Cana - Communaute Francophone",
+        "Les Quebecois dans le Sud",
+        "Vivre en Republique Dominicaine"
+      ],
+      "facebook_strategy": "Quebec Facebook groups are extremely active and tight-knit. Do NOT hard-sell. Join the community, answer questions, share useful content about life in Punta Cana. When you post the property, frame it as sharing with the community, not advertising. Quebecois hate feeling 'sold to' but love recommendations from people they trust.",
+      "other_channels": [
+        "Kijiji.ca -- still very used in Quebec for real estate, especially 'Immobilier a l'etranger' section",
+        "LesPAC.com -- Quebec's original classifieds site, still has traffic",
+        "DuProprio.com -- consider a banner or sponsored listing if budget allows",
+        "Journal de Montreal / Journal de Quebec -- their 'Immobilier' sections get high readership",
+        "Sunwing Vacations partnerships -- they have a real estate arm for DR properties",
+        "RDS.ca forums -- surprisingly, sports forums have active snowbird threads",
+        "Quebec real estate investment meetups (Montreal, Quebec City) -- REIN, IMMOFAB, Club d'investisseurs immobiliers du Quebec"
+      ],
+      "timing": "Best ad spend: August through October. Quebecois are starting to dread winter and actively researching. Secondary window: post-holidays January when the credit card bills hit and they think 'I spent $8,000 on a 2-week all-inclusive -- I could be building equity instead.'"
+    },
+    "competitive_positioning": {
+      "vs_mexico": "Mexico (Riviera Maya, Puerto Vallarta) is the main competitor. DR advantages: closer to Montreal (4.5h vs 5.5h), more affordable, CONFOTUR tax benefits have no Mexican equivalent, stronger francophone community.",
+      "vs_florida": "Florida is for anglophones. Quebecois who want a French-speaking community prefer DR. Also: DR is significantly cheaper per square foot, no US tax complications, no HOA politics in English.",
+      "vs_other_dr": "Sosua/Cabarete have an older reputation (some negative). Las Terrenas is the 'French' spot but harder to reach (no direct flights to Samana). Punta Cana = best airport access + most developed infrastructure + highest rental demand."
+    },
+    "website_recommendations": [
+      "Add a 'Pour les Canadiens' or 'Guide pour acheteurs quebecois' section addressing taxes, flights, legal process",
+      "Show a simple cost comparison: 2 weeks all-inclusive per year x 10 years vs. owning a condo that generates rental income",
+      "Include testimonials from Quebec owners if possible -- nothing sells like social proof from someone in Laval or Longueuil",
+      "Add a FAQ section in Quebec French covering the top 10 questions",
+      "Consider a WhatsApp group or Facebook group specifically for 'Proprietaires quebecois a Cocotal' -- community sells",
+      "Offer a free 30-minute call with a Quebec accountant as a lead magnet -- this alone will generate serious leads",
+      "Show the property in winter context: 'Pendant la tempete de neige, ta vue ressemble a ca...' with a sunny terrace photo"
+    ]
+  }
+}
