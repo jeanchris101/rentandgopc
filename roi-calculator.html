@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROI & Rental Income Calculator | Rent & Go PC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #1a3a2a;
+            --accent: #c8a45e;
+            --bg: #faf9f6;
+            --text: #2c2c2c;
+            --text-light: #6b6b6b;
+            --green: #2e7d32;
+            --green-light: #e8f5e9;
+            --border: #e0ddd5;
+            --white: #ffffff;
+            --shadow: 0 2px 16px rgba(26, 58, 42, 0.08);
+            --shadow-lg: 0 8px 32px rgba(26, 58, 42, 0.12);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary);
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo a {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--accent);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #2a5a40 100%);
+            padding: 3.5rem 2rem 3rem;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            opacity: 0.85;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Panels */
+        .panel {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .panel-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        /* Input Groups */
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-label label {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .input-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .input-row input[type="range"] {
+            flex: 1;
+        }
+
+        .input-row input[type="number"] {
+            width: 100px;
+            padding: 6px 8px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: right;
+            background: var(--bg);
+        }
+
+        .input-row input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(200, 164, 94, 0.2);
+        }
+
+        /* Range Slider Styling */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--white);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.15s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--white);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+
+        /* Results Panel */
+        .results-panel {
+            position: sticky;
+            top: 90px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.85rem 0;
+            border-bottom: 1px solid #f0ede6;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .result-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .result-highlight {
+            background: linear-gradient(135deg, #f0faf2 0%, #e8f5e9 100%);
+            margin: 0 -2rem;
+            padding: 1.25rem 2rem;
+            border-bottom: none;
+        }
+
+        .result-highlight .result-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .result-highlight .result-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        .result-highlight.roi .result-value {
+            font-size: 1.8rem;
+        }
+
+        .result-neutral .result-value {
+            color: var(--accent);
+        }
+
+        /* Projection Box */
+        .projection-box {
+            margin-top: 1.25rem;
+            background: var(--bg);
+            border-radius: 8px;
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+        }
+
+        .projection-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .projection-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.35rem 0;
+            font-size: 0.85rem;
+        }
+
+        .projection-row span:first-child {
+            color: var(--text-light);
+        }
+
+        .projection-row span:last-child {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        /* Compare Toggle */
+        .compare-section {
+            margin-top: 2rem;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.25rem;
+        }
+
+        .toggle-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            cursor: pointer;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: var(--border);
+            border-radius: 13px;
+            transition: 0.3s;
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: var(--white);
+            border-radius: 50%;
+            transition: 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: var(--accent);
+        }
+
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(22px);
+        }
+
+        .compare-grid {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .compare-grid.active {
+            display: grid;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .compare-col {
+            background: var(--bg);
+            border-radius: 8px;
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+        }
+
+        .compare-col h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .compare-col.us h4 {
+            border-bottom-color: #90a4ae;
+        }
+
+        .compare-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.3rem 0;
+            font-size: 0.82rem;
+        }
+
+        .compare-row span:first-child {
+            color: var(--text-light);
+        }
+
+        .compare-row span:last-child {
+            font-weight: 600;
+        }
+
+        /* Info Box */
+        .info-box {
+            margin-top: 2rem;
+        }
+
+        .info-box .panel {
+            background: linear-gradient(135deg, #fefdfb 0%, #faf7f0 100%);
+            border-color: #e8dfc8;
+        }
+
+        .info-box .panel-title {
+            font-size: 1.1rem;
+            border-bottom-color: var(--accent);
+        }
+
+        .info-table {
+            width: 100%;
+        }
+
+        .info-table th {
+            text-align: left;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-table td {
+            padding: 0.6rem 0;
+            font-size: 0.88rem;
+            border-bottom: 1px solid #f0ede6;
+        }
+
+        .info-table td:first-child {
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .info-table td:nth-child(2),
+        .info-table td:nth-child(3) {
+            color: var(--text-light);
+        }
+
+        .confotur-note {
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            background: var(--green-light);
+            border-radius: 6px;
+            font-size: 0.82rem;
+            color: var(--green);
+            line-height: 1.5;
+        }
+
+        /* Share Button */
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+
+        .btn-share {
+            flex: 1;
+            padding: 0.7rem 1rem;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-share:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-share.copied {
+            background: var(--green);
+            border-color: var(--green);
+            color: var(--white);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, #2a5a40 100%);
+            color: var(--white);
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-section p {
+            font-size: 1rem;
+            opacity: 0.85;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.9rem 2rem;
+            background: #25D366;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.25s;
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp:hover {
+            background: #1fb855;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-whatsapp svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 1.5rem 2rem;
+            font-size: 0.82rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-panel {
+                position: static;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1rem 2rem 1.5rem;
+                gap: 1rem;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .result-highlight {
+                margin: 0 -1.5rem;
+                padding: 1rem 1.5rem;
+            }
+
+            .panel {
+                padding: 1.5rem;
+            }
+
+            .compare-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-row input[type="number"] {
+                width: 85px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-inner {
+                padding: 0;
+            }
+
+            .hero {
+                padding: 2.5rem 1.25rem 2rem;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .main-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .cta-section {
+                padding: 2.5rem 1.25rem;
+            }
+
+            .cta-section h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <a href="index.html">Rent & Go PC</a>
+            </div>
+            <button class="hamburger" onclick="document.querySelector('nav').classList.toggle('open')" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="listings.html">Properties</a>
+                <a href="roi-calculator.html" class="active">ROI Calculator</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Investment <span>ROI Calculator</span></h1>
+        <p>Estimate your rental income and return on investment for Punta Cana real estate</p>
+    </section>
+
+    <div class="main-container">
+        <div class="calculator-grid">
+
+            <!-- Inputs Panel -->
+            <div class="panel">
+                <h2 class="panel-title">Investment Parameters</h2>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label for="price">Purchase Price</label>
+                        <span class="input-value" id="priceDisplay">$315,000</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="range" id="price" min="100000" max="1000000" step="5000" value="315000">
+                        <input type="number" id="priceNum" min="100000" max="1000000" step="5000" value="315000">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label for="downpayment">Down Payment</label>
+                        <span class="input-value" id="downpaymentDisplay">100%</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="range" id="downpayment" min="0" max="100" step="5" value="100">
+                        <input type="number" id="downpaymentNum" min="0" max="100" step="1" value="100">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label for="nightly">Avg. Nightly Rate (Airbnb)</label>
+                        <span class="input-value" id="nightlyDisplay">$150</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="range" id="nightly" min="50" max="400" step="5" value="150">
+                        <input type="number" id="nightlyNum" min="50" max="400" step="5" value="150">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label for="occupancy">Occupancy Rate</label>
+                        <span class="input-value" id="occupancyDisplay">65%</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="range" id="occupancy" min="30" max="90" step="1" value="65">
+                        <input type="number" id="occupancyNum" min="30" max="90" step="1" value="65">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label for="hoa">Monthly HOA / Maintenance</label>
+                        <span class="input-value" id="hoaDisplay">$350</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="range" id="hoa" min="100" max="800" step="25" value="350">
+                        <input type="number" id="hoaNum" min="100" max="800" step="25" value="350">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label for="management">Property Management Fee</label>
+                        <span class="input-value" id="managementDisplay">20%</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="range" id="management" min="0" max="30" step="1" value="20">
+                        <input type="number" id="managementNum" min="0" max="30" step="1" value="20">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-label">
+                        <label for="utilities">Annual Utilities & Insurance</label>
+                        <span class="input-value" id="utilitiesDisplay">$2,000</span>
+                    </div>
+                    <div class="input-row">
+                        <input type="range" id="utilities" min="500" max="5000" step="100" value="2000">
+                        <input type="number" id="utilitiesNum" min="500" max="5000" step="100" value="2000">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="panel results-panel">
+                <h2 class="panel-title">Your Investment Returns</h2>
+
+                <div class="result-item result-highlight roi">
+                    <span class="result-label">Annual ROI</span>
+                    <span class="result-value" id="roiResult">--</span>
+                </div>
+
+                <div class="result-item result-highlight">
+                    <span class="result-label">Monthly Net Income</span>
+                    <span class="result-value" id="monthlyResult">--</span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Gross Annual Rental Income</span>
+                    <span class="result-value" id="grossResult">--</span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Management Fees</span>
+                    <span class="result-value" id="mgmtResult">--</span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Annual HOA / Maintenance</span>
+                    <span class="result-value" id="hoaAnnualResult">--</span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Annual Utilities & Insurance</span>
+                    <span class="result-value" id="utilitiesResult">--</span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Net Annual Income</span>
+                    <span class="result-value" id="netResult">--</span>
+                </div>
+
+                <div class="result-item result-neutral">
+                    <span class="result-label">Break-even Timeline</span>
+                    <span class="result-value" id="breakEvenResult">--</span>
+                </div>
+
+                <div class="projection-box">
+                    <div class="projection-title">5-Year Projection</div>
+                    <div class="projection-row">
+                        <span>Total Rental Income (5 yr)</span>
+                        <span id="proj5Income">--</span>
+                    </div>
+                    <div class="projection-row">
+                        <span>Est. Property Appreciation (5%/yr)</span>
+                        <span id="proj5Appreciation">--</span>
+                    </div>
+                    <div class="projection-row" style="border-top: 1px solid var(--border); padding-top: 0.5rem; margin-top: 0.25rem;">
+                        <span style="font-weight:600; color:var(--primary);">Total 5-Year Return</span>
+                        <span id="proj5Total" style="color:var(--green);">--</span>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-share" id="shareBtn" onclick="shareResults()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                        Share Results
+                    </button>
+                </div>
+
+                <!-- Compare Section -->
+                <div class="compare-section">
+                    <div class="toggle-container">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="compareToggle" onchange="toggleCompare()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="toggle-label">Compare to US Real Estate</span>
+                    </div>
+
+                    <div class="compare-grid" id="compareGrid">
+                        <div class="compare-col">
+                            <h4>Punta Cana</h4>
+                            <div class="compare-row">
+                                <span>Annual ROI</span>
+                                <span id="cmpPcRoi" style="color:var(--green);">--</span>
+                            </div>
+                            <div class="compare-row">
+                                <span>Property Tax</span>
+                                <span>~1% or exempt</span>
+                            </div>
+                            <div class="compare-row">
+                                <span>Tax Exemptions</span>
+                                <span>CONFOTUR eligible</span>
+                            </div>
+                            <div class="compare-row">
+                                <span>Entry Price</span>
+                                <span>From ~$150K</span>
+                            </div>
+                            <div class="compare-row">
+                                <span>Appreciation</span>
+                                <span>~5%/yr</span>
+                            </div>
+                        </div>
+                        <div class="compare-col us">
+                            <h4>US Average</h4>
+                            <div class="compare-row">
+                                <span>Annual ROI</span>
+                                <span style="color:var(--text-light);">4-6%</span>
+                            </div>
+                            <div class="compare-row">
+                                <span>Property Tax</span>
+                                <span>1-3% annually</span>
+                            </div>
+                            <div class="compare-row">
+                                <span>Tax Exemptions</span>
+                                <span>Limited</span>
+                            </div>
+                            <div class="compare-row">
+                                <span>Entry Price</span>
+                                <span>From ~$300K+</span>
+                            </div>
+                            <div class="compare-row">
+                                <span>Appreciation</span>
+                                <span>~3-4%/yr</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+            <div class="panel">
+                <h3 class="panel-title">Typical Punta Cana Ranges</h3>
+                <table class="info-table">
+                    <thead>
+                        <tr>
+                            <th>Area</th>
+                            <th>Avg. Nightly Rate</th>
+                            <th>Typical Occupancy</th>
+                            <th>Typical HOA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bavaro</td>
+                            <td>$100 - $200</td>
+                            <td>60 - 75%</td>
+                            <td>$200 - $400</td>
+                        </tr>
+                        <tr>
+                            <td>Cap Cana</td>
+                            <td>$150 - $300</td>
+                            <td>60 - 70%</td>
+                            <td>$300 - $500</td>
+                        </tr>
+                        <tr>
+                            <td>Cocotal</td>
+                            <td>$120 - $200</td>
+                            <td>60 - 70%</td>
+                            <td>$200 - $400</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="confotur-note">
+                    Some properties qualify for CONFOTUR tax exemptions (up to 15 years of property tax and income tax relief), which can further improve returns.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Want personalized numbers for a specific property?</h2>
+        <p>I can run the real numbers on any listing and help you find the best investment for your goals.</p>
+        <a href="https://wa.me/18094865386" target="_blank" rel="noopener" class="btn-whatsapp">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Message me on WhatsApp
+        </a>
+    </section>
+
+    <footer>
+        &copy; 2026 Rent & Go PC. All rights reserved.
+    </footer>
+
+    <script>
+        // Input configuration
+        const inputs = [
+            { id: 'price', prefix: '$', suffix: '', format: 'currency' },
+            { id: 'downpayment', prefix: '', suffix: '%', format: 'number' },
+            { id: 'nightly', prefix: '$', suffix: '', format: 'currency' },
+            { id: 'occupancy', prefix: '', suffix: '%', format: 'number' },
+            { id: 'hoa', prefix: '$', suffix: '', format: 'currency' },
+            { id: 'management', prefix: '', suffix: '%', format: 'number' },
+            { id: 'utilities', prefix: '$', suffix: '', format: 'currency' }
+        ];
+
+        function formatCurrency(n) {
+            return '$' + Math.round(n).toLocaleString('en-US');
+        }
+
+        function formatDisplay(value, config) {
+            if (config.format === 'currency') {
+                return config.prefix + Math.round(value).toLocaleString('en-US');
+            }
+            return config.prefix + value + config.suffix;
+        }
+
+        // Sync slider <-> number input
+        inputs.forEach(function(config) {
+            var slider = document.getElementById(config.id);
+            var numInput = document.getElementById(config.id + 'Num');
+            var display = document.getElementById(config.id + 'Display');
+
+            slider.addEventListener('input', function() {
+                numInput.value = this.value;
+                display.textContent = formatDisplay(Number(this.value), config);
+                calculate();
+            });
+
+            numInput.addEventListener('input', function() {
+                var v = Number(this.value);
+                var min = Number(slider.min);
+                var max = Number(slider.max);
+                if (v >= min && v <= max) {
+                    slider.value = v;
+                    display.textContent = formatDisplay(v, config);
+                    calculate();
+                }
+            });
+
+            numInput.addEventListener('blur', function() {
+                var v = Number(this.value);
+                var min = Number(slider.min);
+                var max = Number(slider.max);
+                if (v < min) this.value = min;
+                if (v > max) this.value = max;
+                slider.value = this.value;
+                display.textContent = formatDisplay(Number(this.value), config);
+                calculate();
+            });
+        });
+
+        function getVal(id) {
+            return Number(document.getElementById(id).value);
+        }
+
+        function calculate() {
+            var price = getVal('price');
+            var downPct = getVal('downpayment') / 100;
+            var nightly = getVal('nightly');
+            var occupancy = getVal('occupancy') / 100;
+            var hoa = getVal('hoa');
+            var mgmtPct = getVal('management') / 100;
+            var utilities = getVal('utilities');
+
+            var grossAnnual = nightly * 365 * occupancy;
+            var mgmtFees = grossAnnual * mgmtPct;
+            var hoaAnnual = hoa * 12;
+            var netAnnual = grossAnnual - mgmtFees - hoaAnnual - utilities;
+            var roi = (netAnnual / price) * 100;
+            var monthlyNet = netAnnual / 12;
+            var breakEven = netAnnual > 0 ? price / netAnnual : Infinity;
+
+            // 5-year projection with 5% annual appreciation
+            var totalRental5 = netAnnual * 5;
+            var appreciatedValue = price * Math.pow(1.05, 5);
+            var appreciation5 = appreciatedValue - price;
+            var total5 = totalRental5 + appreciation5;
+
+            // Update DOM
+            document.getElementById('roiResult').textContent = roi.toFixed(1) + '%';
+            document.getElementById('roiResult').style.color = roi >= 8 ? 'var(--green)' : roi >= 5 ? '#7b8a2e' : '#b77a1a';
+
+            document.getElementById('monthlyResult').textContent = formatCurrency(monthlyNet);
+            document.getElementById('monthlyResult').style.color = monthlyNet > 0 ? 'var(--green)' : '#c62828';
+
+            document.getElementById('grossResult').textContent = formatCurrency(grossAnnual);
+            document.getElementById('mgmtResult').textContent = '-' + formatCurrency(mgmtFees);
+            document.getElementById('hoaAnnualResult').textContent = '-' + formatCurrency(hoaAnnual);
+            document.getElementById('utilitiesResult').textContent = '-' + formatCurrency(utilities);
+            document.getElementById('netResult').textContent = formatCurrency(netAnnual);
+
+            if (breakEven === Infinity || breakEven < 0) {
+                document.getElementById('breakEvenResult').textContent = 'N/A';
+            } else {
+                document.getElementById('breakEvenResult').textContent = breakEven.toFixed(1) + ' years';
+            }
+
+            document.getElementById('proj5Income').textContent = formatCurrency(totalRental5);
+            document.getElementById('proj5Appreciation').textContent = formatCurrency(appreciation5);
+            document.getElementById('proj5Total').textContent = formatCurrency(total5);
+
+            // Compare section
+            document.getElementById('cmpPcRoi').textContent = roi.toFixed(1) + '%';
+        }
+
+        function toggleCompare() {
+            var grid = document.getElementById('compareGrid');
+            grid.classList.toggle('active', document.getElementById('compareToggle').checked);
+        }
+
+        function shareResults() {
+            var price = getVal('price');
+            var roi = document.getElementById('roiResult').textContent;
+            var monthly = document.getElementById('monthlyResult').textContent;
+            var net = document.getElementById('netResult').textContent;
+
+            var text = 'Punta Cana Investment: ' + formatCurrency(price) + ' property -> ' + monthly + '/month net income, ' + roi + ' ROI (' + net + '/year). Calculate yours at rentandgopc.com';
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function() {
+                    showCopied();
+                }).catch(function() {
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                showCopied();
+            } catch (e) {
+                alert('Copy this:\n\n' + text);
+            }
+            document.body.removeChild(ta);
+        }
+
+        function showCopied() {
+            var btn = document.getElementById('shareBtn');
+            btn.classList.add('copied');
+            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+            setTimeout(function() {
+                btn.classList.remove('copied');
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> Share Results';
+            }, 2000);
+        }
+
+        // Initial calculation
+        calculate();
+    </script>
+
+</body>
+</html>
