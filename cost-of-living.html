@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cost of Living Comparison | Rent & Go PC</title>
+    <meta name="description" content="Compare your city's cost of living against Punta Cana. See how much you could save by living in paradise.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Cost of Living: Your City vs Punta Cana">
+    <meta property="og:description" content="See how much you could save by living in Punta Cana, Dominican Republic.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.rentandgopc.com/cost-of-living">
+
+    <!-- Meta Pixel -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'YOUR_PIXEL_ID_HERE');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"/></noscript>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #1a3a2a;
+            --accent: #c8a45e;
+            --bg: #faf9f6;
+            --text: #2c2c2c;
+            --text-light: #6b6b6b;
+            --green: #2e7d32;
+            --green-light: #e8f5e9;
+            --border: #e0ddd5;
+            --white: #ffffff;
+            --shadow: 0 2px 16px rgba(26, 58, 42, 0.08);
+            --shadow-lg: 0 8px 32px rgba(26, 58, 42, 0.12);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary);
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo a {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+
+        .lang-selector {
+            display: flex;
+            gap: 0.35rem;
+            margin-left: 0.5rem;
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.7);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active, .lang-btn:hover {
+            background: var(--accent);
+            color: var(--primary);
+            border-color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--accent);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #2a5a40 100%);
+            padding: 3.5rem 2rem 3rem;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            opacity: 0.85;
+            max-width: 650px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        /* Main */
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+        }
+
+        /* City Selector */
+        .city-selector {
+            margin-bottom: 2.5rem;
+        }
+
+        .city-selector h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1.25rem;
+            text-align: center;
+        }
+
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .city-card {
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .city-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .city-card.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #f0faf2 0%, #e8f5e9 100%);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .city-card.selected::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .city-flag {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .city-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .city-country {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 0.15rem;
+        }
+
+        /* Results (hidden initially) */
+        .results-container {
+            display: none;
+        }
+
+        .results-container.visible {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Comparison Table */
+        .panel {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .panel-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table thead th {
+            text-align: left;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+            padding: 0 0.75rem 0.85rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .comparison-table thead th:nth-child(2),
+        .comparison-table thead th:nth-child(3),
+        .comparison-table thead th:nth-child(4) {
+            text-align: right;
+        }
+
+        .comparison-table tbody tr {
+            transition: background 0.15s;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #fdfcfa;
+        }
+
+        .comparison-table tbody td {
+            padding: 0.85rem 0.75rem;
+            border-bottom: 1px solid #f0ede6;
+            font-size: 0.92rem;
+        }
+
+        .comparison-table tbody td:first-child {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .comparison-table tbody td:nth-child(2) {
+            text-align: right;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .comparison-table tbody td:nth-child(3) {
+            text-align: right;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .comparison-table tbody td:nth-child(4) {
+            text-align: right;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        .comparison-table tbody td:nth-child(4).no-savings {
+            color: #c0392b;
+        }
+
+        .unit-label {
+            font-size: 0.78rem;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .confotur-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), #d4b46e);
+            color: var(--primary);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        /* Annual Summary */
+        .annual-summary {
+            background: linear-gradient(135deg, var(--primary) 0%, #2a5a40 100%);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            color: var(--white);
+            margin-bottom: 2rem;
+        }
+
+        .annual-summary .summary-label {
+            font-size: 1rem;
+            opacity: 0.85;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        .annual-summary .summary-city {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .annual-summary .summary-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 0.25rem 0 0.5rem;
+            line-height: 1.1;
+        }
+
+        .annual-summary .summary-monthly {
+            font-size: 1.05rem;
+            opacity: 0.9;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .annual-summary .summary-monthly strong {
+            color: var(--accent);
+        }
+
+        /* Bar Chart */
+        .chart-container {
+            margin-bottom: 0.5rem;
+        }
+
+        .chart-row {
+            margin-bottom: 1.25rem;
+        }
+
+        .chart-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.4rem;
+        }
+
+        .chart-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .bar-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bar-tag {
+            font-size: 0.72rem;
+            font-weight: 600;
+            width: 72px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .bar-tag.city-tag {
+            color: var(--text-light);
+        }
+
+        .bar-tag.pc-tag {
+            color: var(--primary);
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 22px;
+            background: #f0ede6;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.6s ease-out;
+            min-width: 2px;
+        }
+
+        .bar-fill.city-bar {
+            background: #b0b0b0;
+        }
+
+        .bar-fill.pc-bar {
+            background: linear-gradient(90deg, var(--green), #43a047);
+        }
+
+        .bar-value {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text);
+            flex-shrink: 0;
+            width: 70px;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            color: var(--text-light);
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .legend-dot.city {
+            background: #b0b0b0;
+        }
+
+        .legend-dot.pc {
+            background: var(--green);
+        }
+
+        /* Share */
+        .share-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-share:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-share svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .share-toast {
+            display: none;
+            margin-top: 0.75rem;
+            color: var(--green);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .share-toast.visible {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* CTAs */
+        .cta-section {
+            background: linear-gradient(135deg, #fdf8ef 0%, #faf5e8 100%);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-section p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.85rem 1.75rem;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s;
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: var(--white);
+        }
+
+        .btn-whatsapp:hover {
+            background: #1fb855;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-whatsapp svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .btn-outline {
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 1.5rem 2rem;
+            font-size: 0.82rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .city-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1rem 2rem 1.5rem;
+                gap: 1rem;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+
+            nav.open {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .annual-summary .summary-amount {
+                font-size: 2.5rem;
+            }
+
+            .panel {
+                padding: 1.5rem;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table thead th,
+            .comparison-table tbody td {
+                padding: 0.65rem 0.5rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .city-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.65rem;
+            }
+
+            .city-card {
+                padding: 1rem 0.75rem;
+            }
+
+            .city-flag {
+                font-size: 1.6rem;
+            }
+
+            .city-name {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table thead th:nth-child(2),
+            .comparison-table tbody td:nth-child(2) {
+                display: none;
+            }
+
+            .bar-tag {
+                width: 50px;
+                font-size: 0.68rem;
+            }
+
+            .bar-value {
+                width: 58px;
+                font-size: 0.72rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-cta {
+                justify-content: center;
+            }
+
+            .annual-summary .summary-amount {
+                font-size: 2.2rem;
+            }
+
+            .annual-summary {
+                padding: 2rem 1.25rem;
+            }
+
+            .header-inner {
+                padding: 0;
+            }
+
+            .hero {
+                padding: 2.5rem 1.5rem 2rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .comparison-table thead th:nth-child(4),
+            .comparison-table tbody td:nth-child(4) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-inner">
+            <div class="logo"><a href="index.html">Rent & Go PC</a></div>
+            <nav id="mainNav">
+                <a href="index.html">Properties</a>
+                <a href="neighborhoods.html">Neighborhoods</a>
+                <a href="blog.html">Guide</a>
+                <a href="try-before-you-buy.html">Try Before You Buy</a>
+                <a href="#contact">Contact</a>
+                <div class="lang-selector">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="es">ES</button>
+                    <button class="lang-btn" data-lang="fr">FR</button>
+                    <button class="lang-btn" data-lang="ru">RU</button>
+                </div>
+            </nav>
+            <button class="hamburger" onclick="document.getElementById('mainNav').classList.toggle('open')">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Cost of Living: <span>Your City vs Punta Cana</span></h1>
+        <p>See exactly how much you could save every month by living in paradise. Real numbers, real savings.</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-container">
+
+        <!-- City Selector -->
+        <div class="city-selector">
+            <h2>Select Your Current City</h2>
+            <div class="city-grid" id="cityGrid">
+                <div class="city-card" data-city="miami" onclick="selectCity('miami')">
+                    <span class="city-flag">&#127482;&#127480;</span>
+                    <div class="city-name">Miami</div>
+                    <div class="city-country">Florida, USA</div>
+                </div>
+                <div class="city-card" data-city="nyc" onclick="selectCity('nyc')">
+                    <span class="city-flag">&#127482;&#127480;</span>
+                    <div class="city-name">New York</div>
+                    <div class="city-country">New York, USA</div>
+                </div>
+                <div class="city-card" data-city="la" onclick="selectCity('la')">
+                    <span class="city-flag">&#127482;&#127480;</span>
+                    <div class="city-name">Los Angeles</div>
+                    <div class="city-country">California, USA</div>
+                </div>
+                <div class="city-card" data-city="boston" onclick="selectCity('boston')">
+                    <span class="city-flag">&#127482;&#127480;</span>
+                    <div class="city-name">Boston</div>
+                    <div class="city-country">Massachusetts, USA</div>
+                </div>
+                <div class="city-card" data-city="montreal" onclick="selectCity('montreal')">
+                    <span class="city-flag">&#127464;&#127462;</span>
+                    <div class="city-name">Montreal</div>
+                    <div class="city-country">Quebec, Canada</div>
+                </div>
+                <div class="city-card" data-city="toronto" onclick="selectCity('toronto')">
+                    <span class="city-flag">&#127464;&#127462;</span>
+                    <div class="city-name">Toronto</div>
+                    <div class="city-country">Ontario, Canada</div>
+                </div>
+                <div class="city-card" data-city="moscow" onclick="selectCity('moscow')">
+                    <span class="city-flag">&#127479;&#127482;</span>
+                    <div class="city-name">Moscow</div>
+                    <div class="city-country">Russia</div>
+                </div>
+                <div class="city-card" data-city="madrid" onclick="selectCity('madrid')">
+                    <span class="city-flag">&#127466;&#127480;</span>
+                    <div class="city-name">Madrid</div>
+                    <div class="city-country">Spain</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results (hidden until city selected) -->
+        <div class="results-container" id="resultsContainer">
+
+            <!-- Annual Savings Summary -->
+            <div class="annual-summary" id="annualSummary">
+                <div class="summary-label">By living in Punta Cana instead of <span class="summary-city" id="summaryCity">Miami</span>, you could save approximately</div>
+                <div class="summary-amount" id="summaryAmount">$00,000/yr</div>
+                <div class="summary-monthly" id="summaryMonthly">That's <strong>$0,000 per month</strong> -- enough to cover your mortgage payment on a $315K property.</div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="panel">
+                <h2 class="panel-title" id="tableTitle">Miami vs Punta Cana</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th id="thCity">Miami</th>
+                            <th>Punta Cana</th>
+                            <th>You Save</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparisonBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Bar Chart -->
+            <div class="panel">
+                <h2 class="panel-title">Visual Comparison</h2>
+                <div class="chart-legend">
+                    <div class="legend-item"><div class="legend-dot city"></div> <span id="legendCity">Miami</span></div>
+                    <div class="legend-item"><div class="legend-dot pc"></div> Punta Cana</div>
+                </div>
+                <div class="chart-container" id="chartContainer">
+                </div>
+            </div>
+
+            <!-- Share -->
+            <div class="share-section">
+                <button class="btn-share" onclick="shareResults()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                    Share Your Results
+                </button>
+                <div class="share-toast" id="shareToast">Copied to clipboard! Share it with friends.</div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="cta-section" id="contact">
+                <h2>Ready to Make the Move?</h2>
+                <p>Let's find the perfect property for your new life in paradise.</p>
+                <div class="cta-buttons">
+                    <a href="https://wa.me/18094865386" target="_blank" rel="noopener" class="btn-cta btn-whatsapp">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Message on WhatsApp
+                    </a>
+                    <a href="roi-calculator.html" class="btn-cta btn-outline">Calculate Your Property ROI</a>
+                    <a href="index.html" class="btn-cta btn-outline">See Available Properties</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Rent & Go PC. All rights reserved.
+    </footer>
+
+    <script>
+    // Cost of living data (all values in USD)
+    const puntaCana = {
+        rent: 800,
+        dinner: 35,
+        groceries: 250,
+        beer: 3,
+        cappuccino: 2.50,
+        gym: 35,
+        health: 80,
+        internet: 40,
+        gas: 5.20,
+        utilities: 150,
+        propertyTax: 0,
+        domesticHelp: 300
+    };
+
+    const cities = {
+        miami: {
+            name: 'Miami, FL',
+            short: 'Miami',
+            rent: 3200, dinner: 85, groceries: 600, beer: 8, cappuccino: 5.50,
+            gym: 55, health: 450, internet: 70, gas: 3.80, utilities: 250,
+            propertyTax: 5200, domesticHelp: 2800
+        },
+        nyc: {
+            name: 'New York, NY',
+            short: 'New York',
+            rent: 4500, dinner: 120, groceries: 750, beer: 9, cappuccino: 6,
+            gym: 85, health: 500, internet: 65, gas: 4.20, utilities: 200,
+            propertyTax: 6000, domesticHelp: 3500
+        },
+        la: {
+            name: 'Los Angeles, CA',
+            short: 'Los Angeles',
+            rent: 3800, dinner: 95, groceries: 650, beer: 8, cappuccino: 5.75,
+            gym: 60, health: 480, internet: 70, gas: 5.50, utilities: 220,
+            propertyTax: 4900, domesticHelp: 3000
+        },
+        boston: {
+            name: 'Boston, MA',
+            short: 'Boston',
+            rent: 3500, dinner: 90, groceries: 620, beer: 8, cappuccino: 5.50,
+            gym: 65, health: 470, internet: 65, gas: 3.70, utilities: 230,
+            propertyTax: 5400, domesticHelp: 3200
+        },
+        montreal: {
+            name: 'Montreal, Canada',
+            short: 'Montreal',
+            rent: 1600, dinner: 50, groceries: 360, beer: 5, cappuccino: 3.60,
+            gym: 36, health: 0, internet: 58, gas: 4.70, utilities: 108,
+            propertyTax: 2900, domesticHelp: null
+        },
+        toronto: {
+            name: 'Toronto, Canada',
+            short: 'Toronto',
+            rent: 2170, dinner: 58, groceries: 400, beer: 5.80, cappuccino: 4,
+            gym: 40, health: 0, internet: 62, gas: 4.50, utilities: 123,
+            propertyTax: 3600, domesticHelp: null
+        },
+        moscow: {
+            name: 'Moscow, Russia',
+            short: 'Moscow',
+            rent: 1800, dinner: 60, groceries: 400, beer: 5, cappuccino: 4,
+            gym: 45, health: 200, internet: 15, gas: 3.50, utilities: 120,
+            propertyTax: 2000, domesticHelp: 800
+        },
+        madrid: {
+            name: 'Madrid, Spain',
+            short: 'Madrid',
+            rent: 1600, dinner: 50, groceries: 350, beer: 4, cappuccino: 3,
+            gym: 40, health: 100, internet: 35, gas: 6.50, utilities: 130,
+            propertyTax: 1800, domesticHelp: 1200
+        }
+    };
+
+    const categories = [
+        { key: 'rent', label: '2BR Apartment Rent', unit: '/mo', monthly: true },
+        { key: 'dinner', label: 'Dinner for 2 (mid-range)', unit: '', monthly: false, monthlyMultiplier: 4 },
+        { key: 'groceries', label: 'Monthly Groceries', unit: '/mo', monthly: true },
+        { key: 'beer', label: 'Domestic Beer (restaurant)', unit: '', monthly: false, monthlyMultiplier: 12 },
+        { key: 'cappuccino', label: 'Cappuccino', unit: '', monthly: false, monthlyMultiplier: 20 },
+        { key: 'gym', label: 'Gym Membership', unit: '/mo', monthly: true },
+        { key: 'health', label: 'Private Health Insurance', unit: '/mo', monthly: true },
+        { key: 'internet', label: 'Internet (100 Mbps)', unit: '/mo', monthly: true },
+        { key: 'gas', label: 'Gasoline (per gallon)', unit: '/gal', monthly: false, monthlyMultiplier: 40 },
+        { key: 'utilities', label: 'Utilities (elec, water, AC)', unit: '/mo', monthly: true },
+        { key: 'propertyTax', label: 'Property Tax ($315K home)', unit: '/yr', monthly: false, annual: true },
+        { key: 'domesticHelp', label: 'Domestic Help (full-time)', unit: '/mo', monthly: true }
+    ];
+
+    let selectedCity = null;
+
+    function formatUSD(val) {
+        if (val === null || val === undefined) return 'N/A';
+        if (val === 0) return '$0';
+        if (val >= 1000) {
+            return '$' + val.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+        if (Number.isInteger(val)) return '$' + val;
+        return '$' + val.toFixed(2);
+    }
+
+    function selectCity(cityKey) {
+        selectedCity = cityKey;
+        const city = cities[cityKey];
+
+        // Update card selection
+        document.querySelectorAll('.city-card').forEach(c => c.classList.remove('selected'));
+        document.querySelector(`.city-card[data-city="${cityKey}"]`).classList.add('selected');
+
+        // Show results
+        document.getElementById('resultsContainer').classList.add('visible');
+
+        // Update headers
+        document.getElementById('tableTitle').textContent = city.short + ' vs Punta Cana';
+        document.getElementById('thCity').textContent = city.short;
+        document.getElementById('summaryCity').textContent = city.name;
+        document.getElementById('legendCity').textContent = city.short;
+
+        // Build comparison table
+        const tbody = document.getElementById('comparisonBody');
+        tbody.innerHTML = '';
+        let totalMonthlySavings = 0;
+
+        categories.forEach(cat => {
+            const cityVal = city[cat.key];
+            const pcVal = puntaCana[cat.key];
+            const tr = document.createElement('tr');
+
+            // Category
+            const tdCat = document.createElement('td');
+            tdCat.textContent = cat.label;
+            tr.appendChild(tdCat);
+
+            // City value
+            const tdCity = document.createElement('td');
+            if (cityVal === null) {
+                tdCity.textContent = 'N/A';
+            } else if (cat.key === 'health' && cityVal === 0) {
+                tdCity.innerHTML = '$0 <span class="unit-label">(public)</span>';
+            } else {
+                tdCity.innerHTML = formatUSD(cityVal) + (cat.unit ? ' <span class="unit-label">' + cat.unit + '</span>' : '');
+            }
+            tr.appendChild(tdCity);
+
+            // PC value
+            const tdPC = document.createElement('td');
+            if (cat.key === 'propertyTax') {
+                tdPC.innerHTML = '$0 <span class="confotur-badge">CONFOTUR</span>';
+            } else {
+                tdPC.innerHTML = formatUSD(pcVal) + (cat.unit ? ' <span class="unit-label">' + cat.unit + '</span>' : '');
+            }
+            tr.appendChild(tdPC);
+
+            // Savings
+            const tdSave = document.createElement('td');
+            if (cityVal === null) {
+                tdSave.textContent = '--';
+                tdSave.style.color = 'var(--text-light)';
+            } else {
+                const diff = cityVal - pcVal;
+                if (diff > 0) {
+                    tdSave.innerHTML = formatUSD(diff) + (cat.unit ? ' <span class="unit-label">' + cat.unit + '</span>' : '');
+                } else if (diff < 0) {
+                    tdSave.textContent = '-' + formatUSD(Math.abs(diff));
+                    tdSave.classList.add('no-savings');
+                } else {
+                    tdSave.textContent = '$0';
+                    tdSave.style.color = 'var(--text-light)';
+                }
+
+                // Calculate monthly savings
+                if (cat.annual) {
+                    totalMonthlySavings += diff / 12;
+                } else if (cat.monthly) {
+                    totalMonthlySavings += diff;
+                } else if (cat.monthlyMultiplier) {
+                    totalMonthlySavings += diff * cat.monthlyMultiplier;
+                }
+            }
+            tr.appendChild(tdSave);
+            tbody.appendChild(tr);
+        });
+
+        const annualSavings = Math.round(totalMonthlySavings * 12);
+        const monthlySavings = Math.round(totalMonthlySavings);
+
+        // Update annual summary
+        document.getElementById('summaryAmount').textContent = '$' + Math.abs(annualSavings).toLocaleString('en-US') + '/yr';
+        if (annualSavings > 0) {
+            document.getElementById('summaryMonthly').innerHTML =
+                "That's <strong>$" + monthlySavings.toLocaleString('en-US') + " per month</strong> -- enough to cover your mortgage payment on a $315K property.";
+        } else {
+            document.getElementById('summaryMonthly').innerHTML =
+                "Punta Cana's costs are comparable, but you get <strong>Caribbean weather, beaches, and a slower pace of life</strong>.";
+        }
+
+        // Build bar chart
+        buildChart(city);
+
+        // Scroll to results
+        document.getElementById('resultsContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function buildChart(city) {
+        const container = document.getElementById('chartContainer');
+        container.innerHTML = '';
+
+        // Find max value for scaling (skip property tax for bar scale)
+        const chartCats = categories.filter(c => c.key !== 'propertyTax');
+        let maxVal = 0;
+        chartCats.forEach(cat => {
+            const cv = city[cat.key];
+            const pv = puntaCana[cat.key];
+            if (cv !== null && cv > maxVal) maxVal = cv;
+            if (pv > maxVal) maxVal = pv;
+        });
+
+        chartCats.forEach(cat => {
+            const cityVal = city[cat.key];
+            const pcVal = puntaCana[cat.key];
+
+            if (cityVal === null) return;
+
+            const row = document.createElement('div');
+            row.className = 'chart-row';
+
+            const label = document.createElement('div');
+            label.className = 'chart-label';
+            label.textContent = cat.label;
+            row.appendChild(label);
+
+            const bars = document.createElement('div');
+            bars.className = 'chart-bars';
+
+            // City bar
+            const cityWrapper = document.createElement('div');
+            cityWrapper.className = 'bar-wrapper';
+            cityWrapper.innerHTML = `
+                <span class="bar-tag city-tag">${city.short}</span>
+                <div class="bar-track">
+                    <div class="bar-fill city-bar" style="width: 0%"></div>
+                </div>
+                <span class="bar-value">${formatUSD(cityVal)}</span>
+            `;
+            bars.appendChild(cityWrapper);
+
+            // PC bar
+            const pcWrapper = document.createElement('div');
+            pcWrapper.className = 'bar-wrapper';
+            pcWrapper.innerHTML = `
+                <span class="bar-tag pc-tag">PC</span>
+                <div class="bar-track">
+                    <div class="bar-fill pc-bar" style="width: 0%"></div>
+                </div>
+                <span class="bar-value">${formatUSD(pcVal)}</span>
+            `;
+            bars.appendChild(pcWrapper);
+
+            row.appendChild(bars);
+            container.appendChild(row);
+
+            // Animate bars
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    cityWrapper.querySelector('.bar-fill').style.width = ((cityVal / maxVal) * 100) + '%';
+                    pcWrapper.querySelector('.bar-fill').style.width = ((pcVal / maxVal) * 100) + '%';
+                }, 50);
+            });
+        });
+    }
+
+    function shareResults() {
+        if (!selectedCity) return;
+        const city = cities[selectedCity];
+
+        // Recalculate savings
+        let totalMonthlySavings = 0;
+        categories.forEach(cat => {
+            const cityVal = city[cat.key];
+            const pcVal = puntaCana[cat.key];
+            if (cityVal === null) return;
+            const diff = cityVal - pcVal;
+            if (cat.annual) {
+                totalMonthlySavings += diff / 12;
+            } else if (cat.monthly) {
+                totalMonthlySavings += diff;
+            } else if (cat.monthlyMultiplier) {
+                totalMonthlySavings += diff * cat.monthlyMultiplier;
+            }
+        });
+        const annualSavings = Math.round(totalMonthlySavings * 12);
+
+        const text = `I compared ${city.name} vs Punta Cana cost of living: I could save $${Math.abs(annualSavings).toLocaleString('en-US')}/year! Check it out: rentandgopc.com/cost-of-living`;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast();
+            }).catch(() => {
+                fallbackCopy(text);
+            });
+        } else {
+            fallbackCopy(text);
+        }
+    }
+
+    function fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+            document.execCommand('copy');
+            showToast();
+        } catch(e) {
+            alert(text);
+        }
+        document.body.removeChild(ta);
+    }
+
+    function showToast() {
+        const toast = document.getElementById('shareToast');
+        toast.classList.add('visible');
+        setTimeout(() => toast.classList.remove('visible'), 3000);
+    }
+    </script>
+
+</body>
+</html>
