@@ -25,6 +25,17 @@
         }
         select:focus, input:focus { outline: none; border-color: #1a3a2a; }
 
+        .category-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+        .pill {
+            padding: 6px 14px; border-radius: 20px; border: 1.5px solid #ddd;
+            background: white; font-size: 0.8rem; font-weight: 500; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .pill:hover { border-color: #1a3a2a; }
+        .pill.active { background: #1a3a2a; color: white; border-color: #1a3a2a; }
+        .pill-count { font-size: 0.7rem; color: #999; margin-left: 4px; }
+        .pill.active .pill-count { color: rgba(255,255,255,0.7); }
+
         .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
 
         .post-card {
@@ -34,7 +45,11 @@
         .post-card .post-label {
             font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
             letter-spacing: 0.5px; color: white; background: #1a3a2a;
-            padding: 3px 10px; border-radius: 12px; display: inline-block; margin-bottom: 10px;
+            padding: 3px 10px; border-radius: 12px; display: inline-block; margin-bottom: 4px;
+        }
+        .post-card .style-label {
+            font-size: 0.65rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.5px; color: #888; display: block; margin-bottom: 10px;
         }
         .post-card .post-label.es { background: #c0392b; }
         .post-card .post-label.fr { background: #2980b9; }
@@ -43,7 +58,7 @@
 
         .post-text {
             font-size: 0.88rem; line-height: 1.65; white-space: pre-wrap;
-            color: #333; margin-bottom: 14px; min-height: 200px;
+            color: #333; margin-bottom: 14px; min-height: 160px;
         }
 
         .post-actions { display: flex; gap: 8px; }
@@ -61,6 +76,11 @@
         }
         .tip-box strong { color: #92700c; }
 
+        .stats-bar {
+            display: flex; gap: 20px; margin-bottom: 20px; font-size: 0.85rem; color: #666;
+        }
+        .stats-bar span { font-weight: 600; color: #1a3a2a; }
+
         @media (max-width: 768px) {
             .posts-grid { grid-template-columns: 1fr; }
             .controls { flex-direction: column; }
@@ -70,10 +90,10 @@
 <body>
     <div class="container">
         <h1>Facebook Post Generator</h1>
-        <p class="subtitle">Generate market-specific posts for each audience. Copy and paste into Facebook groups.</p>
+        <p class="subtitle">30+ templates across 6 categories in 4 languages. Copy and paste into Facebook groups.</p>
 
         <div class="tip-box">
-            <strong>Tip:</strong> Always attach your best photo when posting. Text-only posts get buried. Post 1x per group max, best times: 7-9 PM EST (diaspora), 11 AM-1 PM (lunch scroll). Rotate posts — don't reuse the same one in the same group.
+            <strong>Tip:</strong> Always attach your best photo when posting. Post 1x per group max, best times: 7-9 PM EST (diaspora), 11 AM-1 PM (lunch scroll). Rotate templates — don't reuse the same one in the same group within 2 weeks.
         </div>
 
         <div class="controls">
@@ -84,22 +104,22 @@
                 </select>
             </div>
             <div class="control-group">
-                <label>Post Style</label>
-                <select id="style">
-                    <option value="hook">The Hook</option>
-                    <option value="investment">Investment Angle</option>
-                    <option value="lifestyle">Lifestyle</option>
-                    <option value="comparison">Price Comparison</option>
-                    <option value="urgency">Urgency/Scarcity</option>
-                    <option value="confotur">CONFOTUR Education</option>
+                <label>Language</label>
+                <select id="lang-filter">
+                    <option value="all">All Markets</option>
+                    <option value="en">USA (English)</option>
+                    <option value="es">Dominican/LatAm (Spanish)</option>
+                    <option value="fr">Quebec (French)</option>
                 </select>
             </div>
             <div class="control-group">
                 <label>Generate</label>
-                <button class="btn-copy" onclick="generateAll()" style="margin-top: 0;">Generate All Markets</button>
+                <button class="btn-copy" onclick="generateAll()" style="margin-top: 0;">Generate All</button>
             </div>
         </div>
 
+        <div class="category-pills" id="category-pills"></div>
+        <div class="stats-bar" id="stats-bar"></div>
         <div class="posts-grid" id="posts-grid"></div>
     </div>
 
@@ -121,6 +141,20 @@ const PROPERTIES = {
         wa_link: "https://wa.me/18094865386?text=Hello!%20Interested%20in%20the%20Cocotal%202BR",
         site_link: "rentandgopc.com"
     }
+};
+
+const CATEGORIES = {
+    hook:       { label: "Hook", icon: "🎣" },
+    investment: { label: "Investment", icon: "💰" },
+    lifestyle:  { label: "Lifestyle", icon: "🌴" },
+    comparison: { label: "Comparison", icon: "⚖️" },
+    urgency:    { label: "Urgency", icon: "⏰" },
+    confotur:   { label: "CONFOTUR", icon: "📋" },
+    question:   { label: "Engagement", icon: "💬" },
+    story:      { label: "Story", icon: "📖" },
+    seasonal:   { label: "Seasonal", icon: "☀️" },
+    objection:  { label: "Objection Killer", icon: "🛡️" },
+    social:     { label: "Social Proof", icon: "⭐" }
 };
 
 const POSTS = {
@@ -423,34 +457,345 @@ Apartamenty 2 spalni v Cocotal Golf s CONFOTUR za US${p.price}. Vid na golf, dos
 
 Napishite v WhatsApp.
 ${p.site_link}`
+    },
+
+    // === NEW CATEGORIES ===
+
+    question: {
+        en: (p) => `Quick question for anyone looking at Punta Cana real estate:
+
+What matters more to you?
+A) Beach access
+B) Golf course views
+C) Tax benefits
+D) Rental income potential
+
+I ask because I have a property that checks ALL four. 2BR in Cocotal Golf, ${p.price}. Melia Hotel beach access, golf views from the terrace, CONFOTUR tax exemption, and 8-12% Airbnb ROI.
+
+Drop your answer below - curious what buyers prioritize.
+${p.site_link}`,
+        es: (p) => `Pregunta rapida para los que buscan invertir en Punta Cana:
+
+Que es mas importante para ti?
+A) Acceso a playa
+B) Vista al golf
+C) Beneficios fiscales
+D) Potencial de renta
+
+Lo pregunto porque tengo una propiedad que cumple con las CUATRO. 2 habitaciones en Cocotal Golf, US${p.price}. Playa del Melia, vista al golf, CONFOTUR, y 8-12% de retorno en Airbnb.
+
+Deja tu respuesta abajo.
+${p.site_link}`,
+        fr: (p) => `Question rapide pour ceux qui regardent l'immobilier a Punta Cana:
+
+C'est quoi le plus important pour toi?
+A) Acces a la plage
+B) Vue sur le golf
+C) Avantages fiscaux
+D) Potentiel de revenus locatifs
+
+Je demande parce que j'ai un condo qui coche les QUATRE. 2 chambres a Cocotal Golf, US${p.price}. Plage du Melia, vue sur le golf, CONFOTUR, et 8-12% de rendement Airbnb.
+
+Laisse ta reponse en commentaire!
+${p.site_link}`,
+        ru: (p) => `Vopros dlya teh, kto smotrit nedvizhimost v Punta Cana:
+
+Chto dlya vas vazhnee?
+A) Dostup k plyazhu
+B) Vid na golf
+C) Nalogovye lgoty
+D) Dohodnost ot arendy
+
+Sprashivayu, potomu chto u menya est nedvizhimost, kotoraya sootvetstvuet VSEM chetyrem. 2 spalni v Cocotal Golf, US${p.price}. Plyazh Melia, vid na golf, CONFOTUR, i 8-12% dohodnosti na Airbnb.
+
+Napishite vash otvet nizhe.
+${p.site_link}`
+    },
+    story: {
+        en: (p) => `A client asked me last week: "Why Punta Cana and not Cancun?"
+
+Here's what I told them:
+
+1. CONFOTUR - no other Caribbean country gives you 15 years of zero property tax
+2. Direct flights from 30+ US cities - most under 4 hours
+3. USD accepted everywhere - no currency risk
+4. $315K gets you a 2BR with golf views and 5-star hotel access. In Cancun? A 1BR in a crowded tower.
+5. Dominican Republic is the fastest growing economy in the Caribbean
+
+They bought the Cocotal apartment.
+
+If you have questions about buying in DR, ask me anything. I live here.
+${p.site_link}`,
+        es: (p) => `Un cliente me pregunto la semana pasada: "Por que Punta Cana y no otro lugar?"
+
+Esto es lo que le dije:
+
+La gente piensa que Punta Cana es solo turismo. Pero los que viven aqui saben algo diferente. Los costos son bajos, la calidad de vida es alta, y con CONFOTUR no pagas impuestos por 15 anos.
+
+Le mostre el apartamento en Cocotal Golf - US${p.price}, 2 habitaciones, vista al golf, acceso al Hotel Melia. Cuando se paro en la terraza y vio el campo de golf... no necesito mas explicacion.
+
+Si quieres ver lo mismo que el vio, escribeme.
+${p.site_link}`,
+        fr: (p) => `Un client m'a demande la semaine passee: "Pourquoi Punta Cana et pas le Mexique?"
+
+Voici ce que je lui ai repondu:
+
+Au Quebec, on connait bien le Mexique. Mais Punta Cana a un avantage que personne d'autre offre: CONFOTUR. 15 ans sans impot foncier. C'est la loi.
+
+Ajoute a ca: vol direct de Montreal (4h30), USD accepte partout, et un condo 2 chambres a US${p.price} avec vue sur le golf et acces au Melia.
+
+Il est revenu de sa visite et il a signe.
+
+Si t'es curieux, ecris-moi. Pas de pression.
+${p.site_link}`,
+        ru: (p) => `Na proshloj nedele klient sprosil: "Pochemu Punta Cana, a ne Tailand?"
+
+Vot chto ya otvetil:
+
+1. CONFOTUR — ni odna drugaya strana Karibov ne daet 15 let bez nalogov
+2. Pryamye rejsy iz 30+ gorodov SSHA — bolshinstvo menee 4 chasov
+3. USD prinimayut vezde — nikakogo valyutnogo riska
+4. Za US${p.price} — 2 spalni s vidom na golf i dostup k 5-zvezdochnomu otelyu
+5. Dominikanskaya Respublika — samaya bystrorastushchaya ekonomika Karibov
+
+On kupil apartamenty v Cocotal.
+
+Voprosy? Napishite — ya zhivu zdes i znayu rynok.
+${p.site_link}`
+    },
+    seasonal: {
+        en: (p) => `While you're dealing with winter weather, I'm looking at this view from a terrace in Punta Cana.
+
+What if next winter you could be here too?
+
+2BR apartment in Cocotal Golf - ${p.price}. Use it as your winter escape AND rent it on Airbnb the rest of the year.
+
+- ${p.specs_en}
+- Full Melia Hotel access (beach, pool, spa)
+- Golf course views from the terrace
+- 8-12% annual return from vacation rentals
+
+Direct flights from most US cities. Your Caribbean home is closer than you think.
+
+DM me for details.
+${p.site_link}`,
+        es: (p) => `Mientras alla hace frio, aqui estamos asi...
+
+Y si el proximo invierno pudieras estar aqui tambien?
+
+Apartamento 2 habitaciones en Cocotal Golf - US${p.price}. Usalo como tu escape de invierno Y rentalo en Airbnb el resto del ano.
+
+- ${p.specs_es}
+- Acceso completo al Hotel Melia (playa, piscina, spa)
+- Vista al campo de golf desde la terraza
+- 8-12% de retorno anual en alquileres vacacionales
+
+Tu casa en el Caribe esta mas cerca de lo que piensas.
+
+Escribeme para mas info.
+${p.site_link}`,
+        fr: (p) => `Pendant que tu pelletes ta voiture a -25, je regarde cette vue depuis ma terrasse a Punta Cana.
+
+Et si l'hiver prochain tu pouvais etre ici toi aussi?
+
+Condo 2 chambres a Cocotal Golf - US${p.price}. Utilise-le comme ton refuge d'hiver ET loue-le sur Airbnb le reste de l'annee.
+
+- ${p.specs_fr}
+- Acces complet au Melia (plage, piscine, spa)
+- Vue sur le golf depuis la terrasse
+- 8-12% de rendement annuel en location
+
+Vol direct de Montreal. 4h30. Ton chez-toi dans les Caraibes.
+
+Ecris-moi.
+${p.site_link}`,
+        ru: (p) => `Poka u vas zima i -20, ya smotryu na etot vid s terrasy v Punta Cana.
+
+A chto esli sleduyushchej zimoj vy mogli by byt zdes?
+
+Apartamenty 2 spalni v Cocotal Golf - US${p.price}. Ispolzujte kak zimnyuyu rezidentsiyu I sdavajte na Airbnb v ostalnoe vremya goda.
+
+- 144 kv.m., 2 parkovki, bolshaya terrasa
+- Polnyj dostup k otelyu Melia (plyazh, bassejn, spa)
+- Vid na golfnoe pole s terrasy
+- 8-12% godovoj dohodnosti
+
+Pryamye rejsy. Vash dom v Karibah blizhe, chem vy dumaete.
+
+Napishite.
+${p.site_link}`
+    },
+    objection: {
+        en: (p) => `"Buying property in the Dominican Republic sounds risky..."
+
+I hear this a lot. Let me address it:
+
+- Foreign buyers have FULL ownership rights (not like Mexico's restricted zones)
+- Title insurance is available through international companies
+- CONFOTUR is a federal LAW, not a promo - it's in the constitution
+- Banks offer financing to foreigners at 7-9%
+- The DR has the strongest economy in the Caribbean
+- 10 million+ tourists per year - your rental won't sit empty
+
+I have a 2BR in Cocotal Golf for ${p.price}. Happy to walk you through the entire buying process. No pressure, just information.
+
+${p.site_link}`,
+        es: (p) => `"Comprar propiedad en RD... y si sale mal?"
+
+Entiendo la preocupacion. Pero mira los datos:
+
+- Extranjeros tienen PLENOS derechos de propiedad
+- Seguro de titulo disponible con companias internacionales
+- CONFOTUR es LEY federal (Ley 158-01), no una promocion
+- Bancos financian a extranjeros al 7-9%
+- RD tiene la economia mas fuerte del Caribe
+- 10+ millones de turistas al ano - tu alquiler no se queda vacio
+
+Tengo un apartamento de 2 habitaciones en Cocotal Golf por US${p.price}. Te explico todo el proceso de compra sin compromiso.
+
+${p.site_link}`,
+        fr: (p) => `"Acheter en Republique dominicaine, c'est pas risque?"
+
+Je l'entends souvent. Voici les faits:
+
+- Les etrangers ont les MEMES droits de propriete que les locaux (pas comme au Mexique)
+- L'assurance titre est disponible via des compagnies internationales
+- CONFOTUR est une LOI federale, pas une promo temporaire
+- Les banques financent les etrangers a 7-9%
+- La RD a l'economie la plus forte des Caraibes
+- 10M+ de touristes par annee - ton Airbnb sera pas vide
+
+J'ai un condo 2 chambres a Cocotal Golf pour US${p.price}. Je t'explique tout le processus sans engagement.
+
+${p.site_link}`,
+        ru: (p) => `"Pokupka nedvizhimosti v Dominikanskoj Respublike — eto riskovanno..."
+
+Slyshu eto chasto. Davajte razberem fakty:
+
+- Inostrannye pokupateli imeyut POLNYE prava sobstvennosti
+- Strahovanie titulov dostupno cherez mezhdunarodnye kompanii
+- CONFOTUR — eto federalnyj ZAKON, a ne aktsiya
+- Banki kredituyut inostrantsev pod 7-9%
+- DR imeet samyuyu silnuyu ekonomiku v Karibskom bassejne
+- 10+ mln turistov v god — vasha arenda ne budet pustovat
+
+Apartamenty 2 spalni v Cocotal Golf za US${p.price}. Ob'yasnyu ves protsess pokupki bez obyazatelstv.
+
+${p.site_link}`
+    },
+    social: {
+        en: (p) => `Just showed a couple from New Jersey the Cocotal apartment. Their reaction when they stepped on the terrace and saw the golf course view? Priceless.
+
+They said: "We've been looking at condos in Florida for months. Nothing comes close to this for the price."
+
+2BR, ${p.specs_en}. Full Melia Hotel access. ${p.price}.
+
+If you want to see what they saw, send me a message. Virtual tours available for those who can't visit yet.
+
+${p.site_link}`,
+        es: (p) => `Acabo de mostrar el apartamento de Cocotal a una pareja de Nueva York. Su reaccion cuando vieron la vista desde la terraza? No tiene precio.
+
+Me dijeron: "Llevamos meses buscando en Florida. Nada se compara con esto por el precio."
+
+2 habitaciones, ${p.specs_es}. Acceso completo al Hotel Melia. US${p.price}.
+
+Si quieres ver lo mismo que ellos vieron, escribeme. Tours virtuales disponibles.
+
+${p.site_link}`,
+        fr: (p) => `Je viens de montrer le condo de Cocotal a un couple de Laval. Leur reaction quand ils ont vu la vue du golf depuis la terrasse? Impayable.
+
+Ils m'ont dit: "On regarde des condos a Miami depuis des mois. Rien ne se compare a ca pour le prix."
+
+2 chambres, ${p.specs_fr}. Acces complet au Melia. US${p.price}.
+
+Si tu veux voir ce qu'ils ont vu, ecris-moi. Visite virtuelle disponible.
+
+${p.site_link}`,
+        ru: (p) => `Tolko chto pokazal apartamenty v Cocotal pare iz Moskvy. Ih reaktsiya, kogda oni vyshli na terrasu i uvideli vid na golf? Bestsennaya.
+
+Oni skazali: "My smotrim nedvizhimost v Ispanii i Turtsii uzhe polgoda. Nichto ne sravnitsya s etim za etu tsenu."
+
+2 spalni, 144 kv.m. Polnyj dostup k otelyu Melia. US${p.price}.
+
+Hotite uvidet to zhe samoe? Napishite. Dostupny virtualnye tury.
+
+${p.site_link}`
     }
 };
 
-const LANG_LABELS = { en: 'USA', es: 'Dominican/LatAm', fr: 'Quebec', ru: 'Russian' };
-const LANG_COLORS = { en: 'en', es: 'es', fr: 'fr', ru: 'ru' };
+const LANG_LABELS = { en: 'USA', es: 'Dominican/LatAm', fr: 'Quebec' };
+const LANG_COLORS = { en: 'en', es: 'es', fr: 'fr' };
+
+let activeCategory = 'all';
+
+function buildCategoryPills() {
+    const container = document.getElementById('category-pills');
+    container.innerHTML = '';
+
+    // "All" pill
+    const allPill = document.createElement('button');
+    allPill.className = 'pill active';
+    allPill.innerHTML = `All <span class="pill-count">${Object.keys(POSTS).length * 4}</span>`;
+    allPill.onclick = () => { activeCategory = 'all'; generateAll(); };
+    container.appendChild(allPill);
+
+    // Category pills
+    Object.entries(CATEGORIES).forEach(([key, cat]) => {
+        if (!POSTS[key]) return;
+        const pill = document.createElement('button');
+        pill.className = 'pill';
+        pill.dataset.cat = key;
+        pill.innerHTML = `${cat.icon} ${cat.label} <span class="pill-count">4</span>`;
+        pill.onclick = () => { activeCategory = key; generateAll(); };
+        container.appendChild(pill);
+    });
+}
 
 function generateAll() {
     const propKey = document.getElementById('property').value;
-    const style = document.getElementById('style').value;
+    const langFilter = document.getElementById('lang-filter').value;
     const prop = PROPERTIES[propKey];
-    const templates = POSTS[style];
     const grid = document.getElementById('posts-grid');
     grid.innerHTML = '';
 
-    ['en', 'es', 'fr', 'ru'].forEach(lang => {
-        const text = templates[lang](prop);
-        const card = document.createElement('div');
-        card.className = 'post-card';
-        card.innerHTML = `
-            <span class="post-label ${LANG_COLORS[lang]}">${LANG_LABELS[lang]}</span>
-            <div class="post-text">${escapeHtml(text)}</div>
-            <div class="post-actions">
-                <button class="btn-copy" onclick="copyPost(this, '${lang}')">Copy</button>
-            </div>
-        `;
-        card.dataset.text = text;
-        grid.appendChild(card);
+    // Update active pill
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    if (activeCategory === 'all') {
+        document.querySelector('.pill').classList.add('active');
+    } else {
+        const activePill = document.querySelector(`.pill[data-cat="${activeCategory}"]`);
+        if (activePill) activePill.classList.add('active');
+    }
+
+    const styles = activeCategory === 'all' ? Object.keys(POSTS) : [activeCategory];
+    const langs = langFilter === 'all' ? ['en', 'es', 'fr'] : [langFilter];
+    let count = 0;
+
+    styles.forEach(style => {
+        const templates = POSTS[style];
+        if (!templates) return;
+        const catInfo = CATEGORIES[style] || { label: style, icon: '' };
+
+        langs.forEach(lang => {
+            if (!templates[lang]) return;
+            const text = templates[lang](prop);
+            const card = document.createElement('div');
+            card.className = 'post-card';
+            card.innerHTML = `
+                <span class="post-label ${LANG_COLORS[lang]}">${LANG_LABELS[lang]}</span>
+                <span class="style-label">${catInfo.icon} ${catInfo.label}</span>
+                <div class="post-text">${escapeHtml(text)}</div>
+                <div class="post-actions">
+                    <button class="btn-copy" onclick="copyPost(this)">Copy</button>
+                </div>
+            `;
+            card.dataset.text = text;
+            grid.appendChild(card);
+            count++;
+        });
     });
+
+    document.getElementById('stats-bar').innerHTML = `Showing <span>${count}</span> posts across <span>${styles.length}</span> ${styles.length === 1 ? 'category' : 'categories'}`;
 }
 
 function escapeHtml(text) {
@@ -459,7 +804,7 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-function copyPost(btn, lang) {
+function copyPost(btn) {
     const text = btn.closest('.post-card').dataset.text;
     navigator.clipboard.writeText(text).then(() => {
         btn.textContent = 'Copied!';
@@ -471,9 +816,10 @@ function copyPost(btn, lang) {
     });
 }
 
-// Generate on load
+// Init
+buildCategoryPills();
 generateAll();
-document.getElementById('style').addEventListener('change', generateAll);
+document.getElementById('lang-filter').addEventListener('change', generateAll);
 document.getElementById('property').addEventListener('change', generateAll);
     </script>
 </body>
