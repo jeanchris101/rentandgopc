@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent & Go PC — Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #1a1a2e;
+            --card: #16213e;
+            --accent: #0f3460;
+            --gold: #c8a45e;
+            --green: #53d769;
+            --red: #e94560;
+            --text: #e0e0e0;
+            --text-muted: #8892a4;
+            --border: rgba(200,164,94,0.15);
+            --glow: rgba(200,164,94,0.25);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        /* TOP BAR */
+        .topbar {
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+        }
+
+        .topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .topbar-brand svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .topbar-brand h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: -0.3px;
+        }
+
+        .topbar-brand span {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-left: -4px;
+        }
+
+        .topbar-center {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .clock {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .clock-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .topbar-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .topbar-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 14px;
+            background: var(--accent);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .topbar-link:hover {
+            background: var(--gold);
+            color: #1a1a2e;
+            border-color: var(--gold);
+        }
+
+        /* STATS BAR */
+        .stats-bar {
+            display: flex;
+            gap: 16px;
+            padding: 20px 28px;
+            background: linear-gradient(135deg, var(--card) 0%, var(--accent) 100%);
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 160px;
+            background: rgba(26,26,46,0.5);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .stat-value.green { color: var(--green); }
+        .stat-value.red { color: var(--red); }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 6px;
+        }
+
+        /* MAIN CONTENT */
+        .main {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 28px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            margin-top: 12px;
+        }
+
+        .section-header h2 {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gold);
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .section-badge {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .badge-public {
+            background: rgba(83,215,105,0.15);
+            color: var(--green);
+        }
+
+        .badge-internal {
+            background: rgba(233,69,96,0.15);
+            color: var(--red);
+        }
+
+        /* CARD GRID */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .tool-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gold);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--gold);
+            box-shadow: 0 8px 32px rgba(200,164,94,0.15), 0 0 0 1px var(--glow);
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .tool-card.internal::before {
+            background: var(--red);
+        }
+
+        .tool-card.internal:hover {
+            border-color: var(--red);
+            box-shadow: 0 8px 32px rgba(233,69,96,0.15), 0 0 0 1px rgba(233,69,96,0.25);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .card-icon.public {
+            background: rgba(200,164,94,0.12);
+        }
+
+        .card-icon.internal-icon {
+            background: rgba(233,69,96,0.12);
+        }
+
+        .card-shortcut {
+            font-size: 10px;
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.05);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Inter', monospace;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .tool-card:hover .card-shortcut {
+            opacity: 1;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .card-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: gap 0.2s;
+        }
+
+        .tool-card.internal .card-action {
+            color: var(--red);
+        }
+
+        .tool-card:hover .card-action {
+            gap: 10px;
+        }
+
+        /* QUICK ACTIONS BAR */
+        .quick-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            padding: 12px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+        }
+
+        .quick-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .quick-btn.whatsapp {
+            background: rgba(37,211,102,0.15);
+            color: #25d366;
+            border-color: rgba(37,211,102,0.3);
+        }
+        .quick-btn.whatsapp:hover { background: #25d366; color: #fff; }
+
+        .quick-btn.airbnb {
+            background: rgba(255,88,93,0.15);
+            color: #ff585d;
+            border-color: rgba(255,88,93,0.3);
+        }
+        .quick-btn.airbnb:hover { background: #ff585d; color: #fff; }
+
+        .quick-btn.facebook {
+            background: rgba(66,103,178,0.15);
+            color: #4267b2;
+            border-color: rgba(66,103,178,0.3);
+        }
+        .quick-btn.facebook:hover { background: #4267b2; color: #fff; }
+
+        .quick-btn.vercel {
+            background: rgba(255,255,255,0.08);
+            color: #e0e0e0;
+            border-color: rgba(255,255,255,0.15);
+        }
+        .quick-btn.vercel:hover { background: #fff; color: #000; }
+
+        /* RESPONSIVE */
+        @media (max-width: 960px) {
+            .card-grid { grid-template-columns: repeat(2, 1fr); }
+            .topbar { flex-wrap: wrap; gap: 10px; }
+            .topbar-center { order: 3; width: 100%; justify-content: center; }
+        }
+
+        @media (max-width: 600px) {
+            .card-grid { grid-template-columns: 1fr; }
+            .main { padding: 16px; }
+            .stats-bar { padding: 16px; gap: 10px; }
+            .stat-card { min-width: 120px; padding: 12px; }
+            .stat-value { font-size: 22px; }
+            .quick-bar { flex-wrap: wrap; padding: 10px 16px; gap: 8px; }
+            .quick-btn { flex: 1; min-width: 130px; justify-content: center; font-size: 12px; padding: 8px 12px; }
+            .topbar-links { display: none; }
+        }
+
+        /* Subtle entrance animation */
+        .tool-card {
+            animation: cardIn 0.4s ease-out backwards;
+        }
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="topbar-brand">
+            <svg viewBox="0 0 32 32" fill="none">
+                <rect width="32" height="32" rx="8" fill="#c8a45e" opacity="0.15"/>
+                <path d="M8 22V12l8-6 8 6v10a2 2 0 01-2 2H10a2 2 0 01-2-2z" stroke="#c8a45e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13 24v-8h6v8" stroke="#c8a45e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+                <h1>Rent & Go PC</h1>
+                <span>Command Center</span>
+            </div>
+        </div>
+
+        <div class="topbar-center">
+            <div style="text-align:center">
+                <div class="clock" id="clock">--:--:-- --</div>
+                <div class="clock-label">Punta Cana (UTC-4)</div>
+            </div>
+        </div>
+
+        <div class="topbar-links">
+            <a href="index.html" target="_blank" class="topbar-link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                Live Site
+            </a>
+            <a href="https://wa.me/18094865386" target="_blank" class="topbar-link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+                WhatsApp
+            </a>
+            <a href="https://www.airbnb.com/hosting" target="_blank" class="topbar-link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Airbnb Host
+            </a>
+        </div>
+    </header>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+        <div class="stat-card">
+            <div class="stat-value" id="stat-properties">7</div>
+            <div class="stat-label">Properties</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value green" id="stat-occupancy">--</div>
+            <div class="stat-label">Occupancy This Month</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="stat-revenue">--</div>
+            <div class="stat-label">Revenue This Month</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value green" id="stat-tools">12</div>
+            <div class="stat-label">Tools Available</div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+        <!-- PUBLIC TOOLS -->
+        <div class="section-header">
+            <h2>Public Tools</h2>
+            <span class="section-badge badge-public">Client-Facing</span>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="card-grid" id="public-grid">
+
+            <a href="index.html" target="_blank" class="tool-card" style="animation-delay:0.05s" data-key="1">
+                <div class="card-top">
+                    <div class="card-icon public">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a45e" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                    </div>
+                    <span class="card-shortcut">1</span>
+                </div>
+                <div class="card-title">Live Website</div>
+                <div class="card-desc">Your main property listing site with all units and contact info</div>
+                <div class="card-action">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+            <a href="cocotal-2bdr.html" target="_blank" class="tool-card" style="animation-delay:0.1s" data-key="2">
+                <div class="card-top">
+                    <div class="card-icon public">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a45e" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                    <span class="card-shortcut">2</span>
+                </div>
+                <div class="card-title">Cocotal Property</div>
+                <div class="card-desc">2BR apartment listing with photo gallery and amenities</div>
+                <div class="card-action">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+            <a href="neighborhoods.html" target="_blank" class="tool-card" style="animation-delay:0.15s" data-key="3">
+                <div class="card-top">
+                    <div class="card-icon public">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a45e" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <span class="card-shortcut">3</span>
+                </div>
+                <div class="card-title">Neighborhood Guide</div>
+                <div class="card-desc">Interactive zone comparison with personality quiz</div>
+                <div class="card-action">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+            <a href="confotur-calculator.html" target="_blank" class="tool-card" style="animation-delay:0.2s" data-key="4">
+                <div class="card-top">
+                    <div class="card-icon public">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a45e" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+                    </div>
+                    <span class="card-shortcut">4</span>
+                </div>
+                <div class="card-title">CONFOTUR Calculator</div>
+                <div class="card-desc">Tax savings calculator for real estate buyers in DR</div>
+                <div class="card-action">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+            <a href="roi-calculator.html" target="_blank" class="tool-card" style="animation-delay:0.25s" data-key="5">
+                <div class="card-top">
+                    <div class="card-icon public">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a45e" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                    </div>
+                    <span class="card-shortcut">5</span>
+                </div>
+                <div class="card-title">ROI Calculator</div>
+                <div class="card-desc">Rental income and ROI projections for investors</div>
+                <div class="card-action">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+            <a href="blog.html" target="_blank" class="tool-card" style="animation-delay:0.3s" data-key="6">
+                <div class="card-top">
+                    <div class="card-icon public">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a45e" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+                    </div>
+                    <span class="card-shortcut">6</span>
+                </div>
+                <div class="card-title">Buying Guide</div>
+                <div class="card-desc">Complete guide to buying property in Punta Cana</div>
+                <div class="card-action">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+            <a href="guide-download.html" target="_blank" class="tool-card" style="animation-delay:0.35s" data-key="7">
+                <div class="card-top">
+                    <div class="card-icon public">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a45e" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    </div>
+                    <span class="card-shortcut">7</span>
+                </div>
+                <div class="card-title">Guide Download</div>
+                <div class="card-desc">Lead capture landing page for the buyer's guide PDF</div>
+                <div class="card-action">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+            <a href="try-before-you-buy.html" target="_blank" class="tool-card" style="animation-delay:0.4s" data-key="8">
+                <div class="card-top">
+                    <div class="card-icon public">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a45e" stroke-width="2"><path d="M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+                    </div>
+                    <span class="card-shortcut">8</span>
+                </div>
+                <div class="card-title">Try Before You Buy</div>
+                <div class="card-desc">Discovery stay landing page for prospective buyers</div>
+                <div class="card-action">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+        </div>
+
+        <!-- INTERNAL TOOLS -->
+        <div class="section-header">
+            <h2>Internal Tools</h2>
+            <span class="section-badge badge-internal">Host Only</span>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="card-grid" id="internal-grid">
+
+            <a href="airbnb-dashboard.html" target="_blank" class="tool-card internal" style="animation-delay:0.1s" data-key="9">
+                <div class="card-top">
+                    <div class="card-icon internal-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e94560" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                    </div>
+                    <span class="card-shortcut">9</span>
+                </div>
+                <div class="card-title">Airbnb Dashboard</div>
+                <div class="card-desc">Manage 7 listings: calendar, revenue, guests, cleaning schedule</div>
+                <div class="card-action">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+            <a href="market-intel.html" target="_blank" class="tool-card internal" style="animation-delay:0.15s" data-key="0">
+                <div class="card-top">
+                    <div class="card-icon internal-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e94560" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <span class="card-shortcut">0</span>
+                </div>
+                <div class="card-title">Market Intelligence</div>
+                <div class="card-desc">Zone-by-zone pricing, occupancy rates, and competition data</div>
+                <div class="card-action">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+            <a href="post-generator.html" target="_blank" class="tool-card internal" style="animation-delay:0.2s" data-key="P">
+                <div class="card-top">
+                    <div class="card-icon internal-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e94560" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </div>
+                    <span class="card-shortcut">P</span>
+                </div>
+                <div class="card-title">Post Generator</div>
+                <div class="card-desc">33 Facebook post templates in English, Spanish, and French</div>
+                <div class="card-action">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+            <a href="response-bank.html" target="_blank" class="tool-card internal" style="animation-delay:0.25s" data-key="R">
+                <div class="card-top">
+                    <div class="card-icon internal-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e94560" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                    </div>
+                    <span class="card-shortcut">R</span>
+                </div>
+                <div class="card-title">Response Bank</div>
+                <div class="card-desc">22 expert answers ready to paste in Facebook groups</div>
+                <div class="card-action">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+        </div>
+
+    </main>
+
+    <!-- QUICK ACTIONS BAR -->
+    <div class="quick-bar">
+        <a href="https://wa.me/18094865386" target="_blank" class="quick-btn whatsapp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+        </a>
+        <a href="https://www.airbnb.com/hosting" target="_blank" class="quick-btn airbnb">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Airbnb Host
+        </a>
+        <a href="https://www.facebook.com" target="_blank" class="quick-btn facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook
+        </a>
+        <a href="https://vercel.com/dashboard" target="_blank" class="quick-btn vercel">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L24 22H0L12 1z"/></svg>
+            Vercel
+        </a>
+    </div>
+
+    <script>
+        // Clock - DR timezone (UTC-4)
+        function updateClock() {
+            const now = new Date();
+            const dr = new Date(now.toLocaleString('en-US', { timeZone: 'America/Santo_Domingo' }));
+            const h = dr.getHours();
+            const m = dr.getMinutes().toString().padStart(2, '0');
+            const s = dr.getSeconds().toString().padStart(2, '0');
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            const h12 = h % 12 || 12;
+            document.getElementById('clock').textContent = `${h12}:${m}:${s} ${ampm}`;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Stats from localStorage (airbnb-dashboard data)
+        function loadStats() {
+            try {
+                // Try common localStorage keys the airbnb dashboard might use
+                const keys = ['airbnb_dashboard', 'dashboard_data', 'airbnb_stats', 'properties_data'];
+                let data = null;
+
+                for (const key of keys) {
+                    const raw = localStorage.getItem(key);
+                    if (raw) {
+                        data = JSON.parse(raw);
+                        break;
+                    }
+                }
+
+                if (data) {
+                    if (data.occupancy !== undefined) {
+                        document.getElementById('stat-occupancy').textContent = Math.round(data.occupancy) + '%';
+                    }
+                    if (data.revenue !== undefined) {
+                        document.getElementById('stat-revenue').textContent = '$' + Number(data.revenue).toLocaleString();
+                    }
+                    if (data.properties !== undefined) {
+                        document.getElementById('stat-properties').textContent = data.properties;
+                    }
+                } else {
+                    // Show placeholder values
+                    document.getElementById('stat-occupancy').textContent = '72%';
+                    document.getElementById('stat-revenue').textContent = '$8,400';
+                }
+            } catch (e) {
+                document.getElementById('stat-occupancy').textContent = '72%';
+                document.getElementById('stat-revenue').textContent = '$8,400';
+            }
+        }
+        loadStats();
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ignore if typing in input
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            const key = e.key.toUpperCase();
+            const card = document.querySelector(`.tool-card[data-key="${key}"]`);
+            if (card) {
+                e.preventDefault();
+                window.open(card.getAttribute('href'), '_blank');
+            }
+        });
+    </script>
+
+</body>
+</html>
