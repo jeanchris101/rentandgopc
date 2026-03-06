@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Own a Piece of Punta Cana | Rent & Go PC</title>
+    <meta name="description" content="You just experienced what life in Punta Cana is like. Now imagine owning it. Properties earning $25K-35K/year on Airbnb.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Love Punta Cana? What If You Could Own It?">
+    <meta property="og:description" content="The apartment you're staying in could be yours. Properties like this earn $25,000-35,000/year on Airbnb.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.rentandgopc.com/guest-investor.html">
+
+    <!-- Meta Pixel -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'YOUR_PIXEL_ID_HERE');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"/></noscript>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #1a3a2a;
+            --primary-light: #2a5a40;
+            --accent: #c8a45e;
+            --accent-light: #dfc88a;
+            --bg: #faf9f6;
+            --text: #2c2c2c;
+            --text-light: #6b6b6b;
+            --border: #e0ddd5;
+            --white: #ffffff;
+            --shadow: 0 2px 16px rgba(26, 58, 42, 0.08);
+            --shadow-lg: 0 8px 32px rgba(26, 58, 42, 0.12);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background-color: var(--primary);
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo a {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+
+        .lang-selector {
+            display: flex;
+            gap: 0.25rem;
+            margin-left: 0.5rem;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.6);
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active, .lang-btn:hover {
+            background: var(--accent);
+            color: var(--primary);
+            border-color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--accent);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #1d4430 40%, #2a5a40 100%);
+            padding: 6rem 2rem 5rem;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(200, 164, 94, 0.1) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(200, 164, 94, 0.07) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.85;
+            max-width: 620px;
+            margin: 0 auto 2rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .gold-line {
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1.05rem;
+            max-width: 650px;
+            margin: 0 auto 3rem;
+            font-weight: 300;
+        }
+
+        /* ===== YOUR STAY SECTION ===== */
+        .stay-section {
+            background: var(--white);
+        }
+
+        .stay-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .stay-content p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 0.75rem;
+        }
+
+        .stay-content p strong {
+            color: var(--primary);
+        }
+
+        .roi-card {
+            max-width: 520px;
+            margin: 0 auto;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            position: relative;
+        }
+
+        .roi-card-label {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 0.35rem 1.2rem;
+            border-radius: 20px;
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .roi-item {
+            text-align: center;
+        }
+
+        .roi-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .roi-value.accent {
+            color: var(--accent);
+        }
+
+        .roi-label {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+            font-weight: 500;
+        }
+
+        .roi-divider {
+            grid-column: 1 / -1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ===== RENTAL CREDIT ===== */
+        .credit-section {
+            background: var(--bg);
+        }
+
+        .credit-box {
+            max-width: 750px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #fdfaf3 0%, #fdf6e3 100%);
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .credit-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+        }
+
+        .credit-box h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 1.25rem;
+            font-weight: 700;
+        }
+
+        .credit-box .credit-main {
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .credit-box .credit-main strong {
+            color: var(--primary);
+        }
+
+        .credit-box .credit-tag {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--accent);
+            font-weight: 600;
+            font-style: italic;
+            margin-top: 1.5rem;
+        }
+
+        /* ===== WHY PUNTA CANA ===== */
+        .why-section {
+            background: var(--white);
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .fact-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .fact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .fact-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .fact-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .fact-card p {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .fact-card a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.82rem;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        .fact-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials-section {
+            background: var(--bg);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .testimonial-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text);
+            flex: 1;
+            font-style: italic;
+            position: relative;
+            padding-top: 1rem;
+        }
+
+        .testimonial-text::before {
+            content: '\201C';
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--accent);
+            position: absolute;
+            top: -0.5rem;
+            left: 0;
+            line-height: 1;
+            opacity: 0.6;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .testimonial-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .testimonial-origin {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* ===== HOW IT WORKS (TIMELINE) ===== */
+        .process-section {
+            background: var(--white);
+        }
+
+        .timeline {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            padding-left: 60px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent), var(--accent-light), var(--accent));
+            opacity: 0.4;
+        }
+
+        .timeline-step {
+            position: relative;
+            padding-bottom: 2.5rem;
+        }
+
+        .timeline-step:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-number {
+            position: absolute;
+            left: -60px;
+            top: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--accent);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 12px rgba(26, 58, 42, 0.2);
+            z-index: 1;
+        }
+
+        .timeline-step h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .timeline-step p {
+            font-size: 0.92rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* ===== PERSONAL GUIDE ===== */
+        .guide-section {
+            background: linear-gradient(135deg, var(--primary) 0%, #1d4430 100%);
+            color: var(--white);
+        }
+
+        .guide-inner {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .guide-inner h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .guide-inner h2 span {
+            color: var(--accent);
+        }
+
+        .guide-inner p {
+            font-size: 1.05rem;
+            opacity: 0.85;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .guide-inner p:last-of-type {
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.9rem 2.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #20bd5a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-accent:hover {
+            background-color: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(200, 164, 94, 0.35);
+        }
+
+        /* ===== EXPLORE OPTIONS ===== */
+        .explore-section {
+            background: var(--bg);
+        }
+
+        .explore-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+        }
+
+        .explore-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem 1.25rem;
+            text-align: center;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+        }
+
+        .explore-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent);
+        }
+
+        .explore-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .explore-card h3 {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--primary);
+            line-height: 1.3;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: var(--primary);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .qr-placeholder {
+            width: 140px;
+            height: 140px;
+            border: 2px dashed rgba(255,255,255,0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.4);
+            font-weight: 500;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer .footer-brand {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .facts-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .explore-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1.5rem 2rem;
+                gap: 1rem;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero {
+                padding: 4rem 1.5rem 3.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 3.5rem 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .roi-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1.25rem;
+            }
+
+            .facts-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+
+            .explore-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .credit-box {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .guide-inner h2 {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+
+            .roi-value {
+                font-size: 1.5rem;
+            }
+
+            .credit-box h2 {
+                font-size: 1.3rem;
+            }
+
+            .explore-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline {
+                padding-left: 50px;
+            }
+
+            .timeline::before {
+                left: 18px;
+            }
+
+            .timeline-number {
+                left: -50px;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-inner">
+            <div class="logo"><a href="index.html">Rent & Go PC</a></div>
+            <nav id="main-nav">
+                <a href="index.html" data-i18n="gi_nav_properties">Properties</a>
+                <a href="try-before-you-buy.html" data-i18n="gi_nav_trybuy">Try Before You Buy</a>
+                <a href="blog.html" data-i18n="gi_nav_guide">Guide</a>
+                <div class="lang-selector">
+                    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+                    <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+                    <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+                </div>
+            </nav>
+            <button class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('active')">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <h1 data-i18n="gi_hero_title">Love Punta Cana? What If You Could Own a Piece of It?</h1>
+            <p data-i18n="gi_hero_subtitle">You just experienced what life here is like. Now imagine owning it.</p>
+            <div class="gold-line"></div>
+        </div>
+    </section>
+
+    <!-- Your Stay, Your Investment -->
+    <section class="section stay-section">
+        <div class="section-inner">
+            <h2 class="section-title" data-i18n="gi_stay_title">Your Stay, Your Investment</h2>
+            <div class="stay-content">
+                <p data-i18n="gi_stay_line1">The apartment you're staying in? <strong data-i18n="gi_stay_line1_bold">It could be yours.</strong></p>
+                <p data-i18n="gi_stay_line2">Properties like this one earn <strong>$25,000-35,000/year</strong> on Airbnb.</p>
+                <p data-i18n="gi_stay_line3">That's an <strong>8-12% annual return</strong> on your investment.</p>
+            </div>
+            <div class="roi-card">
+                <div class="roi-card-label" data-i18n="gi_roi_label">Sample ROI Breakdown</div>
+                <div class="roi-grid">
+                    <div class="roi-item">
+                        <div class="roi-value">$315K</div>
+                        <div class="roi-label" data-i18n="gi_roi_purchase">Purchase Price</div>
+                    </div>
+                    <div class="roi-item">
+                        <div class="roi-value">$30K</div>
+                        <div class="roi-label" data-i18n="gi_roi_annual">Annual Rental Income</div>
+                    </div>
+                    <div class="roi-divider"></div>
+                    <div class="roi-item">
+                        <div class="roi-value">$1,800</div>
+                        <div class="roi-label" data-i18n="gi_roi_monthly">Monthly Net Income</div>
+                    </div>
+                    <div class="roi-item">
+                        <div class="roi-value accent">9.5%</div>
+                        <div class="roi-label" data-i18n="gi_roi_return">Annual ROI</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rental Credit Offer -->
+    <section class="section credit-section">
+        <div class="section-inner">
+            <div class="credit-box">
+                <h2 data-i18n="gi_credit_title">Book Your Stay. Fall in Love. Buy With Confidence.</h2>
+                <p class="credit-main" data-i18n="gi_credit_desc">If you purchase within <strong>90 days</strong> of your stay, <strong>100% of your rental cost</strong> is credited toward your purchase price.</p>
+                <p class="credit-tag" data-i18n="gi_credit_tag">Your vacation just became an investment.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Buyers Choose Punta Cana -->
+    <section class="section why-section">
+        <div class="section-inner">
+            <h2 class="section-title" data-i18n="gi_why_title">Why Buyers Choose Punta Cana</h2>
+            <div class="facts-grid">
+                <div class="fact-card">
+                    <div class="fact-icon">&#127961;</div>
+                    <h3 data-i18n="gi_fact1_title">100% Foreign Ownership</h3>
+                    <p data-i18n="gi_fact1_desc">Same property rights as Dominican citizens. No restrictions, no special permits needed.</p>
+                </div>
+                <div class="fact-card">
+                    <div class="fact-icon">&#128176;</div>
+                    <h3 data-i18n="gi_fact2_title">CONFOTUR Tax Benefits</h3>
+                    <p data-i18n="gi_fact2_desc">0% property tax for 15 years. Save tens of thousands in taxes.</p>
+                    <a href="confotur-calculator.html" data-i18n="gi_fact2_link">Calculate your savings &#8594;</a>
+                </div>
+                <div class="fact-card">
+                    <div class="fact-icon">&#9992;&#65039;</div>
+                    <h3 data-i18n="gi_fact3_title">Direct Flights</h3>
+                    <p data-i18n="gi_fact3_desc">3-4 hours from most US cities. 4.5 hours from Montreal. Easy weekend trips.</p>
+                </div>
+                <div class="fact-card">
+                    <div class="fact-icon">&#128178;</div>
+                    <h3 data-i18n="gi_fact4_title">Strong USD Economy</h3>
+                    <p data-i18n="gi_fact4_desc">Dollar accepted everywhere. No currency risk on your investment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section testimonials-section">
+        <div class="section-inner">
+            <h2 class="section-title" data-i18n="gi_test_title">What Other Guests Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text" data-i18n="gi_test1_text">We came for a vacation and left as property owners. Best decision we ever made.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">S&amp;M</div>
+                        <div>
+                            <div class="testimonial-name" data-i18n="gi_test1_name">Sarah & Mike</div>
+                            <div class="testimonial-origin" data-i18n="gi_test1_origin">New Jersey, USA</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text" data-i18n="gi_test2_text">The numbers made sense. The lifestyle sealed the deal.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JP</div>
+                        <div>
+                            <div class="testimonial-name" data-i18n="gi_test2_name">Jean-Pierre</div>
+                            <div class="testimonial-origin" data-i18n="gi_test2_origin">Montreal, Canada</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text" data-i18n="gi_test3_text">We stayed in the Cocotal apartment, fell in love with the golf course view, and signed the papers 6 weeks later.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">D</div>
+                        <div>
+                            <div class="testimonial-name" data-i18n="gi_test3_name">David</div>
+                            <div class="testimonial-origin" data-i18n="gi_test3_origin">Miami, USA</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works (Foreign Buyers) -->
+    <section class="section process-section">
+        <div class="section-inner">
+            <h2 class="section-title" data-i18n="gi_process_title">How It Works for Foreign Buyers</h2>
+            <p class="section-subtitle" data-i18n="gi_process_subtitle">A simple, transparent process. No surprises.</p>
+            <div class="timeline">
+                <div class="timeline-step">
+                    <div class="timeline-number">1</div>
+                    <h3 data-i18n="gi_step1_title">Choose Your Property</h3>
+                    <p data-i18n="gi_step1_desc">Browse available units or tell us what you're looking for. We'll match you with the right investment.</p>
+                </div>
+                <div class="timeline-step">
+                    <div class="timeline-number">2</div>
+                    <h3 data-i18n="gi_step2_title">Sign a Reservation Agreement</h3>
+                    <p data-i18n="gi_step2_desc">Secure the property with a 10% deposit. This takes it off the market while we handle the paperwork.</p>
+                </div>
+                <div class="timeline-step">
+                    <div class="timeline-number">3</div>
+                    <h3 data-i18n="gi_step3_title">Due Diligence & Title Search</h3>
+                    <p data-i18n="gi_step3_desc">Our recommended attorney handles everything: title verification, legal review, and documentation.</p>
+                </div>
+                <div class="timeline-step">
+                    <div class="timeline-number">4</div>
+                    <h3 data-i18n="gi_step4_title">Sign at the Notary</h3>
+                    <p data-i18n="gi_step4_desc">Can be done in person or remotely with a power of attorney. No need to fly back.</p>
+                </div>
+                <div class="timeline-step">
+                    <div class="timeline-number">5</div>
+                    <h3 data-i18n="gi_step5_title">Receive Your Title</h3>
+                    <p data-i18n="gi_step5_desc">You're a property owner in paradise. We can manage the rental for you from day one.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Your Personal Guide -->
+    <section class="section guide-section">
+        <div class="guide-inner">
+            <h2 data-i18n="gi_guide_title">I'm <span>Ari</span> -- Your Host AND Your Local Real Estate Expert</h2>
+            <p data-i18n="gi_guide_line1">I live here. I invest here. I manage 7 properties in Cocotal and Bavaro.</p>
+            <p data-i18n="gi_guide_line2">No pressure, no timeshare pitch. Just honest answers from someone who's done it.</p>
+            <a href="https://wa.me/18094865386?text=Hi%20Ari!%20I'm%20staying%20in%20one%20of%20your%20properties%20and%20interested%20in%20buying%20in%20Punta%20Cana" class="btn btn-whatsapp" target="_blank" rel="noopener">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                <span data-i18n="gi_guide_cta">Chat with Ari</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Explore Your Options -->
+    <section class="section explore-section">
+        <div class="section-inner">
+            <h2 class="section-title" data-i18n="gi_explore_title">Explore Your Options</h2>
+            <div class="explore-grid">
+                <a href="roi-calculator.html" class="explore-card">
+                    <div class="explore-icon">&#128200;</div>
+                    <h3 data-i18n="gi_explore_roi">Calculate Your ROI</h3>
+                </a>
+                <a href="confotur-calculator.html" class="explore-card">
+                    <div class="explore-icon">&#128176;</div>
+                    <h3 data-i18n="gi_explore_tax">See Tax Savings</h3>
+                </a>
+                <a href="neighborhoods.html" class="explore-card">
+                    <div class="explore-icon">&#127961;</div>
+                    <h3 data-i18n="gi_explore_neighborhoods">Compare Neighborhoods</h3>
+                </a>
+                <a href="blog.html" class="explore-card">
+                    <div class="explore-icon">&#128214;</div>
+                    <h3 data-i18n="gi_explore_guide">Read the Buying Guide</h3>
+                </a>
+                <a href="index.html" class="explore-card">
+                    <div class="explore-icon">&#127968;</div>
+                    <h3 data-i18n="gi_explore_browse">Browse Properties for Sale</h3>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p data-i18n="gi_footer_qr">Scan this QR code anytime to come back to this page</p>
+        <div class="qr-placeholder" data-i18n="gi_footer_qr_placeholder">QR Code</div>
+        <p data-i18n="gi_footer_location">Rent & Go PC &mdash; Punta Cana, Dominican Republic</p>
+        <div class="footer-brand">Rent & Go PC</div>
+    </footer>
+
+    <!-- Translations -->
+    <script>
+    const TRANSLATIONS = {
+        en: {
+            // Nav
+            gi_nav_properties: "Properties",
+            gi_nav_trybuy: "Try Before You Buy",
+            gi_nav_guide: "Guide",
+
+            // Hero
+            gi_hero_title: "Love Punta Cana? What If You Could Own a Piece of It?",
+            gi_hero_subtitle: "You just experienced what life here is like. Now imagine owning it.",
+
+            // Your Stay
+            gi_stay_title: "Your Stay, Your Investment",
+            gi_stay_line1: "The apartment you\u2019re staying in? <strong>It could be yours.</strong>",
+            gi_stay_line2: "Properties like this one earn <strong>$25,000\u201335,000/year</strong> on Airbnb.",
+            gi_stay_line3: "That\u2019s an <strong>8\u201312% annual return</strong> on your investment.",
+            gi_roi_label: "Sample ROI Breakdown",
+            gi_roi_purchase: "Purchase Price",
+            gi_roi_annual: "Annual Rental Income",
+            gi_roi_monthly: "Monthly Net Income",
+            gi_roi_return: "Annual ROI",
+
+            // Rental Credit
+            gi_credit_title: "Book Your Stay. Fall in Love. Buy With Confidence.",
+            gi_credit_desc: "If you purchase within <strong>90 days</strong> of your stay, <strong>100% of your rental cost</strong> is credited toward your purchase price.",
+            gi_credit_tag: "Your vacation just became an investment.",
+
+            // Why Punta Cana
+            gi_why_title: "Why Buyers Choose Punta Cana",
+            gi_fact1_title: "100% Foreign Ownership",
+            gi_fact1_desc: "Same property rights as Dominican citizens. No restrictions, no special permits needed.",
+            gi_fact2_title: "CONFOTUR Tax Benefits",
+            gi_fact2_desc: "0% property tax for 15 years. Save tens of thousands in taxes.",
+            gi_fact2_link: "Calculate your savings \u2192",
+            gi_fact3_title: "Direct Flights",
+            gi_fact3_desc: "3\u20134 hours from most US cities. 4.5 hours from Montreal. Easy weekend trips.",
+            gi_fact4_title: "Strong USD Economy",
+            gi_fact4_desc: "Dollar accepted everywhere. No currency risk on your investment.",
+
+            // Testimonials
+            gi_test_title: "What Other Guests Say",
+            gi_test1_text: "We came for a vacation and left as property owners. Best decision we ever made.",
+            gi_test1_name: "Sarah & Mike",
+            gi_test1_origin: "New Jersey, USA",
+            gi_test2_text: "The numbers made sense. The lifestyle sealed the deal.",
+            gi_test2_name: "Jean-Pierre",
+            gi_test2_origin: "Montreal, Canada",
+            gi_test3_text: "We stayed in the Cocotal apartment, fell in love with the golf course view, and signed the papers 6 weeks later.",
+            gi_test3_name: "David",
+            gi_test3_origin: "Miami, USA",
+
+            // Process
+            gi_process_title: "How It Works for Foreign Buyers",
+            gi_process_subtitle: "A simple, transparent process. No surprises.",
+            gi_step1_title: "Choose Your Property",
+            gi_step1_desc: "Browse available units or tell us what you\u2019re looking for. We\u2019ll match you with the right investment.",
+            gi_step2_title: "Sign a Reservation Agreement",
+            gi_step2_desc: "Secure the property with a 10% deposit. This takes it off the market while we handle the paperwork.",
+            gi_step3_title: "Due Diligence & Title Search",
+            gi_step3_desc: "Our recommended attorney handles everything: title verification, legal review, and documentation.",
+            gi_step4_title: "Sign at the Notary",
+            gi_step4_desc: "Can be done in person or remotely with a power of attorney. No need to fly back.",
+            gi_step5_title: "Receive Your Title",
+            gi_step5_desc: "You\u2019re a property owner in paradise. We can manage the rental for you from day one.",
+
+            // Guide
+            gi_guide_title: "I\u2019m <span>Ari</span> \u2014 Your Host AND Your Local Real Estate Expert",
+            gi_guide_line1: "I live here. I invest here. I manage 7 properties in Cocotal and Bavaro.",
+            gi_guide_line2: "No pressure, no timeshare pitch. Just honest answers from someone who\u2019s done it.",
+            gi_guide_cta: "Chat with Ari",
+
+            // Explore
+            gi_explore_title: "Explore Your Options",
+            gi_explore_roi: "Calculate Your ROI",
+            gi_explore_tax: "See Tax Savings",
+            gi_explore_neighborhoods: "Compare Neighborhoods",
+            gi_explore_guide: "Read the Buying Guide",
+            gi_explore_browse: "Browse Properties for Sale",
+
+            // Footer
+            gi_footer_qr: "Scan this QR code anytime to come back to this page",
+            gi_footer_qr_placeholder: "QR Code",
+            gi_footer_location: "Rent & Go PC \u2014 Punta Cana, Dominican Republic"
+        },
+
+        es: {
+            // Nav
+            gi_nav_properties: "Propiedades",
+            gi_nav_trybuy: "Prueba Antes de Comprar",
+            gi_nav_guide: "Gu\u00eda",
+
+            // Hero
+            gi_hero_title: "\u00bfTe encanta Punta Cana? \u00bfY si pudieras ser due\u00f1o de una parte?",
+            gi_hero_subtitle: "Acabas de vivir lo que es la vida aqu\u00ed. Ahora imagina ser propietario.",
+
+            // Your Stay
+            gi_stay_title: "Tu Estad\u00eda, Tu Inversi\u00f3n",
+            gi_stay_line1: "\u00bfEl apartamento donde te est\u00e1s quedando? <strong>Podr\u00eda ser tuyo.</strong>",
+            gi_stay_line2: "Propiedades como esta generan <strong>$25,000\u201335,000/a\u00f1o</strong> en Airbnb.",
+            gi_stay_line3: "Eso es un <strong>retorno anual del 8\u201312%</strong> sobre tu inversi\u00f3n.",
+            gi_roi_label: "Ejemplo de Retorno",
+            gi_roi_purchase: "Precio de Compra",
+            gi_roi_annual: "Ingreso Anual por Alquiler",
+            gi_roi_monthly: "Ingreso Neto Mensual",
+            gi_roi_return: "ROI Anual",
+
+            // Rental Credit
+            gi_credit_title: "Reserva. Enam\u00f3rate. Compra con Confianza.",
+            gi_credit_desc: "Si compras dentro de los <strong>90 d\u00edas</strong> de tu estad\u00eda, el <strong>100% de tu alquiler</strong> se acredita al precio de compra.",
+            gi_credit_tag: "Tus vacaciones se convirtieron en una inversi\u00f3n.",
+
+            // Why Punta Cana
+            gi_why_title: "Por Qu\u00e9 los Compradores Eligen Punta Cana",
+            gi_fact1_title: "100% Propiedad Extranjera",
+            gi_fact1_desc: "Los mismos derechos de propiedad que los ciudadanos dominicanos. Sin restricciones.",
+            gi_fact2_title: "Beneficios Fiscales CONFOTUR",
+            gi_fact2_desc: "0% impuesto a la propiedad por 15 a\u00f1os. Ahorra decenas de miles en impuestos.",
+            gi_fact2_link: "Calcula tus ahorros \u2192",
+            gi_fact3_title: "Vuelos Directos",
+            gi_fact3_desc: "3\u20134 horas desde la mayor\u00eda de ciudades de EE.UU. 4.5 horas desde Montreal.",
+            gi_fact4_title: "Econom\u00eda Fuerte en USD",
+            gi_fact4_desc: "El d\u00f3lar se acepta en todos lados. Sin riesgo cambiario en tu inversi\u00f3n.",
+
+            // Testimonials
+            gi_test_title: "Lo Que Dicen Otros Hu\u00e9spedes",
+            gi_test1_text: "Vinimos de vacaciones y nos fuimos como propietarios. La mejor decisi\u00f3n que hemos tomado.",
+            gi_test1_name: "Sarah y Mike",
+            gi_test1_origin: "New Jersey, EE.UU.",
+            gi_test2_text: "Los n\u00fameros ten\u00edan sentido. El estilo de vida sell\u00f3 el trato.",
+            gi_test2_name: "Jean-Pierre",
+            gi_test2_origin: "Montreal, Canad\u00e1",
+            gi_test3_text: "Nos quedamos en el apartamento de Cocotal, nos enamoramos de la vista al campo de golf y firmamos los papeles 6 semanas despu\u00e9s.",
+            gi_test3_name: "David",
+            gi_test3_origin: "Miami, EE.UU.",
+
+            // Process
+            gi_process_title: "C\u00f3mo Funciona para Compradores Extranjeros",
+            gi_process_subtitle: "Un proceso simple y transparente. Sin sorpresas.",
+            gi_step1_title: "Elige Tu Propiedad",
+            gi_step1_desc: "Explora las unidades disponibles o dinos qu\u00e9 buscas. Te conectamos con la inversi\u00f3n ideal.",
+            gi_step2_title: "Firma un Acuerdo de Reserva",
+            gi_step2_desc: "Asegura la propiedad con un dep\u00f3sito del 10%. Se retira del mercado mientras tramitamos todo.",
+            gi_step3_title: "Debida Diligencia y B\u00fasqueda de T\u00edtulo",
+            gi_step3_desc: "Nuestro abogado recomendado se encarga de todo: verificaci\u00f3n de t\u00edtulo, revisi\u00f3n legal y documentaci\u00f3n.",
+            gi_step4_title: "Firma en la Notar\u00eda",
+            gi_step4_desc: "Se puede hacer en persona o remotamente con un poder notarial. No necesitas volver a viajar.",
+            gi_step5_title: "Recibe Tu T\u00edtulo",
+            gi_step5_desc: "Eres propietario en el para\u00edso. Podemos administrar el alquiler por ti desde el primer d\u00eda.",
+
+            // Guide
+            gi_guide_title: "Soy <span>Ari</span> \u2014 Tu Anfitri\u00f3n Y Tu Experto Inmobiliario Local",
+            gi_guide_line1: "Vivo aqu\u00ed. Invierto aqu\u00ed. Administro 7 propiedades en Cocotal y B\u00e1varo.",
+            gi_guide_line2: "Sin presi\u00f3n, sin trucos de timeshare. Solo respuestas honestas de alguien que ya lo hizo.",
+            gi_guide_cta: "Chatea con Ari",
+
+            // Explore
+            gi_explore_title: "Explora Tus Opciones",
+            gi_explore_roi: "Calcula Tu ROI",
+            gi_explore_tax: "Ver Ahorros Fiscales",
+            gi_explore_neighborhoods: "Comparar Vecindarios",
+            gi_explore_guide: "Leer la Gu\u00eda de Compra",
+            gi_explore_browse: "Ver Propiedades en Venta",
+
+            // Footer
+            gi_footer_qr: "Escanea este c\u00f3digo QR en cualquier momento para volver a esta p\u00e1gina",
+            gi_footer_qr_placeholder: "C\u00f3digo QR",
+            gi_footer_location: "Rent & Go PC \u2014 Punta Cana, Rep\u00fablica Dominicana"
+        },
+
+        fr: {
+            // Nav
+            gi_nav_properties: "Propri\u00e9t\u00e9s",
+            gi_nav_trybuy: "Essayez Avant d\u2019Acheter",
+            gi_nav_guide: "Guide",
+
+            // Hero
+            gi_hero_title: "Vous aimez Punta Cana\u00a0? Et si vous pouviez en poss\u00e9der un morceau\u00a0?",
+            gi_hero_subtitle: "Vous venez de vivre ce qu\u2019est la vie ici. Maintenant, imaginez en \u00eatre propri\u00e9taire.",
+
+            // Your Stay
+            gi_stay_title: "Votre S\u00e9jour, Votre Investissement",
+            gi_stay_line1: "L\u2019appartement o\u00f9 vous s\u00e9journez\u00a0? <strong>Il pourrait \u00eatre le v\u00f4tre.</strong>",
+            gi_stay_line2: "Des propri\u00e9t\u00e9s comme celle-ci g\u00e9n\u00e8rent <strong>25\u00a0000\u201335\u00a0000\u00a0$/an</strong> sur Airbnb.",
+            gi_stay_line3: "C\u2019est un <strong>rendement annuel de 8\u201312\u00a0%</strong> sur votre investissement.",
+            gi_roi_label: "Exemple de Rendement",
+            gi_roi_purchase: "Prix d\u2019Achat",
+            gi_roi_annual: "Revenu Locatif Annuel",
+            gi_roi_monthly: "Revenu Net Mensuel",
+            gi_roi_return: "ROI Annuel",
+
+            // Rental Credit
+            gi_credit_title: "R\u00e9servez. Tombez Amoureux. Achetez en Confiance.",
+            gi_credit_desc: "Si vous achetez dans les <strong>90 jours</strong> suivant votre s\u00e9jour, <strong>100\u00a0% de votre loyer</strong> est cr\u00e9dit\u00e9 sur le prix d\u2019achat.",
+            gi_credit_tag: "Vos vacances viennent de devenir un investissement.",
+
+            // Why Punta Cana
+            gi_why_title: "Pourquoi les Acheteurs Choisissent Punta Cana",
+            gi_fact1_title: "100\u00a0% Propri\u00e9t\u00e9 \u00c9trang\u00e8re",
+            gi_fact1_desc: "M\u00eames droits de propri\u00e9t\u00e9 que les citoyens dominicains. Aucune restriction.",
+            gi_fact2_title: "Avantages Fiscaux CONFOTUR",
+            gi_fact2_desc: "0\u00a0% d\u2019imp\u00f4t foncier pendant 15 ans. \u00c9conomisez des dizaines de milliers en taxes.",
+            gi_fact2_link: "Calculez vos \u00e9conomies \u2192",
+            gi_fact3_title: "Vols Directs",
+            gi_fact3_desc: "3\u20134 heures des principales villes am\u00e9ricaines. 4,5 heures de Montr\u00e9al.",
+            gi_fact4_title: "\u00c9conomie Solide en USD",
+            gi_fact4_desc: "Le dollar accept\u00e9 partout. Aucun risque de change sur votre investissement.",
+
+            // Testimonials
+            gi_test_title: "Ce Que Disent les Autres Clients",
+            gi_test1_text: "Nous sommes venus en vacances et repartis propri\u00e9taires. La meilleure d\u00e9cision de notre vie.",
+            gi_test1_name: "Sarah et Mike",
+            gi_test1_origin: "New Jersey, \u00c9tats-Unis",
+            gi_test2_text: "Les chiffres avaient du sens. Le style de vie a scell\u00e9 l\u2019affaire.",
+            gi_test2_name: "Jean-Pierre",
+            gi_test2_origin: "Montr\u00e9al, Canada",
+            gi_test3_text: "Nous avons s\u00e9journ\u00e9 dans l\u2019appartement de Cocotal, nous sommes tomb\u00e9s amoureux de la vue sur le golf, et avons sign\u00e9 les papiers 6 semaines plus tard.",
+            gi_test3_name: "David",
+            gi_test3_origin: "Miami, \u00c9tats-Unis",
+
+            // Process
+            gi_process_title: "Comment \u00c7a Marche pour les Acheteurs \u00c9trangers",
+            gi_process_subtitle: "Un processus simple et transparent. Aucune surprise.",
+            gi_step1_title: "Choisissez Votre Propri\u00e9t\u00e9",
+            gi_step1_desc: "Parcourez les unit\u00e9s disponibles ou dites-nous ce que vous cherchez. Nous vous trouverons l\u2019investissement id\u00e9al.",
+            gi_step2_title: "Signez un Accord de R\u00e9servation",
+            gi_step2_desc: "S\u00e9curisez la propri\u00e9t\u00e9 avec un acompte de 10\u00a0%. Elle est retir\u00e9e du march\u00e9 pendant que nous g\u00e9rons les formalit\u00e9s.",
+            gi_step3_title: "Diligence Raisonnable et Recherche de Titre",
+            gi_step3_desc: "Notre avocat recommand\u00e9 s\u2019occupe de tout\u00a0: v\u00e9rification du titre, examen juridique et documentation.",
+            gi_step4_title: "Signez chez le Notaire",
+            gi_step4_desc: "Peut se faire en personne ou \u00e0 distance avec une procuration. Pas besoin de revenir.",
+            gi_step5_title: "Recevez Votre Titre",
+            gi_step5_desc: "Vous \u00eates propri\u00e9taire au paradis. Nous pouvons g\u00e9rer la location pour vous d\u00e8s le premier jour.",
+
+            // Guide
+            gi_guide_title: "Je suis <span>Ari</span> \u2014 Votre H\u00f4te ET Votre Expert Immobilier Local",
+            gi_guide_line1: "Je vis ici. J\u2019investis ici. Je g\u00e8re 7 propri\u00e9t\u00e9s \u00e0 Cocotal et Bavaro.",
+            gi_guide_line2: "Aucune pression, pas de discours de timeshare. Juste des r\u00e9ponses honn\u00eates de quelqu\u2019un qui l\u2019a fait.",
+            gi_guide_cta: "Discutez avec Ari",
+
+            // Explore
+            gi_explore_title: "Explorez Vos Options",
+            gi_explore_roi: "Calculez Votre ROI",
+            gi_explore_tax: "Voir les \u00c9conomies Fiscales",
+            gi_explore_neighborhoods: "Comparer les Quartiers",
+            gi_explore_guide: "Lire le Guide d\u2019Achat",
+            gi_explore_browse: "Parcourir les Propri\u00e9t\u00e9s",
+
+            // Footer
+            gi_footer_qr: "Scannez ce code QR \u00e0 tout moment pour revenir \u00e0 cette page",
+            gi_footer_qr_placeholder: "Code QR",
+            gi_footer_location: "Rent & Go PC \u2014 Punta Cana, R\u00e9publique Dominicaine"
+        }
+    };
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
