@@ -1,0 +1,409 @@
+{
+  "usa": {
+    "key_selling_points": [
+      {
+        "point": "USD-denominated real estate",
+        "detail": "All Punta Cana property is priced and transacted in USD. Zero currency risk unlike Mexico (peso fluctuation) or Costa Rica (colon). Your investment holds dollar value."
+      },
+      {
+        "point": "CONFOTUR tax exemption",
+        "detail": "Properties in tourism zones qualify for Law 158-01 (CONFOTUR): ZERO property tax for 15 years, ZERO transfer tax on first sale, ZERO income tax on rental income during the exemption period. This is a government incentive, not a loophole."
+      },
+      {
+        "point": "Full foreign ownership rights",
+        "detail": "DR constitution allows 100% foreign ownership of property. No need for a local partner, trust, or corporation (unlike Mexico's restricted zone). You get a titulo (title deed) in YOUR name registered at the Registro de Titulos."
+      },
+      {
+        "point": "Direct flights from 15+ US cities",
+        "detail": "PUJ airport has direct flights from JFK, MIA, EWR, BOS, ATL, CLT, FLL, PHL, ORD, IAH, DFW, MCO, BWI, DCA, and SJU. Average flight time 3-4 hours from East Coast. JetBlue, Delta, United, American, Spirit, Frontier all fly direct."
+      },
+      {
+        "point": "Airbnb/VRBO rental income potential",
+        "detail": "Punta Cana averages 70-85% occupancy for well-managed short-term rentals. Nightly rates $120-$350 depending on property type. Many buyers cover mortgage + expenses with 6-8 months of rental income and use the property themselves the rest."
+      },
+      {
+        "point": "Cost of living arbitrage",
+        "detail": "Property management, maintenance, housekeeping, landscaping all cost 60-70% less than equivalent US services. A full-time property manager runs $400-800/month. HOA fees typically $150-400/month including pool, security, common areas."
+      },
+      {
+        "point": "No capital gains tax under CONFOTUR",
+        "detail": "If you sell during the CONFOTUR exemption period, capital gains on the property are tax-exempt in DR. You still report to the IRS but can use foreign tax credits and exclusions."
+      },
+      {
+        "point": "Residency pathway",
+        "detail": "Property ownership of $200,000+ qualifies you for investor residency visa. After 2 years of residency, you can apply for permanent residency. Useful for retirees, remote workers, or those wanting a Plan B."
+      }
+    ],
+    "objections_and_answers": [
+      {
+        "objection": "Is it safe to own property in the DR?",
+        "answer": "Punta Cana is a purpose-built tourism zone with private security, gated communities, and a dedicated tourist police (CESTUR). Crime rates in the resort corridor are comparable to US resort towns. The DR government protects tourism infrastructure aggressively because it's 18% of GDP.",
+        "proof_point": "Over 8 million tourists visited DR in 2025. Major hotel chains (Marriott, Hyatt, Hard Rock, Club Med) have billions invested here."
+      },
+      {
+        "objection": "What if the government seizes my property?",
+        "answer": "DR has strong property rights enshrined in the constitution (Article 51). The Torrens title system (same as Australia and many US states) provides registered title with government guarantee. Expropriation requires due process and fair compensation, same as US eminent domain. DR has bilateral investment treaties with the US (DR-CAFTA) that add another layer of protection.",
+        "proof_point": "Share examples of Americans who have owned for 10-20 years. Reference DR-CAFTA treaty protections."
+      },
+      {
+        "objection": "I've heard about title fraud and squatters",
+        "answer": "This is a real concern with rural land or informal developments. The solution: ONLY buy from developers with deslinde (land survey) registered at Jurisdiccion Inmobiliaria, clear titulo, and CONFOTUR certification. A local attorney ($1,500-2,500) does title search and handles closing. We only list properties with clean, registered titles.",
+        "proof_point": "Provide your attorney's credentials and the title verification process step by step."
+      },
+      {
+        "objection": "Can I get a mortgage? I don't want to pay all cash.",
+        "answer": "Local DR banks (Banreservas, Popular, BHD) offer mortgages to foreigners at 8-12% interest, 15-20 year terms, requiring 30% down. Some developers offer in-house financing: 30-50% down, 3-5 year terms at 0% interest (built into price). US buyers can also do a HELOC on their US property to fund the purchase. Cash is king for negotiation leverage (5-15% discount).",
+        "proof_point": "List 2-3 developers that offer financing plans with specific terms."
+      },
+      {
+        "objection": "What about IRS reporting?",
+        "answer": "Yes, you must report foreign property to the IRS. Key requirements: (1) Report rental income on Schedule E, (2) FBAR/FinCEN 114 if you have DR bank accounts over $10K, (3) Form 8938 (FATCA) for foreign financial assets over $50K. You do NOT need to report the property itself on FBAR — only financial accounts. Capital gains on sale are reported but you can credit DR taxes paid. Consult a CPA who specializes in expat tax — this is routine, not scary.",
+        "proof_point": "Recommend 2-3 CPAs who specialize in US-DR cross-border tax. Offer a free tax implications PDF."
+      },
+      {
+        "objection": "Who manages it when I'm not there?",
+        "answer": "Most condo/resort developments have on-site rental management programs (they handle bookings, cleaning, maintenance, guest check-in for 20-30% of rental income). For standalone villas, independent property managers charge $300-600/month. We provide a vetted list of property managers with track records and references.",
+        "proof_point": "Provide manager contact list with Google reviews, years in business, and portfolio size."
+      },
+      {
+        "objection": "What if the developer doesn't finish the project?",
+        "answer": "This is the #1 real risk. Mitigation: (1) Only buy from developers with 3+ completed projects you can physically visit, (2) Payments should be tied to construction milestones via fideicomiso (escrow trust) at a DR bank, (3) CONFOTUR certification means the government vetted the project, (4) Visit before final payment. We do NOT list developers without completed track records.",
+        "proof_point": "Show completed projects gallery. Offer site visit tours."
+      }
+    ],
+    "best_channels": {
+      "facebook_groups": [
+        "Expats in Punta Cana (12K+ members, very active)",
+        "Americans Living in the Dominican Republic (8K+)",
+        "Punta Cana Real Estate (mixed quality, good for visibility)",
+        "DR Expat Community (active discussion, less sales-y)",
+        "Caribbean Real Estate Investors (broader but engaged)",
+        "Retiring Abroad - Caribbean (retirement-focused buyers)"
+      ],
+      "forums_and_communities": [
+        "DR1.com forums — oldest English-language DR forum, serious buyers lurk here",
+        "ExpatExchange.com Dominican Republic section",
+        "Reddit: r/expats, r/realestateinvesting, r/digitalnomad (for remote worker angle)",
+        "BiggerPockets forums (investment property angle, search 'Dominican Republic')",
+        "International Living magazine/website (retirement demographic, affluent)"
+      ],
+      "youtube_strategy": "Create property walkthrough videos with drone footage. Americans research on YouTube before contacting agents. Title format: 'Inside a $185,000 Luxury Condo in Punta Cana | Full Tour'. This content has 2-3 year shelf life and generates inbound leads passively.",
+      "paid_channels": [
+        "Facebook/Instagram ads targeting US zip codes with high DR travel volume (10461 Bronx, 33125 Miami, 02124 Boston, 07104 Newark, 11207 Brooklyn)",
+        "Google Ads on 'buy property punta cana', 'punta cana real estate', 'invest dominican republic'",
+        "Realtor.com international section (paid listing)",
+        "Point2Homes.com (international property portal)"
+      ]
+    },
+    "tax_notes": {
+      "dr_taxes": {
+        "property_tax_IPI": "1% annually on properties valued over ~$7.7M DOP (~$130K USD) — but CONFOTUR exempts this for 15 years",
+        "transfer_tax": "3% of assessed value on resale (exempt on first sale under CONFOTUR)",
+        "capital_gains": "27% on net gain (exempt under CONFOTUR period)",
+        "rental_income_tax": "27% corporate rate or 15-25% personal rate (exempt under CONFOTUR)"
+      },
+      "us_taxes": {
+        "reporting": "Rental income reported on Schedule E. Foreign tax credit available for any DR taxes paid (Form 1116).",
+        "fbar": "FinCEN 114 required if DR bank accounts exceed $10,000 at any point during the year. The property itself is NOT reported on FBAR.",
+        "fatca": "Form 8938 required for foreign financial assets over $50K ($200K for joint filers living abroad).",
+        "capital_gains_on_sale": "Reported to IRS. Long-term capital gains rates apply (0/15/20%). Foreign tax credit for DR taxes paid on the gain.",
+        "no_1031_exchange": "Section 1031 like-kind exchanges do NOT apply to foreign property as of 2017 Tax Cuts and Jobs Act.",
+        "estate_planning": "DR property is subject to DR inheritance law (forced heirship rules). US estate tax may also apply. Get cross-border estate planning advice."
+      },
+      "recommended_professionals": "Always recommend buyers consult a US CPA with international experience AND a DR tax attorney. Budget $500-1,000 for pre-purchase tax planning consultation."
+    },
+    "messaging_tips": {
+      "primary_hooks": [
+        "Your beachfront condo costs less than a garage in Miami",
+        "15 years of ZERO property tax — that's not a typo",
+        "3.5 hours from JFK. Your weekend home in the Caribbean.",
+        "Your Airbnb guests pay your mortgage while you sleep",
+        "The IRS lets you write off your property management trip (if you do it right)"
+      ],
+      "emotional_triggers": {
+        "freedom": "Escape the rat race. Wake up to palm trees. Work from your balcony overlooking the ocean.",
+        "smart_money": "While everyone fights over overpriced US condos, savvy investors are building Caribbean portfolios at 40 cents on the dollar.",
+        "urgency": "Pre-construction prices go up 15-25% by delivery. Early buyers get the best units AND the best price.",
+        "lifestyle": "Not just an investment — it's 52 weekends a year of ocean views, golf, and no state income tax.",
+        "legacy": "Build generational wealth in a market that's still early. Punta Cana in 2026 is Miami Beach in 1985."
+      },
+      "words_that_convert": ["tax-free", "turnkey", "rental income", "pre-construction", "USD pricing", "direct flights", "gated community", "resort amenities", "property management included", "financing available"],
+      "words_to_avoid": ["cheap", "third world", "developing country", "bargain", "offshore", "hide money", "tax haven"]
+    },
+    "facebook_strategy": {
+      "content_mix": {
+        "40_percent": "Property tours and walkthroughs (video and carousel posts)",
+        "25_percent": "Lifestyle content (beach, restaurants, golf, daily life in PC)",
+        "20_percent": "Education (CONFOTUR explained, buying process, tax tips, mortgage info)",
+        "15_percent": "Social proof (buyer testimonials, closing day photos, rental income screenshots)"
+      },
+      "ad_targeting": {
+        "interests": ["Caribbean travel", "real estate investing", "Punta Cana", "Dominican Republic travel", "retirement planning", "Airbnb hosting", "passive income"],
+        "behaviors": ["frequent international travelers", "engaged shoppers", "likely to move"],
+        "demographics": "Ages 35-65, household income $75K+, homeowners, college educated",
+        "lookalike": "Build 1% lookalike from your buyer email list and website visitors"
+      },
+      "retargeting_funnel": [
+        "Stage 1: Video views (property tours) — broad audience",
+        "Stage 2: Lead magnet (free 'Punta Cana Buyer Guide' PDF) — retarget video viewers",
+        "Stage 3: Consultation booking — retarget guide downloaders",
+        "Stage 4: Trip invitation (free site visit) — retarget consultation completers"
+      ]
+    }
+  },
+  "dominican_diaspora": {
+    "key_selling_points": [
+      {
+        "point": "Tener lo tuyo en tu tierra",
+        "detail": "Despues de anos trabajando en el frio, tener tu propiedad en RD no es solo una inversion — es orgullo, es raices, es decirle a tu familia 'lo logramos'. Muchos dominicanos en el exterior suenaron con esto desde que salieron del pais."
+      },
+      {
+        "point": "Herencia para la familia",
+        "detail": "Una propiedad en Punta Cana es algo que le dejas a tus hijos y nietos. No es como un carro que pierde valor — el terreno en zona turistica solo sube. Tus hijos pueden usarlo, rentarlo, o venderlo cuando quieran."
+      },
+      {
+        "point": "CONFOTUR: 15 anos sin impuestos",
+        "detail": "La mayoria de dominicanos en USA no saben que existe CONFOTUR. Es una ley del gobierno que te exime de impuesto a la propiedad por 15 anos, exime el impuesto de transferencia en la primera compra, y exime el impuesto sobre ingresos de alquiler. Es legal y esta en la Ley 158-01."
+      },
+      {
+        "point": "Planes de pago accesibles",
+        "detail": "No necesitas tener $150K en el banco. Muchos proyectos aceptan separacion con $2,000-5,000, cuotas mensuales de $500-1,500 durante construccion (18-36 meses), y financiamiento del desarrollador. Puedes pagar poco a poco como pagas un lease de carro."
+      },
+      {
+        "point": "Tu retiro resuelto",
+        "detail": "Social Security y pension de USA rinden 3-4x mas en RD. Un retiro de $2,500/month en RD es vida de clase media-alta. Y si tienes tu propiedad pagada, tus gastos fijos son minimos."
+      },
+      {
+        "point": "Ingreso en dolares por Airbnb",
+        "detail": "Punta Cana recibe 4+ millones de turistas al ano. Tu apartamento puede generar $800-2,500/mes en alquiler turistico, manejado por una empresa local. Ese dinero te llega en dolares a tu cuenta."
+      }
+    ],
+    "objections_and_answers": [
+      {
+        "objection": "Alla todo es trucho, me van a tumbar",
+        "answer": "Entendemos la desconfianza — hay historias reales de estafas. Por eso es CRITICO: (1) verificar el titulo en el Registro de Titulos (nosotros te damos el certificado), (2) comprar SOLO en proyectos con CONFOTUR aprobado (el gobierno ya los verifico), (3) usar un abogado inmobiliario que TU elijas (no el del desarrollador), (4) pagos a traves de fideicomiso bancario, no directo al developer. Si un desarrollador no acepta fideicomiso, es red flag.",
+        "proof_point": "Ofrecer copia del titulo registrado, certificacion CONFOTUR, y referencia de 3+ compradores anteriores que puedan hablar por telefono."
+      },
+      {
+        "objection": "Yo conozco gente que compro y nunca les entregaron",
+        "answer": "Eso pasa con desarrolladores sin historial. Nosotros solo trabajamos con proyectos que tienen minimo 2-3 entregas completadas que puedes visitar fisicamente. Te llevamos a ver los edificios terminados, hablas con los duenos, verificas todo antes de firmar.",
+        "proof_point": "Organizar tours a proyectos completados. Fotos y videos de entregas con duenos reales."
+      },
+      {
+        "objection": "Es muy caro, no me da",
+        "answer": "Un estudio en Punta Cana empieza desde $75K-95K. Un 1BR desde $110K-150K. Con separacion de $3,000 y cuotas de $800-1,200/month, es menos que un alquiler en el Bronx o Hialeah. Y al final del plan, el apartamento es TUYO. Ademas genera ingreso cuando no lo usas.",
+        "proof_point": "Tabla comparativa: alquiler en NYC/Miami vs cuota mensual de propiedad en PC."
+      },
+      {
+        "objection": "Prefiero comprar casa en USA primero",
+        "answer": "Respetable — pero mira los numeros. Un downpayment en NYC/Miami es $60-100K para un apto mediocre. Con esos mismos $60K en Punta Cana tienes un apartamento COMPLETO en zona turistica que genera ingreso. No es uno u otro — muchos compran en RD MIENTRAS ahorran para USA porque la propiedad en RD se aprecia y genera cash flow.",
+        "proof_point": "Caso de estudio: dominicano en NJ que compro en PC en 2022 por $95K, ahora vale $140K y genera $1,200/mes en Airbnb."
+      },
+      {
+        "objection": "Y si necesito vender rapido?",
+        "answer": "El mercado de reventa en Punta Cana es activo, especialmente para propiedades con CONFOTUR y en complejos con rental management. Tiempo promedio de venta: 3-8 meses. Propiedades pre-construccion se pueden ceder (traspasar el contrato) antes de la entrega, muchas veces con ganancia.",
+        "proof_point": "Datos de reventas recientes con tiempos y margenes."
+      }
+    ],
+    "best_channels": {
+      "facebook_groups": [
+        "Dominicanos en New York (500K+ members — massive reach)",
+        "Dominicanos en Miami (100K+)",
+        "Dominicanos en Boston (50K+)",
+        "Dominicanos en New Jersey (80K+)",
+        "Dominicanos en USA (general, 200K+)",
+        "Bienes Raices Republica Dominicana (focused on RE)",
+        "Punta Cana Real Estate en Espanol",
+        "Inversiones en Republica Dominicana",
+        "Dominicanos Inversionistas"
+      ],
+      "other_channels": [
+        "Instagram reels — short property tours with reggaeton/dembow background music, Spanish captions",
+        "TikTok — 'Mira lo que compre en Punta Cana con $3,000 de inicial' format performs extremely well",
+        "WhatsApp broadcast lists — diaspora trusts WhatsApp more than email. Build a list.",
+        "YouTube — longer tours, 'Proceso de compra paso a paso', 'Mi experiencia comprando en RD'",
+        "Dominican radio stations in NYC (La Mega 97.9, Radio Que Buena) — older demographic but high trust",
+        "Dominican festivals and events (Dominican Day Parade NYC, DR Independence Day events) — booth presence"
+      ],
+      "influencer_strategy": "Partner with Dominican-American content creators (100K-500K followers) who already post lifestyle content. Offer them a free trip + commission per referral. Micro-influencers in the diaspora space convert better than macro because the audience trusts them personally."
+    },
+    "tax_notes": {
+      "dual_obligations": "Dominican-Americans with US citizenship/green card must report worldwide income to IRS, including DR rental income and capital gains. Same rules as the USA section above apply.",
+      "remittance_advantage": "If sending money for monthly payments, use Remitly, Wise, or direct bank wire — NOT Western Union (fees too high). Wire to the developer's DR bank account or fideicomiso. Keep ALL receipts for IRS documentation.",
+      "cedula_and_rnc": "You do NOT need a Dominican cedula to buy property. A valid US passport is sufficient. However, if you plan to rent the property commercially, you may need an RNC (tax ID) which your attorney can obtain.",
+      "inheritance_warning": "DR has forced heirship laws — your spouse and children have automatic rights to a portion of your estate. This may conflict with your US will. Get a cross-border estate plan."
+    },
+    "messaging_tips": {
+      "primary_hooks": [
+        "Tu familia merece tener lo suyo en su tierra",
+        "Separalo con $3,000 — cuotas mas baratas que tu renta en El Bronx",
+        "15 anos sin pagar impuestos. Se llama CONFOTUR y nadie te lo habia dicho.",
+        "Deja de pagar renta que no es tuya. En Punta Cana, tu Airbnb te paga a TI.",
+        "Tu viejo soñaba con esto. Ahora tu puedes hacerlo realidad."
+      ],
+      "emotional_triggers": {
+        "orgullo": "Llegar al barrio y decir 'tengo lo mio en Punta Cana'. Eso no tiene precio.",
+        "familia": "Un lugar donde tu mama pueda disfrutar, tus hijos puedan ir en vacaciones, y tu puedas retirarte tranquilo.",
+        "desquite": "Saliste de RD buscando algo mejor. Ahora vuelves como inversionista, no como turista.",
+        "seguridad": "No es un 'negocito' — es un activo registrado, con titulo, en zona turistica que solo sube de valor.",
+        "urgencia": "Los precios en Punta Cana subieron 20-30% en 3 anos. Cada mes que esperas, pagas mas."
+      },
+      "words_that_convert": ["lo tuyo", "sin impuestos", "cuotas", "separalo hoy", "titulo registrado", "fideicomiso", "inversion segura", "para tu familia", "retiro", "dolares"],
+      "words_to_avoid": ["oportunidad unica (overused, sounds scammy)", "no te lo pierdas (spam trigger)", "negocion (sounds informal/suspicious)", "rapido y facil (nothing about RE should sound easy)"],
+      "tone_guide": "Speak like a primo that made it and is sharing the move — not like a salesman. Use 'tu' not 'usted'. Dominican Spanish, not neutral Spanish. Say 'vaina' once in a while. Keep it real, keep it direct."
+    },
+    "facebook_strategy": {
+      "content_mix": {
+        "35_percent": "Property tours with Dominican narration, music, and real talk about prices",
+        "25_percent": "Educational: CONFOTUR explainer, buying process, common scam red flags, payment plan breakdowns",
+        "20_percent": "Testimonials: real buyers (video preferred) sharing their experience, showing their keys, their apartment",
+        "20_percent": "Lifestyle and aspiration: Punta Cana beaches, nightlife, restaurants, golf — 'esto es lo que te espera'"
+      },
+      "ad_targeting": {
+        "demographics": "Ages 28-55, Dominican-American, located in NYC metro, Miami-Dade, Boston metro, NJ (Essex, Passaic, Hudson counties)",
+        "interests": ["Dominican Republic", "Punta Cana", "bienes raices", "remesas", "vuelos a Santo Domingo", "bachata", "Dominican food"],
+        "language": "Spanish (and bilingual for 2nd gen)",
+        "custom_audiences": "Upload email lists from Dominican community events, WhatsApp groups (with consent), Dominican business associations"
+      },
+      "engagement_tactics": [
+        "Go LIVE on Facebook from a property showing — walk through the unit, answer questions in real time in Spanish",
+        "Post 'Cuanto crees que cuesta este apartamento?' polls — massive engagement",
+        "Share buyer closing day photos with their permission — tags generate organic reach",
+        "Create a private Facebook group 'Dominicanos Invirtiendo en Punta Cana' — build community, answer questions, nurture leads"
+      ]
+    }
+  },
+  "latam_investors": {
+    "colombian_buyers": {
+      "motivation": "Capital flight from peso devaluation, USD-denominated safe haven, diversification outside Colombia. Many Colombians already invest in Miami — Punta Cana is the same thesis at 40-60% lower entry point.",
+      "key_messages": [
+        "Inversion 100% en dolares — protege tu patrimonio de la devaluacion del peso colombiano",
+        "Mismo concepto que Miami pero con precios de hace 15 anos",
+        "CONFOTUR te da ventajas fiscales que en Colombia o USA no existen",
+        "Comunidad colombiana creciente en Punta Cana — no estas solo"
+      ],
+      "channels": ["Facebook: Colombianos en Republica Dominicana", "Instagram real estate influencers from Medellin/Bogota", "Colombian investment podcasts and YouTube channels"],
+      "concerns": "CRS reporting (Colombia participates in automatic tax info exchange), transferring money out of Colombia (4x1000 tax on financial transactions), need to report foreign property to DIAN."
+    },
+    "venezuelan_buyers": {
+      "motivation": "Asset protection, dollar preservation, many already in diaspora (Miami, Madrid, Santiago, Bogota). DR is geographically close, familiar culture, direct flights. Some have existing businesses in DR.",
+      "key_messages": [
+        "Protege lo que construiste — un activo en dolares fuera de cualquier riesgo politico",
+        "Punta Cana tiene comunidad venezolana establecida y creciendo",
+        "Propiedad registrada con titulo Torrens — nadie te la puede quitar",
+        "Genera ingreso pasivo en dolares mientras decides tu proximo paso"
+      ],
+      "channels": ["Venezuelan diaspora groups on Facebook and Telegram", "Venezuelan real estate investors on Instagram", "Word of mouth through Venezuelan business networks in DR"],
+      "concerns": "May have difficulty proving source of funds (compliance). Need clear onboarding process for documentation. Many pay cash — be ready for that."
+    },
+    "argentine_buyers": {
+      "motivation": "Perpetual peso crisis, cepo cambiario (capital controls), desire to park USD outside Argentina. Argentines are sophisticated real estate investors — they understand pre-construction, pozo, and rental yield analysis.",
+      "key_messages": [
+        "Dolariza tu patrimonio con un activo real — no un plazo fijo que te licuan",
+        "Sin cepo, sin restricciones — compras directo en USD",
+        "Rendimiento por alquiler turistico superior a cualquier departamento en CABA",
+        "CONFOTUR = 15 anos sin impuestos a la propiedad. En Argentina pagas ABL + Bienes Personales + Ganancias."
+      ],
+      "channels": ["Argentine real estate investment groups on Facebook/Telegram", "Inversiones en el exterior (general LatAm investment groups)", "Argentine financial YouTubers who cover foreign RE investment"],
+      "concerns": "AFIP reporting requirements for foreign property (Bienes Personales tax on worldwide assets). Wire transfer complications from Argentina — many use crypto or intermediaries. Be prepared for sophisticated financial questions about cap rates, IRR, and comparable analysis."
+    },
+    "general_latam_strategy": {
+      "positioning": "Punta Cana as the 'Miami alternative' — same USD safety, better tax treatment, lower entry price, easier residency pathway, and growing international community.",
+      "language": "Use neutral Latin American Spanish for broad LatAm content. Avoid Dominican slang in LatAm-targeted ads (save that for diaspora content).",
+      "payment_reality": "Many LatAm buyers will want to pay via wire from US accounts (they already moved money out), crypto, or structured installments. Be flexible on payment methods while staying compliant with DR anti-money-laundering (Ley 155-17).",
+      "trust_building": "LatAm buyers are skeptical of Caribbean real estate due to regional scam reputation. Lead with: registered titles, CONFOTUR government certification, fideicomiso escrow, completed project portfolio, and video testimonials from other LatAm buyers."
+    }
+  },
+  "content_ideas": [
+    {
+      "id": 1,
+      "title": "The CONFOTUR Breakdown Nobody Told You About",
+      "format": "Carousel post (Instagram) + video (Facebook/TikTok)",
+      "audience": "All markets",
+      "hook": "You're paying property taxes on your home. In Punta Cana, you pay ZERO for 15 years. Here's how.",
+      "content_outline": "Slide 1: Bold claim. Slide 2: What is CONFOTUR (Law 158-01). Slide 3: What's exempt (property tax, transfer tax, income tax). Slide 4: How to verify a project is CONFOTUR certified. Slide 5: What happens after 15 years. Slide 6: CTA — DM for list of certified projects.",
+      "language": "Create in both English and Spanish"
+    },
+    {
+      "id": 2,
+      "title": "I Bought a Condo in Punta Cana — Full Cost Breakdown",
+      "format": "YouTube video (10-15 min) + short clips for Reels/TikTok",
+      "audience": "USA + Dominican diaspora",
+      "hook": "Everyone shows you the pool and the view. Nobody shows you the REAL numbers. Here's every single cost.",
+      "content_outline": "Purchase price, closing costs (attorney, notary, transfer tax), monthly HOA, property management fee, utilities, furnishing budget, annual maintenance reserve. Show REAL receipts/invoices. Compare total monthly cost to renting equivalent in Miami or NYC.",
+      "language": "English primary, Spanish subtitles"
+    },
+    {
+      "id": 3,
+      "title": "5 Red Flags That a Punta Cana Developer is a Scam",
+      "format": "Video (Facebook/Instagram/TikTok)",
+      "audience": "Dominican diaspora (primary), all markets",
+      "hook": "Before you send a single dollar to ANY developer in RD, watch this. I've seen people lose everything.",
+      "content_outline": "Red flag 1: No registered titulo (deslinde). 2: Won't accept fideicomiso. 3: No completed projects to show. 4: Pressure to pay fast with 'discounts' that expire tomorrow. 5: No CONFOTUR certification. For each: what to ask, what to verify, where to check.",
+      "language": "Spanish (Dominican tone)"
+    },
+    {
+      "id": 4,
+      "title": "My Airbnb Income Report — Punta Cana Property",
+      "format": "Carousel + video testimonial",
+      "audience": "All markets (investment angle)",
+      "hook": "Here's exactly how much my Punta Cana condo made on Airbnb last month. Screenshots included.",
+      "content_outline": "Show Airbnb dashboard (with guest info blurred): occupancy rate, nightly rate, monthly revenue. Then subtract: management fee, cleaning, utilities, HOA. Show NET income. Compare to purchase price for yield calculation. Month-over-month for seasonality.",
+      "language": "English version + Spanish version"
+    },
+    {
+      "id": 5,
+      "title": "Para Mi Mama: Le Compre Su Apartamento en Punta Cana",
+      "format": "Emotional video (Facebook/Instagram Reels)",
+      "audience": "Dominican diaspora",
+      "hook": "Ella limpio casas en Nueva York por 20 anos. Hoy le entrego las llaves de SU apartamento en Punta Cana.",
+      "content_outline": "Storytelling format: immigrant story, sacrifice, years of work, surprise reveal. Emotional reaction. Tour of the apartment. This is the most shareable content format for the diaspora. Can be a real client story (with permission) or a produced narrative based on composite stories.",
+      "language": "Spanish"
+    },
+    {
+      "id": 6,
+      "title": "Americans Can Own Property in DR — Here's What Most Don't Know",
+      "format": "Educational carousel (LinkedIn + Facebook + Instagram)",
+      "audience": "USA buyers",
+      "hook": "Unlike Mexico, you get the title in YOUR name. No trust, no corporation, no partner required.",
+      "content_outline": "Slide 1: Yes, 100% foreign ownership is legal. Slide 2: Torrens title system explained. Slide 3: DR-CAFTA treaty protections. Slide 4: The buying process in 6 steps. Slide 5: IRS reporting basics. Slide 6: CONFOTUR tax benefits. Slide 7: CTA for buyer guide download.",
+      "language": "English"
+    },
+    {
+      "id": 7,
+      "title": "Punta Cana vs Tulum vs Costa Rica — Where to Invest",
+      "format": "Comparison video + infographic",
+      "audience": "USA + LatAm investors",
+      "hook": "I compared the 3 hottest Caribbean/Central American markets side by side. The numbers surprised me.",
+      "content_outline": "Compare: entry price per sqft, tax treatment, foreign ownership rules, rental yield, flight access, safety, currency risk, internet/infrastructure, developer quality, residency pathway. Punta Cana wins on: USD pricing, tax exemptions, ownership simplicity, flight access. Be honest about where others win (Tulum: trendiness, Costa Rica: nature/eco).",
+      "language": "English (share in LatAm groups with Spanish captions)"
+    },
+    {
+      "id": 8,
+      "title": "Cuanto Necesitas Realmente Para Comprar en Punta Cana",
+      "format": "TikTok/Reels series (Part 1, 2, 3)",
+      "audience": "Dominican diaspora",
+      "hook": "Te dicen que necesitas $100K. La verdad? Puedes empezar con $3,000. Dejame explicarte.",
+      "content_outline": "Part 1: Separation/reservation deposit ($2K-5K). Part 2: Monthly payments during construction ($500-1,500). Part 3: What happens at delivery (remaining balance, financing options, furnishing). Use real project examples with real numbers. Address objection: 'but what if I lose my job and can't keep paying?'",
+      "language": "Spanish (Dominican casual)"
+    },
+    {
+      "id": 9,
+      "title": "A Day in the Life: Living in Punta Cana Full Time",
+      "format": "Vlog-style video (YouTube + clips for social)",
+      "audience": "USA retirees + remote workers",
+      "hook": "I wake up at 7am, walk to the beach, work from a cafe with ocean view, and my monthly expenses are $1,800. Here's my life in Punta Cana.",
+      "content_outline": "Morning routine, co-working spaces, grocery shopping (show prices), restaurants for lunch ($8-12 meals), afternoon at the beach/pool, evening social scene. Show the REAL daily life, not just the resort fantasy. Include: internet speed test, power reliability (generator backup), healthcare visit, gym, etc.",
+      "language": "English (Spanish subtitles)"
+    },
+    {
+      "id": 10,
+      "title": "Client Closing Day Compilation — Real Buyers, Real Keys",
+      "format": "Monthly compilation video (30-60 sec each buyer)",
+      "audience": "All markets",
+      "hook": "Every month we hand over keys to new owners. Here's this month's closings.",
+      "content_outline": "3-5 buyers receiving keys, signing papers, first walk-in to their new unit. Mix of American, Dominican diaspora, and LatAm buyers. Each says one sentence about why they bought and where they're from. End with: 'Want to be in next month's video? DM us.' This is the highest-trust content you can produce — real people, real transactions, real emotion.",
+      "language": "Bilingual (each buyer speaks their language)"
+    }
+  ]
+}

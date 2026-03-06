@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Generator | Rent & Go PC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #333; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        h1 { font-size: 1.5rem; margin-bottom: 6px; }
+        .subtitle { color: #666; margin-bottom: 24px; font-size: 0.9rem; }
+
+        .controls {
+            display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;
+            background: white; padding: 16px; border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .control-group { display: flex; flex-direction: column; gap: 4px; }
+        .control-group label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: #888; letter-spacing: 0.5px; }
+        select, input {
+            padding: 8px 12px; border: 1.5px solid #ddd; border-radius: 8px;
+            font-size: 0.9rem; font-family: inherit; background: white;
+        }
+        select:focus, input:focus { outline: none; border-color: #1a3a2a; }
+
+        .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+
+        .post-card {
+            background: white; border-radius: 12px; padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); position: relative;
+        }
+        .post-card .post-label {
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.5px; color: white; background: #1a3a2a;
+            padding: 3px 10px; border-radius: 12px; display: inline-block; margin-bottom: 10px;
+        }
+        .post-card .post-label.es { background: #c0392b; }
+        .post-card .post-label.fr { background: #2980b9; }
+        .post-card .post-label.ru { background: #8e44ad; }
+        .post-card .post-label.en { background: #27ae60; }
+
+        .post-text {
+            font-size: 0.88rem; line-height: 1.65; white-space: pre-wrap;
+            color: #333; margin-bottom: 14px; min-height: 200px;
+        }
+
+        .post-actions { display: flex; gap: 8px; }
+        .btn-copy {
+            padding: 6px 16px; border: 1.5px solid #1a3a2a; border-radius: 8px;
+            background: white; color: #1a3a2a; font-weight: 600; font-size: 0.8rem;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .btn-copy:hover { background: #1a3a2a; color: white; }
+        .btn-copy.copied { background: #27ae60; border-color: #27ae60; color: white; }
+
+        .tip-box {
+            background: #fffbeb; border: 1px solid #f5d778; border-radius: 10px;
+            padding: 14px 18px; margin-bottom: 20px; font-size: 0.85rem; line-height: 1.5;
+        }
+        .tip-box strong { color: #92700c; }
+
+        @media (max-width: 768px) {
+            .posts-grid { grid-template-columns: 1fr; }
+            .controls { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Facebook Post Generator</h1>
+        <p class="subtitle">Generate market-specific posts for each audience. Copy and paste into Facebook groups.</p>
+
+        <div class="tip-box">
+            <strong>Tip:</strong> Always attach your best photo when posting. Text-only posts get buried. Post 1x per group max, best times: 7-9 PM EST (diaspora), 11 AM-1 PM (lunch scroll). Rotate posts — don't reuse the same one in the same group.
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Property</label>
+                <select id="property">
+                    <option value="cocotal">Cocotal 2BR - $315,000</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Post Style</label>
+                <select id="style">
+                    <option value="hook">The Hook</option>
+                    <option value="investment">Investment Angle</option>
+                    <option value="lifestyle">Lifestyle</option>
+                    <option value="comparison">Price Comparison</option>
+                    <option value="urgency">Urgency/Scarcity</option>
+                    <option value="confotur">CONFOTUR Education</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Generate</label>
+                <button class="btn-copy" onclick="generateAll()" style="margin-top: 0;">Generate All Markets</button>
+            </div>
+        </div>
+
+        <div class="posts-grid" id="posts-grid"></div>
+    </div>
+
+    <script>
+const PROPERTIES = {
+    cocotal: {
+        title_en: "2BR Apartment in Cocotal Golf",
+        title_es: "Apartamento 2 Habitaciones en Cocotal Golf",
+        title_fr: "Condo 2 Chambres a Cocotal Golf",
+        title_ru: "2-komnatnye apartamenty v Cocotal Golf",
+        price: "$315,000",
+        specs_en: "144 sqm, 2 bedrooms, 2 bathrooms, 2 parking, large terrace",
+        specs_es: "144 m2, 2 habitaciones, 2 banos, 2 parqueos, terraza amplia",
+        specs_fr: "144 m2, 2 chambres, 2 salles de bain, 2 stationnements, grande terrasse",
+        location: "Cocotal Golf & Country Club, Bavaro",
+        highlights_en: "Golf course views, Melia Hotel access, CONFOTUR",
+        highlights_es: "Vista al campo de golf, acceso Hotel Melia, CONFOTUR",
+        highlights_fr: "Vue sur le golf, acces Hotel Melia, CONFOTUR",
+        wa_link: "https://wa.me/18094865386?text=Hello!%20Interested%20in%20the%20Cocotal%202BR",
+        site_link: "rentandgopc.com"
+    }
+};
+
+const POSTS = {
+    hook: {
+        en: (p) => `2BR apartment overlooking Cocotal Golf Course - ${p.price}
+
+This one checks all the boxes:
+- ${p.specs_en}
+- Full access to Melia Hotel (beach, pool, spa, restaurants)
+- CONFOTUR included = 0% property tax for 15 years
+
+Golf course views from your terrace. 4.5 hours from Miami, direct flights.
+
+Serious buyers - DM me or WhatsApp.
+${p.site_link}`,
+        es: (p) => `Apartamento 2 habitaciones con VISTA AL GOLF en Cocotal - US${p.price}
+
+${p.specs_es}
+Acceso completo al Hotel Melia (playa, restaurantes, spa)
+CONFOTUR INCLUIDO - 15 anos sin impuestos!
+
+Cocotal Golf & Country Club, Bavaro, Punta Cana
+
+Escribeme al WhatsApp para mas fotos y detalles.
+${p.site_link}`,
+        fr: (p) => `Condo 2 chambres avec vue sur le golf a Cocotal - US${p.price}
+
+${p.specs_fr}
+Acces complet a l'Hotel Melia (plage, restos, spa)
+CONFOTUR inclus = 0% d'impot foncier pendant 15 ans!
+
+Vols directs depuis Montreal. A 4h30 de chez toi.
+
+Ecris-moi sur WhatsApp pour plus de photos.
+${p.site_link}`,
+        ru: (p) => `2-komnatnye apartamenty s vidom na golf v Cocotal - US${p.price}
+
+144 kv.m., 2 spalni, 2 vannye, 2 parkovki, bolshaya terrasa
+Polnyj dostup k otelyu Melia (plyazh, restorany, spa)
+CONFOTUR = 0% nalog na nedvizhimost 15 let!
+
+Cocotal Golf & Country Club, Bavaro, Punta Cana
+
+Napishite v WhatsApp dlya foto i detalej.
+${p.site_link}`
+    },
+    investment: {
+        en: (p) => `Did you know CONFOTUR saves you THOUSANDS in taxes when buying in Punta Cana?
+
+I have a 2BR in Cocotal Golf - ${p.price} - that qualifies:
+- No transfer tax (saves ~$9,450)
+- No property tax for 15 YEARS
+- No capital gains tax when you sell
+- No tax on rental income
+
+Plus: ${p.specs_en}. Golf views. Melia Hotel access.
+
+8-12% annual ROI on Airbnb. The property pays for itself.
+
+DM me for details. ${p.site_link}`,
+        es: (p) => `CONFOTUR = 15 anos SIN IMPUESTOS en tu propiedad
+
+Tengo un apartamento de 2 habitaciones en Cocotal Golf - US${p.price}:
+- 0% impuesto de transferencia (ahorro de ~$9,450)
+- 0% impuesto de propiedad por 15 ANOS
+- 0% ganancia de capital al vender
+- 0% impuesto sobre renta de alquiler
+
+${p.specs_es}. Vista al golf. Acceso Hotel Melia.
+
+Retorno de 8-12% anual en Airbnb. La propiedad se paga sola.
+
+Escribeme para mas info. ${p.site_link}`,
+        fr: (p) => `CONFOTUR = 15 ans SANS IMPOT sur ta propriete
+
+J'ai un condo 2 chambres a Cocotal Golf - US${p.price}:
+- 0% taxe de transfert (tu sauves ~$9,450)
+- 0% impot foncier pendant 15 ANS
+- 0% impot sur le gain en capital
+- 0% impot sur les revenus de location
+
+${p.specs_fr}. Vue sur le golf. Acces Hotel Melia.
+
+Rendement de 8-12% par annee sur Airbnb. Ton condo travaille pour toi meme quand tu es a Montreal.
+
+Ecris-moi pour plus d'infos. ${p.site_link}`,
+        ru: (p) => `CONFOTUR = 15 let BEZ NALOGOV na vashu nedvizhimost
+
+Apartamenty 2 spalni v Cocotal Golf - US${p.price}:
+- 0% nalog na peredachu (ekonomiya ~$9,450)
+- 0% nalog na nedvizhimost 15 LET
+- 0% nalog na prirost kapitala
+- 0% nalog na dohod ot arendy
+
+144 kv.m., vid na golf, dostup k otelyu Melia.
+Dohodnost 8-12% godovyh na Airbnb.
+
+Napishite v WhatsApp. ${p.site_link}`
+    },
+    lifestyle: {
+        en: (p) => `Imagine waking up to this view every morning...
+
+2-bedroom apartment in Cocotal Golf, Punta Cana. ${p.specs_en}.
+
+Huge terrace overlooking the golf course. Walk to Melia Hotel for beach days, dinner, or spa.
+
+${p.price} with CONFOTUR (15 years tax free).
+
+This isn't just a property - it's a lifestyle upgrade.
+
+DM for details. Serious inquiries only.
+${p.site_link}`,
+        es: (p) => `Imaginate despertar con esta vista todos los dias...
+
+Apartamento de 2 habitaciones en Cocotal Golf, Punta Cana. ${p.specs_es}.
+
+Terraza enorme con vista al campo de golf. Camina al Hotel Melia para playa, cena o spa.
+
+US${p.price} con CONFOTUR (15 anos sin impuestos).
+
+Esto no es solo una propiedad - es un cambio de vida.
+
+Escribeme para detalles.
+${p.site_link}`,
+        fr: (p) => `Imagine-toi te reveiller avec cette vue chaque matin...
+
+Condo 2 chambres a Cocotal Golf, Punta Cana. ${p.specs_fr}.
+
+Grande terrasse avec vue sur le parcours de golf. Marche jusqu'au Melia pour la plage, un souper ou le spa.
+
+US${p.price} avec CONFOTUR (15 ans sans impot).
+
+Pendant que Montreal pellete, tu es sur ta terrasse au soleil.
+
+Ecris-moi pour les details.
+${p.site_link}`,
+        ru: (p) => `Predstavte: vy prosypaetes s takim vidom kazhdoe utro...
+
+Apartamenty 2 spalni v Cocotal Golf, Punta Cana. 144 kv.m.
+
+Bolshaya terrasa s vidom na pole dlya golfa. Plyazh, restorany, spa otelya Melia — v neskolkih minutah hodby.
+
+US${p.price} s CONFOTUR (15 let bez nalogov).
+
+Eto ne prosto nedvizhimost — eto novyj uroven zhizni.
+
+Napishite v WhatsApp.
+${p.site_link}`
+    },
+    comparison: {
+        en: (p) => `${p.price} in Miami gets you a small studio.
+${p.price} in Punta Cana gets you THIS:
+
+- 2 bedrooms, 1,550 sqft (144 m2)
+- Golf course views
+- Beach access via Melia Hotel
+- 2 parking spots
+- ZERO property tax for 15 years (CONFOTUR)
+- 8-12% annual ROI on Airbnb
+
+Direct flights from Miami, NYC, Boston. 3-4 hours.
+
+Just saying. DM me if you want details.
+${p.site_link}`,
+        es: (p) => `US${p.price} en Miami = un studio pequeno.
+US${p.price} en Punta Cana = ESTO:
+
+- 2 habitaciones, 144 m2
+- Vista al campo de golf
+- Acceso a playa del Hotel Melia
+- 2 parqueos
+- CERO impuestos por 15 anos (CONFOTUR)
+- 8-12% de retorno anual en Airbnb
+
+Tu mismo dinero, 10x mas valor. Piensalo.
+
+Escribeme para mas informacion.
+${p.site_link}`,
+        fr: (p) => `US${p.price} a Montreal = un 3 1/2 dans Griffintown.
+US${p.price} a Punta Cana = CECI:
+
+- Condo 2 chambres, 144 m2
+- Vue sur le parcours de golf
+- Acces plage via Hotel Melia
+- 2 stationnements
+- ZERO impot foncier pendant 15 ans (CONFOTUR)
+- Rendement 8-12% par annee sur Airbnb
+
+Vol direct depuis Montreal. 4h30.
+
+Ton meme budget, 10x plus de valeur. Penses-y.
+
+Ecris-moi. ${p.site_link}`,
+        ru: (p) => `US${p.price} v Majami = malenkaya studiya.
+US${p.price} v Punta Cana = VOT CHTO:
+
+- 2 spalni, 144 kv.m.
+- Vid na pole dlya golfa
+- Dostup k plyazhu cherez otel Melia
+- 2 parkovochnyh mesta
+- 0% nalog na nedvizhimost 15 let (CONFOTUR)
+- 8-12% godovoj dohodnosti na Airbnb
+
+Te zhe dengi — v 10 raz bolshe tsennosti.
+
+Napishite. ${p.site_link}`
+    },
+    urgency: {
+        en: (p) => `Only ONE unit left with this view.
+
+2-bedroom apartment in Cocotal Golf. ${p.specs_en}.
+
+Direct golf course views from the terrace. Full Melia Hotel access. CONFOTUR included.
+
+US${p.price}.
+
+If you're looking at Punta Cana, this is your chance. DM me before it's gone.
+${p.site_link}`,
+        es: (p) => `Solo queda UNO con esta vista.
+
+Apartamento de 2 habitaciones en Cocotal Golf. ${p.specs_es}.
+
+Vista directa al campo de golf desde la terraza. Acceso completo al Hotel Melia. CONFOTUR incluido.
+
+US${p.price}.
+
+Si estas buscando en Punta Cana, esta es tu oportunidad. Escribeme antes de que se vaya.
+${p.site_link}`,
+        fr: (p) => `Il en reste UN SEUL avec cette vue.
+
+Condo 2 chambres a Cocotal Golf. ${p.specs_fr}.
+
+Vue directe sur le golf depuis la terrasse. Acces complet a l'Hotel Melia. CONFOTUR inclus.
+
+US${p.price}.
+
+Si tu cherches a Punta Cana, c'est ta chance. Ecris-moi avant qu'il parte.
+${p.site_link}`,
+        ru: (p) => `Ostalsya ODIN s takim vidom.
+
+Apartamenty 2 spalni v Cocotal Golf. 144 kv.m., 2 parkovki, bolshaya terrasa.
+
+Pryamoj vid na pole dlya golfa. Polnyj dostup k otelyu Melia. CONFOTUR vklyuchen.
+
+US${p.price}.
+
+Esli vy ishchete v Punta Cana — eto vash shans. Napishite poka est.
+${p.site_link}`
+    },
+    confotur: {
+        en: (p) => `If you're buying property in the Dominican Republic and you don't know about CONFOTUR, you're leaving money on the table.
+
+CONFOTUR (Law 158-01) gives you 15 YEARS of tax exemptions:
+- 0% transfer tax at closing (saves ~3% of purchase price)
+- 0% annual property tax (IPI)
+- 0% capital gains tax when you sell
+- 0% tax on rental income
+- 0% import duties on furnishings
+
+I have a 2BR in Cocotal Golf with CONFOTUR for ${p.price}. Golf views, Melia Hotel access, ${p.specs_en}.
+
+Want to learn more? DM me.
+${p.site_link}`,
+        es: (p) => `Si estas comprando propiedad en RD y no conoces CONFOTUR, estas dejando dinero en la mesa.
+
+CONFOTUR (Ley 158-01) te da 15 ANOS de exenciones:
+- 0% impuesto de transferencia (ahorras ~3% del precio)
+- 0% impuesto anual a la propiedad (IPI)
+- 0% ganancia de capital al vender
+- 0% impuesto sobre renta de alquiler
+- 0% impuestos de importacion en muebles
+
+Tengo un 2BR en Cocotal Golf con CONFOTUR por US${p.price}. Vista al golf, acceso Melia, ${p.specs_es}.
+
+Preguntame lo que quieras.
+${p.site_link}`,
+        fr: (p) => `Si tu achetes en Republique dominicaine sans connaitre le CONFOTUR, tu laisses de l'argent sur la table.
+
+CONFOTUR (Loi 158-01) = 15 ANS d'exemptions fiscales:
+- 0% taxe de transfert (tu sauves ~3% du prix)
+- 0% impot foncier annuel (IPI)
+- 0% impot sur le gain en capital a la revente
+- 0% impot sur les revenus de location
+- 0% droits d'importation sur le mobilier
+
+J'ai un condo 2 chambres a Cocotal Golf avec CONFOTUR pour US${p.price}. Vue sur le golf, acces Melia, ${p.specs_fr}.
+
+Ecris-moi pour en jaser!
+${p.site_link}`,
+        ru: (p) => `Esli vy pokupaete nedvizhimost v Dominikanskoj Respublike i ne znaete pro CONFOTUR — vy teryaete dengi.
+
+CONFOTUR (Zakon 158-01) daet 15 LET nalogovyh lgot:
+- 0% nalog na peredachu (ekonomiya ~3% ot tseny)
+- 0% ezhegodnyj nalog na nedvizhimost (IPI)
+- 0% nalog na prirost kapitala pri prodazhe
+- 0% nalog na dohod ot arendy
+- 0% importnye poshliny na mebel
+
+Apartamenty 2 spalni v Cocotal Golf s CONFOTUR za US${p.price}. Vid na golf, dostup k otelyu Melia.
+
+Napishite v WhatsApp.
+${p.site_link}`
+    }
+};
+
+const LANG_LABELS = { en: 'USA', es: 'Dominican/LatAm', fr: 'Quebec', ru: 'Russian' };
+const LANG_COLORS = { en: 'en', es: 'es', fr: 'fr', ru: 'ru' };
+
+function generateAll() {
+    const propKey = document.getElementById('property').value;
+    const style = document.getElementById('style').value;
+    const prop = PROPERTIES[propKey];
+    const templates = POSTS[style];
+    const grid = document.getElementById('posts-grid');
+    grid.innerHTML = '';
+
+    ['en', 'es', 'fr', 'ru'].forEach(lang => {
+        const text = templates[lang](prop);
+        const card = document.createElement('div');
+        card.className = 'post-card';
+        card.innerHTML = `
+            <span class="post-label ${LANG_COLORS[lang]}">${LANG_LABELS[lang]}</span>
+            <div class="post-text">${escapeHtml(text)}</div>
+            <div class="post-actions">
+                <button class="btn-copy" onclick="copyPost(this, '${lang}')">Copy</button>
+            </div>
+        `;
+        card.dataset.text = text;
+        grid.appendChild(card);
+    });
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function copyPost(btn, lang) {
+    const text = btn.closest('.post-card').dataset.text;
+    navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+}
+
+// Generate on load
+generateAll();
+document.getElementById('style').addEventListener('change', generateAll);
+document.getElementById('property').addEventListener('change', generateAll);
+    </script>
+</body>
+</html>
