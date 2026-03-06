@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posting Calendar | Rent & Go PC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #333; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { font-size: 1.5rem; margin-bottom: 4px; }
+        .subtitle { color: #666; margin-bottom: 20px; font-size: 0.9rem; }
+
+        .stats-bar {
+            display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px;
+        }
+        .stat-card {
+            background: white; padding: 14px 20px; border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); flex: 1; min-width: 140px;
+        }
+        .stat-card .stat-value { font-size: 1.4rem; font-weight: 700; color: #1a3a2a; }
+        .stat-card .stat-label { font-size: 0.72rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .controls {
+            display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;
+            background: white; padding: 14px 16px; border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); align-items: flex-end;
+        }
+        .control-group { display: flex; flex-direction: column; gap: 4px; }
+        .control-group label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: #888; letter-spacing: 0.5px; }
+        select, input {
+            padding: 8px 12px; border: 1.5px solid #ddd; border-radius: 8px;
+            font-size: 0.88rem; font-family: inherit; background: white;
+        }
+        .btn {
+            padding: 8px 18px; border: none; border-radius: 8px;
+            font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-primary { background: #1a3a2a; color: white; }
+        .btn-primary:hover { background: #2d5a3f; }
+        .btn-outline { background: white; border: 1.5px solid #ddd; color: #555; }
+        .btn-outline:hover { border-color: #1a3a2a; color: #1a3a2a; }
+
+        .legend {
+            display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;
+            font-size: 0.78rem; color: #666;
+        }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .legend-dot {
+            width: 10px; height: 10px; border-radius: 50%; display: inline-block;
+        }
+
+        .week-grid {
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 24px;
+        }
+        .day-header {
+            text-align: center; font-size: 0.72rem; font-weight: 700;
+            text-transform: uppercase; color: #888; letter-spacing: 0.5px; padding: 8px 0;
+        }
+        .day-cell {
+            background: white; border-radius: 10px; padding: 10px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06); min-height: 120px;
+        }
+        .day-cell.today { border: 2px solid #c8a45e; }
+        .day-date {
+            font-size: 0.8rem; font-weight: 600; color: #1a3a2a; margin-bottom: 8px;
+        }
+        .day-date .day-num { font-size: 1.1rem; }
+
+        .task-item {
+            padding: 6px 8px; border-radius: 6px; margin-bottom: 4px;
+            font-size: 0.72rem; line-height: 1.3; cursor: pointer;
+            border-left: 3px solid; transition: transform 0.1s;
+        }
+        .task-item:hover { transform: translateX(2px); }
+        .task-item.en { background: #e8f5e9; border-color: #27ae60; }
+        .task-item.es { background: #fce4ec; border-color: #c0392b; }
+        .task-item.fr { background: #e3f2fd; border-color: #2980b9; }
+        .task-item.ru { background: #f3e5f5; border-color: #8e44ad; }
+        .task-item.value { background: #fff8e1; border-color: #f5a623; }
+        .task-item .task-time { font-weight: 600; }
+        .task-item .task-group { color: #888; font-size: 0.65rem; }
+
+        .task-item.done { opacity: 0.4; text-decoration: line-through; }
+
+        /* Detail panel */
+        .detail-panel {
+            display: none; position: fixed; top: 0; right: 0; bottom: 0;
+            width: 420px; background: white; box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+            z-index: 100; padding: 24px; overflow-y: auto;
+        }
+        .detail-panel.open { display: block; }
+        .detail-panel .close-btn {
+            position: absolute; top: 12px; right: 16px; background: none;
+            border: none; font-size: 1.5rem; cursor: pointer; color: #888;
+        }
+        .detail-panel h3 { font-size: 1.1rem; margin-bottom: 16px; color: #1a3a2a; }
+        .detail-panel .detail-meta {
+            display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;
+        }
+        .detail-panel .meta-tag {
+            padding: 3px 10px; border-radius: 12px; font-size: 0.72rem; font-weight: 600;
+        }
+        .detail-panel .post-preview {
+            background: #f8f8f8; border-radius: 8px; padding: 14px;
+            font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap;
+            margin-bottom: 16px; max-height: 300px; overflow-y: auto;
+        }
+        .detail-panel .action-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+        .btn-copy-detail {
+            padding: 8px 20px; border: 1.5px solid #1a3a2a; border-radius: 8px;
+            background: #1a3a2a; color: white; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; transition: all 0.2s; flex: 1;
+        }
+        .btn-copy-detail:hover { background: #2d5a3f; }
+        .btn-copy-detail.copied { background: #27ae60; border-color: #27ae60; }
+        .btn-done {
+            padding: 8px 20px; border: 1.5px solid #ddd; border-radius: 8px;
+            background: white; color: #555; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; flex: 1;
+        }
+        .btn-done:hover { border-color: #27ae60; color: #27ae60; }
+
+        .overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3);
+            z-index: 99;
+        }
+        .overlay.open { display: block; }
+
+        .tip-box {
+            background: #fffbeb; border: 1px solid #f5d778; border-radius: 10px;
+            padding: 12px 16px; margin-bottom: 16px; font-size: 0.82rem; line-height: 1.5;
+        }
+        .tip-box strong { color: #92700c; }
+
+        @media (max-width: 768px) {
+            .week-grid { grid-template-columns: 1fr; }
+            .day-header { display: none; }
+            .detail-panel { width: 100%; }
+            .stats-bar { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Posting Calendar</h1>
+        <p class="subtitle">Your week-by-week posting plan across all markets. Click any task for the ready-to-copy post.</p>
+
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-value" id="stat-total">0</div>
+                <div class="stat-label">Posts This Week</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-done">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-remaining">0</div>
+                <div class="stat-label">Remaining</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-week">Week 1</div>
+                <div class="stat-label">Current Week</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Week</label>
+                <select id="week-select">
+                    <option value="0">This Week</option>
+                    <option value="1">Next Week</option>
+                    <option value="2">Week 3</option>
+                    <option value="3">Week 4</option>
+                </select>
+            </div>
+            <button class="btn btn-outline" onclick="resetWeek()">Reset Week</button>
+            <button class="btn btn-primary" onclick="window.open('post-generator.html','_blank')">Open Post Generator</button>
+        </div>
+
+        <div class="tip-box">
+            <strong>Rules:</strong> Max 1 post per group per day. 70% value content / 30% listings. Never post the same style twice in the same group. Best times: 7-9 PM EST (diaspora after work), 11 AM-1 PM (lunch scroll), Sat 9-11 AM (weekend browsing).
+        </div>
+
+        <div class="legend">
+            <div class="legend-item"><span class="legend-dot" style="background:#27ae60"></span> USA (English)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#c0392b"></span> Dominican/LatAm (Spanish)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#2980b9"></span> Quebec (French)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#8e44ad"></span> Russian</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#f5a623"></span> Value Post (no listing)</div>
+        </div>
+
+        <div class="week-grid" id="week-grid"></div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeDetail()"></div>
+    <div class="detail-panel" id="detail-panel">
+        <button class="close-btn" onclick="closeDetail()">&times;</button>
+        <h3 id="detail-title"></h3>
+        <div class="detail-meta" id="detail-meta"></div>
+        <div id="detail-instructions" style="font-size:0.82rem; margin-bottom:12px; color:#555;"></div>
+        <div class="post-preview" id="detail-post"></div>
+        <div class="action-btns">
+            <button class="btn-copy-detail" id="btn-copy" onclick="copyDetailPost()">Copy Post Text</button>
+            <button class="btn-done" id="btn-done" onclick="markDone()">Mark Done</button>
+        </div>
+    </div>
+
+    <script>
+// === SCHEDULE TEMPLATES ===
+// Each week has a balanced mix across markets and styles
+// Format: { day: 0-6 (Mon-Sun), time, market, style, group, instruction }
+
+const GROUPS = {
+    en: [
+        "Punta Cana Expats & Residents",
+        "Dominican Republic Real Estate",
+        "Caribbean Real Estate Investors",
+        "Expats in Dominican Republic",
+        "Punta Cana Community"
+    ],
+    es: [
+        "Dominicanos en New York",
+        "Dominicanos en Miami",
+        "Bienes Raices Republica Dominicana",
+        "Dominicanos en NJ/CT",
+        "Inversiones RD"
+    ],
+    fr: [
+        "Quebecois en Republique Dominicaine",
+        "Snowbirds Quebecois",
+        "Expatries Quebecois en RD",
+        "Immobilier Republique Dominicaine - Quebec",
+        "Les Quebecois dans le Sud"
+    ],
+    ru: [
+        "Russians in Dominican Republic",
+        "Russian Expats Caribbean",
+        "Nedvizhimost za rubezhom"
+    ]
+};
+
+const VALUE_POSTS = {
+    en: [
+        { title: "CONFOTUR Explainer", text: "A lot of people ask me about buying property in Punta Cana but don't know about CONFOTUR.\n\nHere's the quick version: it's a Dominican law (158-01) that gives you 15 YEARS of tax exemptions on qualifying properties:\n\n- No transfer tax at closing\n- No annual property tax\n- No capital gains when you sell\n- No tax on rental income\n\nNot every property qualifies. If you're looking at Punta Cana, make sure your unit has CONFOTUR certification before you sign anything.\n\nHappy to answer questions if anyone's exploring this." },
+        { title: "5 Things to Know Before Buying in DR", text: "5 things I wish someone told me before buying in the Dominican Republic:\n\n1. Foreigners CAN own property outright - 100% ownership, no restrictions\n2. CONFOTUR saves you thousands in taxes (ask if your property qualifies)\n3. Everything is priced in USD - no currency risk\n4. The notary system handles closings (similar to Europe, not the US)\n5. Property management companies handle everything when you're not there\n\nPunta Cana isn't just a vacation spot anymore. It's a legitimate real estate market with 8-12% Airbnb yields.\n\nAnyone else own here? What was your experience?" },
+        { title: "Cost of Living in Punta Cana", text: "People always ask me: what does it actually cost to live in Punta Cana?\n\nHere's a realistic monthly breakdown:\n- Condo fees: $150-$400/mo depending on complex\n- Electricity: $80-$200 (AC is the big variable)\n- Water: $15-$30\n- Internet (fiber): $40-$60\n- Groceries: $300-$500 for a couple\n- Health insurance: $80-$200\n- Gas/transport: $60-$120\n\nTotal: $725-$1,510/month for a comfortable lifestyle.\n\nCompare that to Miami, NYC, or LA. And you're 5 minutes from the beach.\n\nQuestions? Drop them below." }
+    ],
+    es: [
+        { title: "Que es CONFOTUR?", text: "Mucha gente me pregunta por comprar en Punta Cana pero NO conoce CONFOTUR.\n\nCONFOTUR es una ley dominicana (158-01) que te da 15 ANOS de exenciones de impuestos:\n\n- 0% impuesto de transferencia\n- 0% impuesto a la propiedad (IPI)\n- 0% ganancia de capital al vender\n- 0% impuesto sobre renta de alquiler\n\nNo todas las propiedades califican. Si estas mirando Punta Cana, asegurate de que tu unidad tenga certificacion CONFOTUR antes de firmar.\n\nPreguntas? Escribeme con confianza." },
+        { title: "Comprar en RD desde USA - Guia Rapida", text: "Para mis dominicanos en el exterior que quieren tener lo suyo en su tierra:\n\n5 cosas que debes saber:\n\n1. Si, puedes comprar con cedula o pasaporte - no hay restriccion\n2. CONFOTUR te ahorra miles en impuestos (pregunta si tu proyecto califica)\n3. Todo se maneja en dolares\n4. Hay planes de pago - no necesitas el 100% de una vez\n5. Una compania de administracion maneja todo cuando no estas\n\nPunta Cana ya no es solo para vacaciones. Es una inversion real con retorno de 8-12% en Airbnb.\n\nAlguien mas ha comprado? Cuenten su experiencia." }
+    ],
+    fr: [
+        { title: "CONFOTUR pour les Quebecois", text: "Si tu penses acheter en Republique dominicaine, il y a un truc que beaucoup de Quebecois ne connaissent pas: le CONFOTUR.\n\nC'est une loi dominicaine qui te donne 15 ANS sans impot:\n\n- 0% taxe de transfert a l'achat\n- 0% impot foncier annuel\n- 0% impot sur le gain en capital\n- 0% impot sur les revenus de location\n\nPas toutes les proprietes sont admissibles. Fais tes verifications avant de signer.\n\nSi tu as des questions, ecris-moi. Ca me fait plaisir de jaser de ca." },
+        { title: "Acheter en RD - Guide Quebecois", text: "Pour mes snowbirds et futurs proprio en Republique dominicaine, voici ce que j'aurais aime savoir avant:\n\n1. Tu peux acheter en ton nom - propriete a 100%, aucune restriction\n2. Le CONFOTUR te sauve des milliers en impots (verifie si ton condo est admissible)\n3. Tout est en USD - pense a ton taux de change CAD/USD\n4. Le systeme notarial est similaire au Quebec - tu vas te sentir chez toi\n5. N'oublie pas le T1135 pour l'ARC si ta propriete vaut plus de 100 000$ CA\n\nVol direct Montreal-Punta Cana: 4h30 avec Sunwing ou Air Transat.\n\nDes questions? Jasons-en!" }
+    ],
+    ru: [
+        { title: "CONFOTUR dlya investorov", text: "Esli vy rassmatrivaete pokupku nedvizhimosti v Dominikanskoj Respublike, vam nuzhno znat pro CONFOTUR.\n\nEto zakon (158-01), kotoryj daet 15 LET nalogovyh lgot:\n\n- 0% nalog na peredachu\n- 0% nalog na nedvizhimost\n- 0% nalog na prirost kapitala\n- 0% nalog na arendnyj dohod\n\nNe vsya nedvizhimost podpadaet pod etot zakon. Proverite pered pokupkoj.\n\nNapishite mne v WhatsApp esli est voprosy." }
+    ]
+};
+
+const LISTING_STYLES = ['hook', 'investment', 'lifestyle', 'comparison', 'urgency', 'confotur'];
+const STYLE_LABELS = {
+    hook: 'The Hook', investment: 'Investment', lifestyle: 'Lifestyle',
+    comparison: 'Price Compare', urgency: 'Urgency', confotur: 'CONFOTUR Ed.'
+};
+
+// Property post text (simplified versions for calendar)
+function getListingPost(market, style) {
+    const p = { price: '$315,000', link: 'rentandgopc.com' };
+    const posts = {
+        en: {
+            hook: `2BR apartment overlooking Cocotal Golf Course - ${p.price}\n\nThis one checks all the boxes:\n- 144 sqm, 2 bed, 2 bath, 2 parking\n- Full Melia Hotel access (beach, pool, spa)\n- CONFOTUR = 0% property tax for 15 years\n- Golf course views from your terrace\n\nSerious buyers DM me or WhatsApp.\n${p.link}`,
+            investment: `CONFOTUR saves you THOUSANDS when buying in Punta Cana.\n\n2BR in Cocotal Golf - ${p.price}:\n- No transfer tax (~$9,450 saved)\n- No property tax for 15 YEARS\n- No capital gains tax\n- No rental income tax\n\n144 sqm, golf views, Melia access. 8-12% Airbnb ROI.\n\nDM for details. ${p.link}`,
+            lifestyle: `Imagine waking up to golf course views every morning...\n\n2BR in Cocotal Golf, Punta Cana. 144 sqm, huge terrace. Walk to Melia Hotel for beach, dinner, spa.\n\n${p.price} with CONFOTUR (15 years tax free).\n\nNot just a property - a lifestyle upgrade.\n\nDM for details. ${p.link}`,
+            comparison: `${p.price} in Miami = small studio.\n${p.price} in Punta Cana = THIS:\n\n- 2 bed, 1,550 sqft\n- Golf course views\n- Melia Hotel beach access\n- 2 parking\n- ZERO property tax 15 years\n- 8-12% Airbnb ROI\n\nDirect flights, 3-4 hours. DM me.\n${p.link}`,
+            urgency: `Only ONE unit left with this view.\n\n2BR Cocotal Golf. 144 sqm, 2 parking, terrace with direct golf views.\nMelia Hotel access. CONFOTUR included.\n\nUS${p.price}.\n\nDM me before it's gone.\n${p.link}`,
+            confotur: `Buying in DR without knowing CONFOTUR? You're leaving money on the table.\n\n15 YEARS tax exemptions:\n- 0% transfer tax\n- 0% property tax\n- 0% capital gains\n- 0% rental income tax\n\n2BR Cocotal Golf with CONFOTUR: ${p.price}. Golf views, Melia access.\n\nDM me. ${p.link}`
+        },
+        es: {
+            hook: `Apartamento 2 hab con VISTA AL GOLF en Cocotal - US${p.price}\n\n144 m2, 2 parqueos, terraza amplia\nAcceso Hotel Melia (playa, restaurantes, spa)\nCONFOTUR INCLUIDO - 15 anos sin impuestos!\n\nEscribeme al WhatsApp.\n${p.link}`,
+            investment: `CONFOTUR = 15 anos SIN IMPUESTOS\n\n2 hab en Cocotal Golf - US${p.price}:\n- 0% transferencia (~$9,450 de ahorro)\n- 0% propiedad por 15 ANOS\n- 0% ganancia de capital\n- 0% renta de alquiler\n\n8-12% retorno anual en Airbnb.\n\nEscribeme. ${p.link}`,
+            lifestyle: `Imaginate despertar con esta vista...\n\n2 hab en Cocotal Golf. 144 m2, terraza con vista al golf. Hotel Melia a pasos.\n\nUS${p.price} con CONFOTUR.\n\nEsto es un cambio de vida.\n\nEscribeme. ${p.link}`,
+            comparison: `US${p.price} en Miami = studio.\nUS${p.price} en Punta Cana = ESTO:\n\n- 2 hab, 144 m2\n- Vista al golf\n- Playa del Melia\n- 2 parqueos\n- CERO impuestos 15 anos\n- 8-12% retorno Airbnb\n\nTu dinero, 10x mas valor.\n${p.link}`,
+            urgency: `Solo queda UNO con esta vista.\n\n2 hab Cocotal Golf. 144 m2, 2 parqueos, terraza al golf.\nAcceso Melia. CONFOTUR incluido.\n\nUS${p.price}.\n\nEscribeme antes de que se vaya.\n${p.link}`,
+            confotur: `Si compras en RD y no conoces CONFOTUR, estas dejando dinero.\n\n15 ANOS exenciones:\n- 0% transferencia\n- 0% propiedad\n- 0% ganancia capital\n- 0% renta alquiler\n\n2 hab Cocotal Golf con CONFOTUR: US${p.price}.\n\nPreguntame. ${p.link}`
+        },
+        fr: {
+            hook: `Condo 2 ch vue sur le golf a Cocotal - US${p.price}\n\n144 m2, 2 stationnements, grande terrasse\nAcces Hotel Melia (plage, restos, spa)\nCONFOTUR inclus = 0% impot 15 ans!\n\nVol direct depuis Montreal, 4h30.\n\nEcris-moi sur WhatsApp.\n${p.link}`,
+            investment: `CONFOTUR = 15 ans SANS IMPOT\n\nCondo 2 ch a Cocotal Golf - US${p.price}:\n- 0% taxe transfert (~$9,450 d'economie)\n- 0% impot foncier 15 ANS\n- 0% gain en capital\n- 0% revenus de location\n\nRendement 8-12%/an sur Airbnb. Ton condo travaille pour toi.\n\nEcris-moi. ${p.link}`,
+            lifestyle: `Imagine-toi: ta terrasse, vue sur le golf, soleil...\n\nCondo 2 ch a Cocotal Golf. 144 m2. Melia Hotel a distance de marche.\n\nUS${p.price} avec CONFOTUR.\n\nPendant que Montreal pellete, tu es au soleil.\n\nEcris-moi. ${p.link}`,
+            comparison: `US${p.price} a Montreal = 3 1/2 dans Griffintown.\nUS${p.price} a Punta Cana = CECI:\n\n- 2 ch, 144 m2\n- Vue golf\n- Plage Melia\n- 2 stationnements\n- ZERO impot 15 ans\n- Rendement 8-12% Airbnb\n\nVol direct Montreal. 4h30.\n${p.link}`,
+            urgency: `Il en reste UN SEUL avec cette vue.\n\nCondo 2 ch Cocotal Golf. 144 m2, terrasse vue golf.\nAcces Melia. CONFOTUR inclus.\n\nUS${p.price}.\n\nEcris-moi avant qu'il parte.\n${p.link}`,
+            confotur: `Tu achetes en RD sans connaitre le CONFOTUR? Tu laisses de l'argent sur la table.\n\n15 ANS exemptions:\n- 0% transfert\n- 0% foncier\n- 0% gain en capital\n- 0% revenus location\n\nCondo 2 ch Cocotal Golf: US${p.price}.\n\nJasons-en! ${p.link}`
+        },
+        ru: {
+            hook: `Apartamenty 2 sp. s vidom na golf v Cocotal - US${p.price}\n\n144 kv.m., 2 parkovki, bolshaya terrasa\nOtel Melia (plyazh, restorany, spa)\nCONFOTUR = 0% nalogov 15 let!\n\nNapishite v WhatsApp.\n${p.link}`,
+            investment: `CONFOTUR = 15 let BEZ NALOGOV\n\n2 sp. Cocotal Golf - US${p.price}:\n- 0% nalog peredachi (~$9,450 ekonomii)\n- 0% nalog nedvizhimost 15 LET\n- 0% prirost kapitala\n- 0% arendnyj dohod\n\n8-12% godovyh na Airbnb.\n\nNapishite. ${p.link}`,
+            lifestyle: `Predstavte: utro, terrasa, vid na golf...\n\n2 sp. Cocotal Golf. 144 kv.m. Otel Melia ryadom.\n\nUS${p.price} s CONFOTUR (15 let bez nalogov).\n\nNe prosto nedvizhimost — novyj uroven zhizni.\n\nNapishite. ${p.link}`,
+            comparison: `US${p.price} v Majami = studiya.\nUS${p.price} v Punta Cana = VOT:\n\n- 2 spalni, 144 kv.m.\n- Vid na golf\n- Plyazh Melia\n- 2 parkovki\n- 0% nalogov 15 let\n- 8-12% Airbnb\n\nNapishite. ${p.link}`,
+            urgency: `Ostalsya ODIN s takim vidom.\n\n2 sp. Cocotal Golf. 144 kv.m., terrasa, vid na golf.\nMelia. CONFOTUR.\n\nUS${p.price}.\n\nNapishite poka est.\n${p.link}`,
+            confotur: `Pokupaete v DR bez CONFOTUR? Teryaete dengi.\n\n15 LET lgot:\n- 0% peredacha\n- 0% nedvizhimost\n- 0% prirost kapitala\n- 0% arenda\n\n2 sp. Cocotal Golf: US${p.price}.\n\nNapishite. ${p.link}`
+        }
+    };
+    return posts[market]?.[style] || '';
+}
+
+// Week schedule generator
+function generateWeekSchedule(weekOffset) {
+    // Rotate styles and groups each week
+    const styleRotation = [...LISTING_STYLES];
+    for (let i = 0; i < weekOffset; i++) styleRotation.push(styleRotation.shift());
+
+    const schedule = [
+        // Monday - Value day (build trust)
+        { day: 0, time: '12:00 PM', type: 'value', market: 'en', valueIdx: weekOffset % VALUE_POSTS.en.length,
+          group: GROUPS.en[weekOffset % GROUPS.en.length], instruction: 'Share as helpful advice, not a listing. Engage with every comment.' },
+        { day: 0, time: '7:30 PM', type: 'value', market: 'es', valueIdx: weekOffset % VALUE_POSTS.es.length,
+          group: GROUPS.es[weekOffset % GROUPS.es.length], instruction: 'Tono conversacional. Responde cada comentario.' },
+
+        // Tuesday - Listing day (EN + FR)
+        { day: 1, time: '12:00 PM', type: 'listing', market: 'en', style: styleRotation[0],
+          group: GROUPS.en[(weekOffset + 1) % GROUPS.en.length], instruction: 'Attach your BEST photo. Lead with the image.' },
+        { day: 1, time: '7:00 PM', type: 'listing', market: 'fr', style: styleRotation[1],
+          group: GROUPS.fr[weekOffset % GROUPS.fr.length], instruction: 'Attache ta meilleure photo. Les Quebecois repondent bien aux images de terrasse/vue.' },
+
+        // Wednesday - Value day (FR + RU)
+        { day: 2, time: '11:00 AM', type: 'value', market: 'fr', valueIdx: weekOffset % VALUE_POSTS.fr.length,
+          group: GROUPS.fr[(weekOffset + 1) % GROUPS.fr.length], instruction: 'Partage comme conseil, pas comme pub. Utilise le "tu".' },
+        { day: 2, time: '7:30 PM', type: 'value', market: 'ru', valueIdx: weekOffset % VALUE_POSTS.ru.length,
+          group: GROUPS.ru[weekOffset % GROUPS.ru.length], instruction: 'Share as educational content. Russians value detailed information.' },
+
+        // Thursday - Listing day (ES + RU)
+        { day: 3, time: '12:00 PM', type: 'listing', market: 'es', style: styleRotation[2],
+          group: GROUPS.es[(weekOffset + 1) % GROUPS.es.length], instruction: 'Foto obligatoria. Los dominicanos responden mas a fotos reales.' },
+        { day: 3, time: '7:00 PM', type: 'listing', market: 'ru', style: styleRotation[3],
+          group: GROUPS.ru[(weekOffset + 1) % GROUPS.ru.length], instruction: 'Include investment numbers. Russian buyers are ROI-focused.' },
+
+        // Friday - Mixed (listing EN + value ES)
+        { day: 4, time: '11:30 AM', type: 'listing', market: 'en', style: styleRotation[4],
+          group: GROUPS.en[(weekOffset + 2) % GROUPS.en.length], instruction: 'Friday = people dreaming about weekend escapes. Use lifestyle angle.' },
+        { day: 4, time: '8:00 PM', type: 'value', market: 'es', valueIdx: (weekOffset + 1) % VALUE_POSTS.es.length,
+          group: GROUPS.es[(weekOffset + 2) % GROUPS.es.length], instruction: 'Viernes por la noche — la gente esta relajada y scrolleando.' },
+
+        // Saturday - Listing day (FR + ES)
+        { day: 5, time: '9:30 AM', type: 'listing', market: 'fr', style: styleRotation[5],
+          group: GROUPS.fr[(weekOffset + 2) % GROUPS.fr.length], instruction: 'Samedi matin — les gens browsent avec leur cafe. Bon timing.' },
+        { day: 5, time: '11:00 AM', type: 'listing', market: 'es', style: styleRotation[0],
+          group: GROUPS.es[(weekOffset + 3) % GROUPS.es.length], instruction: 'Sabado = la gente tiene tiempo. Buen momento para posts largos.' },
+
+        // Sunday - Rest or light value
+        { day: 6, time: '10:00 AM', type: 'value', market: 'en', valueIdx: (weekOffset + 1) % VALUE_POSTS.en.length,
+          group: GROUPS.en[(weekOffset + 3) % GROUPS.en.length], instruction: 'Sunday = light, inspirational. Share a lifestyle post or tip.' },
+    ];
+
+    return schedule;
+}
+
+// === STATE ===
+let currentWeek = 0;
+let completedTasks = JSON.parse(localStorage.getItem('calendar_done') || '{}');
+let selectedTask = null;
+
+// === RENDER ===
+function getWeekDates(weekOffset) {
+    const now = new Date();
+    const monday = new Date(now);
+    monday.setDate(now.getDate() - now.getDay() + 1 + (weekOffset * 7));
+    const dates = [];
+    for (let i = 0; i < 7; i++) {
+        const d = new Date(monday);
+        d.setDate(monday.getDate() + i);
+        dates.push(d);
+    }
+    return dates;
+}
+
+function renderWeek() {
+    const grid = document.getElementById('week-grid');
+    const dates = getWeekDates(currentWeek);
+    const schedule = generateWeekSchedule(currentWeek);
+    const today = new Date().toDateString();
+
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    grid.innerHTML = days.map(d => `<div class="day-header">${d}</div>`).join('');
+
+    let totalTasks = 0, doneTasks = 0;
+
+    dates.forEach((date, dayIdx) => {
+        const dayTasks = schedule.filter(t => t.day === dayIdx);
+        const isToday = date.toDateString() === today;
+        const dateStr = date.toLocaleDateString('en', { month: 'short', day: 'numeric' });
+
+        const tasksHtml = dayTasks.map((task, tIdx) => {
+            const taskId = `w${currentWeek}_d${dayIdx}_t${tIdx}`;
+            const isDone = completedTasks[taskId];
+            totalTasks++;
+            if (isDone) doneTasks++;
+
+            const market = task.market;
+            const cssClass = task.type === 'value' ? 'value' : market;
+            const label = task.type === 'value'
+                ? (VALUE_POSTS[market]?.[task.valueIdx]?.title || 'Value Post')
+                : `${STYLE_LABELS[task.style]} - ${market.toUpperCase()}`;
+
+            return `<div class="task-item ${cssClass} ${isDone ? 'done' : ''}"
+                         onclick="openDetail('${taskId}', ${currentWeek}, ${dayIdx}, ${tIdx})">
+                <div class="task-time">${task.time}</div>
+                <div>${label}</div>
+                <div class="task-group">${task.group}</div>
+            </div>`;
+        }).join('');
+
+        grid.innerHTML += `
+            <div class="day-cell ${isToday ? 'today' : ''}">
+                <div class="day-date"><span class="day-num">${date.getDate()}</span> ${dateStr}</div>
+                ${tasksHtml || '<div style="color:#ccc;font-size:0.78rem;margin-top:20px;text-align:center;">Rest day</div>'}
+            </div>`;
+    });
+
+    document.getElementById('stat-total').textContent = totalTasks;
+    document.getElementById('stat-done').textContent = doneTasks;
+    document.getElementById('stat-remaining').textContent = totalTasks - doneTasks;
+    document.getElementById('stat-week').textContent = `Week ${currentWeek + 1}`;
+}
+
+function openDetail(taskId, week, day, tIdx) {
+    const schedule = generateWeekSchedule(week);
+    const task = schedule.filter(t => t.day === day)[tIdx];
+    if (!task) return;
+
+    selectedTask = { taskId, task };
+    const panel = document.getElementById('detail-panel');
+    const overlay = document.getElementById('overlay');
+
+    const market = task.market;
+    const marketLabels = { en: 'USA', es: 'Dominican/LatAm', fr: 'Quebec', ru: 'Russian' };
+    const marketColors = { en: '#27ae60', es: '#c0392b', fr: '#2980b9', ru: '#8e44ad' };
+
+    let title, postText;
+    if (task.type === 'value') {
+        const vp = VALUE_POSTS[market]?.[task.valueIdx];
+        title = vp?.title || 'Value Post';
+        postText = vp?.text || '';
+    } else {
+        title = `${STYLE_LABELS[task.style]} Post`;
+        postText = getListingPost(market, task.style);
+    }
+
+    document.getElementById('detail-title').textContent = title;
+    document.getElementById('detail-meta').innerHTML = `
+        <span class="meta-tag" style="background:${marketColors[market]}20;color:${marketColors[market]}">${marketLabels[market]}</span>
+        <span class="meta-tag" style="background:#f0f0f0;color:#555">${task.time}</span>
+        <span class="meta-tag" style="background:#f0f0f0;color:#555">${task.type === 'value' ? 'Value Post' : 'Listing'}</span>
+    `;
+    document.getElementById('detail-instructions').innerHTML = `<strong>Group:</strong> ${task.group}<br><strong>Tip:</strong> ${task.instruction}`;
+    document.getElementById('detail-post').textContent = postText;
+
+    const isDone = completedTasks[taskId];
+    document.getElementById('btn-done').textContent = isDone ? 'Undo' : 'Mark Done';
+    document.getElementById('btn-copy').textContent = 'Copy Post Text';
+    document.getElementById('btn-copy').classList.remove('copied');
+
+    panel.classList.add('open');
+    overlay.classList.add('open');
+}
+
+function closeDetail() {
+    document.getElementById('detail-panel').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+    selectedTask = null;
+}
+
+function copyDetailPost() {
+    const text = document.getElementById('detail-post').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('btn-copy');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy Post Text'; btn.classList.remove('copied'); }, 2000);
+    });
+}
+
+function markDone() {
+    if (!selectedTask) return;
+    const { taskId } = selectedTask;
+    if (completedTasks[taskId]) {
+        delete completedTasks[taskId];
+    } else {
+        completedTasks[taskId] = true;
+    }
+    localStorage.setItem('calendar_done', JSON.stringify(completedTasks));
+    renderWeek();
+    closeDetail();
+}
+
+function resetWeek() {
+    const prefix = `w${currentWeek}_`;
+    Object.keys(completedTasks).forEach(k => { if (k.startsWith(prefix)) delete completedTasks[k]; });
+    localStorage.setItem('calendar_done', JSON.stringify(completedTasks));
+    renderWeek();
+}
+
+// Init
+document.getElementById('week-select').addEventListener('change', (e) => {
+    currentWeek = parseInt(e.target.value);
+    renderWeek();
+});
+renderWeek();
+    </script>
+</body>
+</html>
