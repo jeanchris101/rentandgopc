@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punta Cana Market Intelligence | Bavaro/PC Rental Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1117;--card:#161b22;--border:#21262d;--border-light:#30363d;
+  --blue:#58a6ff;--green:#3fb950;--red:#f85149;--gold:#d29922;--purple:#bc8cff;--cyan:#39d2c0;
+  --text:#e6edf3;--text-secondary:#8b949e;--text-muted:#484f58;
+  --radius:12px;--radius-sm:8px;
+}
+html{font-size:14px;scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh;overflow-x:hidden}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-muted)}
+
+/* Layout */
+.container{max-width:1440px;margin:0 auto;padding:0 24px}
+header{border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;background:rgba(13,17,23,0.95);backdrop-filter:blur(12px);z-index:100}
+.header-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--blue),var(--purple));border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#fff}
+.logo h1{font-size:18px;font-weight:700;letter-spacing:-0.3px}
+.logo span{color:var(--text-secondary);font-weight:400;font-size:13px;margin-left:8px}
+.header-actions{display:flex;gap:8px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.badge-live{background:rgba(63,185,80,0.15);color:var(--green);border:1px solid rgba(63,185,80,0.3)}
+.badge-live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* Nav */
+nav{border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:61px;z-index:99}
+.nav-inner{display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nav-btn{padding:12px 20px;font-size:13px;font-weight:500;color:var(--text-secondary);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:all 0.2s}
+.nav-btn:hover{color:var(--text);background:rgba(88,166,255,0.05)}
+.nav-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+
+/* Sections */
+section{padding:32px 0;display:none}
+section.active{display:block}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:border-color 0.2s,box-shadow 0.2s}
+.card:hover{border-color:var(--border-light)}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.card-title{font-size:13px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.5px}
+
+/* Zone Grid */
+.zone-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.zone-card{cursor:pointer;position:relative;overflow:hidden}
+.zone-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--radius) var(--radius) 0 0}
+.zone-card:nth-child(1)::before{background:var(--blue)}
+.zone-card:nth-child(2)::before{background:var(--green)}
+.zone-card:nth-child(3)::before{background:var(--gold)}
+.zone-card:nth-child(4)::before{background:var(--text-muted)}
+.zone-card:nth-child(5)::before{background:var(--cyan)}
+.zone-card:nth-child(6)::before{background:var(--purple)}
+.zone-card:nth-child(7)::before{background:var(--red)}
+.zone-card:nth-child(8)::before{background:#f778ba}
+.zone-card:hover{border-color:var(--blue);box-shadow:0 0 20px rgba(88,166,255,0.08)}
+.zone-name{font-size:16px;font-weight:700;margin-bottom:4px}
+.zone-subtitle{font-size:12px;color:var(--text-secondary);margin-bottom:16px}
+.zone-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.metric{display:flex;flex-direction:column;gap:2px}
+.metric-label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.3px}
+.metric-value{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600}
+.metric-value.green{color:var(--green)}
+.metric-value.blue{color:var(--blue)}
+.metric-value.gold{color:var(--gold)}
+.metric-value.red{color:var(--red)}
+.zone-footer{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:12px;border-top:1px solid var(--border)}
+.competition-bar{display:flex;gap:2px;align-items:center}
+.comp-dot{width:8px;height:8px;border-radius:2px;background:var(--border-light)}
+.comp-dot.filled{background:var(--gold)}
+.invest-stars{display:flex;gap:2px}
+.star{font-size:14px;color:var(--border-light)}
+.star.filled{color:var(--gold)}
+
+/* Sort Controls */
+.sort-controls{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.sort-controls label{font-size:12px;color:var(--text-secondary);margin-right:4px}
+.sort-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text-secondary);font-size:12px;font-weight:500;cursor:pointer;transition:all 0.2s}
+.sort-btn:hover,.sort-btn.active{border-color:var(--blue);color:var(--blue);background:rgba(88,166,255,0.08)}
+
+/* Zone Detail Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;justify-content:center;align-items:flex-start;padding:40px 20px;overflow-y:auto}
+.modal-overlay.open{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:800px;width:100%;padding:32px;position:relative;animation:modalIn 0.3s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:16px;right:16px;background:var(--border);border:none;color:var(--text);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.modal-close:hover{background:var(--red)}
+.modal h2{font-size:22px;font-weight:700;margin-bottom:4px}
+.modal .zone-type{color:var(--text-secondary);font-size:13px;margin-bottom:24px}
+.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.detail-stat{background:var(--bg);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.detail-stat .label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.detail-stat .value{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700}
+.tips-section{background:var(--bg);border-radius:var(--radius-sm);padding:16px}
+.tips-section h3{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--blue)}
+.tips-section ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.tips-section li{padding-left:16px;position:relative;font-size:13px;color:var(--text-secondary);line-height:1.6}
+.tips-section li::before{content:'>';position:absolute;left:0;color:var(--blue);font-family:'JetBrains Mono',monospace;font-weight:700}
+
+/* Comparison */
+.compare-controls{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;align-items:center}
+.compare-controls label{font-size:13px;color:var(--text-secondary)}
+.zone-select{background:var(--bg);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:var(--radius-sm);font-size:13px;font-family:'Inter',sans-serif;cursor:pointer}
+.zone-select:focus{border-color:var(--blue);outline:none}
+.compare-table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+.compare-table th,.compare-table td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border);font-size:13px}
+.compare-table th{background:var(--bg);color:var(--text-secondary);font-weight:600;text-transform:uppercase;letter-spacing:0.3px;font-size:11px;position:sticky;top:0}
+.compare-table td{font-family:'JetBrains Mono',monospace;font-size:13px}
+.compare-table tr:last-child td{border-bottom:none}
+.winner{color:var(--green);font-weight:700}
+.compare-chart{margin-top:24px}
+.chart-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.chart-label{width:120px;font-size:12px;color:var(--text-secondary);text-align:right;flex-shrink:0}
+.chart-bars{flex:1;display:flex;flex-direction:column;gap:4px}
+.chart-bar-wrapper{display:flex;align-items:center;gap:8px}
+.chart-bar{height:24px;border-radius:4px;transition:width 0.6s ease;min-width:2px;display:flex;align-items:center;padding-left:8px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:#fff}
+.chart-bar.z1{background:var(--blue)}
+.chart-bar.z2{background:var(--green)}
+.chart-bar.z3{background:var(--gold)}
+
+/* Heatmap */
+.heatmap-wrapper{overflow-x:auto}
+.heatmap{width:100%;border-collapse:separate;border-spacing:3px}
+.heatmap th{padding:8px 6px;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.3px;font-weight:600;text-align:center}
+.heatmap th:first-child{text-align:left;min-width:160px}
+.heatmap td{text-align:center;padding:10px 6px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;transition:transform 0.15s,box-shadow 0.15s;cursor:default;position:relative}
+.heatmap td:hover{transform:scale(1.08);box-shadow:0 0 12px rgba(0,0,0,0.4);z-index:2}
+.heatmap td:first-child{background:transparent !important;color:var(--text);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;text-align:left}
+.heatmap-legend{display:flex;gap:16px;align-items:center;margin-top:16px;justify-content:center}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-secondary)}
+.legend-swatch{width:16px;height:16px;border-radius:4px}
+
+/* Revenue Simulator */
+.sim-layout{display:grid;grid-template-columns:380px 1fr;gap:24px}
+.sim-form{display:flex;flex-direction:column;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group label{font-size:12px;color:var(--text-secondary);font-weight:500}
+.form-input,.form-select{background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:var(--radius-sm);font-size:14px;font-family:'Inter',sans-serif;transition:border-color 0.2s}
+.form-input:focus,.form-select:focus{border-color:var(--blue);outline:none}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sim-results{display:flex;flex-direction:column;gap:16px}
+.result-big{background:var(--bg);border-radius:var(--radius);padding:24px;text-align:center;border:1px solid var(--border)}
+.result-big .label{font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.result-big .amount{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:700;color:var(--green)}
+.result-big .sub{font-size:12px;color:var(--text-secondary);margin-top:4px}
+.results-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.result-card{background:var(--bg);border-radius:var(--radius-sm);padding:16px;border:1px solid var(--border)}
+.result-card .label{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.3px;margin-bottom:4px}
+.result-card .value{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:600}
+.us-compare{margin-top:16px}
+.us-compare h3{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--text-secondary)}
+.us-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.us-row:last-child{border-bottom:none}
+.us-city{color:var(--text-secondary)}
+.us-val{font-family:'JetBrains Mono',monospace;font-weight:600}
+
+/* Competition */
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.comp-card .zone-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.comp-card .listing-count{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--blue)}
+.comp-card .listing-label{font-size:11px;color:var(--text-muted)}
+.comp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.comp-stat{text-align:center;background:var(--bg);border-radius:var(--radius-sm);padding:10px 8px}
+.comp-stat .v{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600}
+.comp-stat .l{font-size:10px;color:var(--text-muted);margin-top:2px}
+.edge-box{background:var(--bg);border-radius:var(--radius-sm);padding:12px;border-left:3px solid var(--green)}
+.edge-box h4{font-size:12px;font-weight:600;color:var(--green);margin-bottom:6px}
+.edge-box p{font-size:12px;color:var(--text-secondary);line-height:1.5}
+
+/* Pricing */
+.pricing-zone{margin-bottom:24px}
+.pricing-zone h3{font-size:16px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.pricing-table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);margin-bottom:12px}
+.pricing-table th,.pricing-table td{padding:10px 14px;text-align:center;border-bottom:1px solid var(--border);font-size:12px}
+.pricing-table th{background:var(--bg);color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.3px;font-size:10px}
+.pricing-table td{font-family:'JetBrains Mono',monospace}
+.pricing-table tr:last-child td{border-bottom:none}
+.pricing-tips{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:12px}
+.pricing-tip{background:var(--bg);border-radius:var(--radius-sm);padding:14px;font-size:12px;color:var(--text-secondary);line-height:1.6;border-left:3px solid var(--blue)}
+.pricing-tip strong{color:var(--text);font-weight:600}
+
+/* Insights */
+.insight-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:720px;margin:0 auto}
+.insight-item{padding:20px 0;border-bottom:1px solid var(--border);display:none}
+.insight-item.visible{display:block}
+.insight-item:last-child{border-bottom:none}
+.insight-icon{font-size:13px;color:var(--gold);margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.insight-text{font-size:15px;line-height:1.7;color:var(--text)}
+.insight-nav{display:flex;justify-content:center;gap:8px;margin-top:20px}
+.insight-dot{width:8px;height:8px;border-radius:50%;background:var(--border-light);cursor:pointer;transition:background 0.2s}
+.insight-dot.active{background:var(--blue)}
+.insight-counter{text-align:center;font-size:12px;color:var(--text-muted);margin-top:8px;font-family:'JetBrains Mono',monospace}
+
+/* Print */
+.print-btn{padding:8px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--card);color:var(--text);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+.print-btn:hover{border-color:var(--blue);color:var(--blue)}
+
+/* Utilities */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.section-title{font-size:20px;font-weight:700;letter-spacing:-0.3px}
+.section-desc{font-size:13px;color:var(--text-secondary);margin-top:2px}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.tag-high{background:rgba(248,81,73,0.15);color:var(--red)}
+.tag-med{background:rgba(210,153,34,0.15);color:var(--gold)}
+.tag-low{background:rgba(63,185,80,0.15);color:var(--green)}
+.tag-vlow{background:rgba(88,166,255,0.15);color:var(--blue)}
+
+/* Responsive */
+@media(max-width:900px){
+  .sim-layout{grid-template-columns:1fr}
+  .detail-grid{grid-template-columns:repeat(2,1fr)}
+  .zone-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .container{padding:0 12px}
+  .zone-metrics{grid-template-columns:1fr}
+  .compare-controls{flex-direction:column;align-items:stretch}
+}
+
+/* Print styles */
+@media print{
+  body{background:#fff;color:#000}
+  .card,.modal,.compare-table,.heatmap td,.pricing-table,.comp-card,.result-card,.result-big,.detail-stat,.tips-section,.edge-box,.pricing-tip,.insight-panel{background:#f8f8f8;border-color:#ddd;color:#000}
+  header,nav,.print-btn,.modal-close,.sort-controls,.compare-controls,.nav-btn,.header-actions{display:none !important}
+  section{display:block !important;padding:16px 0;page-break-inside:avoid}
+  .metric-value,.mono{color:#000 !important}
+  .metric-value.green,.winner{color:#0a6; !important}
+  .metric-value.blue{color:#06a !important}
+  .metric-value.gold{color:#a80 !important}
+  .metric-value.red{color:#c00 !important}
+  .heatmap td{color:#000 !important}
+}
+
+/* Animations */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.zone-card,.comp-card{animation:fadeIn 0.4s ease backwards}
+.zone-card:nth-child(2),.comp-card:nth-child(2){animation-delay:0.05s}
+.zone-card:nth-child(3),.comp-card:nth-child(3){animation-delay:0.1s}
+.zone-card:nth-child(4),.comp-card:nth-child(4){animation-delay:0.15s}
+.zone-card:nth-child(5),.comp-card:nth-child(5){animation-delay:0.2s}
+.zone-card:nth-child(6),.comp-card:nth-child(6){animation-delay:0.25s}
+.zone-card:nth-child(7),.comp-card:nth-child(7){animation-delay:0.3s}
+.zone-card:nth-child(8),.comp-card:nth-child(8){animation-delay:0.35s}
+</style>
+</head>
+<body>
+
+<header>
+<div class="container header-inner">
+  <div class="logo">
+    <div class="logo-icon">MI</div>
+    <div>
+      <h1>Market Intelligence <span>Bavaro / Punta Cana</span></h1>
+    </div>
+  </div>
+  <div class="header-actions">
+    <div class="badge badge-live">Data: Q1 2026</div>
+    <button class="print-btn" onclick="window.print()">&#9113; Print Report</button>
+  </div>
+</div>
+</header>
+
+<nav>
+<div class="container nav-inner">
+  <button class="nav-btn active" data-section="overview">Zone Overview</button>
+  <button class="nav-btn" data-section="compare">Compare Zones</button>
+  <button class="nav-btn" data-section="heatmap">Seasonal Heatmap</button>
+  <button class="nav-btn" data-section="simulator">Revenue Simulator</button>
+  <button class="nav-btn" data-section="competition">Competition</button>
+  <button class="nav-btn" data-section="pricing">Pricing Strategy</button>
+  <button class="nav-btn" data-section="insights">Key Insights</button>
+</div>
+</nav>
+
+<!-- ===== ZONE OVERVIEW ===== -->
+<section id="overview" class="active">
+<div class="container">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Zone Overview</div>
+      <div class="section-desc">8 micro-zones across the Bavaro / Punta Cana corridor. Click any zone for details.</div>
+    </div>
+  </div>
+  <div class="sort-controls">
+    <label>Sort by:</label>
+    <button class="sort-btn active" data-sort="default">Default</button>
+    <button class="sort-btn" data-sort="adr">ADR</button>
+    <button class="sort-btn" data-sort="occupancy">Occupancy</button>
+    <button class="sort-btn" data-sort="revenue">Revenue</button>
+    <button class="sort-btn" data-sort="competition">Competition</button>
+    <button class="sort-btn" data-sort="investment">Investment Score</button>
+  </div>
+  <div class="zone-grid" id="zoneGrid"></div>
+</div>
+</section>
+
+<!-- ===== COMPARE ===== -->
+<section id="compare">
+<div class="container">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Zone Comparison</div>
+      <div class="section-desc">Select up to 3 zones for side-by-side analysis.</div>
+    </div>
+  </div>
+  <div class="compare-controls">
+    <label>Zone 1:</label><select class="zone-select" id="cmp1"></select>
+    <label>Zone 2:</label><select class="zone-select" id="cmp2"></select>
+    <label>Zone 3:</label><select class="zone-select" id="cmp3"></select>
+  </div>
+  <div id="compareContent"></div>
+</div>
+</section>
+
+<!-- ===== HEATMAP ===== -->
+<section id="heatmap">
+<div class="container">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Seasonal Occupancy Heatmap</div>
+      <div class="section-desc">12-month occupancy estimates by zone. Darker = higher occupancy.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="heatmap-wrapper">
+      <table class="heatmap" id="heatmapTable"></table>
+    </div>
+    <div class="heatmap-legend">
+      <div class="legend-item"><div class="legend-swatch" style="background:rgba(88,166,255,0.12)"></div>35-45%</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:rgba(88,166,255,0.25)"></div>45-55%</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:rgba(88,166,255,0.4)"></div>55-65%</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:rgba(88,166,255,0.55)"></div>65-75%</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:rgba(88,166,255,0.72)"></div>75-85%</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:rgba(88,166,255,0.9)"></div>85%+</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== SIMULATOR ===== -->
+<section id="simulator">
+<div class="container">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Revenue Simulator</div>
+      <div class="section-desc">Estimate annual income and compare against US rental markets.</div>
+    </div>
+  </div>
+  <div class="sim-layout">
+    <div class="card sim-form">
+      <div class="card-title">Parameters</div>
+      <div class="form-group">
+        <label>Zone</label>
+        <select class="form-select" id="simZone"></select>
+      </div>
+      <div class="form-group">
+        <label>Property Type</label>
+        <select class="form-select" id="simType">
+          <option value="studio">Studio</option>
+          <option value="1br" selected>1 Bedroom</option>
+          <option value="2br">2 Bedrooms</option>
+          <option value="3br">3+ Bedrooms</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Nightly Rate (USD)</label>
+        <input type="number" class="form-input" id="simRate" value="100">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Management Fee %</label>
+          <input type="number" class="form-input" id="simMgmt" value="20">
+        </div>
+        <div class="form-group">
+          <label>Cleaning Fee / Turnover</label>
+          <input type="number" class="form-input" id="simClean" value="35">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Property Value (USD)</label>
+          <input type="number" class="form-input" id="simValue" value="120000">
+        </div>
+        <div class="form-group">
+          <label>Annual Expenses (USD)</label>
+          <input type="number" class="form-input" id="simExpenses" value="3600">
+        </div>
+      </div>
+      <button class="print-btn" style="align-self:stretch;justify-content:center;margin-top:8px" onclick="runSimulator()">Calculate</button>
+    </div>
+    <div class="sim-results" id="simResults">
+      <div class="result-big">
+        <div class="label">Estimated Annual Net Profit</div>
+        <div class="amount" id="simNet">--</div>
+        <div class="sub" id="simNetSub">Fill in parameters and click Calculate</div>
+      </div>
+      <div class="results-grid">
+        <div class="result-card"><div class="label">Gross Revenue</div><div class="value" id="simGross">--</div></div>
+        <div class="result-card"><div class="label">Monthly Avg</div><div class="value" id="simMonthly">--</div></div>
+        <div class="result-card"><div class="label">Occupancy Est.</div><div class="value" id="simOcc">--</div></div>
+        <div class="result-card"><div class="label">Nights Booked</div><div class="value" id="simNights">--</div></div>
+        <div class="result-card"><div class="label">Management Fees</div><div class="value" id="simMgmtOut" style="color:var(--red)">--</div></div>
+        <div class="result-card"><div class="label">Cleaning Costs</div><div class="value" id="simCleanOut" style="color:var(--red)">--</div></div>
+        <div class="result-card"><div class="label">ROI on Property</div><div class="value" id="simROI" style="color:var(--gold)">--</div></div>
+        <div class="result-card"><div class="label">Cap Rate</div><div class="value" id="simCap" style="color:var(--gold)">--</div></div>
+      </div>
+      <div class="us-compare card">
+        <h3>vs. US Rental Markets (Same Investment)</h3>
+        <div class="us-row"><span class="us-city">Miami, FL (1BR avg)</span><span class="us-val mono" id="usMiami">--</span></div>
+        <div class="us-row"><span class="us-city">Orlando, FL (1BR avg)</span><span class="us-val mono" id="usOrlando">--</span></div>
+        <div class="us-row"><span class="us-city">Your Punta Cana Est.</span><span class="us-val mono green" id="usPC" style="color:var(--green)">--</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== COMPETITION ===== -->
+<section id="competition">
+<div class="container">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Competition Analyzer</div>
+      <div class="section-desc">Listing density, review quality, and competitive edges per zone.</div>
+    </div>
+  </div>
+  <div class="comp-grid" id="compGrid"></div>
+</div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section id="pricing">
+<div class="container">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Pricing Strategy Recommendations</div>
+      <div class="section-desc">Optimal nightly rates by zone, season, and property type.</div>
+    </div>
+  </div>
+  <div id="pricingContent"></div>
+  <div class="pricing-tips" style="margin-top:32px">
+    <div class="pricing-tip"><strong>Length-of-stay discounts:</strong> Offer -10% for 7+ nights, -20% for 14+ nights, and -25% for 28+ nights (monthly). Long stays reduce turnover costs and cleaning fees significantly.</div>
+    <div class="pricing-tip"><strong>Last-minute pricing:</strong> Drop rates 15-20% for bookings within 72 hours of check-in. An occupied night at a discount beats an empty night every time.</div>
+    <div class="pricing-tip"><strong>Weekend premium:</strong> Friday/Saturday nights command 10-20% more than weekday rates in most beach zones. Set up smart pricing rules accordingly.</div>
+    <div class="pricing-tip"><strong>Minimum stay strategy:</strong> Set 3-night minimums during high season, 2-night in shoulder, and 1-night in low season. During Christmas/New Year, enforce 5-7 night minimums for maximum revenue.</div>
+  </div>
+</div>
+</section>
+
+<!-- ===== INSIGHTS ===== -->
+<section id="insights">
+<div class="container">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Key Market Insights</div>
+      <div class="section-desc">Actionable intelligence for Punta Cana vacation rental operators.</div>
+    </div>
+  </div>
+  <div class="insight-panel" id="insightPanel"></div>
+</div>
+</section>
+
+<!-- ZONE DETAIL MODAL -->
+<div class="modal-overlay" id="zoneModal">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<script>
+// ===== DATA =====
+const ZONES = [
+  {
+    id:'bavaro', name:'Bavaro Beach', subtitle:'Tourist Strip',
+    adrLow:85, adrHigh:120, occLow:72, occHigh:80,
+    rev1brLow:2200, rev1brHigh:2800, rev2brLow:3200, rev2brHigh:4200,
+    rev3brLow:4500, rev3brHigh:5800,
+    studioRevLow:1600, studioRevHigh:2100,
+    listings:'1,000+', listingsNum:1100, compLevel:5,
+    bestFor:'High-volume, budget travelers',
+    peakPremium:[40,60], investScore:3,
+    avgReview:4.52, superhostPct:18, avgResponseHr:2.1,
+    amenities:['Pool','Beach access','A/C','WiFi','Kitchen','Parking'],
+    edge:'Stand out with premium furnishings and professional photos. Most Bavaro listings are cookie-cutter resort condos -- a well-designed interior with local art and modern amenities creates instant differentiation.',
+    tips:['Invest in professional photography -- it pays for itself in 2 bookings','Add a welcome basket with local rum and coffee','Offer airport pickup as an add-on service','Use dynamic pricing -- demand fluctuates heavily by week','Highlight walking distance to beach in your title','List on both Airbnb AND Booking.com for maximum reach'],
+    seasonalOcc:[82,85,83,78,65,52,48,46,50,55,62,80]
+  },
+  {
+    id:'cocotal', name:'Cocotal Golf & CC', subtitle:'Golf & Country Club',
+    adrLow:95, adrHigh:140, occLow:65, occHigh:75,
+    rev1brLow:2400, rev1brHigh:3000, rev2brLow:3500, rev2brHigh:4500,
+    rev3brLow:5000, rev3brHigh:6500,
+    studioRevLow:1800, studioRevHigh:2300,
+    listings:'200-300', listingsNum:250, compLevel:3,
+    bestFor:'Golf tourists, families, mid-term stays',
+    peakPremium:[35,50], investScore:4,
+    avgReview:4.61, superhostPct:24, avgResponseHr:1.8,
+    amenities:['Pool','Golf access','A/C','WiFi','Kitchen','Parking','Gym','Security'],
+    edge:'Golf packages are your weapon. Partner with the Cocotal course for discounted tee times. Family-friendly features (cribs, high chairs, kids games) tap into the underserved family market here.',
+    tips:['Create golf + stay packages with the Cocotal course','Market to families: add cribs, board games, kid-proof furniture','Offer mid-term stay discounts (2-4 weeks) to attract snowbirds','Emphasize gated community security in your listing','Include bikes or golf cart rental as premium add-ons','Target Canadian and European golfers with winter campaigns'],
+    seasonalOcc:[78,80,78,72,58,48,44,42,46,52,60,76]
+  },
+  {
+    id:'capcana', name:'Cap Cana', subtitle:'Luxury Enclave',
+    adrLow:180, adrHigh:350, occLow:55, occHigh:65,
+    rev1brLow:3200, rev1brHigh:4200, rev2brLow:4000, rev2brHigh:6000,
+    rev3brLow:6000, rev3brHigh:10000,
+    studioRevLow:2400, studioRevHigh:3200,
+    listings:'150-200', listingsNum:175, compLevel:2,
+    bestFor:'Luxury travelers, honeymooners',
+    peakPremium:[50,70], investScore:4,
+    avgReview:4.74, superhostPct:32, avgResponseHr:1.2,
+    amenities:['Pool','Private beach','A/C','WiFi','Full kitchen','Concierge','Spa access','Marina'],
+    edge:'Luxury experience is everything. Champagne on arrival, premium linens (600+ thread count), stocked kitchen with wine, and a concierge WhatsApp line. Your competition is 5-star resorts -- match the service, beat the price.',
+    tips:['Invest in luxury: Nespresso machine, Molton Brown toiletries, 600TC sheets','Offer concierge service via WhatsApp for restaurant/activity bookings','Target honeymooners with romance packages (rose petals, wine)','Professional staging and drone photography are non-negotiable at this price','Partner with Caleton Beach Club for guest access','Consider a welcome video tour sent before arrival'],
+    seasonalOcc:[70,72,68,62,50,40,38,36,42,48,55,68]
+  },
+  {
+    id:'village', name:'Punta Cana Village', subtitle:'Local & Transit Hub',
+    adrLow:55, adrHigh:85, occLow:60, occHigh:70,
+    rev1brLow:1400, rev1brHigh:1800, rev2brLow:2000, rev2brHigh:2600,
+    rev3brLow:2800, rev3brHigh:3500,
+    studioRevLow:1000, studioRevHigh:1400,
+    listings:'300-400', listingsNum:350, compLevel:3,
+    bestFor:'Budget travelers, airport overnights',
+    peakPremium:[25,35], investScore:2,
+    avgReview:4.38, superhostPct:14, avgResponseHr:3.2,
+    amenities:['A/C','WiFi','Kitchen','Parking'],
+    edge:'Speed and convenience win here. Offer 24/7 self-check-in, clear directions from the airport, and late checkout. Many guests are one-nighters or budget travelers who value hassle-free over luxury.',
+    tips:['Enable self-check-in with smart lock for late arrivals','Create a laminated quick guide: taxi numbers, nearby restaurants, ATMs','Offer airport shuttle as add-on (partner with local driver)','Keep turnover costs minimal -- simple, durable furnishings','Target last-minute bookings with competitive same-day pricing','List on Booking.com -- heavy with transit/budget travelers'],
+    seasonalOcc:[72,74,70,68,58,50,48,46,50,54,60,70]
+  },
+  {
+    id:'cortecito', name:'El Cortecito', subtitle:'Beach Village Life',
+    adrLow:70, adrHigh:110, occLow:70, occHigh:78,
+    rev1brLow:2000, rev1brHigh:2600, rev2brLow:2800, rev2brHigh:3800,
+    rev3brLow:4000, rev3brHigh:5200,
+    studioRevLow:1500, studioRevHigh:2000,
+    listings:'500+', listingsNum:550, compLevel:4,
+    bestFor:'Walkable beach life, digital nomads',
+    peakPremium:[35,50], investScore:4,
+    avgReview:4.55, superhostPct:21, avgResponseHr:1.9,
+    amenities:['Pool','Beach nearby','A/C','WiFi','Kitchen','Workspace'],
+    edge:'The "walkability" factor. El Cortecito is the only zone where guests can walk to beach, restaurants, bars, and shops. Market the lifestyle, not just the apartment. A dedicated workspace attracts the growing digital nomad segment.',
+    tips:['Add a proper desk + ergonomic chair for digital nomads','Create a "neighborhood guide" with your favorite local spots','Highlight walkability: "3 min walk to beach, bars, and restaurants"','Offer a local SIM card or pocket WiFi for guests','Partner with nearby restaurants for guest discounts','Target 25-40 year olds on Instagram with lifestyle content'],
+    seasonalOcc:[80,83,80,75,62,54,50,48,52,56,64,78]
+  },
+  {
+    id:'corales', name:'Los Corales', subtitle:'Mid-Range Sweet Spot',
+    adrLow:65, adrHigh:100, occLow:68, occHigh:76,
+    rev1brLow:1800, rev1brHigh:2300, rev2brLow:2600, rev2brHigh:3500,
+    rev3brLow:3600, rev3brHigh:4800,
+    studioRevLow:1300, studioRevHigh:1800,
+    listings:'400+', listingsNum:420, compLevel:4,
+    bestFor:'Mid-range, repeat visitors, snowbirds',
+    peakPremium:[30,45], investScore:3,
+    avgReview:4.48, superhostPct:19, avgResponseHr:2.4,
+    amenities:['Pool','Beach nearby','A/C','WiFi','Kitchen','Parking','Laundry'],
+    edge:'The value proposition zone. You are competing on price-to-quality ratio. Clean, well-maintained units with reliable WiFi and responsive hosts win repeat guests. Snowbird discounts for 30+ day stays can fill your low season.',
+    tips:['Offer monthly stay discounts of 30-40% to attract snowbirds','Install washer/dryer -- it is a top-3 filter for extended stays','Maintain 4.7+ rating by responding to every review','Offer returning guest discounts (10% off) to build loyalty','Keep the unit spotless -- mid-range guests are pickiest about cleanliness','Add Netflix/streaming -- it is expected at this price point'],
+    seasonalOcc:[78,80,77,72,60,50,46,44,48,54,62,76]
+  },
+  {
+    id:'vistacana', name:'Vista Cana', subtitle:'Emerging Inland Zone',
+    adrLow:50, adrHigh:80, occLow:45, occHigh:55,
+    rev1brLow:1000, rev1brHigh:1500, rev2brLow:1600, rev2brHigh:2200,
+    rev3brLow:2200, rev3brHigh:3000,
+    studioRevLow:750, studioRevHigh:1100,
+    listings:'50-100', listingsNum:75, compLevel:1,
+    bestFor:'Long-term stays, locals, budget',
+    peakPremium:[15,25], investScore:2,
+    avgReview:4.31, superhostPct:12, avgResponseHr:4.1,
+    amenities:['Pool','A/C','WiFi','Kitchen','Parking','Security'],
+    edge:'Rock-bottom competition and prices. Long-term rentals (1-6 months) to remote workers or Dominican families relocating are the play here. Do not try to compete on nightly rates with beach zones.',
+    tips:['Focus on monthly rentals: price at $800-1200/mo all-in','Target Dominican families and local relocations','List on local platforms (Corotos, Facebook Marketplace DR)','Offer furnished long-term leases with utilities included','Keep maintenance costs low -- tenants stay longer','Consider corporate rentals for construction/resort workers'],
+    seasonalOcc:[52,54,50,48,42,38,36,35,38,42,46,50]
+  },
+  {
+    id:'uveroalto', name:'Uvero Alto', subtitle:'Boutique & Nature',
+    adrLow:120, adrHigh:200, occLow:50, occHigh:60,
+    rev1brLow:2500, rev1brHigh:3500, rev2brLow:3800, rev2brHigh:5500,
+    rev3brLow:5200, rev3brHigh:7500,
+    studioRevLow:1900, studioRevHigh:2600,
+    listings:'30-50', listingsNum:40, compLevel:1,
+    bestFor:'Boutique luxury, couples, nature lovers',
+    peakPremium:[45,60], investScore:3,
+    avgReview:4.68, superhostPct:28, avgResponseHr:1.5,
+    amenities:['Pool','Private beach','A/C','WiFi','Kitchen','Nature trails','Yoga deck'],
+    edge:'Sell the seclusion and exclusivity. Uvero Alto guests are escaping crowds, not seeking them. Eco-friendly touches, outdoor showers, hammock gardens, and "unplugged" experiences are your differentiators vs. the resort strip.',
+    tips:['Market as a "boutique retreat" -- avoid resort language','Add eco-touches: solar lights, reef-safe toiletries, bamboo everything','Offer nature experiences: horseback riding, surf lessons, jungle tours','Build a hammock garden or yoga deck as a unique amenity','Target couples and honeymooners on specialized travel blogs','Emphasize privacy and seclusion in all marketing materials'],
+    seasonalOcc:[64,66,62,56,46,38,36,34,40,44,50,62]
+  }
+];
+
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+const INSIGHTS = [
+  '2BR apartments in Cocotal earn 15% more per night than equivalent Bavaro Beach units, thanks to the golf tourist premium and perceived exclusivity of a gated community.',
+  'Properties with pool photos in the first 3 listing images receive approximately 2x more booking inquiries than those leading with interior shots.',
+  'Listings rated 4.8 or above can charge 20-25% more than comparable 4.5-rated properties in the same zone. Every tenth of a point matters above 4.5.',
+  'El Cortecito has the highest repeat-guest rate in Punta Cana, estimated at 35%. Walkability and the village atmosphere create loyal return visitors.',
+  'December 20 through January 5 accounts for roughly 15% of annual revenue in most Punta Cana zones. Pricing these 16 days correctly can make or break your year.',
+  'Cap Cana properties with marina or ocean views command 40-60% higher nightly rates than garden-view units in the same complex.',
+  'Semana Santa (Holy Week, March/April) brings a massive influx of Dominican tourists. Listings in Spanish with local payment options see 3x more bookings during this period.',
+  'The average Punta Cana Airbnb listing has 23 photos. Top-performing listings (top 10% by revenue) average 38 photos with professional quality.',
+  'Properties offering airport pickup as a bookable add-on see 18% higher conversion rates. The $25-35 cost to the guest feels like a premium service.',
+  'Snowbird stays (30+ days, Nov-Mar) from Canadians fill 60-70% of Los Corales capacity during winter. Monthly pricing of $1,200-1,800 for a 1BR is the sweet spot.',
+  'Vista Cana is growing 25% year-over-year in new listings -- the fastest growth rate of any PC zone. Early movers can establish dominance before saturation.',
+  'Self-check-in (smart lock + instructions) reduces host workload by 40% and allows late-night arrivals from red-eye flights, which are common at PUJ airport.',
+  'The #1 guest complaint across all PC zones is WiFi speed. Investing in fiber internet (300+ Mbps) and advertising the speed in your listing eliminates the top friction point.',
+  'Punta Cana received 4.2 million tourists in 2025, up 8% from 2024. The vacation rental market is growing faster than hotel capacity, creating sustained demand for quality Airbnb listings.',
+  'Properties that respond to inquiries within 1 hour are 3x more likely to receive a booking vs. those responding after 24 hours. Automated messaging is essential.'
+];
+
+// ===== RENDER FUNCTIONS =====
+
+function renderZoneGrid(sortBy='default'){
+  const grid = document.getElementById('zoneGrid');
+  let sorted = [...ZONES];
+  if(sortBy==='adr') sorted.sort((a,b)=>((b.adrLow+b.adrHigh)/2)-((a.adrLow+a.adrHigh)/2));
+  else if(sortBy==='occupancy') sorted.sort((a,b)=>((b.occLow+b.occHigh)/2)-((a.occLow+a.occHigh)/2));
+  else if(sortBy==='revenue') sorted.sort((a,b)=>((b.rev2brLow+b.rev2brHigh)/2)-((a.rev2brLow+a.rev2brHigh)/2));
+  else if(sortBy==='competition') sorted.sort((a,b)=>a.compLevel-b.compLevel);
+  else if(sortBy==='investment') sorted.sort((a,b)=>b.investScore-a.investScore);
+
+  grid.innerHTML = sorted.map((z,i)=>{
+    const avgADR = Math.round((z.adrLow+z.adrHigh)/2);
+    const avgOcc = Math.round((z.occLow+z.occHigh)/2);
+    const avgRev2 = Math.round((z.rev2brLow+z.rev2brHigh)/2);
+    const compTags = {1:'tag-vlow',2:'tag-low',3:'tag-med',4:'tag-high',5:'tag-high'};
+    const compLabels = {1:'Very Low',2:'Low-Med',3:'Medium',4:'High',5:'Very High'};
+    return `<div class="card zone-card" onclick="openZoneModal('${z.id}')" style="animation-delay:${i*0.05}s">
+      <div class="zone-name">${z.name}</div>
+      <div class="zone-subtitle">${z.subtitle} &middot; ${z.bestFor}</div>
+      <div class="zone-metrics">
+        <div class="metric"><div class="metric-label">Avg Nightly Rate</div><div class="metric-value blue mono">$${z.adrLow}-${z.adrHigh}</div></div>
+        <div class="metric"><div class="metric-label">Occupancy</div><div class="metric-value green mono">${z.occLow}-${z.occHigh}%</div></div>
+        <div class="metric"><div class="metric-label">2BR Revenue/mo</div><div class="metric-value gold mono">$${fmt(z.rev2brLow)}-${fmt(z.rev2brHigh)}</div></div>
+        <div class="metric"><div class="metric-label">Active Listings</div><div class="metric-value mono">${z.listings}</div></div>
+      </div>
+      <div class="zone-footer">
+        <span class="tag ${compTags[z.compLevel]}">${compLabels[z.compLevel]} Competition</span>
+        <div class="invest-stars" title="Investment Score: ${z.investScore}/5">${[1,2,3,4,5].map(s=>`<span class="star ${s<=z.investScore?'filled':''}">&#9733;</span>`).join('')}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openZoneModal(zoneId){
+  const z = ZONES.find(x=>x.id===zoneId);
+  if(!z) return;
+  const avgADR = Math.round((z.adrLow+z.adrHigh)/2);
+  const avgOcc = Math.round((z.occLow+z.occHigh)/2);
+  const m = document.getElementById('modalContent');
+  m.innerHTML = `
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h2>${z.name}</h2>
+    <div class="zone-type">${z.subtitle} &middot; ${z.bestFor}</div>
+    <div class="detail-grid">
+      <div class="detail-stat"><div class="label">Avg ADR</div><div class="value mono" style="color:var(--blue)">$${avgADR}</div></div>
+      <div class="detail-stat"><div class="label">Occupancy</div><div class="value mono" style="color:var(--green)">${avgOcc}%</div></div>
+      <div class="detail-stat"><div class="label">Listings</div><div class="value mono">${z.listings}</div></div>
+      <div class="detail-stat"><div class="label">Studio Rev/mo</div><div class="value mono">$${fmt(z.studioRevLow)}-${fmt(z.studioRevHigh)}</div></div>
+      <div class="detail-stat"><div class="label">1BR Rev/mo</div><div class="value mono">$${fmt(z.rev1brLow)}-${fmt(z.rev1brHigh)}</div></div>
+      <div class="detail-stat"><div class="label">2BR Rev/mo</div><div class="value mono" style="color:var(--gold)">$${fmt(z.rev2brLow)}-${fmt(z.rev2brHigh)}</div></div>
+      <div class="detail-stat"><div class="label">3BR+ Rev/mo</div><div class="value mono">$${fmt(z.rev3brLow)}-${fmt(z.rev3brHigh)}</div></div>
+      <div class="detail-stat"><div class="label">Peak Premium</div><div class="value mono" style="color:var(--red)">+${z.peakPremium[0]}-${z.peakPremium[1]}%</div></div>
+      <div class="detail-stat"><div class="label">Avg Review</div><div class="value mono">${z.avgReview}</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <div class="detail-stat"><div class="label">Superhost %</div><div class="value mono">${z.superhostPct}%</div></div>
+      <div class="detail-stat"><div class="label">Avg Response</div><div class="value mono">${z.avgResponseHr}h</div></div>
+    </div>
+    <div style="margin-bottom:16px">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Typical Amenities</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">${z.amenities.map(a=>`<span style="padding:4px 10px;border-radius:4px;background:var(--bg);border:1px solid var(--border);font-size:12px;color:var(--text-secondary)">${a}</span>`).join('')}</div>
+    </div>
+    <div class="tips-section" style="margin-bottom:16px;border-left:3px solid var(--green);background:var(--bg)">
+      <h3 style="color:var(--green)">Your Competitive Edge</h3>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.7">${z.edge}</p>
+    </div>
+    <div class="tips-section">
+      <h3>Optimization Tips</h3>
+      <ul>${z.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
+    </div>
+  `;
+  document.getElementById('zoneModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+  document.getElementById('zoneModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function renderCompare(){
+  const ids = [document.getElementById('cmp1').value, document.getElementById('cmp2').value, document.getElementById('cmp3').value].filter(Boolean);
+  const zones = ids.map(id=>ZONES.find(z=>z.id===id)).filter(Boolean);
+  if(zones.length<2){document.getElementById('compareContent').innerHTML='<p style="color:var(--text-secondary)">Select at least 2 zones to compare.</p>';return;}
+
+  const metrics = [
+    {label:'Avg ADR (low)',key:z=>z.adrLow,fmt:v=>'$'+v,higher:true},
+    {label:'Avg ADR (high)',key:z=>z.adrHigh,fmt:v=>'$'+v,higher:true},
+    {label:'Occupancy (low)',key:z=>z.occLow,fmt:v=>v+'%',higher:true},
+    {label:'Occupancy (high)',key:z=>z.occHigh,fmt:v=>v+'%',higher:true},
+    {label:'1BR Revenue/mo (avg)',key:z=>Math.round((z.rev1brLow+z.rev1brHigh)/2),fmt:v=>'$'+fmt(v),higher:true},
+    {label:'2BR Revenue/mo (avg)',key:z=>Math.round((z.rev2brLow+z.rev2brHigh)/2),fmt:v=>'$'+fmt(v),higher:true},
+    {label:'3BR+ Revenue/mo (avg)',key:z=>Math.round((z.rev3brLow+z.rev3brHigh)/2),fmt:v=>'$'+fmt(v),higher:true},
+    {label:'Active Listings',key:z=>z.listingsNum,fmt:v=>v.toLocaleString(),higher:false},
+    {label:'Avg Review Score',key:z=>z.avgReview,fmt:v=>v.toFixed(2),higher:true},
+    {label:'Superhost %',key:z=>z.superhostPct,fmt:v=>v+'%',higher:true},
+    {label:'Peak Season Premium',key:z=>Math.round((z.peakPremium[0]+z.peakPremium[1])/2),fmt:v=>'+'+v+'%',higher:true},
+    {label:'Investment Score',key:z=>z.investScore,fmt:v=>v+'/5',higher:true},
+  ];
+
+  const colors = ['z1','z2','z3'];
+  let html = `<table class="compare-table"><thead><tr><th>Metric</th>${zones.map(z=>`<th>${z.name}</th>`).join('')}</tr></thead><tbody>`;
+  metrics.forEach(m=>{
+    const vals = zones.map(z=>m.key(z));
+    const best = m.higher ? Math.max(...vals) : Math.min(...vals);
+    html += `<tr><td style="font-family:Inter,sans-serif;color:var(--text-secondary)">${m.label}</td>`;
+    zones.forEach((z,i)=>{
+      const v = m.key(z);
+      html += `<td class="${v===best?'winner':''}">${m.fmt(v)}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+
+  // Bar charts
+  const chartMetrics = [
+    {label:'ADR (avg)',key:z=>Math.round((z.adrLow+z.adrHigh)/2),max:350,fmt:v=>'$'+v},
+    {label:'Occupancy (avg)',key:z=>Math.round((z.occLow+z.occHigh)/2),max:100,fmt:v=>v+'%'},
+    {label:'2BR Rev/mo',key:z=>Math.round((z.rev2brLow+z.rev2brHigh)/2),max:10000,fmt:v=>'$'+fmt(v)},
+    {label:'Listings',key:z=>z.listingsNum,max:1200,fmt:v=>v.toLocaleString()},
+    {label:'Review Score',key:z=>z.avgReview,max:5,fmt:v=>v.toFixed(2)},
+  ];
+
+  html += '<div class="compare-chart">';
+  chartMetrics.forEach(m=>{
+    html += `<div class="chart-row"><div class="chart-label">${m.label}</div><div class="chart-bars">`;
+    zones.forEach((z,i)=>{
+      const v = m.key(z);
+      const pct = Math.max(5, (v/m.max)*100);
+      html += `<div class="chart-bar-wrapper"><div class="chart-bar ${colors[i]}" style="width:${pct}%">${m.fmt(v)}</div><span style="font-size:11px;color:var(--text-muted)">${z.name.split(' ')[0]}</span></div>`;
+    });
+    html += '</div></div>';
+  });
+  html += '</div>';
+
+  document.getElementById('compareContent').innerHTML = html;
+}
+
+function renderHeatmap(){
+  const table = document.getElementById('heatmapTable');
+  let html = '<thead><tr><th>Zone</th>';
+  MONTHS.forEach(m=>{html+=`<th>${m}</th>`});
+  html += '</tr></thead><tbody>';
+
+  ZONES.forEach(z=>{
+    html += `<tr><td>${z.name}</td>`;
+    z.seasonalOcc.forEach(occ=>{
+      const intensity = Math.min(0.95, Math.max(0.08, (occ-30)/65));
+      const textColor = intensity > 0.5 ? '#fff' : 'var(--text-secondary)';
+      html += `<td style="background:rgba(88,166,255,${intensity});color:${textColor}" title="${z.name}: ${occ}% occupancy">${occ}%</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody>';
+  table.innerHTML = html;
+}
+
+function runSimulator(){
+  const zoneId = document.getElementById('simZone').value;
+  const zone = ZONES.find(z=>z.id===zoneId);
+  const type = document.getElementById('simType').value;
+  const rate = parseFloat(document.getElementById('simRate').value)||100;
+  const mgmtPct = parseFloat(document.getElementById('simMgmt').value)||20;
+  const cleanFee = parseFloat(document.getElementById('simClean').value)||35;
+  const propValue = parseFloat(document.getElementById('simValue').value)||120000;
+  const annualExp = parseFloat(document.getElementById('simExpenses').value)||3600;
+
+  const avgOcc = ((zone.occLow+zone.occHigh)/2)/100;
+  const nightsBooked = Math.round(365 * avgOcc);
+  const avgStayLength = type==='studio'?3.5 : type==='1br'?4.5 : type==='2br'?5.5 : 6;
+  const turnovers = Math.round(nightsBooked / avgStayLength);
+
+  const grossRevenue = nightsBooked * rate;
+  const mgmtCost = grossRevenue * (mgmtPct/100);
+  const cleanCost = turnovers * cleanFee;
+  const totalExpenses = mgmtCost + cleanCost + annualExp;
+  const netProfit = grossRevenue - totalExpenses;
+  const roi = (netProfit / propValue) * 100;
+  const capRate = ((grossRevenue - cleanCost - annualExp) / propValue) * 100;
+
+  document.getElementById('simGross').textContent = '$'+fmt(Math.round(grossRevenue));
+  document.getElementById('simMonthly').textContent = '$'+fmt(Math.round(grossRevenue/12));
+  document.getElementById('simOcc').textContent = Math.round(avgOcc*100)+'%';
+  document.getElementById('simNights').textContent = nightsBooked;
+  document.getElementById('simMgmtOut').textContent = '-$'+fmt(Math.round(mgmtCost));
+  document.getElementById('simCleanOut').textContent = '-$'+fmt(Math.round(cleanCost));
+  document.getElementById('simROI').textContent = roi.toFixed(1)+'%';
+  document.getElementById('simCap').textContent = capRate.toFixed(1)+'%';
+  document.getElementById('simNet').textContent = '$'+fmt(Math.round(netProfit));
+  document.getElementById('simNet').style.color = netProfit >= 0 ? 'var(--green)' : 'var(--red)';
+  document.getElementById('simNetSub').textContent = `${nightsBooked} nights booked, ${turnovers} turnovers, ${mgmtPct}% mgmt fee`;
+
+  // US comparison (approximate yields on same property value investment)
+  const miamiYield = propValue * 0.048; // ~4.8% cap rate in Miami
+  const orlandoYield = propValue * 0.055; // ~5.5% cap rate in Orlando
+  document.getElementById('usMiami').textContent = '$'+fmt(Math.round(miamiYield))+'/yr';
+  document.getElementById('usOrlando').textContent = '$'+fmt(Math.round(orlandoYield))+'/yr';
+  document.getElementById('usPC').textContent = '$'+fmt(Math.round(netProfit))+'/yr';
+}
+
+function renderCompetition(){
+  const grid = document.getElementById('compGrid');
+  grid.innerHTML = ZONES.map(z=>{
+    const compTags = {1:'tag-vlow',2:'tag-low',3:'tag-med',4:'tag-high',5:'tag-high'};
+    const compLabels = {1:'Very Low',2:'Low-Med',3:'Medium',4:'High',5:'Very High'};
+    return `<div class="card comp-card">
+      <div class="zone-header">
+        <div>
+          <div style="font-size:15px;font-weight:700">${z.name}</div>
+          <span class="tag ${compTags[z.compLevel]}" style="margin-top:4px;display:inline-block">${compLabels[z.compLevel]}</span>
+        </div>
+        <div style="text-align:right">
+          <div class="listing-count">${z.listings}</div>
+          <div class="listing-label">Active Listings</div>
+        </div>
+      </div>
+      <div class="comp-stats">
+        <div class="comp-stat"><div class="v">${z.avgReview}</div><div class="l">Avg Review</div></div>
+        <div class="comp-stat"><div class="v">${z.superhostPct}%</div><div class="l">Superhost</div></div>
+        <div class="comp-stat"><div class="v">${z.avgResponseHr}h</div><div class="l">Avg Response</div></div>
+      </div>
+      <div style="margin-bottom:12px">
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.3px">Common Amenities</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">${z.amenities.map(a=>`<span style="padding:3px 8px;border-radius:4px;background:var(--bg);font-size:11px;color:var(--text-secondary)">${a}</span>`).join('')}</div>
+      </div>
+      <div class="edge-box">
+        <h4>Your Edge</h4>
+        <p>${z.edge}</p>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderPricing(){
+  const container = document.getElementById('pricingContent');
+  let html = '';
+  ZONES.forEach(z=>{
+    const seasons = [
+      {name:'High (Dec-Mar)', mult1br:1.0, mult2br:1.0},
+      {name:'Shoulder (Apr,May,Nov)', mult1br:0.78, mult2br:0.80},
+      {name:'Low (Jun-Oct)', mult1br:0.60, mult2br:0.65},
+      {name:'Christmas Peak (Dec 20-Jan 5)', mult1br:1.0+(z.peakPremium[1]/100), mult2br:1.0+(z.peakPremium[1]/100)},
+      {name:'Semana Santa', mult1br:1.0+(z.peakPremium[0]/100), mult2br:1.0+(z.peakPremium[0]/100)},
+    ];
+    const base1br = Math.round((z.adrLow+z.adrHigh)/2 * 0.85);
+    const base2br = Math.round((z.adrLow+z.adrHigh)/2 * 1.25);
+
+    html += `<div class="pricing-zone"><h3>${z.name} <span class="tag ${z.compLevel>=4?'tag-high':z.compLevel>=3?'tag-med':'tag-low'}" style="font-size:10px">${z.subtitle}</span></h3>`;
+    html += `<table class="pricing-table"><thead><tr><th>Season</th><th>1BR Recommended</th><th>2BR Recommended</th><th>Min Stay</th></tr></thead><tbody>`;
+    const minStays = ['3 nights','2 nights','1 night','5-7 nights','3 nights'];
+    seasons.forEach((s,i)=>{
+      const r1 = Math.round(base1br * s.mult1br);
+      const r2 = Math.round(base2br * s.mult2br);
+      html += `<tr><td style="font-family:Inter,sans-serif;color:var(--text-secondary);text-align:left">${s.name}</td><td style="color:var(--blue)">$${r1}/nt</td><td style="color:var(--gold)">$${r2}/nt</td><td style="color:var(--text-secondary)">${minStays[i]}</td></tr>`;
+    });
+    html += '</tbody></table></div>';
+  });
+  container.innerHTML = html;
+}
+
+function renderInsights(){
+  const panel = document.getElementById('insightPanel');
+  let html = '';
+  INSIGHTS.forEach((text,i)=>{
+    html += `<div class="insight-item ${i===0?'visible':''}" data-insight="${i}">
+      <div class="insight-icon">Insight #${i+1}</div>
+      <div class="insight-text">${text}</div>
+    </div>`;
+  });
+  html += '<div class="insight-nav">';
+  INSIGHTS.forEach((_,i)=>{
+    html += `<div class="insight-dot ${i===0?'active':''}" data-dot="${i}" onclick="showInsight(${i})"></div>`;
+  });
+  html += '</div>';
+  html += `<div class="insight-counter"><span id="insightNum">1</span> / ${INSIGHTS.length}</div>`;
+  panel.innerHTML = html;
+
+  // Auto-rotate
+  let current = 0;
+  setInterval(()=>{
+    current = (current+1)%INSIGHTS.length;
+    showInsight(current);
+  }, 6000);
+}
+
+function showInsight(idx){
+  document.querySelectorAll('.insight-item').forEach(el=>el.classList.remove('visible'));
+  document.querySelectorAll('.insight-dot').forEach(el=>el.classList.remove('active'));
+  const item = document.querySelector(`.insight-item[data-insight="${idx}"]`);
+  const dot = document.querySelector(`.insight-dot[data-dot="${idx}"]`);
+  if(item) item.classList.add('visible');
+  if(dot) dot.classList.add('active');
+  const counter = document.getElementById('insightNum');
+  if(counter) counter.textContent = idx+1;
+}
+
+// ===== UTILITIES =====
+function fmt(n){return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+
+function populateSelects(){
+  const selects = ['cmp1','cmp2','cmp3','simZone'];
+  selects.forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    if(id.startsWith('cmp')) el.innerHTML = '<option value="">-- Select --</option>';
+    ZONES.forEach(z=>{
+      const opt = document.createElement('option');
+      opt.value = z.id;
+      opt.textContent = z.name;
+      el.appendChild(opt);
+    });
+  });
+  // Set defaults for comparison
+  document.getElementById('cmp1').value = 'bavaro';
+  document.getElementById('cmp2').value = 'cocotal';
+  document.getElementById('cmp3').value = 'capcana';
+  // Sim default
+  document.getElementById('simZone').value = 'cocotal';
+}
+
+// ===== NAVIGATION =====
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(btn.dataset.section).classList.add('active');
+  });
+});
+
+// Sort buttons
+document.addEventListener('click',e=>{
+  if(e.target.classList.contains('sort-btn')){
+    document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
+    e.target.classList.add('active');
+    renderZoneGrid(e.target.dataset.sort);
+  }
+});
+
+// Compare selects
+['cmp1','cmp2','cmp3'].forEach(id=>{
+  document.getElementById(id).addEventListener('change', renderCompare);
+});
+
+// Modal close on overlay click
+document.getElementById('zoneModal').addEventListener('click',e=>{
+  if(e.target===document.getElementById('zoneModal')) closeModal();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape') closeModal();});
+
+// ===== INIT =====
+populateSelects();
+renderZoneGrid();
+renderHeatmap();
+renderCompetition();
+renderPricing();
+renderInsights();
+renderCompare();
+runSimulator();
+</script>
+</body>
+</html>
