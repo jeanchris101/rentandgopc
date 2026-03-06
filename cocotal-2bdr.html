@@ -41,34 +41,38 @@
         </div>
     </header>
 
-    <!-- Gallery -->
-    <div class="property-gallery" id="gallery">
-        <div class="gallery-main" onclick="openLightbox(currentIndex)">
-            <img id="gallery-main-img" src="images/cocotal/hero-pool-golf.jpg" alt="Pool and golf course at Cocotal Golf, Punta Cana">
-            <div class="gallery-counter" id="gallery-counter">1 / 10</div>
-            <div class="gallery-hint">Click to enlarge</div>
+    <!-- Gallery Slideshow -->
+    <div class="slideshow" id="slideshow">
+        <div class="slideshow-track" id="slideshow-track">
+            <div class="slide"><img src="images/cocotal/hero-pool-golf.jpg" alt="Pool and golf course at Cocotal Golf, Punta Cana"><span class="slide-label">Pool & Golf Course</span></div>
+            <div class="slide"><img src="images/cocotal/balcony-view.jpg" alt="View from apartment balcony"><span class="slide-label">View from Balcony</span></div>
+            <div class="slide"><img src="images/cocotal/terrace-view.jpg" alt="Terrace view of golf course"><span class="slide-label">Terrace View</span></div>
+            <div class="slide"><img src="images/cocotal/master-bedroom.jpg" alt="Master bedroom with terrace access"><span class="slide-label">Master Bedroom</span></div>
+            <div class="slide"><img src="images/cocotal/kitchen.jpg" alt="Modern kitchen with island"><span class="slide-label">Kitchen</span></div>
+            <div class="slide"><img src="images/cocotal/bathroom.jpg" alt="Master bathroom with double sink"><span class="slide-label">Master Bathroom</span></div>
+            <div class="slide"><img src="images/cocotal/pool-architecture.jpg" alt="Pool and modern architecture"><span class="slide-label">Pool & Residence</span></div>
+            <div class="slide"><img src="images/cocotal/golf-panoramic.jpg" alt="Cocotal golf course panoramic"><span class="slide-label">Golf Course</span></div>
+            <div class="slide"><img src="images/cocotal/pool-building.jpg" alt="Pool area with lounge chairs"><span class="slide-label">Pool Area</span></div>
+            <div class="slide"><img src="images/cocotal/terrace-accent.jpg" alt="Large terrace with accent wall"><span class="slide-label">Terrace</span></div>
+            <div class="slide"><img src="images/cocotal/living-room.jpg" alt="Living room with balcony view"><span class="slide-label">Living Room</span></div>
+            <div class="slide"><img src="images/cocotal/hallway.jpg" alt="Hallway with modern finishes"><span class="slide-label">Hallway</span></div>
+            <div class="slide"><img src="images/cocotal/pool-ground.jpg" alt="Pool at ground level"><span class="slide-label">Pool Area</span></div>
+            <div class="slide"><img src="images/cocotal/terrace-panoramic.jpg" alt="Panoramic terrace view"><span class="slide-label">Panoramic View</span></div>
+            <div class="slide"><img src="images/cocotal/pool-lounge.jpg" alt="Pool lounge area"><span class="slide-label">Pool Lounge</span></div>
         </div>
-        <div class="gallery-thumbs" id="gallery-thumbs">
-            <img src="images/cocotal/hero-pool-golf.jpg" alt="Pool and golf course" class="thumb active" onclick="setMainImage(0)">
-            <img src="images/cocotal/balcony-view.jpg" alt="Balcony view - pool and golf" class="thumb" onclick="setMainImage(1)">
-            <img src="images/cocotal/terrace-view.jpg" alt="Terrace view of golf course" class="thumb" onclick="setMainImage(2)">
-            <img src="images/cocotal/master-bedroom.jpg" alt="Master bedroom" class="thumb" onclick="setMainImage(3)">
-            <img src="images/cocotal/kitchen.jpg" alt="Modern kitchen" class="thumb" onclick="setMainImage(4)">
-            <img src="images/cocotal/bathroom.jpg" alt="Master bathroom" class="thumb" onclick="setMainImage(5)">
-            <img src="images/cocotal/pool-architecture.jpg" alt="Pool and architecture" class="thumb" onclick="setMainImage(6)">
-            <img src="images/cocotal/golf-panoramic.jpg" alt="Golf course panoramic" class="thumb" onclick="setMainImage(7)">
-            <img src="images/cocotal/pool-building.jpg" alt="Pool area" class="thumb" onclick="setMainImage(8)">
-            <img src="images/cocotal/terrace-accent.jpg" alt="Large terrace" class="thumb" onclick="setMainImage(9)">
-        </div>
+        <button class="slide-btn slide-prev" onclick="slideNav(-1)">&#8249;</button>
+        <button class="slide-btn slide-next" onclick="slideNav(1)">&#8250;</button>
+        <div class="slide-counter" id="slide-counter">1 / 15</div>
+        <div class="slide-dots" id="slide-dots"></div>
     </div>
 
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
         <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-        <button class="lightbox-prev" onclick="lightboxNav(-1)">&lsaquo;</button>
-        <button class="lightbox-next" onclick="lightboxNav(1)">&rsaquo;</button>
+        <button class="lightbox-prev" onclick="lightboxNav(-1)">&#8249;</button>
+        <button class="lightbox-next" onclick="lightboxNav(1)">&#8250;</button>
         <img id="lightbox-img" src="" alt="">
-        <div class="lightbox-counter" id="lightbox-counter">1 / 10</div>
+        <div class="lightbox-counter" id="lightbox-counter">1 / 15</div>
     </div>
 
     <!-- Detail Content -->

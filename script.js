@@ -49,41 +49,75 @@ function toggleMenu() {
     document.querySelector('.nav').classList.toggle('active');
 }
 
-// === Photo Gallery ===
+// === Slideshow ===
 let currentIndex = 0;
-let galleryImages = [];
+let slideCount = 0;
+let slideImages = [];
+let touchStartX = 0;
 
 function initGallery() {
-    const thumbs = document.querySelectorAll('#gallery-thumbs .thumb');
-    if (!thumbs.length) return;
-    galleryImages = Array.from(thumbs).map(t => ({ src: t.src, alt: t.alt }));
-}
-
-function setMainImage(idx) {
-    if (!galleryImages.length) return;
-    currentIndex = idx;
-    const mainImg = document.getElementById('gallery-main-img');
-    const counter = document.getElementById('gallery-counter');
-    if (mainImg) {
-        mainImg.src = galleryImages[idx].src;
-        mainImg.alt = galleryImages[idx].alt;
-    }
-    if (counter) counter.textContent = (idx + 1) + ' / ' + galleryImages.length;
-    document.querySelectorAll('#gallery-thumbs .thumb').forEach((t, i) => {
-        t.classList.toggle('active', i === idx);
+    const slides = document.querySelectorAll('.slide');
+    if (!slides.length) return;
+    slideCount = slides.length;
+    slideImages = Array.from(slides).map(s => {
+        const img = s.querySelector('img');
+        return { src: img.src, alt: img.alt };
     });
+
+    // Build dots
+    const dotsEl = document.getElementById('slide-dots');
+    if (dotsEl) {
+        for (let i = 0; i < slideCount; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            dotsEl.appendChild(dot);
+        }
+    }
+
+    // Click slide to open lightbox
+    slides.forEach((s, i) => {
+        s.addEventListener('click', () => openLightbox(i));
+    });
+
+    // Touch/swipe support
+    const track = document.getElementById('slideshow-track');
+    if (track) {
+        track.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+        track.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) slideNav(diff > 0 ? 1 : -1);
+        }, { passive: true });
+    }
 }
 
+function goToSlide(idx) {
+    currentIndex = idx;
+    const track = document.getElementById('slideshow-track');
+    if (track) track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+    const counter = document.getElementById('slide-counter');
+    if (counter) counter.textContent = (idx + 1) + ' / ' + slideCount;
+    document.querySelectorAll('.slide-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+
+function slideNav(dir) {
+    let next = currentIndex + dir;
+    if (next < 0) next = slideCount - 1;
+    if (next >= slideCount) next = 0;
+    goToSlide(next);
+}
+
+// === Lightbox ===
 function openLightbox(idx) {
-    if (!galleryImages.length) return;
+    if (!slideImages.length) return;
     const lb = document.getElementById('lightbox');
     const img = document.getElementById('lightbox-img');
     const counter = document.getElementById('lightbox-counter');
     if (!lb || !img) return;
     currentIndex = idx;
-    img.src = galleryImages[idx].src;
-    img.alt = galleryImages[idx].alt;
-    if (counter) counter.textContent = (idx + 1) + ' / ' + galleryImages.length;
+    img.src = slideImages[idx].src;
+    img.alt = slideImages[idx].alt;
+    if (counter) counter.textContent = (idx + 1) + ' / ' + slideCount;
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
 }
@@ -96,16 +130,16 @@ function closeLightbox(e) {
 }
 
 function lightboxNav(dir) {
-    if (!galleryImages.length) return;
-    currentIndex = (currentIndex + dir + galleryImages.length) % galleryImages.length;
+    if (!slideImages.length) return;
+    currentIndex = (currentIndex + dir + slideCount) % slideCount;
     const img = document.getElementById('lightbox-img');
     const counter = document.getElementById('lightbox-counter');
     if (img) {
-        img.src = galleryImages[currentIndex].src;
-        img.alt = galleryImages[currentIndex].alt;
+        img.src = slideImages[currentIndex].src;
+        img.alt = slideImages[currentIndex].alt;
     }
-    if (counter) counter.textContent = (currentIndex + 1) + ' / ' + galleryImages.length;
-    setMainImage(currentIndex);
+    if (counter) counter.textContent = (currentIndex + 1) + ' / ' + slideCount;
+    goToSlide(currentIndex);
 }
 
 // Init on page load
