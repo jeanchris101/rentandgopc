@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punta Cana Properties Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #1a1a2e; --card: #16213e; --accent: #0f3460; --alert: #e94560;
+  --positive: #53d769; --gold: #c8a45e; --text: #e0e0e0; --text-dim: #8892a4;
+  --border: #2a2a4a; --input-bg: #0d1b2a; --sidebar-w: 240px;
+  --hover: #1e2d4a; --shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+html { font-size: 14px; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+a { color: var(--gold); text-decoration: none; }
+button { font-family: 'Inter', sans-serif; cursor: pointer; border: none; outline: none; }
+input, select, textarea { font-family: 'Inter', sans-serif; background: var(--input-bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; outline: none; font-size: 0.92rem; }
+input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+textarea { resize: vertical; }
+
+/* SIDEBAR */
+.sidebar { width: var(--sidebar-w); background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; transition: transform 0.3s; }
+.sidebar-logo { padding: 24px 20px 20px; border-bottom: 1px solid var(--border); }
+.sidebar-logo h1 { font-size: 1.1rem; font-weight: 700; color: var(--gold); letter-spacing: 0.5px; }
+.sidebar-logo p { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
+.sidebar-nav { flex: 1; padding: 12px 0; overflow-y: auto; }
+.sidebar-nav button { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 20px; background: none; color: var(--text-dim); font-size: 0.9rem; font-weight: 500; text-align: left; transition: all 0.2s; border-left: 3px solid transparent; }
+.sidebar-nav button:hover { background: var(--hover); color: var(--text); }
+.sidebar-nav button.active { background: var(--hover); color: var(--gold); border-left-color: var(--gold); }
+.sidebar-nav button .nav-icon { width: 20px; text-align: center; font-size: 1.1rem; }
+.sidebar-footer { padding: 16px 20px; border-top: 1px solid var(--border); display: flex; gap: 8px; }
+.sidebar-footer button { flex: 1; padding: 8px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; }
+.btn-export { background: var(--accent); color: var(--text); }
+.btn-import { background: var(--gold); color: #1a1a2e; }
+.btn-export:hover { background: #1a4a80; }
+.btn-import:hover { background: #d4b06a; }
+
+/* MAIN */
+.main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
+
+/* HEADER STATS */
+.top-bar { background: var(--card); border-bottom: 1px solid var(--border); padding: 16px 28px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; position: sticky; top: 0; z-index: 50; }
+.stat-pill { display: flex; align-items: center; gap: 8px; background: var(--bg); padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); }
+.stat-pill .stat-icon { font-size: 1.2rem; }
+.stat-pill .stat-val { font-size: 1.15rem; font-weight: 700; color: var(--gold); }
+.stat-pill .stat-label { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* CONTENT */
+.content { flex: 1; padding: 28px; overflow-y: auto; }
+.section { display: none; }
+.section.active { display: block; }
+.section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+.section-title .st-icon { color: var(--gold); }
+
+/* BUTTONS */
+.btn { padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+.btn-primary { background: var(--gold); color: #1a1a2e; }
+.btn-primary:hover { background: #d4b06a; }
+.btn-secondary { background: var(--accent); color: var(--text); }
+.btn-secondary:hover { background: #1a4a80; }
+.btn-danger { background: var(--alert); color: white; }
+.btn-danger:hover { background: #ff5a75; }
+.btn-sm { padding: 5px 10px; font-size: 0.78rem; }
+.btn-ghost { background: transparent; color: var(--text-dim); border: 1px solid var(--border); }
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+.btn-whatsapp { background: #25D366; color: white; }
+.btn-whatsapp:hover { background: #2be076; }
+
+/* GRID */
+.prop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+.prop-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: all 0.2s; cursor: pointer; position: relative; }
+.prop-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: var(--shadow); }
+.prop-card .pc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+.prop-card .pc-name { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+.prop-card .pc-status { padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.status-occupied { background: rgba(83,215,105,0.15); color: var(--positive); }
+.status-vacant { background: rgba(200,164,94,0.15); color: var(--gold); }
+.status-cleaning { background: rgba(255,193,7,0.15); color: #ffc107; }
+.status-maintenance { background: rgba(233,69,96,0.15); color: var(--alert); }
+.prop-card .pc-body { display: flex; flex-direction: column; gap: 8px; }
+.pc-row { display: flex; justify-content: space-between; font-size: 0.85rem; }
+.pc-row .pc-label { color: var(--text-dim); }
+.pc-row .pc-value { font-weight: 600; }
+.pc-occupancy { margin-top: 8px; }
+.pc-occ-bar { height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden; margin-top: 4px; }
+.pc-occ-fill { height: 100%; background: var(--positive); border-radius: 3px; transition: width 0.5s; }
+
+/* MODAL */
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.65); z-index: 1000; display: none; align-items: center; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal { background: var(--card); border: 1px solid var(--border); border-radius: 12px; width: 90%; max-width: 560px; max-height: 90vh; overflow-y: auto; padding: 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+.modal-wide { max-width: 720px; }
+.modal h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; color: var(--gold); }
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+/* TABLE */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { text-align: left; font-size: 0.75rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+.data-table tr:hover td { background: var(--hover); }
+
+/* SCORE BADGES */
+.score-cold { background: rgba(100,149,237,0.15); color: #6495ed; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; }
+.score-warm { background: rgba(255,165,0,0.15); color: #ffa500; padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; }
+.score-hot { background: rgba(233,69,96,0.15); color: var(--alert); padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; }
+
+/* CALENDAR */
+.cal-controls { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.cal-controls .cal-month { font-size: 1.2rem; font-weight: 700; min-width: 200px; text-align: center; }
+.gantt-wrap { overflow-x: auto; background: var(--card); border: 1px solid var(--border); border-radius: 12px; }
+.gantt-table { width: 100%; border-collapse: collapse; min-width: 900px; }
+.gantt-table th { padding: 8px 4px; font-size: 0.65rem; font-weight: 600; color: var(--text-dim); text-align: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--card); min-width: 32px; }
+.gantt-table th.gantt-prop-head { text-align: left; padding-left: 14px; min-width: 160px; position: sticky; left: 0; z-index: 2; background: var(--card); }
+.gantt-table td { padding: 6px 2px; text-align: center; border-bottom: 1px solid var(--border); position: relative; }
+.gantt-table td.gantt-prop-cell { text-align: left; padding-left: 14px; font-weight: 600; font-size: 0.82rem; position: sticky; left: 0; background: var(--card); z-index: 1; white-space: nowrap; }
+.gantt-cell { height: 28px; cursor: pointer; border-radius: 3px; transition: background 0.15s; }
+.gantt-cell:hover { background: rgba(200,164,94,0.2); }
+.gantt-cell.booked { background: rgba(83,215,105,0.5); border-radius: 0; }
+.gantt-cell.booked-start { border-radius: 4px 0 0 4px; }
+.gantt-cell.booked-end { border-radius: 0 4px 4px 0; }
+.gantt-cell.booked-single { border-radius: 4px; }
+.gantt-cell.blocked { background: rgba(100,100,130,0.4); }
+.gantt-cell.cleaning { background: rgba(255,193,7,0.4); }
+.gantt-cell.today { box-shadow: inset 0 0 0 2px var(--gold); }
+.gantt-guest-label { position: absolute; top: 50%; left: 4px; transform: translateY(-50%); font-size: 0.6rem; font-weight: 600; color: #fff; white-space: nowrap; pointer-events: none; z-index: 1; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+
+/* REVENUE */
+.rev-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.rev-stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+.rev-stat-card .rsc-label { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.rev-stat-card .rsc-value { font-size: 1.6rem; font-weight: 800; color: var(--gold); }
+.rev-stat-card .rsc-sub { font-size: 0.78rem; color: var(--text-dim); margin-top: 2px; }
+.chart-container { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+.chart-title { font-size: 1rem; font-weight: 700; margin-bottom: 16px; }
+.bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 200px; padding-top: 10px; }
+.bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
+.bar { width: 100%; max-width: 50px; border-radius: 4px 4px 0 0; transition: height 0.5s; position: relative; min-height: 2px; }
+.bar:hover { opacity: 0.85; }
+.bar-label { font-size: 0.6rem; color: var(--text-dim); writing-mode: vertical-rl; text-orientation: mixed; max-height: 80px; overflow: hidden; transform: rotate(180deg); }
+.bar-value { font-size: 0.65rem; color: var(--text); font-weight: 600; }
+
+/* TEMPLATES */
+.template-list { display: flex; flex-direction: column; gap: 12px; }
+.template-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.template-header { padding: 14px 18px; background: var(--accent); display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+.template-header h3 { font-size: 0.92rem; font-weight: 700; }
+.template-body { padding: 18px; display: none; }
+.template-card.open .template-body { display: block; }
+.template-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+.template-tabs button { padding: 5px 14px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; background: var(--bg); color: var(--text-dim); }
+.template-tabs button.active { background: var(--gold); color: #1a1a2e; }
+.template-content { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px; font-size: 0.88rem; line-height: 1.6; white-space: pre-wrap; min-height: 80px; max-height: 300px; overflow-y: auto; }
+.template-actions { display: flex; gap: 8px; margin-top: 12px; }
+.template-actions select { max-width: 200px; }
+
+/* CLEANING */
+.clean-filters { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+
+/* TABS */
+.tab-bar { display: flex; gap: 4px; margin-bottom: 20px; background: var(--bg); border-radius: 8px; padding: 4px; width: fit-content; }
+.tab-bar button { padding: 8px 18px; border-radius: 6px; font-size: 0.82rem; font-weight: 600; background: none; color: var(--text-dim); }
+.tab-bar button.active { background: var(--accent); color: var(--gold); }
+
+/* Expense form inline */
+.expense-inline { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: flex-end; }
+.expense-inline .form-group { margin-bottom: 0; }
+.expense-inline input, .expense-inline select { width: auto; min-width: 120px; }
+
+/* Toast */
+.toast { position: fixed; bottom: 24px; right: 24px; background: var(--positive); color: #1a1a2e; padding: 12px 20px; border-radius: 8px; font-weight: 600; font-size: 0.88rem; z-index: 9999; transform: translateY(80px); opacity: 0; transition: all 0.3s; box-shadow: var(--shadow); }
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.error { background: var(--alert); color: white; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; }
+  .mobile-toggle { display: flex !important; }
+  .prop-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+}
+.mobile-toggle { display: none; position: fixed; top: 12px; left: 12px; z-index: 200; background: var(--card); border: 1px solid var(--border); color: var(--gold); width: 40px; height: 40px; border-radius: 8px; align-items: center; justify-content: center; font-size: 1.3rem; }
+
+/* Misc */
+.empty-state { text-align: center; padding: 48px 20px; color: var(--text-dim); }
+.empty-state .es-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.badge-count { background: var(--alert); color: white; font-size: 0.65rem; padding: 1px 6px; border-radius: 10px; margin-left: 6px; font-weight: 700; }
+.text-gold { color: var(--gold); }
+.text-positive { color: var(--positive); }
+.text-alert { color: var(--alert); }
+.text-dim { color: var(--text-dim); }
+.mt-12 { margin-top: 12px; }
+.mt-20 { margin-top: 20px; }
+.mb-12 { margin-bottom: 12px; }
+.mb-20 { margin-bottom: 20px; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+</style>
+</head>
+<body>
+
+<button class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <h1>PuntaCana Props</h1>
+    <p>Airbnb Operations</p>
+  </div>
+  <nav class="sidebar-nav">
+    <button class="active" onclick="showSection('properties', this)"><span class="nav-icon">&#127968;</span> Properties</button>
+    <button onclick="showSection('calendar', this)"><span class="nav-icon">&#128197;</span> Calendar</button>
+    <button onclick="showSection('revenue', this)"><span class="nav-icon">&#128176;</span> Revenue</button>
+    <button onclick="showSection('guests', this)"><span class="nav-icon">&#128101;</span> Guest Pipeline</button>
+    <button onclick="showSection('cleaning', this)"><span class="nav-icon">&#128703;</span> Cleaning</button>
+    <button onclick="showSection('templates', this)"><span class="nav-icon">&#128172;</span> Templates</button>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn-export" onclick="exportData()">Export</button>
+    <button class="btn-import" onclick="document.getElementById('importFile').click()">Import</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+  </div>
+</aside>
+
+<main class="main">
+  <!-- TOP BAR STATS -->
+  <div class="top-bar" id="topBar"></div>
+
+  <div class="content">
+    <!-- PROPERTIES -->
+    <div class="section active" id="sec-properties">
+      <div class="flex-between mb-20">
+        <h2 class="section-title"><span class="st-icon">&#127968;</span> Property Overview</h2>
+        <button class="btn btn-primary" onclick="openPropertyModal()">+ Add Property</button>
+      </div>
+      <div class="prop-grid" id="propGrid"></div>
+    </div>
+
+    <!-- CALENDAR -->
+    <div class="section" id="sec-calendar">
+      <h2 class="section-title"><span class="st-icon">&#128197;</span> Occupancy Calendar</h2>
+      <div class="cal-controls">
+        <button class="btn btn-ghost" onclick="calNav(-1)">&larr; Prev</button>
+        <span class="cal-month" id="calMonth"></span>
+        <button class="btn btn-ghost" onclick="calNav(1)">Next &rarr;</button>
+        <button class="btn btn-sm btn-secondary" onclick="calToday()">Today</button>
+      </div>
+      <div class="gantt-wrap" id="ganttWrap"></div>
+    </div>
+
+    <!-- REVENUE -->
+    <div class="section" id="sec-revenue">
+      <h2 class="section-title"><span class="st-icon">&#128176;</span> Revenue Tracker</h2>
+      <div class="rev-grid" id="revStats"></div>
+      <div class="chart-container">
+        <div class="flex-between mb-12">
+          <h3 class="chart-title">Monthly Revenue by Property</h3>
+          <div>
+            <button class="btn btn-sm btn-ghost" onclick="revChartNav(-1)">&larr;</button>
+            <span id="revChartMonth" style="font-weight:600;margin:0 8px;"></span>
+            <button class="btn btn-sm btn-ghost" onclick="revChartNav(1)">&rarr;</button>
+          </div>
+        </div>
+        <div class="bar-chart" id="revChart"></div>
+      </div>
+      <div class="flex-between mb-12">
+        <h3 class="chart-title">Expenses</h3>
+        <button class="btn btn-sm btn-primary" onclick="openExpenseModal()">+ Add Expense</button>
+      </div>
+      <div class="expense-inline mb-12">
+        <div class="form-group"><label>Filter Property</label><select id="expPropFilter" onchange="renderExpenses()"><option value="">All</option></select></div>
+        <div class="form-group"><label>Filter Month</label><input type="month" id="expMonthFilter" onchange="renderExpenses()"></div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="data-table" id="expenseTable"><thead><tr><th>Date</th><th>Property</th><th>Category</th><th>Amount</th><th>Note</th><th></th></tr></thead><tbody></tbody></table>
+      </div>
+      <div class="mt-20">
+        <h3 class="chart-title mb-12">P&L Summary (Current Month)</h3>
+        <div style="overflow-x:auto;">
+          <table class="data-table" id="plTable"><thead><tr><th>Property</th><th>Revenue</th><th>Expenses</th><th>Net Profit</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- GUESTS -->
+    <div class="section" id="sec-guests">
+      <h2 class="section-title"><span class="st-icon">&#128101;</span> Guest Pipeline & Buyer Scoring</h2>
+      <div class="clean-filters mb-12">
+        <div class="form-group"><label>Score Filter</label><select id="guestScoreFilter" onchange="renderGuests()"><option value="">All</option><option>Hot</option><option>Warm</option><option>Cold</option></select></div>
+        <div class="form-group"><label>Search</label><input type="text" id="guestSearch" placeholder="Guest name..." oninput="renderGuests()"></div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="data-table" id="guestTable"><thead><tr><th>Guest</th><th>Stays</th><th>Total Nights</th><th>Avg Nightly</th><th>Country</th><th>Notes</th><th>Score</th><th>Actions</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+
+    <!-- CLEANING -->
+    <div class="section" id="sec-cleaning">
+      <div class="flex-between mb-20">
+        <h2 class="section-title"><span class="st-icon">&#128703;</span> Cleaning Schedule</h2>
+        <button class="btn btn-primary" onclick="openCleanerModal()">Manage Cleaners</button>
+      </div>
+      <div class="clean-filters mb-12">
+        <div class="form-group"><label>Status</label><select id="cleanStatusFilter" onchange="renderCleaning()"><option value="">All</option><option>Pending</option><option>In Progress</option><option>Done</option></select></div>
+        <div class="form-group"><label>Property</label><select id="cleanPropFilter" onchange="renderCleaning()"><option value="">All</option></select></div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="data-table" id="cleanTable"><thead><tr><th>Property</th><th>Checkout Date</th><th>Guest</th><th>Cleaner</th><th>Status</th><th>Actions</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+
+    <!-- TEMPLATES -->
+    <div class="section" id="sec-templates">
+      <h2 class="section-title"><span class="st-icon">&#128172;</span> Message Templates</h2>
+      <div class="clean-filters mb-12">
+        <div class="form-group"><label>Apply to Booking</label><select id="templateBookingSelect" onchange="updateTemplatePlaceholders()"><option value="">Select a booking...</option></select></div>
+      </div>
+      <div class="template-list" id="templateList"></div>
+    </div>
+  </div>
+</main>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ========== DATA LAYER ==========
+const STORAGE_KEY = 'pcprops_data';
+
+function loadData() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (raw) return JSON.parse(raw);
+  return getDefaultData();
+}
+
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA));
+}
+
+let DATA = loadData();
+
+function getDefaultData() {
+  const today = new Date();
+  const d = (offset) => {
+    const dt = new Date(today); dt.setDate(dt.getDate() + offset);
+    return dt.toISOString().split('T')[0];
+  };
+  return {
+    properties: [
+      { id: 'p1', name: 'Villa Bavaro Sunrise', status: 'occupied', nightlyRate: 185 },
+      { id: 'p2', name: 'Condo Cap Cana Marina', status: 'occupied', nightlyRate: 220 },
+      { id: 'p3', name: 'Studio Los Corales Beach', status: 'vacant', nightlyRate: 95 },
+      { id: 'p4', name: 'Penthouse Cocotal Golf', status: 'cleaning', nightlyRate: 310 },
+      { id: 'p5', name: 'Townhouse Palma Real', status: 'vacant', nightlyRate: 150 },
+      { id: 'p6', name: 'Villa Punta Espada', status: 'maintenance', nightlyRate: 425 },
+      { id: 'p7', name: 'Apt Downtown Bavaro', status: 'vacant', nightlyRate: 75 },
+    ],
+    bookings: [
+      { id: 'b1', propertyId: 'p1', guest: 'Sarah Thompson', checkIn: d(-3), checkOut: d(4), nightlyRate: 185, platform: 'Airbnb', country: 'USA', notes: '' },
+      { id: 'b2', propertyId: 'p2', guest: 'Marc Dupont', checkIn: d(-5), checkOut: d(2), nightlyRate: 220, platform: 'Airbnb', country: 'Canada', notes: 'Asked about buying property nearby' },
+      { id: 'b3', propertyId: 'p4', guest: 'Elena Rodriguez', checkIn: d(-8), checkOut: d(0), nightlyRate: 310, platform: 'VRBO', country: 'Spain', notes: '' },
+      { id: 'b4', propertyId: 'p1', guest: 'James Wilson', checkIn: d(7), checkOut: d(17), nightlyRate: 195, platform: 'Airbnb', country: 'USA', notes: 'Repeat guest, loves the area' },
+      { id: 'b5', propertyId: 'p3', guest: 'Anna Kowalski', checkIn: d(2), checkOut: d(5), nightlyRate: 95, platform: 'Booking.com', country: 'Germany', notes: '' },
+      { id: 'b6', propertyId: 'p5', guest: 'Robert Chen', checkIn: d(5), checkOut: d(15), nightlyRate: 155, platform: 'Airbnb', country: 'USA', notes: 'Interested in investment properties' },
+      { id: 'b7', propertyId: 'p2', guest: 'Marc Dupont', checkIn: d(10), checkOut: d(20), nightlyRate: 230, platform: 'Direct', country: 'Canada', notes: 'Returning guest - very interested in area' },
+      { id: 'b8', propertyId: 'p7', guest: 'Lisa Park', checkIn: d(-2), checkOut: d(1), nightlyRate: 80, platform: 'Airbnb', country: 'South Korea', notes: '' },
+    ],
+    expenses: [
+      { id: 'e1', propertyId: 'p1', date: d(-5), category: 'Cleaning', amount: 45, note: 'Turnover clean' },
+      { id: 'e2', propertyId: 'p4', date: d(-1), category: 'Maintenance', amount: 120, note: 'AC repair' },
+      { id: 'e3', propertyId: 'p2', date: d(-10), category: 'Supplies', amount: 35, note: 'Toiletries restock' },
+      { id: 'e4', propertyId: 'p1', date: d(-15), category: 'HOA', amount: 250, note: 'Monthly HOA' },
+      { id: 'e5', propertyId: 'p3', date: d(-12), category: 'Utilities', amount: 85, note: 'Electric bill' },
+    ],
+    cleaners: [
+      { id: 'c1', name: 'Maria Santos', phone: '18091234567' },
+      { id: 'c2', name: 'Juan Perez', phone: '18097654321' },
+      { id: 'c3', name: 'Rosa Martinez', phone: '18095551234' },
+    ],
+    cleaningTasks: [],
+    guestNotes: {},
+    nextId: 100
+  };
+}
+
+function genId() { return 'id_' + (DATA.nextId++); }
+
+// ========== NAVIGATION ==========
+function showSection(name, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + name).classList.add('active');
+  document.querySelectorAll('.sidebar-nav button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.querySelector('.sidebar').classList.remove('open');
+  if (name === 'calendar') renderCalendar();
+  if (name === 'revenue') renderRevenue();
+  if (name === 'guests') renderGuests();
+  if (name === 'cleaning') { populateCleanPropFilter(); renderCleaning(); }
+  if (name === 'templates') renderTemplates();
+  if (name === 'properties') renderProperties();
+}
+
+// ========== TOAST ==========
+function toast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ========== MODAL ==========
+function openModal(html, wide) {
+  const m = document.getElementById('modalContent');
+  m.innerHTML = html;
+  m.className = 'modal' + (wide ? ' modal-wide' : '');
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+
+// ========== TOP BAR ==========
+function renderTopBar() {
+  const today = new Date(); const todayStr = today.toISOString().split('T')[0];
+  const y = today.getFullYear(), m = today.getMonth();
+  const occupied = DATA.bookings.filter(b => b.checkIn <= todayStr && b.checkOut > todayStr).length;
+  const monthBookings = DATA.bookings.filter(b => {
+    const ci = new Date(b.checkIn), co = new Date(b.checkOut);
+    return (ci.getFullYear() === y && ci.getMonth() === m) || (co.getFullYear() === y && co.getMonth() === m) || (ci < new Date(y, m, 1) && co > new Date(y, m + 1, 0));
+  });
+  let monthRev = 0;
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  const monthStart = new Date(y, m, 1), monthEnd = new Date(y, m + 1, 0);
+  let totalOccDays = 0;
+  monthBookings.forEach(b => {
+    const ci = new Date(b.checkIn), co = new Date(b.checkOut);
+    const s = ci < monthStart ? monthStart : ci;
+    const e = co > monthEnd ? new Date(monthEnd.getTime() + 86400000) : co;
+    const nights = Math.max(0, Math.round((e - s) / 86400000));
+    monthRev += nights * (b.nightlyRate || 0);
+    totalOccDays += nights;
+  });
+  const occPct = DATA.properties.length > 0 ? Math.round(totalOccDays / (daysInMonth * DATA.properties.length) * 100) : 0;
+  const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 2);
+  const tomorrowStr = tomorrow.toISOString().split('T')[0];
+  const upcoming = DATA.bookings.filter(b => b.checkOut >= todayStr && b.checkOut <= tomorrowStr).length;
+
+  document.getElementById('topBar').innerHTML = `
+    <div class="stat-pill"><span class="stat-icon">&#127968;</span><div><div class="stat-val">${DATA.properties.length}</div><div class="stat-label">Properties</div></div></div>
+    <div class="stat-pill"><span class="stat-icon">&#128994;</span><div><div class="stat-val">${occupied}</div><div class="stat-label">Occupied Now</div></div></div>
+    <div class="stat-pill"><span class="stat-icon">&#128176;</span><div><div class="stat-val">$${monthRev.toLocaleString()}</div><div class="stat-label">This Month Rev</div></div></div>
+    <div class="stat-pill"><span class="stat-icon">&#128200;</span><div><div class="stat-val">${occPct}%</div><div class="stat-label">Monthly Occupancy</div></div></div>
+    <div class="stat-pill"><span class="stat-icon">${upcoming > 0 ? '&#128680;' : '&#9989;'}</span><div><div class="stat-val ${upcoming > 0 ? 'text-alert' : ''}">${upcoming}</div><div class="stat-label">Checkouts 48h</div></div></div>
+  `;
+}
+
+// ========== PROPERTIES ==========
+function renderProperties() {
+  const todayStr = new Date().toISOString().split('T')[0];
+  const grid = document.getElementById('propGrid');
+  grid.innerHTML = DATA.properties.map(p => {
+    const current = DATA.bookings.find(b => b.propertyId === p.id && b.checkIn <= todayStr && b.checkOut > todayStr);
+    const y = new Date().getFullYear(), m = new Date().getMonth();
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    const monthStart = new Date(y, m, 1), monthEnd = new Date(y, m + 1, 0);
+    let occDays = 0;
+    DATA.bookings.filter(b => b.propertyId === p.id).forEach(b => {
+      const ci = new Date(b.checkIn), co = new Date(b.checkOut);
+      if (co > monthStart && ci <= monthEnd) {
+        const s = ci < monthStart ? monthStart : ci;
+        const e = co > new Date(monthEnd.getTime() + 86400000) ? new Date(monthEnd.getTime() + 86400000) : co;
+        occDays += Math.max(0, Math.round((e - s) / 86400000));
+      }
+    });
+    const occPct = Math.round(occDays / daysInMonth * 100);
+    const statusClass = 'status-' + p.status;
+    const statusLabel = p.status.charAt(0).toUpperCase() + p.status.slice(1);
+    return `<div class="prop-card" onclick="openPropertyDetail('${p.id}')">
+      <div class="pc-header">
+        <span class="pc-name">${esc(p.name)}</span>
+        <span class="pc-status ${statusClass}">${statusLabel}</span>
+      </div>
+      <div class="pc-body">
+        <div class="pc-row"><span class="pc-label">Guest</span><span class="pc-value">${current ? esc(current.guest) : '--'}</span></div>
+        <div class="pc-row"><span class="pc-label">Check-in</span><span class="pc-value">${current ? current.checkIn : '--'}</span></div>
+        <div class="pc-row"><span class="pc-label">Check-out</span><span class="pc-value">${current ? current.checkOut : '--'}</span></div>
+        <div class="pc-row"><span class="pc-label">Nightly Rate</span><span class="pc-value text-gold">$${p.nightlyRate}</span></div>
+        <div class="pc-occupancy">
+          <div class="pc-row"><span class="pc-label">Occupancy this month</span><span class="pc-value">${occPct}%</span></div>
+          <div class="pc-occ-bar"><div class="pc-occ-fill" style="width:${occPct}%"></div></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openPropertyDetail(pid) {
+  const p = DATA.properties.find(x => x.id === pid);
+  if (!p) return;
+  const bookings = DATA.bookings.filter(b => b.propertyId === pid).sort((a,b) => a.checkIn > b.checkIn ? -1 : 1);
+  openModal(`
+    <h2>&#127968; ${esc(p.name)}</h2>
+    <div class="form-row">
+      <div class="form-group"><label>Property Name</label><input id="editPropName" value="${esc(p.name)}"></div>
+      <div class="form-group"><label>Nightly Rate ($)</label><input type="number" id="editPropRate" value="${p.nightlyRate}"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Status</label>
+        <select id="editPropStatus">
+          <option value="occupied" ${p.status==='occupied'?'selected':''}>Occupied</option>
+          <option value="vacant" ${p.status==='vacant'?'selected':''}>Vacant</option>
+          <option value="cleaning" ${p.status==='cleaning'?'selected':''}>Cleaning</option>
+          <option value="maintenance" ${p.status==='maintenance'?'selected':''}>Maintenance</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-danger btn-sm" onclick="deleteProperty('${pid}')">Delete Property</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="savePropertyEdit('${pid}')">Save</button>
+    </div>
+    <h3 class="mt-20 mb-12" style="font-size:1rem;">Bookings</h3>
+    <table class="data-table"><thead><tr><th>Guest</th><th>Check-in</th><th>Check-out</th><th>Rate</th><th>Platform</th><th></th></tr></thead>
+    <tbody>${bookings.map(b => `<tr><td>${esc(b.guest)}</td><td>${b.checkIn}</td><td>${b.checkOut}</td><td>$${b.nightlyRate}</td><td>${esc(b.platform||'')}</td><td><button class="btn btn-sm btn-danger" onclick="deleteBooking('${b.id}');openPropertyDetail('${pid}')">Del</button></td></tr>`).join('')}</tbody></table>
+    <button class="btn btn-sm btn-secondary mt-12" onclick="closeModal();openBookingModal('${pid}')">+ Add Booking</button>
+  `, true);
+}
+
+function savePropertyEdit(pid) {
+  const p = DATA.properties.find(x => x.id === pid);
+  p.name = document.getElementById('editPropName').value.trim() || p.name;
+  p.nightlyRate = parseFloat(document.getElementById('editPropRate').value) || p.nightlyRate;
+  p.status = document.getElementById('editPropStatus').value;
+  saveData(); closeModal(); renderAll();
+  toast('Property updated');
+}
+
+function deleteProperty(pid) {
+  if (!confirm('Delete this property and all its bookings?')) return;
+  DATA.properties = DATA.properties.filter(x => x.id !== pid);
+  DATA.bookings = DATA.bookings.filter(x => x.propertyId !== pid);
+  DATA.expenses = DATA.expenses.filter(x => x.propertyId !== pid);
+  saveData(); closeModal(); renderAll();
+  toast('Property deleted');
+}
+
+function openPropertyModal() {
+  openModal(`
+    <h2>Add New Property</h2>
+    <div class="form-group"><label>Property Name</label><input id="newPropName" placeholder="e.g. Villa Bavaro Sunrise"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Nightly Rate ($)</label><input type="number" id="newPropRate" value="150"></div>
+      <div class="form-group"><label>Status</label>
+        <select id="newPropStatus"><option value="vacant">Vacant</option><option value="occupied">Occupied</option><option value="cleaning">Cleaning</option><option value="maintenance">Maintenance</option></select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="addProperty()">Add Property</button>
+    </div>
+  `);
+}
+
+function addProperty() {
+  const name = document.getElementById('newPropName').value.trim();
+  if (!name) { toast('Name required', true); return; }
+  DATA.properties.push({ id: genId(), name, nightlyRate: parseFloat(document.getElementById('newPropRate').value) || 150, status: document.getElementById('newPropStatus').value });
+  saveData(); closeModal(); renderAll();
+  toast('Property added');
+}
+
+// ========== BOOKINGS ==========
+function openBookingModal(propertyId, dateStr) {
+  const propOptions = DATA.properties.map(p => `<option value="${p.id}" ${p.id===propertyId?'selected':''}>${esc(p.name)}</option>`).join('');
+  openModal(`
+    <h2>Add Booking</h2>
+    <div class="form-group"><label>Property</label><select id="bkProp">${propOptions}</select></div>
+    <div class="form-group"><label>Guest Name</label><input id="bkGuest" placeholder="Full name"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Check-in</label><input type="date" id="bkIn" value="${dateStr||''}"></div>
+      <div class="form-group"><label>Check-out</label><input type="date" id="bkOut"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Nightly Rate ($)</label><input type="number" id="bkRate" value="${DATA.properties.find(p=>p.id===propertyId)?.nightlyRate||150}"></div>
+      <div class="form-group"><label>Platform</label>
+        <select id="bkPlatform"><option>Airbnb</option><option>VRBO</option><option>Booking.com</option><option>Direct</option><option>Other</option></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Country</label><input id="bkCountry" placeholder="e.g. USA"></div>
+      <div class="form-group"><label>Notes</label><input id="bkNotes" placeholder="Optional notes"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="addBooking()">Save Booking</button>
+    </div>
+  `);
+}
+
+function addBooking() {
+  const guest = document.getElementById('bkGuest').value.trim();
+  const checkIn = document.getElementById('bkIn').value;
+  const checkOut = document.getElementById('bkOut').value;
+  if (!guest || !checkIn || !checkOut) { toast('Fill all required fields', true); return; }
+  if (checkOut <= checkIn) { toast('Check-out must be after check-in', true); return; }
+  DATA.bookings.push({
+    id: genId(),
+    propertyId: document.getElementById('bkProp').value,
+    guest, checkIn, checkOut,
+    nightlyRate: parseFloat(document.getElementById('bkRate').value) || 0,
+    platform: document.getElementById('bkPlatform').value,
+    country: document.getElementById('bkCountry').value.trim(),
+    notes: document.getElementById('bkNotes').value.trim()
+  });
+  saveData(); closeModal(); renderAll();
+  toast('Booking added');
+}
+
+function deleteBooking(bid) {
+  DATA.bookings = DATA.bookings.filter(x => x.id !== bid);
+  saveData(); renderAll();
+}
+
+// ========== CALENDAR ==========
+let calYear, calMonth;
+(function() { const n = new Date(); calYear = n.getFullYear(); calMonth = n.getMonth(); })();
+
+function calNav(dir) { calMonth += dir; if (calMonth > 11) { calMonth = 0; calYear++; } if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar(); }
+function calToday() { const n = new Date(); calYear = n.getFullYear(); calMonth = n.getMonth(); renderCalendar(); }
+
+function renderCalendar() {
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('calMonth').textContent = months[calMonth] + ' ' + calYear;
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const todayStr = new Date().toISOString().split('T')[0];
+
+  let html = '<table class="gantt-table"><thead><tr><th class="gantt-prop-head">Property</th>';
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dow = new Date(calYear, calMonth, d).getDay();
+    html += `<th style="${dow===0||dow===6?'color:var(--gold)':''}">${d}</th>`;
+  }
+  html += '</tr></thead><tbody>';
+
+  DATA.properties.forEach(p => {
+    html += `<tr><td class="gantt-prop-cell">${esc(p.name)}</td>`;
+    const propBookings = DATA.bookings.filter(b => b.propertyId === p.id);
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const isToday = dateStr === todayStr;
+      let cls = 'gantt-cell';
+      if (isToday) cls += ' today';
+      let guestLabel = '';
+      const booking = propBookings.find(b => dateStr >= b.checkIn && dateStr < b.checkOut);
+      if (booking) {
+        cls += ' booked';
+        if (dateStr === booking.checkIn) { cls += ' booked-start'; guestLabel = `<span class="gantt-guest-label">${esc(booking.guest.split(' ')[0])}</span>`; }
+        const lastDay = new Date(new Date(booking.checkOut).getTime() - 86400000).toISOString().split('T')[0];
+        if (dateStr === lastDay) cls += ' booked-end';
+        if (booking.checkIn === lastDay) cls += ' booked-single';
+      }
+      // Check if checkout day (cleaning)
+      const checkoutBooking = propBookings.find(b => dateStr === b.checkOut);
+      if (checkoutBooking && !booking) {
+        cls += ' cleaning';
+      }
+      html += `<td><div class="${cls}" onclick="openBookingModal('${p.id}','${dateStr}')">${guestLabel}</div></td>`;
+    }
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('ganttWrap').innerHTML = html;
+}
+
+// ========== REVENUE ==========
+let revChartYear, revChartMonth;
+(function() { const n = new Date(); revChartYear = n.getFullYear(); revChartMonth = n.getMonth(); })();
+function revChartNav(dir) { revChartMonth += dir; if (revChartMonth > 11) { revChartMonth = 0; revChartYear++; } if (revChartMonth < 0) { revChartMonth = 11; revChartYear--; } renderRevenue(); }
+
+function renderRevenue() {
+  const y = new Date().getFullYear(), m = new Date().getMonth();
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  // YTD revenue
+  let ytdRev = 0, ytdNights = 0, ytdOccDays = 0, ytdTotalDays = 0;
+  for (let mo = 0; mo <= m; mo++) {
+    const dim = new Date(y, mo + 1, 0).getDate();
+    ytdTotalDays += dim * DATA.properties.length;
+    const ms = new Date(y, mo, 1), me = new Date(y, mo + 1, 0);
+    DATA.bookings.forEach(b => {
+      const ci = new Date(b.checkIn), co = new Date(b.checkOut);
+      if (co > ms && ci <= me) {
+        const s = ci < ms ? ms : ci;
+        const e = co > new Date(me.getTime() + 86400000) ? new Date(me.getTime() + 86400000) : co;
+        const nights = Math.max(0, Math.round((e - s) / 86400000));
+        ytdRev += nights * (b.nightlyRate || 0);
+        ytdNights += nights;
+        ytdOccDays += nights;
+      }
+    });
+  }
+  const avgADR = ytdNights > 0 ? Math.round(ytdRev / ytdNights) : 0;
+  const avgOcc = ytdTotalDays > 0 ? Math.round(ytdOccDays / ytdTotalDays * 100) : 0;
+  const ytdExpenses = DATA.expenses.filter(e => new Date(e.date).getFullYear() === y).reduce((s, e) => s + e.amount, 0);
+
+  document.getElementById('revStats').innerHTML = `
+    <div class="rev-stat-card"><div class="rsc-label">YTD Revenue</div><div class="rsc-value">$${ytdRev.toLocaleString()}</div></div>
+    <div class="rev-stat-card"><div class="rsc-label">YTD Expenses</div><div class="rsc-value text-alert">$${ytdExpenses.toLocaleString()}</div></div>
+    <div class="rev-stat-card"><div class="rsc-label">YTD Net Profit</div><div class="rsc-value ${ytdRev-ytdExpenses>=0?'text-positive':'text-alert'}">$${(ytdRev-ytdExpenses).toLocaleString()}</div></div>
+    <div class="rev-stat-card"><div class="rsc-label">Average ADR</div><div class="rsc-value">$${avgADR}</div></div>
+    <div class="rev-stat-card"><div class="rsc-label">YTD Occupancy</div><div class="rsc-value">${avgOcc}%</div></div>
+  `;
+
+  // Bar chart for selected month
+  const fullMonths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('revChartMonth').textContent = fullMonths[revChartMonth] + ' ' + revChartYear;
+  const dim = new Date(revChartYear, revChartMonth + 1, 0).getDate();
+  const cMs = new Date(revChartYear, revChartMonth, 1), cMe = new Date(revChartYear, revChartMonth + 1, 0);
+  let propRevs = DATA.properties.map(p => {
+    let rev = 0;
+    DATA.bookings.filter(b => b.propertyId === p.id).forEach(b => {
+      const ci = new Date(b.checkIn), co = new Date(b.checkOut);
+      if (co > cMs && ci <= cMe) {
+        const s = ci < cMs ? cMs : ci;
+        const e = co > new Date(cMe.getTime() + 86400000) ? new Date(cMe.getTime() + 86400000) : co;
+        rev += Math.max(0, Math.round((e - s) / 86400000)) * (b.nightlyRate || 0);
+      }
+    });
+    return { name: p.name, rev };
+  });
+  const maxRev = Math.max(...propRevs.map(x => x.rev), 1);
+  const colors = ['#e94560','#53d769','#c8a45e','#6495ed','#ff6b9d','#00d2d3','#ffa502'];
+  document.getElementById('revChart').innerHTML = propRevs.map((pr, i) => {
+    const h = Math.round(pr.rev / maxRev * 180);
+    return `<div class="bar-group"><div class="bar-value">$${pr.rev.toLocaleString()}</div><div class="bar" style="height:${h}px;background:${colors[i%colors.length]};" title="${esc(pr.name)}: $${pr.rev}"></div><div class="bar-label">${esc(pr.name.length > 14 ? pr.name.slice(0,14)+'...' : pr.name)}</div></div>`;
+  }).join('');
+
+  // Expense filter dropdowns
+  const ef = document.getElementById('expPropFilter');
+  const currentVal = ef.value;
+  ef.innerHTML = '<option value="">All</option>' + DATA.properties.map(p => `<option value="${p.id}">${esc(p.name)}</option>`).join('');
+  ef.value = currentVal;
+  renderExpenses();
+  renderPL();
+}
+
+function renderExpenses() {
+  const propF = document.getElementById('expPropFilter').value;
+  const monthF = document.getElementById('expMonthFilter').value;
+  let exps = DATA.expenses.slice().sort((a,b) => b.date.localeCompare(a.date));
+  if (propF) exps = exps.filter(e => e.propertyId === propF);
+  if (monthF) exps = exps.filter(e => e.date.startsWith(monthF));
+  const tbody = document.querySelector('#expenseTable tbody');
+  if (exps.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:24px;">No expenses found</td></tr>'; return; }
+  tbody.innerHTML = exps.map(e => {
+    const pn = DATA.properties.find(p => p.id === e.propertyId)?.name || 'Unknown';
+    return `<tr><td>${e.date}</td><td>${esc(pn)}</td><td>${esc(e.category)}</td><td class="text-alert">$${e.amount.toLocaleString()}</td><td>${esc(e.note||'')}</td><td><button class="btn btn-sm btn-danger" onclick="deleteExpense('${e.id}')">Del</button></td></tr>`;
+  }).join('');
+}
+
+function renderPL() {
+  const y = new Date().getFullYear(), m = new Date().getMonth();
+  const ms = new Date(y, m, 1), me = new Date(y, m + 1, 0);
+  const monthStr = `${y}-${String(m+1).padStart(2,'0')}`;
+  const tbody = document.querySelector('#plTable tbody');
+  let totalRev = 0, totalExp = 0;
+  tbody.innerHTML = DATA.properties.map(p => {
+    let rev = 0;
+    DATA.bookings.filter(b => b.propertyId === p.id).forEach(b => {
+      const ci = new Date(b.checkIn), co = new Date(b.checkOut);
+      if (co > ms && ci <= me) {
+        const s = ci < ms ? ms : ci;
+        const e = co > new Date(me.getTime() + 86400000) ? new Date(me.getTime() + 86400000) : co;
+        rev += Math.max(0, Math.round((e - s) / 86400000)) * (b.nightlyRate || 0);
+      }
+    });
+    const exp = DATA.expenses.filter(e => e.propertyId === p.id && e.date.startsWith(monthStr)).reduce((s, e) => s + e.amount, 0);
+    const net = rev - exp;
+    totalRev += rev; totalExp += exp;
+    return `<tr><td>${esc(p.name)}</td><td class="text-positive">$${rev.toLocaleString()}</td><td class="text-alert">$${exp.toLocaleString()}</td><td style="color:${net>=0?'var(--positive)':'var(--alert)'};font-weight:700;">$${net.toLocaleString()}</td></tr>`;
+  }).join('');
+  tbody.innerHTML += `<tr style="font-weight:800;border-top:2px solid var(--gold);"><td>TOTAL</td><td class="text-positive">$${totalRev.toLocaleString()}</td><td class="text-alert">$${totalExp.toLocaleString()}</td><td style="color:${totalRev-totalExp>=0?'var(--positive)':'var(--alert)'}">$${(totalRev-totalExp).toLocaleString()}</td></tr>`;
+}
+
+function openExpenseModal() {
+  const propOpts = DATA.properties.map(p => `<option value="${p.id}">${esc(p.name)}</option>`).join('');
+  openModal(`
+    <h2>Add Expense</h2>
+    <div class="form-group"><label>Property</label><select id="expProp">${propOpts}</select></div>
+    <div class="form-row">
+      <div class="form-group"><label>Date</label><input type="date" id="expDate" value="${new Date().toISOString().split('T')[0]}"></div>
+      <div class="form-group"><label>Amount ($)</label><input type="number" id="expAmt" step="0.01"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Category</label>
+        <select id="expCat"><option>Cleaning</option><option>Maintenance</option><option>Supplies</option><option>HOA</option><option>Utilities</option><option>Insurance</option><option>Taxes</option><option>Management</option><option>Other</option></select>
+      </div>
+      <div class="form-group"><label>Note</label><input id="expNote" placeholder="Optional"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="addExpense()">Save Expense</button>
+    </div>
+  `);
+}
+
+function addExpense() {
+  const amt = parseFloat(document.getElementById('expAmt').value);
+  if (!amt || amt <= 0) { toast('Enter a valid amount', true); return; }
+  DATA.expenses.push({
+    id: genId(),
+    propertyId: document.getElementById('expProp').value,
+    date: document.getElementById('expDate').value,
+    category: document.getElementById('expCat').value,
+    amount: amt,
+    note: document.getElementById('expNote').value.trim()
+  });
+  saveData(); closeModal(); renderRevenue(); renderTopBar();
+  toast('Expense added');
+}
+
+function deleteExpense(eid) {
+  DATA.expenses = DATA.expenses.filter(x => x.id !== eid);
+  saveData(); renderRevenue(); renderTopBar();
+}
+
+// ========== GUESTS ==========
+function renderGuests() {
+  const scoreFilter = document.getElementById('guestScoreFilter').value;
+  const searchVal = document.getElementById('guestSearch').value.toLowerCase();
+
+  // Aggregate guests
+  const guestMap = {};
+  DATA.bookings.forEach(b => {
+    const key = b.guest.toLowerCase().trim();
+    if (!guestMap[key]) guestMap[key] = { name: b.guest, stays: 0, totalNights: 0, totalRate: 0, countries: new Set(), notes: [], bookingIds: [] };
+    guestMap[key].stays++;
+    const nights = Math.max(1, Math.round((new Date(b.checkOut) - new Date(b.checkIn)) / 86400000));
+    guestMap[key].totalNights += nights;
+    guestMap[key].totalRate += b.nightlyRate * nights;
+    if (b.country) guestMap[key].countries.add(b.country);
+    if (b.notes) guestMap[key].notes.push(b.notes);
+    guestMap[key].bookingIds.push(b.id);
+  });
+
+  let guests = Object.values(guestMap).map(g => {
+    let score = 0;
+    // Length of stay
+    if (g.totalNights >= 14) score += 3;
+    else if (g.totalNights >= 7) score += 2;
+    else score += 1;
+    // Repeat
+    if (g.stays >= 2) score += 3;
+    // Country
+    const countries = [...g.countries];
+    if (countries.some(c => /usa|us|united states|canada|ca/i.test(c))) score += 2;
+    // Notes
+    const allNotes = g.notes.join(' ').toLowerCase();
+    const customNotes = DATA.guestNotes?.[g.name.toLowerCase()] || '';
+    const combined = allNotes + ' ' + customNotes.toLowerCase();
+    if (/buy|invest|purchase|property|real estate|interested|own/i.test(combined)) score += 3;
+    // Classify
+    let level = 'Cold';
+    if (score >= 7) level = 'Hot';
+    else if (score >= 4) level = 'Warm';
+    return { ...g, score, level, avgRate: Math.round(g.totalRate / g.totalNights), countries, allNotes: combined, customNotes };
+  });
+
+  if (scoreFilter) guests = guests.filter(g => g.level === scoreFilter);
+  if (searchVal) guests = guests.filter(g => g.name.toLowerCase().includes(searchVal));
+  guests.sort((a, b) => b.score - a.score);
+
+  const tbody = document.querySelector('#guestTable tbody');
+  if (guests.length === 0) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-dim);">No guests found</td></tr>'; return; }
+  tbody.innerHTML = guests.map(g => {
+    const cls = g.level === 'Hot' ? 'score-hot' : g.level === 'Warm' ? 'score-warm' : 'score-cold';
+    const waMsg = encodeURIComponent(`Hi ${g.name.split(' ')[0]}! Hope you enjoyed your stay in Punta Cana. We have some exciting investment opportunities in the area. Would you like to know more?`);
+    const notesDisplay = g.notes.filter(Boolean).join('; ') + (DATA.guestNotes?.[g.name.toLowerCase()] ? ' | ' + DATA.guestNotes[g.name.toLowerCase()] : '');
+    return `<tr>
+      <td style="font-weight:600;">${esc(g.name)}</td>
+      <td>${g.stays}${g.stays >= 2 ? ' <span style="color:var(--gold);font-size:0.7rem;">REPEAT</span>' : ''}</td>
+      <td>${g.totalNights}</td>
+      <td>$${g.avgRate}</td>
+      <td>${[...g.countries].join(', ') || '--'}</td>
+      <td><input style="width:160px;font-size:0.8rem;" placeholder="Add note..." value="${esc(DATA.guestNotes?.[g.name.toLowerCase()]||'')}" onchange="saveGuestNote('${esc(g.name.toLowerCase())}', this.value)"></td>
+      <td><span class="${cls}">${g.level}</span></td>
+      <td><a href="https://wa.me/?text=${waMsg}" target="_blank" class="btn btn-sm btn-whatsapp">WhatsApp</a></td>
+    </tr>`;
+  }).join('');
+}
+
+function saveGuestNote(key, val) {
+  if (!DATA.guestNotes) DATA.guestNotes = {};
+  DATA.guestNotes[key] = val;
+  saveData();
+}
+
+// ========== CLEANING ==========
+function populateCleanPropFilter() {
+  const sel = document.getElementById('cleanPropFilter');
+  sel.innerHTML = '<option value="">All</option>' + DATA.properties.map(p => `<option value="${p.id}">${esc(p.name)}</option>`).join('');
+}
+
+function renderCleaning() {
+  const statusF = document.getElementById('cleanStatusFilter').value;
+  const propF = document.getElementById('cleanPropFilter').value;
+
+  // Auto-generate tasks from checkout dates
+  const todayStr = new Date().toISOString().split('T')[0];
+  const futureLimit = new Date(); futureLimit.setDate(futureLimit.getDate() + 30);
+  const futureStr = futureLimit.toISOString().split('T')[0];
+
+  DATA.bookings.forEach(b => {
+    if (b.checkOut >= todayStr && b.checkOut <= futureStr) {
+      const exists = DATA.cleaningTasks.find(t => t.bookingId === b.id);
+      if (!exists) {
+        DATA.cleaningTasks.push({ id: genId(), bookingId: b.id, propertyId: b.propertyId, checkOut: b.checkOut, guest: b.guest, cleanerId: '', status: 'Pending' });
+      }
+    }
+  });
+  saveData();
+
+  let tasks = DATA.cleaningTasks.slice().sort((a, b) => a.checkOut.localeCompare(b.checkOut));
+  if (statusF) tasks = tasks.filter(t => t.status === statusF);
+  if (propF) tasks = tasks.filter(t => t.propertyId === propF);
+
+  const cleanerOpts = DATA.cleaners.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('');
+  const tbody = document.querySelector('#cleanTable tbody');
+  if (tasks.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-dim);">No cleaning tasks</td></tr>'; return; }
+  tbody.innerHTML = tasks.map(t => {
+    const pn = DATA.properties.find(p => p.id === t.propertyId)?.name || 'Unknown';
+    const isPast = t.checkOut < todayStr;
+    const cleaner = DATA.cleaners.find(c => c.id === t.cleanerId);
+    const waLink = cleaner ? `https://wa.me/${cleaner.phone}?text=${encodeURIComponent(`Hi ${cleaner.name}, please clean ${pn} on ${t.checkOut}. Guest ${t.guest} checks out that day. Thanks!`)}` : '#';
+    return `<tr style="${isPast && t.status !== 'Done' ? 'background:rgba(233,69,96,0.08);':''}">
+      <td style="font-weight:600;">${esc(pn)}</td>
+      <td>${t.checkOut}${isPast && t.status !== 'Done' ? ' <span class="text-alert">(overdue)</span>' : ''}</td>
+      <td>${esc(t.guest)}</td>
+      <td><select onchange="assignCleaner('${t.id}',this.value)" style="width:140px;"><option value="">Unassigned</option>${cleanerOpts}</select><script>document.currentScript.previousElementSibling.value='${t.cleanerId||''}'</script></td>
+      <td><select onchange="setCleanStatus('${t.id}',this.value)" style="width:120px;">
+        <option ${t.status==='Pending'?'selected':''}>Pending</option>
+        <option ${t.status==='In Progress'?'selected':''}>In Progress</option>
+        <option ${t.status==='Done'?'selected':''}>Done</option>
+      </select></td>
+      <td>${cleaner ? `<a href="${waLink}" target="_blank" class="btn btn-sm btn-whatsapp">Notify</a>` : ''}</td>
+    </tr>`;
+  }).join('');
+}
+
+function assignCleaner(tid, cid) {
+  const t = DATA.cleaningTasks.find(x => x.id === tid);
+  if (t) { t.cleanerId = cid; saveData(); }
+}
+
+function setCleanStatus(tid, status) {
+  const t = DATA.cleaningTasks.find(x => x.id === tid);
+  if (t) { t.status = status; saveData(); }
+}
+
+function openCleanerModal() {
+  openModal(`
+    <h2>Manage Cleaners</h2>
+    <div id="cleanerList">${DATA.cleaners.map(c => `
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+        <input style="flex:1" value="${esc(c.name)}" onchange="updateCleaner('${c.id}','name',this.value)">
+        <input style="width:140px" value="${c.phone}" placeholder="Phone" onchange="updateCleaner('${c.id}','phone',this.value)">
+        <button class="btn btn-sm btn-danger" onclick="deleteCleaner('${c.id}')">X</button>
+      </div>
+    `).join('')}</div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <input id="newCleanerName" placeholder="Name" style="flex:1">
+      <input id="newCleanerPhone" placeholder="Phone (e.g. 18091234567)" style="width:160px">
+      <button class="btn btn-sm btn-primary" onclick="addCleaner()">Add</button>
+    </div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Close</button></div>
+  `);
+}
+
+function addCleaner() {
+  const name = document.getElementById('newCleanerName').value.trim();
+  const phone = document.getElementById('newCleanerPhone').value.trim();
+  if (!name) { toast('Name required', true); return; }
+  DATA.cleaners.push({ id: genId(), name, phone });
+  saveData(); openCleanerModal(); toast('Cleaner added');
+}
+
+function updateCleaner(cid, field, val) {
+  const c = DATA.cleaners.find(x => x.id === cid);
+  if (c) { c[field] = val; saveData(); }
+}
+
+function deleteCleaner(cid) {
+  DATA.cleaners = DATA.cleaners.filter(x => x.id !== cid);
+  saveData(); openCleanerModal();
+}
+
+// ========== TEMPLATES ==========
+const TEMPLATES = [
+  {
+    name: 'Booking Confirmation',
+    icon: '&#9989;',
+    EN: `Hi {guest_name}!\n\nThank you for booking {property_name}! We're excited to host you in Punta Cana.\n\nCheck-in: {check_in_date}\nCheck-out: {check_out_date}\n\nWe'll send you detailed arrival instructions 3 days before your stay. If you have any questions in the meantime, don't hesitate to reach out!\n\nSee you soon,\nYour Punta Cana Host`,
+    ES: `Hola {guest_name}!\n\nGracias por reservar {property_name}! Estamos emocionados de recibirte en Punta Cana.\n\nCheck-in: {check_in_date}\nCheck-out: {check_out_date}\n\nTe enviaremos instrucciones detalladas de llegada 3 dias antes de tu estadia. Si tienes alguna pregunta, no dudes en escribirnos!\n\nNos vemos pronto,\nTu Host en Punta Cana`,
+    FR: `Bonjour {guest_name}!\n\nMerci d'avoir reserve {property_name}! Nous sommes ravis de vous accueillir a Punta Cana.\n\nArrivee: {check_in_date}\nDepart: {check_out_date}\n\nNous vous enverrons les instructions d'arrivee detaillees 3 jours avant votre sejour. N'hesitez pas a nous contacter!\n\nA bientot,\nVotre Hote a Punta Cana`
+  },
+  {
+    name: 'Pre-Arrival (3 days before)',
+    icon: '&#9992;',
+    EN: `Hi {guest_name}!\n\nYour trip to {property_name} is just 3 days away! Here's everything you need:\n\nADDRESS & CHECK-IN:\n- Address: [Property Address]\n- Check-in time: 3:00 PM\n- Access: Smart lock code will be sent on check-in day\n\nWIFI:\n- Network: [WiFi Name]\n- Password: [WiFi Password]\n\nLOCAL TIPS:\n- Best nearby restaurant: [Restaurant Name]\n- Nearest supermarket: 5 min walk\n- Beach access: [directions]\n- Uber/DiDi work great here\n\nLet me know if you need airport transfer arrangements!\n\nSafe travels,\nYour Host`,
+    ES: `Hola {guest_name}!\n\nTu viaje a {property_name} es en solo 3 dias! Aqui tienes todo lo que necesitas:\n\nDIRECCION Y CHECK-IN:\n- Direccion: [Direccion]\n- Hora de entrada: 3:00 PM\n- Acceso: El codigo de la cerradura se envia el dia del check-in\n\nWIFI:\n- Red: [Nombre WiFi]\n- Clave: [Clave WiFi]\n\nTIPS LOCALES:\n- Mejor restaurante cercano: [Nombre]\n- Supermercado mas cercano: 5 min caminando\n- Acceso a la playa: [direcciones]\n- Uber/DiDi funcionan muy bien aqui\n\nAvisame si necesitas transporte del aeropuerto!\n\nBuen viaje,\nTu Host`,
+    FR: `Bonjour {guest_name}!\n\nVotre sejour a {property_name} approche - plus que 3 jours! Voici tout ce qu'il faut:\n\nADRESSE & ARRIVEE:\n- Adresse: [Adresse]\n- Heure d'arrivee: 15h00\n- Acces: Code de serrure envoye le jour de l'arrivee\n\nWIFI:\n- Reseau: [Nom WiFi]\n- Mot de passe: [MDP WiFi]\n\nCONSEILS LOCAUX:\n- Meilleur restaurant: [Nom]\n- Supermarche le plus proche: 5 min a pied\n- Acces plage: [directions]\n- Uber/DiDi fonctionnent tres bien\n\nDites-moi si vous avez besoin d'un transfert aeroport!\n\nBon voyage,\nVotre Hote`
+  },
+  {
+    name: 'Check-in Day (Welcome)',
+    icon: '&#127881;',
+    EN: `Welcome to Punta Cana, {guest_name}!\n\nYour unit at {property_name} is ready.\n\nSMART LOCK CODE: [Code]\n\nEMERGENCY CONTACTS:\n- Property Manager: [Phone]\n- Building Security: [Phone]\n- Local Emergency: 911\n\nQUICK NOTES:\n- AC remote is on the nightstand\n- Pool hours: 7am - 10pm\n- Trash pickup: [days]\n- Please treat the space like your own home\n\nEnjoy your stay! I'm just a message away if you need anything.\n\nWelcome home!`,
+    ES: `Bienvenido a Punta Cana, {guest_name}!\n\nTu unidad en {property_name} esta lista.\n\nCODIGO DE CERRADURA: [Codigo]\n\nCONTACTOS DE EMERGENCIA:\n- Administrador: [Telefono]\n- Seguridad: [Telefono]\n- Emergencias: 911\n\nNOTAS RAPIDAS:\n- El control del AC esta en la mesa de noche\n- Horario de piscina: 7am - 10pm\n- Recogida de basura: [dias]\n- Por favor cuida el espacio como tu hogar\n\nDisfruta tu estadia! Estoy a un mensaje de distancia.\n\nBienvenido!`,
+    FR: `Bienvenue a Punta Cana, {guest_name}!\n\nVotre logement a {property_name} est pret.\n\nCODE SERRURE: [Code]\n\nCONTACTS D'URGENCE:\n- Gestionnaire: [Tel]\n- Securite: [Tel]\n- Urgences: 911\n\nNOTES RAPIDES:\n- La telecommande AC est sur la table de nuit\n- Piscine: 7h - 22h\n- Collecte ordures: [jours]\n- Merci de traiter l'espace comme votre maison\n\nProfitez de votre sejour! Je suis a un message.\n\nBienvenue!`
+  },
+  {
+    name: 'Mid-Stay Check-in (Day 2)',
+    icon: '&#128075;',
+    EN: `Hi {guest_name}!\n\nJust checking in - how's everything at {property_name}? I hope you're enjoying Punta Cana!\n\nA few recommendations for today:\n- Hoyo Azul cenote tour (stunning!)\n- Macao Beach (best local beach)\n- Marina Cap Cana for sunset dinner\n\nBy the way, if you ever fall in love with this area (many guests do!), I also help people find their dream property here in Punta Cana. Happy to chat about it anytime - no pressure at all!\n\nLet me know if you need anything.\n\nEnjoy your day!`,
+    ES: `Hola {guest_name}!\n\nSolo queria ver como va todo en {property_name}. Espero que estes disfrutando Punta Cana!\n\nAlgunas recomendaciones para hoy:\n- Tour al cenote Hoyo Azul (impresionante!)\n- Playa Macao (la mejor playa local)\n- Marina Cap Cana para cenar al atardecer\n\nPor cierto, si alguna vez te enamoras de esta zona (a muchos huespedes les pasa!), tambien ayudo a personas a encontrar su propiedad ideal aqui en Punta Cana. Con gusto hablamos cuando quieras, sin compromiso!\n\nAvisame si necesitas algo.\n\nDisfruta tu dia!`,
+    FR: `Bonjour {guest_name}!\n\nJe prends des nouvelles - comment se passe tout a {property_name}? J'espere que vous appreciez Punta Cana!\n\nQuelques recommandations:\n- Tour du cenote Hoyo Azul (magnifique!)\n- Plage Macao (meilleure plage locale)\n- Marina Cap Cana pour un diner au coucher du soleil\n\nAu fait, si vous tombez amoureux de la region (beaucoup de nos hotes le font!), j'aide aussi les gens a trouver leur propriete de reve ici. On peut en discuter quand vous voulez, sans engagement!\n\nDites-moi si vous avez besoin de quoi que ce soit.\n\nBonne journee!`
+  },
+  {
+    name: 'Checkout Reminder (Day before)',
+    icon: '&#128666;',
+    EN: `Hi {guest_name}!\n\nJust a friendly reminder that checkout from {property_name} is tomorrow, {check_out_date}.\n\nCHECKOUT INSTRUCTIONS:\n- Checkout time: 11:00 AM\n- Please leave keys/cards on the kitchen counter\n- Turn off all AC units\n- Close all windows and lock the door\n- No need to strip beds or do laundry\n\nIf you need a late checkout, let me know and I'll check availability (subject to next booking).\n\nAlso - if you enjoyed your stay, I'd really appreciate a review on Airbnb! It means the world to us.\n\nThank you for being an amazing guest!\n\nSafe travels home!`,
+    ES: `Hola {guest_name}!\n\nSolo un recordatorio amigable de que el checkout de {property_name} es manana, {check_out_date}.\n\nINSTRUCCIONES DE SALIDA:\n- Hora de salida: 11:00 AM\n- Deja las llaves/tarjetas en la mesa de la cocina\n- Apaga todos los aires acondicionados\n- Cierra ventanas y puerta con llave\n- No necesitas quitar sabanas ni lavar ropa\n\nSi necesitas checkout tarde, avisame y verifico disponibilidad.\n\nAdemas - si disfrutaste tu estadia, te agradeceria mucho un review en Airbnb! Significa mucho para nosotros.\n\nGracias por ser un huesped increible!\n\nBuen viaje de regreso!`,
+    FR: `Bonjour {guest_name}!\n\nPetit rappel: le checkout de {property_name} est demain, {check_out_date}.\n\nINSTRUCTIONS DE DEPART:\n- Heure de depart: 11h00\n- Laissez les cles sur le comptoir de cuisine\n- Eteignez tous les climatiseurs\n- Fermez fenetres et porte a cle\n- Pas besoin de defaire les lits\n\nSi vous avez besoin d'un depart tardif, faites-le moi savoir.\n\nAussi - si vous avez aime votre sejour, un avis sur Airbnb serait tres apprecie!\n\nMerci d'avoir ete un hote formidable!\n\nBon retour!`
+  },
+  {
+    name: 'Post-Stay Thank You (1 day after)',
+    icon: '&#128150;',
+    EN: `Hi {guest_name}!\n\nThank you again for staying at {property_name}! We hope you had an incredible time in Punta Cana.\n\nIf you haven't already, we'd love a review on Airbnb - it helps us so much!\n\nAlso... have you ever thought about owning a piece of paradise? Many of our guests end up investing in Punta Cana properties. Rental returns are strong (you experienced the location firsthand!), and prices are still very competitive compared to other Caribbean destinations.\n\nI'd be happy to share our ROI calculator or connect you with our real estate team - no strings attached.\n\nHope to see you back soon!\n\nWarm regards`,
+    ES: `Hola {guest_name}!\n\nGracias nuevamente por quedarte en {property_name}! Esperamos que hayas tenido un tiempo increible en Punta Cana.\n\nSi aun no lo has hecho, nos encantaria un review en Airbnb - nos ayuda muchisimo!\n\nAdemas... alguna vez has pensado en tener un pedacito de paraiso? Muchos de nuestros huespedes terminan invirtiendo en propiedades en Punta Cana. Los retornos de alquiler son fuertes (tu mismo experimentaste la ubicacion!), y los precios siguen siendo muy competitivos comparados con otros destinos del Caribe.\n\nCon gusto te comparto nuestra calculadora de ROI o te conecto con nuestro equipo inmobiliario - sin compromiso.\n\nEsperamos verte de nuevo pronto!\n\nSaludos cordiales`,
+    FR: `Bonjour {guest_name}!\n\nMerci encore pour votre sejour a {property_name}! Nous esperons que vous avez passe un moment incroyable a Punta Cana.\n\nSi ce n'est pas deja fait, un avis sur Airbnb nous aiderait enormement!\n\nAussi... avez-vous deja pense a posseder un morceau de paradis? Beaucoup de nos hotes finissent par investir dans des proprietes a Punta Cana. Les rendements locatifs sont solides, et les prix restent tres competitifs.\n\nJe serais ravi de partager notre calculateur de ROI ou de vous mettre en contact avec notre equipe immobiliere - sans engagement.\n\nAu plaisir de vous revoir!\n\nCordialement`
+  },
+  {
+    name: 'Follow-up (2 weeks after)',
+    icon: '&#127796;',
+    EN: `Hi {guest_name}!\n\nMissing Punta Cana yet? We sure miss having you at {property_name}!\n\nI wanted to share something interesting - we recently put together an ROI analysis for our properties and the numbers are impressive:\n\n- Average occupancy: 70-85%\n- Annual return: 8-12% net\n- Property appreciation: 5-8% yearly\n- Full management available (we handle everything!)\n\nIf you ever want to explore ownership opportunities, I'd love to walk you through it. We have options starting from studio apartments to luxury villas.\n\nNo pressure at all - just wanted to plant the seed!\n\nHope to welcome you back soon, whether as a guest or a neighbor!\n\nBest regards`,
+    ES: `Hola {guest_name}!\n\nExtranas Punta Cana? Nosotros extraniamos tenerte en {property_name}!\n\nQueria compartirte algo interesante - recientemente preparamos un analisis de ROI de nuestras propiedades y los numeros son impresionantes:\n\n- Ocupacion promedio: 70-85%\n- Retorno anual: 8-12% neto\n- Apreciacion: 5-8% anual\n- Administracion completa disponible (nosotros manejamos todo!)\n\nSi alguna vez quieres explorar oportunidades de compra, me encantaria guiarte. Tenemos opciones desde estudios hasta villas de lujo.\n\nSin presion - solo queria plantar la semillita!\n\nEsperamos darte la bienvenida pronto, ya sea como huesped o como vecino!\n\nSaludos`,
+    FR: `Bonjour {guest_name}!\n\nPunta Cana vous manque? Vous nous manquez a {property_name}!\n\nJe voulais partager quelque chose d'interessant - nous avons recemment analyse le ROI de nos proprietes:\n\n- Occupation moyenne: 70-85%\n- Rendement annuel: 8-12% net\n- Appreciation: 5-8% par an\n- Gestion complete disponible!\n\nSi vous souhaitez explorer les opportunites d'achat, je serais ravi de vous guider. Nous avons des options allant du studio a la villa de luxe.\n\nAucune pression - juste une idee a garder en tete!\n\nAu plaisir de vous revoir, en tant qu'hote ou voisin!\n\nCordialement`
+  }
+];
+
+let currentTemplateLang = 'EN';
+let currentTemplateBooking = null;
+
+function renderTemplates() {
+  // Populate booking selector
+  const sel = document.getElementById('templateBookingSelect');
+  const currentVal = sel.value;
+  sel.innerHTML = '<option value="">Select a booking to fill placeholders...</option>' + DATA.bookings.map(b => {
+    const pn = DATA.properties.find(p => p.id === b.propertyId)?.name || '';
+    return `<option value="${b.id}">${esc(b.guest)} - ${esc(pn)} (${b.checkIn})</option>`;
+  }).join('');
+  sel.value = currentVal;
+
+  document.getElementById('templateList').innerHTML = TEMPLATES.map((t, i) => `
+    <div class="template-card" id="tpl-${i}">
+      <div class="template-header" onclick="toggleTemplate(${i})">
+        <h3>${t.icon} ${t.name}</h3>
+        <span class="text-dim" style="font-size:0.8rem;">EN / ES / FR</span>
+      </div>
+      <div class="template-body">
+        <div class="template-tabs">
+          <button class="${currentTemplateLang==='EN'?'active':''}" onclick="switchTemplateLang('EN',${i})">English</button>
+          <button class="${currentTemplateLang==='ES'?'active':''}" onclick="switchTemplateLang('ES',${i})">Espanol</button>
+          <button class="${currentTemplateLang==='FR'?'active':''}" onclick="switchTemplateLang('FR',${i})">Francais</button>
+        </div>
+        <div class="template-content" id="tplContent-${i}">${esc(t[currentTemplateLang])}</div>
+        <div class="template-actions">
+          <button class="btn btn-sm btn-primary" onclick="copyTemplate(${i})">Copy to Clipboard</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleTemplate(i) {
+  document.getElementById('tpl-' + i).classList.toggle('open');
+}
+
+function switchTemplateLang(lang, i) {
+  currentTemplateLang = lang;
+  const tpl = TEMPLATES[i];
+  let text = tpl[lang];
+  text = applyPlaceholders(text);
+  document.getElementById('tplContent-' + i).textContent = text;
+  const tabs = document.getElementById('tpl-' + i).querySelectorAll('.template-tabs button');
+  tabs.forEach(b => b.classList.remove('active'));
+  tabs.forEach(b => { if (b.textContent.startsWith(lang === 'EN' ? 'E' : lang === 'ES' ? 'Es' : 'Fr')) b.classList.add('active'); });
+  // Fix: match exact text
+  tabs[lang === 'EN' ? 0 : lang === 'ES' ? 1 : 2].classList.add('active');
+  tabs.forEach(b => b.classList.remove('active'));
+  tabs[lang === 'EN' ? 0 : lang === 'ES' ? 1 : 2].classList.add('active');
+}
+
+function applyPlaceholders(text) {
+  const sel = document.getElementById('templateBookingSelect');
+  if (!sel || !sel.value) return text;
+  const b = DATA.bookings.find(x => x.id === sel.value);
+  if (!b) return text;
+  const pn = DATA.properties.find(p => p.id === b.propertyId)?.name || '';
+  return text.replace(/\{guest_name\}/g, b.guest.split(' ')[0])
+    .replace(/\{property_name\}/g, pn)
+    .replace(/\{check_in_date\}/g, b.checkIn)
+    .replace(/\{check_out_date\}/g, b.checkOut);
+}
+
+function updateTemplatePlaceholders() {
+  TEMPLATES.forEach((t, i) => {
+    const el = document.getElementById('tplContent-' + i);
+    if (el) {
+      let text = t[currentTemplateLang];
+      text = applyPlaceholders(text);
+      el.textContent = text;
+    }
+  });
+}
+
+function copyTemplate(i) {
+  const el = document.getElementById('tplContent-' + i);
+  const text = el.textContent;
+  navigator.clipboard.writeText(text).then(() => toast('Copied to clipboard!')).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    toast('Copied to clipboard!');
+  });
+}
+
+// ========== IMPORT / EXPORT ==========
+function exportData() {
+  const blob = new Blob([JSON.stringify(DATA, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = `pcprops-backup-${new Date().toISOString().split('T')[0]}.json`; a.click();
+  URL.revokeObjectURL(url);
+  toast('Data exported');
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (!imported.properties || !imported.bookings) { toast('Invalid backup file', true); return; }
+      DATA = imported;
+      saveData(); renderAll();
+      toast('Data imported successfully');
+    } catch (err) { toast('Failed to parse file', true); }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+// ========== UTILITY ==========
+function esc(str) {
+  if (!str) return '';
+  const d = document.createElement('div'); d.textContent = str; return d.innerHTML;
+}
+
+// ========== RENDER ALL ==========
+function renderAll() {
+  renderTopBar();
+  renderProperties();
+}
+
+// Auto-update property statuses based on bookings
+function autoUpdateStatuses() {
+  const todayStr = new Date().toISOString().split('T')[0];
+  DATA.properties.forEach(p => {
+    const current = DATA.bookings.find(b => b.propertyId === p.id && b.checkIn <= todayStr && b.checkOut > todayStr);
+    const checkoutToday = DATA.bookings.find(b => b.propertyId === p.id && b.checkOut === todayStr);
+    if (current) {
+      if (p.status !== 'maintenance') p.status = 'occupied';
+    } else if (checkoutToday) {
+      if (p.status !== 'maintenance') p.status = 'cleaning';
+    } else {
+      if (p.status === 'occupied' || p.status === 'cleaning') p.status = 'vacant';
+    }
+  });
+  saveData();
+}
+
+// INIT
+autoUpdateStatuses();
+renderAll();
+</script>
+</body>
+</html>
