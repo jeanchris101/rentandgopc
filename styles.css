@@ -474,6 +474,7 @@ body {
 .gallery-img {
     overflow: hidden;
     background: #e8e5df;
+    min-height: 250px;
 }
 
 .gallery-img img {
