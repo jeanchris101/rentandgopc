@@ -55,6 +55,7 @@ const TRANSLATIONS = {
     terrace_label: "Terrace",
     main_photo: "Main Photo - Coming Soon",
     all_properties: "All Properties",
+    blog_nav: "Guide",
     details: "Details",
     footer: "Punta Cana, Dominican Republic"
   },
@@ -115,6 +116,7 @@ const TRANSLATIONS = {
     terrace_label: "Terraza",
     main_photo: "Foto Principal - Pr\u00f3ximamente",
     all_properties: "Todas las Propiedades",
+    blog_nav: "Gu\u00eda",
     details: "Detalles",
     footer: "Punta Cana, Rep\u00fablica Dominicana"
   },
@@ -175,6 +177,7 @@ const TRANSLATIONS = {
     golf_view: "Vue sur le Golf",
     terrace_label: "Terrasse",
     main_photo: "Photo Principale - Bient\u00f4t",
+    blog_nav: "Guide",
     all_properties: "Toutes les Propri\u00e9t\u00e9s",
     details: "D\u00e9tails",
     footer: "Punta Cana, R\u00e9publique dominicaine"
@@ -236,6 +239,7 @@ const TRANSLATIONS = {
     golf_view: "\u0412\u0438\u0434 \u043d\u0430 \u043f\u043e\u043b\u0435 \u0434\u043b\u044f \u0433\u043e\u043b\u044c\u0444\u0430",
     terrace_label: "\u0422\u0435\u0440\u0440\u0430\u0441\u0430",
     main_photo: "\u0413\u043b\u0430\u0432\u043d\u043e\u0435 \u0444\u043e\u0442\u043e \u2014 \u0441\u043a\u043e\u0440\u043e \u043f\u043e\u044f\u0432\u0438\u0442\u0441\u044f",
+    blog_nav: "\u0413\u0438\u0434",
     all_properties: "\u0412\u0441\u0435 \u043e\u0431\u044a\u0435\u043a\u0442\u044b",
     details: "\u041f\u043e\u0434\u0440\u043e\u0431\u043d\u0435\u0435",
     footer: "Punta Cana, \u0414\u043e\u043c\u0438\u043d\u0438\u043a\u0430\u043d\u0441\u043a\u0430\u044f \u0420\u0435\u0441\u043f\u0443\u0431\u043b\u0438\u043a\u0430"

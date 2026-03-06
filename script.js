@@ -49,6 +49,19 @@ function toggleMenu() {
     document.querySelector('.nav').classList.toggle('active');
 }
 
+// Gallery: swap thumbnail into main gallery slot
+function swapGallery(thumbEl) {
+    const mainImg = document.querySelector('#gallery-main img');
+    if (mainImg && thumbEl) {
+        const tempSrc = mainImg.src;
+        const tempAlt = mainImg.alt;
+        mainImg.src = thumbEl.src;
+        mainImg.alt = thumbEl.alt;
+        thumbEl.src = tempSrc;
+        thumbEl.alt = tempAlt;
+    }
+}
+
 // Init on page load
 document.addEventListener('DOMContentLoaded', () => {
     applyTranslations();
