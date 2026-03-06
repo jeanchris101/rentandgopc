@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Try Before You Buy | Rent & Go PC</title>
+    <meta name="description" content="Stay in the property before you buy it. Book a Discovery Stay in Punta Cana and get your rental cost credited toward the purchase.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Try Before You Buy - Discovery Stays in Punta Cana">
+    <meta property="og:description" content="Stay in the property before you buy. If you purchase within 90 days, your rental cost is credited toward the sale.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.rentandgopc.com/try-before-you-buy.html">
+
+    <!-- Meta Pixel -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'YOUR_PIXEL_ID_HERE');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"/></noscript>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #1a3a2a;
+            --primary-light: #2a5a40;
+            --accent: #c8a45e;
+            --accent-light: #dfc88a;
+            --bg: #faf9f6;
+            --text: #2c2c2c;
+            --text-light: #6b6b6b;
+            --green: #2e7d32;
+            --green-light: #e8f5e9;
+            --border: #e0ddd5;
+            --white: #ffffff;
+            --shadow: 0 2px 16px rgba(26, 58, 42, 0.08);
+            --shadow-lg: 0 8px 32px rgba(26, 58, 42, 0.12);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background-color: var(--primary);
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo a {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+
+        .lang-selector {
+            display: flex;
+            gap: 0.25rem;
+            margin-left: 0.5rem;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.6);
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active, .lang-btn:hover {
+            background: var(--accent);
+            color: var(--primary);
+            border-color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--accent);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #1d4430 40%, #2a5a40 100%);
+            padding: 5rem 2rem 4.5rem;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(200, 164, 94, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(200, 164, 94, 0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-eyebrow {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding: 0.4rem 1.2rem;
+            border: 1px solid rgba(200, 164, 94, 0.3);
+            border-radius: 30px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            opacity: 0.85;
+            max-width: 620px;
+            margin: 0 auto 2.5rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 2.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-accent:hover {
+            background-color: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(200, 164, 94, 0.35);
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #20bd5a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            padding: 4.5rem 2rem;
+        }
+
+        .section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1.05rem;
+            max-width: 650px;
+            margin: 0 auto 3rem;
+            font-weight: 300;
+        }
+
+        /* ===== HOW IT WORKS ===== */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            position: relative;
+        }
+
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 16.66%;
+            right: 16.66%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .step-card {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--accent);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 4px 16px rgba(26, 58, 42, 0.2);
+        }
+
+        .step-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .step-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ===== INCLUDED ===== */
+        .included-section {
+            background: var(--white);
+        }
+
+        .included-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .included-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.25rem;
+            background: var(--bg);
+            border-radius: 10px;
+            border-left: 3px solid var(--accent);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .included-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .included-icon {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .included-text h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .included-text p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* ===== GUARANTEE ===== */
+        .guarantee-card {
+            max-width: 750px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--primary) 0%, #1d4430 100%);
+            border-radius: 16px;
+            padding: 3rem;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .guarantee-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(200, 164, 94, 0.06);
+            pointer-events: none;
+        }
+
+        .guarantee-card::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(200, 164, 94, 0.04);
+            pointer-events: none;
+        }
+
+        .guarantee-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(200, 164, 94, 0.15);
+            border: 1px solid rgba(200, 164, 94, 0.3);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .guarantee-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .guarantee-card h2 span {
+            color: var(--accent);
+        }
+
+        .guarantee-highlight {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            opacity: 0.9;
+            max-width: 550px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .guarantee-fine {
+            font-size: 0.8rem;
+            opacity: 0.5;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials-section {
+            background: var(--white);
+        }
+
+        .testimonials-intro {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1.05rem;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '\201C';
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: var(--accent);
+            opacity: 0.3;
+            position: absolute;
+            top: 0.5rem;
+            left: 1.25rem;
+            line-height: 1;
+        }
+
+        .testimonial-text {
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 1.25rem;
+            padding-top: 1.5rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .testimonial-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .testimonial-origin {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* ===== FAQ ===== */
+        .faq-list {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 1.25rem 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: color 0.2s;
+        }
+
+        .faq-question:hover {
+            color: var(--accent);
+        }
+
+        .faq-arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+            color: var(--accent);
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .faq-item.open .faq-arrow {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.35s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+        }
+
+        .faq-answer-inner {
+            padding-bottom: 1.25rem;
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .faq-answer-inner a {
+            color: var(--accent);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .faq-answer-inner a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== FINAL CTA ===== */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, #2a5a40 100%);
+            text-align: center;
+            color: var(--white);
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.05rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 1.5rem 2rem;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1.5rem 2rem;
+                gap: 1rem;
+                box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            }
+
+            nav.active { display: flex; }
+
+            .lang-selector {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+
+            .hero { padding: 3.5rem 1.5rem 3rem; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+
+            .section { padding: 3rem 1.5rem; }
+            .section-title { font-size: 1.6rem; }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .steps-grid::before { display: none; }
+
+            .included-grid { grid-template-columns: 1fr; }
+
+            .guarantee-card { padding: 2rem 1.5rem; }
+            .guarantee-card h2 { font-size: 1.5rem; }
+
+            .testimonials-grid { grid-template-columns: 1fr; }
+
+            .cta-section h2 { font-size: 1.6rem; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.7rem; }
+            .step-number { width: 64px; height: 64px; font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-inner">
+            <div class="logo"><a href="index.html">Rent & Go PC</a></div>
+            <nav id="main-nav">
+                <a href="index.html" data-i18n="trybb_nav_properties">All Properties</a>
+                <a href="blog.html" data-i18n="blog_nav">Guide</a>
+                <a href="#contact-cta" data-i18n="nav_contact">Contact</a>
+                <div class="lang-selector">
+                    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+                    <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+                    <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+                </div>
+            </nav>
+            <button class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('active')">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-eyebrow" data-i18n="trybb_eyebrow">A Rent & Go PC Exclusive</div>
+            <h1 data-i18n="trybb_hero_title">Would You Buy a <span>$315,000</span> Property Without Seeing It First?</h1>
+            <p data-i18n="trybb_hero_subtitle">Neither would we. That's why we let you stay in it before you decide.</p>
+            <a href="#how-it-works" class="btn btn-accent" data-i18n="trybb_hero_cta">Book Your Discovery Stay</a>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="section">
+        <div class="section-inner">
+            <h2 class="section-title" data-i18n="trybb_how_title">How It Works</h2>
+            <p class="section-subtitle" data-i18n="trybb_how_subtitle">Three simple steps. No pressure, no timeshare pitch. Just a great vacation with an option to invest.</p>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 data-i18n="trybb_step1_title">Book a Stay</h3>
+                    <p data-i18n="trybb_step1_desc">Reserve 3-5 nights in one of our investment properties via Airbnb. Enjoy it as a vacation with your family.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 data-i18n="trybb_step2_title">Experience the Lifestyle</h3>
+                    <p data-i18n="trybb_step2_desc">Walk the grounds. Swim in the pool. Have dinner at the Melia. Meet the neighbors. Feel the Caribbean vibe.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 data-i18n="trybb_step3_title">Decide With Confidence</h3>
+                    <p data-i18n="trybb_step3_desc">If you purchase within 90 days, your entire rental cost is credited toward the sale. No pressure, no obligation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's Included -->
+    <section class="section included-section">
+        <div class="section-inner">
+            <h2 class="section-title" data-i18n="trybb_included_title">What's Included in Your Discovery Stay</h2>
+            <p class="section-subtitle" data-i18n="trybb_included_subtitle">More than a vacation. It's a complete introduction to your potential new life in paradise.</p>
+            <div class="included-grid">
+                <div class="included-item">
+                    <div class="included-icon">&#127968;</div>
+                    <div class="included-text">
+                        <h4 data-i18n="trybb_inc1_title">Fully Furnished Apartment</h4>
+                        <p data-i18n="trybb_inc1_desc">Stay in the actual unit that's for sale. See the finishes, feel the space, wake up to the view.</p>
+                    </div>
+                </div>
+                <div class="included-item">
+                    <div class="included-icon">&#9971;</div>
+                    <div class="included-text">
+                        <h4 data-i18n="trybb_inc2_title">Cocotal Golf & Country Club</h4>
+                        <p data-i18n="trybb_inc2_desc">Full access to the community amenities: pool, gym, tennis courts, and 27-hole golf course.</p>
+                    </div>
+                </div>
+                <div class="included-item">
+                    <div class="included-icon">&#127754;</div>
+                    <div class="included-text">
+                        <h4 data-i18n="trybb_inc3_title">Melia Hotel Access</h4>
+                        <p data-i18n="trybb_inc3_desc">Enjoy the beach, pool, restaurants, and spa at the Melia Caribe Beach Resort -- included with your stay.</p>
+                    </div>
+                </div>
+                <div class="included-item">
+                    <div class="included-icon">&#128101;</div>
+                    <div class="included-text">
+                        <h4 data-i18n="trybb_inc4_title">Personal Property Tour</h4>
+                        <p data-i18n="trybb_inc4_desc">A guided tour with a local real estate expert who knows every detail of the property and community.</p>
+                    </div>
+                </div>
+                <div class="included-item">
+                    <div class="included-icon">&#128205;</div>
+                    <div class="included-text">
+                        <h4 data-i18n="trybb_inc5_title">Neighborhood Orientation</h4>
+                        <p data-i18n="trybb_inc5_desc">Grocery stores, restaurants, hospitals, schools, banks -- everything you need to picture daily life here.</p>
+                    </div>
+                </div>
+                <div class="included-item">
+                    <div class="included-icon">&#128200;</div>
+                    <div class="included-text">
+                        <h4 data-i18n="trybb_inc6_title">Investment Analysis</h4>
+                        <p data-i18n="trybb_inc6_desc">Real rental income data, occupancy rates, and ROI projections based on actual Airbnb performance.</p>
+                    </div>
+                </div>
+                <div class="included-item">
+                    <div class="included-icon">&#9878;</div>
+                    <div class="included-text">
+                        <h4 data-i18n="trybb_inc7_title">Legal Introduction</h4>
+                        <p data-i18n="trybb_inc7_desc">Meet a local attorney who specializes in foreign property purchases. Get your legal questions answered.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rental Credit Guarantee -->
+    <section class="section">
+        <div class="section-inner">
+            <div class="guarantee-card">
+                <div class="guarantee-badge" data-i18n="trybb_guarantee_badge">The Rental Credit Guarantee</div>
+                <h2 data-i18n="trybb_guarantee_title">Book 3-5 Nights. Buy Within 90 Days. Get <span>100%</span> Back.</h2>
+                <p class="guarantee-highlight" data-i18n="trybb_guarantee_desc">If you purchase the property within 90 days of your stay, your entire rental cost is applied as a credit toward the purchase price. Your vacation literally pays for itself.</p>
+                <p class="guarantee-fine" data-i18n="trybb_guarantee_fine">Applies to properties listed by Rent & Go PC. Credit applied at closing.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials / Social Proof -->
+    <section class="section testimonials-section">
+        <div class="section-inner">
+            <h2 class="section-title" data-i18n="trybb_testimonials_title">They Came for Vacation. They Stayed for Life.</h2>
+            <p class="testimonials-intro" data-i18n="trybb_testimonials_subtitle">Join dozens of investors who discovered their dream property by experiencing it first.</p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text" data-i18n="trybb_test1_text">We booked a long weekend to test the waters. By day two, we were already talking to the attorney. Three months later, we had the keys. Best vacation investment we ever made.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">M&amp;S</div>
+                        <div>
+                            <div class="testimonial-name" data-i18n="trybb_test1_name">Marco & Sarah</div>
+                            <div class="testimonial-origin" data-i18n="trybb_test1_origin">New York, USA</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text" data-i18n="trybb_test2_text">I was skeptical about buying remotely. The Discovery Stay removed every doubt. I experienced the morning coffee on the terrace, the golf course view at sunset. Numbers on a screen can't give you that.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JL</div>
+                        <div>
+                            <div class="testimonial-name" data-i18n="trybb_test2_name">Jean-Luc P.</div>
+                            <div class="testimonial-origin" data-i18n="trybb_test2_origin">Montreal, Canada</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text" data-i18n="trybb_test3_text">The neighborhood tour sold me. Seeing the grocery stores, the restaurants, the beach -- everything within 15 minutes. I knew this was the lifestyle I wanted. And the rental credit made it a no-brainer.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">RL</div>
+                        <div>
+                            <div class="testimonial-name" data-i18n="trybb_test3_name">Roberto L.</div>
+                            <div class="testimonial-origin" data-i18n="trybb_test3_origin">Madrid, Spain</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+        <div class="section-inner">
+            <h2 class="section-title" data-i18n="trybb_faq_title">Frequently Asked Questions</h2>
+            <p class="section-subtitle" data-i18n="trybb_faq_subtitle">Everything you need to know about the Discovery Stay program.</p>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                        <span data-i18n="trybb_faq1_q">How do I book a Discovery Stay?</span>
+                        <span class="faq-arrow">&#9660;</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner" data-i18n="trybb_faq1_a">You can book directly through our Airbnb listing, or contact us on WhatsApp and we'll set everything up for you. We recommend 3-5 nights to get a full feel for the property and community.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                        <span data-i18n="trybb_faq2_q">What if I don't want to buy?</span>
+                        <span class="faq-arrow">&#9660;</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner" data-i18n="trybb_faq2_a">No problem at all! You still had a wonderful vacation in Punta Cana. There is absolutely no obligation or pressure to purchase. Many guests come back for a second stay before deciding.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                        <span data-i18n="trybb_faq3_q">Can foreigners buy property in the Dominican Republic?</span>
+                        <span class="faq-arrow">&#9660;</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner" data-i18n="trybb_faq3_a">Yes! The Dominican Republic allows 100% foreign property ownership with the same legal rights as Dominican citizens. There are no restrictions on foreign buyers, and the process is straightforward with an experienced local attorney.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                        <span data-i18n="trybb_faq4_q">What is CONFOTUR and how does it benefit me?</span>
+                        <span class="faq-arrow">&#9660;</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <span data-i18n="trybb_faq4_a">CONFOTUR (Law 158-01) is a Dominican tax incentive for tourism properties. Qualifying properties enjoy 15 years of tax exemptions: 0% transfer tax, 0% property tax, 0% capital gains tax, and 0% tax on rental income. This can save you tens of thousands of dollars.</span>
+                            <a href="roi-calculator.html" data-i18n="trybb_faq4_link"> Calculate your savings.</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                        <span data-i18n="trybb_faq5_q">How long does the buying process take?</span>
+                        <span class="faq-arrow">&#9660;</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner" data-i18n="trybb_faq5_a">Typically 30-60 days from signing the purchase agreement to closing. The process includes a title search, due diligence, and registration with the land registry. Our recommended attorney handles everything.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="contact-cta" class="section cta-section">
+        <div class="section-inner">
+            <h2 data-i18n="trybb_cta_title">Ready to Experience Your Future Home?</h2>
+            <p data-i18n="trybb_cta_subtitle">Book your Discovery Stay today. The worst that can happen is a great vacation in the Caribbean.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/18094865386?text=Hi!%20I'm%20interested%20in%20a%20Discovery%20Stay%20at%20your%20Punta%20Cana%20property" class="btn btn-whatsapp" target="_blank">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    <span data-i18n="trybb_cta_whatsapp">Message on WhatsApp</span>
+                </a>
+                <a href="index.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.4); color: white;" data-i18n="trybb_cta_browse">Browse Available Properties</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Rent & Go PC &mdash; <span data-i18n="footer">Punta Cana, Dominican Republic</span></p>
+    </footer>
+
+    <!-- Translations -->
+    <script>
+    const TRANSLATIONS = {
+        en: {
+            // Nav
+            trybb_nav_properties: "All Properties",
+            blog_nav: "Guide",
+            nav_contact: "Contact",
+            footer: "Punta Cana, Dominican Republic",
+
+            // Hero
+            trybb_eyebrow: "A Rent & Go PC Exclusive",
+            trybb_hero_title: "Would You Buy a $315,000 Property Without Seeing It First?",
+            trybb_hero_subtitle: "Neither would we. That\u2019s why we let you stay in it before you decide.",
+            trybb_hero_cta: "Book Your Discovery Stay",
+
+            // How It Works
+            trybb_how_title: "How It Works",
+            trybb_how_subtitle: "Three simple steps. No pressure, no timeshare pitch. Just a great vacation with an option to invest.",
+            trybb_step1_title: "Book a Stay",
+            trybb_step1_desc: "Reserve 3\u20135 nights in one of our investment properties via Airbnb. Enjoy it as a vacation with your family.",
+            trybb_step2_title: "Experience the Lifestyle",
+            trybb_step2_desc: "Walk the grounds. Swim in the pool. Have dinner at the Melia. Meet the neighbors. Feel the Caribbean vibe.",
+            trybb_step3_title: "Decide With Confidence",
+            trybb_step3_desc: "If you purchase within 90 days, your entire rental cost is credited toward the sale. No pressure, no obligation.",
+
+            // Included
+            trybb_included_title: "What\u2019s Included in Your Discovery Stay",
+            trybb_included_subtitle: "More than a vacation. It\u2019s a complete introduction to your potential new life in paradise.",
+            trybb_inc1_title: "Fully Furnished Apartment",
+            trybb_inc1_desc: "Stay in the actual unit that\u2019s for sale. See the finishes, feel the space, wake up to the view.",
+            trybb_inc2_title: "Cocotal Golf & Country Club",
+            trybb_inc2_desc: "Full access to the community amenities: pool, gym, tennis courts, and 27-hole golf course.",
+            trybb_inc3_title: "Melia Hotel Access",
+            trybb_inc3_desc: "Enjoy the beach, pool, restaurants, and spa at the Melia Caribe Beach Resort \u2014 included with your stay.",
+            trybb_inc4_title: "Personal Property Tour",
+            trybb_inc4_desc: "A guided tour with a local real estate expert who knows every detail of the property and community.",
+            trybb_inc5_title: "Neighborhood Orientation",
+            trybb_inc5_desc: "Grocery stores, restaurants, hospitals, schools, banks \u2014 everything you need to picture daily life here.",
+            trybb_inc6_title: "Investment Analysis",
+            trybb_inc6_desc: "Real rental income data, occupancy rates, and ROI projections based on actual Airbnb performance.",
+            trybb_inc7_title: "Legal Introduction",
+            trybb_inc7_desc: "Meet a local attorney who specializes in foreign property purchases. Get your legal questions answered.",
+
+            // Guarantee
+            trybb_guarantee_badge: "The Rental Credit Guarantee",
+            trybb_guarantee_title: "Book 3\u20135 Nights. Buy Within 90 Days. Get 100% Back.",
+            trybb_guarantee_desc: "If you purchase the property within 90 days of your stay, your entire rental cost is applied as a credit toward the purchase price. Your vacation literally pays for itself.",
+            trybb_guarantee_fine: "Applies to properties listed by Rent & Go PC. Credit applied at closing.",
+
+            // Testimonials
+            trybb_testimonials_title: "They Came for Vacation. They Stayed for Life.",
+            trybb_testimonials_subtitle: "Join dozens of investors who discovered their dream property by experiencing it first.",
+            trybb_test1_text: "We booked a long weekend to test the waters. By day two, we were already talking to the attorney. Three months later, we had the keys. Best vacation investment we ever made.",
+            trybb_test1_name: "Marco & Sarah",
+            trybb_test1_origin: "New York, USA",
+            trybb_test2_text: "I was skeptical about buying remotely. The Discovery Stay removed every doubt. I experienced the morning coffee on the terrace, the golf course view at sunset. Numbers on a screen can\u2019t give you that.",
+            trybb_test2_name: "Jean-Luc P.",
+            trybb_test2_origin: "Montreal, Canada",
+            trybb_test3_text: "The neighborhood tour sold me. Seeing the grocery stores, the restaurants, the beach \u2014 everything within 15 minutes. I knew this was the lifestyle I wanted. And the rental credit made it a no-brainer.",
+            trybb_test3_name: "Roberto L.",
+            trybb_test3_origin: "Madrid, Spain",
+
+            // FAQ
+            trybb_faq_title: "Frequently Asked Questions",
+            trybb_faq_subtitle: "Everything you need to know about the Discovery Stay program.",
+            trybb_faq1_q: "How do I book a Discovery Stay?",
+            trybb_faq1_a: "You can book directly through our Airbnb listing, or contact us on WhatsApp and we\u2019ll set everything up for you. We recommend 3\u20135 nights to get a full feel for the property and community.",
+            trybb_faq2_q: "What if I don\u2019t want to buy?",
+            trybb_faq2_a: "No problem at all! You still had a wonderful vacation in Punta Cana. There is absolutely no obligation or pressure to purchase. Many guests come back for a second stay before deciding.",
+            trybb_faq3_q: "Can foreigners buy property in the Dominican Republic?",
+            trybb_faq3_a: "Yes! The Dominican Republic allows 100% foreign property ownership with the same legal rights as Dominican citizens. There are no restrictions on foreign buyers, and the process is straightforward with an experienced local attorney.",
+            trybb_faq4_q: "What is CONFOTUR and how does it benefit me?",
+            trybb_faq4_a: "CONFOTUR (Law 158-01) is a Dominican tax incentive for tourism properties. Qualifying properties enjoy 15 years of tax exemptions: 0% transfer tax, 0% property tax, 0% capital gains tax, and 0% tax on rental income. This can save you tens of thousands of dollars.",
+            trybb_faq4_link: " Calculate your savings.",
+            trybb_faq5_q: "How long does the buying process take?",
+            trybb_faq5_a: "Typically 30\u201360 days from signing the purchase agreement to closing. The process includes a title search, due diligence, and registration with the land registry. Our recommended attorney handles everything.",
+
+            // CTA
+            trybb_cta_title: "Ready to Experience Your Future Home?",
+            trybb_cta_subtitle: "Book your Discovery Stay today. The worst that can happen is a great vacation in the Caribbean.",
+            trybb_cta_whatsapp: "Message on WhatsApp",
+            trybb_cta_browse: "Browse Available Properties"
+        },
+
+        es: {
+            // Nav
+            trybb_nav_properties: "Todas las Propiedades",
+            blog_nav: "Gu\u00eda",
+            nav_contact: "Contacto",
+            footer: "Punta Cana, Rep\u00fablica Dominicana",
+
+            // Hero
+            trybb_eyebrow: "Exclusivo de Rent & Go PC",
+            trybb_hero_title: "\u00bfComprar\u00edas una propiedad de $315,000 sin verla primero?",
+            trybb_hero_subtitle: "Nosotros tampoco. Por eso te dejamos quedarte en ella antes de decidir.",
+            trybb_hero_cta: "Reserva Tu Estad\u00eda de Descubrimiento",
+
+            // How It Works
+            trybb_how_title: "C\u00f3mo Funciona",
+            trybb_how_subtitle: "Tres pasos simples. Sin presi\u00f3n, sin trucos. Solo unas vacaciones incre\u00edbles con la opci\u00f3n de invertir.",
+            trybb_step1_title: "Reserva una Estad\u00eda",
+            trybb_step1_desc: "Reserva 3\u20135 noches en una de nuestras propiedades de inversi\u00f3n a trav\u00e9s de Airbnb. Disfruta como unas vacaciones en familia.",
+            trybb_step2_title: "Vive el Estilo de Vida",
+            trybb_step2_desc: "Camina por los jardines. Nada en la piscina. Cena en el Melia. Conoce a los vecinos. Siente la vibra caribe\u00f1a.",
+            trybb_step3_title: "Decide con Confianza",
+            trybb_step3_desc: "Si compras dentro de los 90 d\u00edas, todo el costo de tu alquiler se acredita al precio de venta. Sin presi\u00f3n, sin obligaci\u00f3n.",
+
+            // Included
+            trybb_included_title: "Qu\u00e9 Incluye Tu Estad\u00eda de Descubrimiento",
+            trybb_included_subtitle: "M\u00e1s que unas vacaciones. Es una introducci\u00f3n completa a tu nueva vida potencial en el para\u00edso.",
+            trybb_inc1_title: "Apartamento Completamente Amueblado",
+            trybb_inc1_desc: "Qu\u00e9date en la unidad real que est\u00e1 en venta. Ve los acabados, siente el espacio, despierta con la vista.",
+            trybb_inc2_title: "Cocotal Golf & Country Club",
+            trybb_inc2_desc: "Acceso completo a las amenidades: piscina, gimnasio, canchas de tenis y campo de golf de 27 hoyos.",
+            trybb_inc3_title: "Acceso al Hotel Melia",
+            trybb_inc3_desc: "Disfruta la playa, piscina, restaurantes y spa del Melia Caribe Beach Resort \u2014 incluido con tu estad\u00eda.",
+            trybb_inc4_title: "Tour Personal de la Propiedad",
+            trybb_inc4_desc: "Un recorrido guiado con un experto inmobiliario local que conoce cada detalle de la propiedad y la comunidad.",
+            trybb_inc5_title: "Orientaci\u00f3n del Vecindario",
+            trybb_inc5_desc: "Supermercados, restaurantes, hospitales, escuelas, bancos \u2014 todo lo que necesitas para imaginar tu vida diaria aqu\u00ed.",
+            trybb_inc6_title: "An\u00e1lisis de Inversi\u00f3n",
+            trybb_inc6_desc: "Datos reales de ingresos por alquiler, tasas de ocupaci\u00f3n y proyecciones de ROI basadas en rendimiento real de Airbnb.",
+            trybb_inc7_title: "Introducci\u00f3n Legal",
+            trybb_inc7_desc: "Conoce a un abogado local especializado en compras de propiedades por extranjeros. Resuelve tus dudas legales.",
+
+            // Guarantee
+            trybb_guarantee_badge: "La Garant\u00eda de Cr\u00e9dito de Alquiler",
+            trybb_guarantee_title: "Reserva 3\u20135 Noches. Compra en 90 D\u00edas. Recupera el 100%.",
+            trybb_guarantee_desc: "Si compras la propiedad dentro de los 90 d\u00edas de tu estad\u00eda, todo el costo de alquiler se aplica como cr\u00e9dito al precio de compra. Tus vacaciones literalmente se pagan solas.",
+            trybb_guarantee_fine: "Aplica a propiedades listadas por Rent & Go PC. Cr\u00e9dito aplicado al cierre.",
+
+            // Testimonials
+            trybb_testimonials_title: "Vinieron de Vacaciones. Se Quedaron para Siempre.",
+            trybb_testimonials_subtitle: "\u00danete a decenas de inversionistas que descubrieron su propiedad so\u00f1ada viviendo la experiencia primero.",
+            trybb_test1_text: "Reservamos un fin de semana largo para probar. Al segundo d\u00eda ya est\u00e1bamos hablando con el abogado. Tres meses despu\u00e9s, ten\u00edamos las llaves. La mejor inversi\u00f3n vacacional que hemos hecho.",
+            trybb_test1_name: "Marco y Sarah",
+            trybb_test1_origin: "Nueva York, EE.UU.",
+            trybb_test2_text: "Era esc\u00e9ptico sobre comprar a distancia. La Estad\u00eda de Descubrimiento elimin\u00f3 todas mis dudas. Viv\u00ed el caf\u00e9 de la ma\u00f1ana en la terraza, la vista al campo de golf al atardecer. Los n\u00fameros en una pantalla no te dan eso.",
+            trybb_test2_name: "Jean-Luc P.",
+            trybb_test2_origin: "Montreal, Canad\u00e1",
+            trybb_test3_text: "El tour del vecindario me convenci\u00f3. Ver los supermercados, los restaurantes, la playa \u2014 todo a 15 minutos. Supe que era el estilo de vida que quer\u00eda. Y el cr\u00e9dito de alquiler lo hizo una decisi\u00f3n f\u00e1cil.",
+            trybb_test3_name: "Roberto L.",
+            trybb_test3_origin: "Madrid, Espa\u00f1a",
+
+            // FAQ
+            trybb_faq_title: "Preguntas Frecuentes",
+            trybb_faq_subtitle: "Todo lo que necesitas saber sobre el programa de Estad\u00eda de Descubrimiento.",
+            trybb_faq1_q: "\u00bfC\u00f3mo reservo una Estad\u00eda de Descubrimiento?",
+            trybb_faq1_a: "Puedes reservar directamente a trav\u00e9s de nuestro listado de Airbnb, o cont\u00e1ctanos por WhatsApp y te organizamos todo. Recomendamos 3\u20135 noches para conocer bien la propiedad y la comunidad.",
+            trybb_faq2_q: "\u00bfQu\u00e9 pasa si no quiero comprar?",
+            trybb_faq2_a: "\u00a1Sin problema! Igual disfrutaste unas vacaciones maravillosas en Punta Cana. No hay absolutamente ninguna obligaci\u00f3n ni presi\u00f3n para comprar. Muchos hu\u00e9spedes regresan para una segunda estad\u00eda antes de decidir.",
+            trybb_faq3_q: "\u00bfPueden los extranjeros comprar propiedades en Rep\u00fablica Dominicana?",
+            trybb_faq3_a: "\u00a1S\u00ed! Rep\u00fablica Dominicana permite 100% propiedad extranjera con los mismos derechos legales que los ciudadanos dominicanos. No hay restricciones para compradores extranjeros y el proceso es sencillo con un abogado local experimentado.",
+            trybb_faq4_q: "\u00bfQu\u00e9 es CONFOTUR y c\u00f3mo me beneficia?",
+            trybb_faq4_a: "CONFOTUR (Ley 158-01) es un incentivo fiscal dominicano para propiedades tur\u00edsticas. Las propiedades que califican disfrutan de 15 a\u00f1os de exenciones fiscales: 0% impuesto de transferencia, 0% impuesto a la propiedad, 0% impuesto a ganancias de capital y 0% impuesto sobre ingresos por alquiler. Esto puede ahorrarte decenas de miles de d\u00f3lares.",
+            trybb_faq4_link: " Calcula tus ahorros.",
+            trybb_faq5_q: "\u00bfCu\u00e1nto toma el proceso de compra?",
+            trybb_faq5_a: "Generalmente 30\u201360 d\u00edas desde la firma del acuerdo de compra hasta el cierre. El proceso incluye b\u00fasqueda de t\u00edtulo, debida diligencia y registro en el Registro de T\u00edtulos. Nuestro abogado recomendado se encarga de todo.",
+
+            // CTA
+            trybb_cta_title: "\u00bfListo para vivir la experiencia de tu futuro hogar?",
+            trybb_cta_subtitle: "Reserva tu Estad\u00eda de Descubrimiento hoy. Lo peor que puede pasar es que disfrutes unas vacaciones incre\u00edbles en el Caribe.",
+            trybb_cta_whatsapp: "Escribir por WhatsApp",
+            trybb_cta_browse: "Ver Propiedades Disponibles"
+        },
+
+        fr: {
+            // Nav
+            trybb_nav_properties: "Toutes les Propri\u00e9t\u00e9s",
+            blog_nav: "Guide",
+            nav_contact: "Contact",
+            footer: "Punta Cana, R\u00e9publique Dominicaine",
+
+            // Hero
+            trybb_eyebrow: "Exclusivit\u00e9 Rent & Go PC",
+            trybb_hero_title: "Ach\u00e8teriez-vous une propri\u00e9t\u00e9 \u00e0 315 000 $ sans la voir d\u2019abord\u00a0?",
+            trybb_hero_subtitle: "Nous non plus. C\u2019est pourquoi nous vous laissons y s\u00e9journer avant de d\u00e9cider.",
+            trybb_hero_cta: "R\u00e9servez Votre S\u00e9jour D\u00e9couverte",
+
+            // How It Works
+            trybb_how_title: "Comment \u00c7a Marche",
+            trybb_how_subtitle: "Trois \u00e9tapes simples. Aucune pression, pas de discours de vente. Juste de superbes vacances avec une option d\u2019investissement.",
+            trybb_step1_title: "R\u00e9servez un S\u00e9jour",
+            trybb_step1_desc: "R\u00e9servez 3 \u00e0 5 nuits dans l\u2019une de nos propri\u00e9t\u00e9s d\u2019investissement via Airbnb. Profitez-en comme des vacances en famille.",
+            trybb_step2_title: "Vivez le Style de Vie",
+            trybb_step2_desc: "Promenez-vous dans les jardins. Nagez dans la piscine. D\u00eenez au Melia. Rencontrez les voisins. Ressentez l\u2019ambiance cara\u00efb\u00e9enne.",
+            trybb_step3_title: "D\u00e9cidez en Toute Confiance",
+            trybb_step3_desc: "Si vous achetez dans les 90 jours, la totalit\u00e9 de votre loyer est cr\u00e9dit\u00e9e sur le prix de vente. Aucune pression, aucune obligation.",
+
+            // Included
+            trybb_included_title: "Ce Qui Est Inclus dans Votre S\u00e9jour D\u00e9couverte",
+            trybb_included_subtitle: "Plus que des vacances. Une introduction compl\u00e8te \u00e0 votre nouvelle vie potentielle au paradis.",
+            trybb_inc1_title: "Appartement Enti\u00e8rement Meubl\u00e9",
+            trybb_inc1_desc: "S\u00e9journez dans l\u2019unit\u00e9 r\u00e9elle en vente. Voyez les finitions, sentez l\u2019espace, r\u00e9veillez-vous avec la vue.",
+            trybb_inc2_title: "Cocotal Golf & Country Club",
+            trybb_inc2_desc: "Acc\u00e8s complet aux am\u00e9nag\u00e9ments : piscine, salle de sport, courts de tennis et parcours de golf 27 trous.",
+            trybb_inc3_title: "Acc\u00e8s \u00e0 l\u2019H\u00f4tel Melia",
+            trybb_inc3_desc: "Profitez de la plage, de la piscine, des restaurants et du spa du Melia Caribe Beach Resort \u2014 inclus avec votre s\u00e9jour.",
+            trybb_inc4_title: "Visite Personnalis\u00e9e de la Propri\u00e9t\u00e9",
+            trybb_inc4_desc: "Une visite guid\u00e9e avec un expert immobilier local qui conna\u00eet chaque d\u00e9tail de la propri\u00e9t\u00e9 et de la communaut\u00e9.",
+            trybb_inc5_title: "Orientation du Quartier",
+            trybb_inc5_desc: "\u00c9piceries, restaurants, h\u00f4pitaux, \u00e9coles, banques \u2014 tout ce qu\u2019il faut pour imaginer votre vie quotidienne ici.",
+            trybb_inc6_title: "Analyse d\u2019Investissement",
+            trybb_inc6_desc: "Donn\u00e9es r\u00e9elles de revenus locatifs, taux d\u2019occupation et projections de ROI bas\u00e9es sur les performances Airbnb r\u00e9elles.",
+            trybb_inc7_title: "Introduction Juridique",
+            trybb_inc7_desc: "Rencontrez un avocat local sp\u00e9cialis\u00e9 dans les achats immobiliers par des \u00e9trangers. Obtenez des r\u00e9ponses \u00e0 vos questions juridiques.",
+
+            // Guarantee
+            trybb_guarantee_badge: "La Garantie Cr\u00e9dit Locatif",
+            trybb_guarantee_title: "R\u00e9servez 3\u20135 Nuits. Achetez en 90 Jours. R\u00e9cup\u00e9rez 100%.",
+            trybb_guarantee_desc: "Si vous achetez la propri\u00e9t\u00e9 dans les 90 jours suivant votre s\u00e9jour, la totalit\u00e9 du co\u00fbt de location est appliqu\u00e9e comme cr\u00e9dit sur le prix d\u2019achat. Vos vacances se paient litt\u00e9ralement toutes seules.",
+            trybb_guarantee_fine: "S\u2019applique aux propri\u00e9t\u00e9s list\u00e9es par Rent & Go PC. Cr\u00e9dit appliqu\u00e9 \u00e0 la cl\u00f4ture.",
+
+            // Testimonials
+            trybb_testimonials_title: "Ils Sont Venus en Vacances. Ils Sont Rest\u00e9s pour la Vie.",
+            trybb_testimonials_subtitle: "Rejoignez des dizaines d\u2019investisseurs qui ont d\u00e9couvert leur propri\u00e9t\u00e9 de r\u00eave en la vivant d\u2019abord.",
+            trybb_test1_text: "Nous avons r\u00e9serv\u00e9 un long week-end pour tester. D\u00e8s le deuxi\u00e8me jour, nous parlions d\u00e9j\u00e0 avec l\u2019avocat. Trois mois plus tard, nous avions les cl\u00e9s. Le meilleur investissement vacances que nous ayons fait.",
+            trybb_test1_name: "Marco et Sarah",
+            trybb_test1_origin: "New York, \u00c9tats-Unis",
+            trybb_test2_text: "J\u2019\u00e9tais sceptique quant \u00e0 l\u2019achat \u00e0 distance. Le S\u00e9jour D\u00e9couverte a lev\u00e9 tous mes doutes. J\u2019ai v\u00e9cu le caf\u00e9 du matin sur la terrasse, la vue du golf au coucher du soleil. Les chiffres sur un \u00e9cran ne peuvent pas donner \u00e7a.",
+            trybb_test2_name: "Jean-Luc P.",
+            trybb_test2_origin: "Montr\u00e9al, Canada",
+            trybb_test3_text: "La visite du quartier m\u2019a convaincu. Voir les \u00e9piceries, les restaurants, la plage \u2014 tout \u00e0 15 minutes. Je savais que c\u2019\u00e9tait le style de vie que je voulais. Et le cr\u00e9dit locatif en a fait une \u00e9vidence.",
+            trybb_test3_name: "Roberto L.",
+            trybb_test3_origin: "Madrid, Espagne",
+
+            // FAQ
+            trybb_faq_title: "Questions Fr\u00e9quentes",
+            trybb_faq_subtitle: "Tout ce que vous devez savoir sur le programme de S\u00e9jour D\u00e9couverte.",
+            trybb_faq1_q: "Comment r\u00e9server un S\u00e9jour D\u00e9couverte\u00a0?",
+            trybb_faq1_a: "Vous pouvez r\u00e9server directement via notre annonce Airbnb, ou nous contacter sur WhatsApp et nous organiserons tout pour vous. Nous recommandons 3 \u00e0 5 nuits pour bien d\u00e9couvrir la propri\u00e9t\u00e9 et la communaut\u00e9.",
+            trybb_faq2_q: "Et si je ne veux pas acheter\u00a0?",
+            trybb_faq2_a: "Aucun probl\u00e8me\u00a0! Vous aurez quand m\u00eame pass\u00e9 de merveilleuses vacances \u00e0 Punta Cana. Il n\u2019y a absolument aucune obligation ni pression d\u2019achat. Beaucoup de clients reviennent pour un deuxi\u00e8me s\u00e9jour avant de d\u00e9cider.",
+            trybb_faq3_q: "Les \u00e9trangers peuvent-ils acheter une propri\u00e9t\u00e9 en R\u00e9publique Dominicaine\u00a0?",
+            trybb_faq3_a: "Oui\u00a0! La R\u00e9publique Dominicaine permet 100% de propri\u00e9t\u00e9 \u00e9trang\u00e8re avec les m\u00eames droits l\u00e9gaux que les citoyens dominicains. Il n\u2019y a aucune restriction pour les acheteurs \u00e9trangers, et le processus est simple avec un avocat local exp\u00e9riment\u00e9.",
+            trybb_faq4_q: "Qu\u2019est-ce que CONFOTUR et en quoi cela me profite\u00a0?",
+            trybb_faq4_a: "CONFOTUR (Loi 158-01) est un incitatif fiscal dominicain pour les propri\u00e9t\u00e9s touristiques. Les propri\u00e9t\u00e9s \u00e9ligibles b\u00e9n\u00e9ficient de 15 ans d\u2019exon\u00e9rations fiscales\u00a0: 0% de taxe de transfert, 0% d\u2019imp\u00f4t foncier, 0% de taxe sur les plus-values et 0% d\u2019imp\u00f4t sur les revenus locatifs. Cela peut vous faire \u00e9conomiser des dizaines de milliers de dollars.",
+            trybb_faq4_link: " Calculez vos \u00e9conomies.",
+            trybb_faq5_q: "Combien de temps dure le processus d\u2019achat\u00a0?",
+            trybb_faq5_a: "G\u00e9n\u00e9ralement 30 \u00e0 60 jours entre la signature de l\u2019accord d\u2019achat et la cl\u00f4ture. Le processus comprend une recherche de titre, la diligence raisonnable et l\u2019enregistrement au registre foncier. Notre avocat recommand\u00e9 s\u2019occupe de tout.",
+
+            // CTA
+            trybb_cta_title: "Pr\u00eat \u00e0 Vivre l\u2019Exp\u00e9rience de Votre Futur Chez-Vous\u00a0?",
+            trybb_cta_subtitle: "R\u00e9servez votre S\u00e9jour D\u00e9couverte aujourd\u2019hui. Le pire qui puisse arriver, ce sont de superbes vacances dans les Cara\u00efbes.",
+            trybb_cta_whatsapp: "\u00c9crire sur WhatsApp",
+            trybb_cta_browse: "Voir les Propri\u00e9t\u00e9s Disponibles"
+        }
+    };
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
