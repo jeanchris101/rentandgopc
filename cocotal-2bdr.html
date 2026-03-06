@@ -42,27 +42,33 @@
     </header>
 
     <!-- Gallery -->
-    <div class="property-detail-hero">
-        <div class="gallery">
-            <div class="gallery-img" id="gallery-main">
-                <img src="images/cocotal/hero-pool-golf.jpg" alt="Pool and golf course at Cocotal Golf, Punta Cana" loading="eager">
-            </div>
-            <div class="gallery-img" id="gallery-2">
-                <img src="images/cocotal/balcony-view.jpg" alt="View from apartment balcony - pool and golf course" loading="lazy">
-            </div>
-            <div class="gallery-img" id="gallery-3">
-                <img src="images/cocotal/master-bedroom.jpg" alt="Master bedroom with terrace access" loading="lazy">
-            </div>
+    <div class="property-gallery" id="gallery">
+        <div class="gallery-main" onclick="openLightbox(currentIndex)">
+            <img id="gallery-main-img" src="images/cocotal/hero-pool-golf.jpg" alt="Pool and golf course at Cocotal Golf, Punta Cana">
+            <div class="gallery-counter" id="gallery-counter">1 / 10</div>
+            <div class="gallery-hint">Click to enlarge</div>
         </div>
-        <div class="gallery-thumbs">
-            <img src="images/cocotal/pool-architecture.jpg" alt="Pool and modern architecture" class="thumb" onclick="swapGallery(this)">
-            <img src="images/cocotal/kitchen.jpg" alt="Modern kitchen with island" class="thumb" onclick="swapGallery(this)">
-            <img src="images/cocotal/bathroom.jpg" alt="Master bathroom with double sink" class="thumb" onclick="swapGallery(this)">
-            <img src="images/cocotal/terrace-view.jpg" alt="Terrace view of golf course" class="thumb" onclick="swapGallery(this)">
-            <img src="images/cocotal/golf-panoramic.jpg" alt="Cocotal golf course panoramic" class="thumb" onclick="swapGallery(this)">
-            <img src="images/cocotal/pool-building.jpg" alt="Pool area with lounge chairs" class="thumb" onclick="swapGallery(this)">
-            <img src="images/cocotal/terrace-accent.jpg" alt="Large terrace with accent wall" class="thumb" onclick="swapGallery(this)">
+        <div class="gallery-thumbs" id="gallery-thumbs">
+            <img src="images/cocotal/hero-pool-golf.jpg" alt="Pool and golf course" class="thumb active" onclick="setMainImage(0)">
+            <img src="images/cocotal/balcony-view.jpg" alt="Balcony view - pool and golf" class="thumb" onclick="setMainImage(1)">
+            <img src="images/cocotal/terrace-view.jpg" alt="Terrace view of golf course" class="thumb" onclick="setMainImage(2)">
+            <img src="images/cocotal/master-bedroom.jpg" alt="Master bedroom" class="thumb" onclick="setMainImage(3)">
+            <img src="images/cocotal/kitchen.jpg" alt="Modern kitchen" class="thumb" onclick="setMainImage(4)">
+            <img src="images/cocotal/bathroom.jpg" alt="Master bathroom" class="thumb" onclick="setMainImage(5)">
+            <img src="images/cocotal/pool-architecture.jpg" alt="Pool and architecture" class="thumb" onclick="setMainImage(6)">
+            <img src="images/cocotal/golf-panoramic.jpg" alt="Golf course panoramic" class="thumb" onclick="setMainImage(7)">
+            <img src="images/cocotal/pool-building.jpg" alt="Pool area" class="thumb" onclick="setMainImage(8)">
+            <img src="images/cocotal/terrace-accent.jpg" alt="Large terrace" class="thumb" onclick="setMainImage(9)">
         </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <button class="lightbox-prev" onclick="lightboxNav(-1)">&lsaquo;</button>
+        <button class="lightbox-next" onclick="lightboxNav(1)">&rsaquo;</button>
+        <img id="lightbox-img" src="" alt="">
+        <div class="lightbox-counter" id="lightbox-counter">1 / 10</div>
     </div>
 
     <!-- Detail Content -->
