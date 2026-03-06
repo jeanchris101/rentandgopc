@@ -1,13 +1,46 @@
-// Language toggle
-let currentLang = 'es';
+// Language system
+const LANGS = ['en', 'es', 'fr', 'ru'];
+const LANG_LABELS = { en: 'EN', es: 'ES', fr: 'FR', ru: 'RU' };
 
-function toggleLang() {
-    currentLang = currentLang === 'es' ? 'en' : 'es';
-    const btn = document.querySelector('.lang-toggle');
-    btn.textContent = currentLang === 'es' ? 'EN' : 'ES';
+let currentLang = localStorage.getItem('lang') || 'en';
 
-    document.querySelectorAll('[data-es]').forEach(el => {
-        el.textContent = el.getAttribute(`data-${currentLang}`);
+function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    applyTranslations();
+    updateLangSelector();
+}
+
+function cycleLang() {
+    const idx = LANGS.indexOf(currentLang);
+    const next = LANGS[(idx + 1) % LANGS.length];
+    setLang(next);
+}
+
+function applyTranslations() {
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) {
+            el.textContent = t[key];
+        }
+    });
+    // Update html lang attribute
+    document.documentElement.lang = currentLang === 'es' ? 'es' : currentLang === 'fr' ? 'fr' : currentLang === 'ru' ? 'ru' : 'en';
+}
+
+function updateLangSelector() {
+    // Update all lang buttons
+    document.querySelectorAll('.lang-selector').forEach(selector => {
+        selector.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === currentLang);
+        });
+    });
+    // Update mobile toggle text
+    document.querySelectorAll('.lang-toggle-mobile').forEach(el => {
+        const idx = LANGS.indexOf(currentLang);
+        const next = LANGS[(idx + 1) % LANGS.length];
+        el.textContent = LANG_LABELS[next];
     });
 }
 
@@ -16,19 +49,25 @@ function toggleMenu() {
     document.querySelector('.nav').classList.toggle('active');
 }
 
-// Close mobile menu on link click
-document.querySelectorAll('.nav a').forEach(link => {
-    link.addEventListener('click', () => {
-        document.querySelector('.nav').classList.remove('active');
-    });
-});
+// Init on page load
+document.addEventListener('DOMContentLoaded', () => {
+    applyTranslations();
+    updateLangSelector();
 
-// Header shadow on scroll
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('.header');
-    if (window.scrollY > 10) {
-        header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-    } else {
-        header.style.boxShadow = 'none';
-    }
+    // Close mobile menu on link click
+    document.querySelectorAll('.nav a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.querySelector('.nav').classList.remove('active');
+        });
+    });
+
+    // Header shadow on scroll
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.header');
+        if (header) {
+            header.style.boxShadow = window.scrollY > 10
+                ? '0 2px 20px rgba(0,0,0,0.1)'
+                : 'none';
+        }
+    });
 });

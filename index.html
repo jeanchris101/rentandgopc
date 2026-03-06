@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Propiedades en Punta Cana | Apartamentos y Villas en Venta</title>
-    <meta name="description" content="Apartamentos y villas en venta en Punta Cana, Republica Dominicana. Cocotal Golf, Cap Cana, Bavaro. Contactenos hoy.">
+    <title>Rent & Go PC | Properties in Punta Cana</title>
+    <meta name="description" content="Apartments and villas for sale in Punta Cana, Dominican Republic. Cocotal Golf, Cap Cana, Bavaro. Contact us today.">
 
     <!-- Open Graph for Facebook -->
-    <meta property="og:title" content="Propiedades en Venta - Punta Cana">
-    <meta property="og:description" content="Las mejores propiedades en Punta Cana. Apartamentos con CONFOTUR, vistas al golf, acceso a playa.">
+    <meta property="og:title" content="Properties For Sale - Punta Cana">
+    <meta property="og:description" content="Exclusive properties in Punta Cana. Apartments with CONFOTUR, golf views, beach access.">
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="es_DO">
+    <meta property="og:url" content="https://www.rentandgopc.com">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -21,12 +21,17 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href="index.html" class="logo">PC Properties</a>
+                <a href="index.html" class="logo">Rent & Go PC</a>
                 <nav class="nav">
-                    <a href="#properties">Propiedades</a>
-                    <a href="#why-punta-cana">Por que Punta Cana?</a>
-                    <a href="#contact">Contacto</a>
-                    <button class="lang-toggle" onclick="toggleLang()">EN</button>
+                    <a href="#properties" data-i18n="nav_properties">Properties</a>
+                    <a href="#why-punta-cana" data-i18n="nav_why_pc">Why Punta Cana?</a>
+                    <a href="#contact" data-i18n="nav_contact">Contact</a>
+                    <div class="lang-selector">
+                        <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+                        <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+                        <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+                        <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
+                    </div>
                 </nav>
                 <button class="mobile-menu-btn" onclick="toggleMenu()">
                     <span></span><span></span><span></span>
@@ -39,40 +44,40 @@
     <section class="hero">
         <div class="hero-overlay"></div>
         <div class="container hero-content">
-            <h1 data-es="Tu Propiedad en el Paraiso" data-en="Your Property in Paradise">Tu Propiedad en el Paraiso</h1>
-            <p data-es="Apartamentos y villas exclusivas en Punta Cana, Republica Dominicana" data-en="Exclusive apartments and villas in Punta Cana, Dominican Republic">Apartamentos y villas exclusivas en Punta Cana, Republica Dominicana</p>
-            <a href="#properties" class="btn btn-primary" data-es="Ver Propiedades" data-en="View Properties">Ver Propiedades</a>
+            <h1 data-i18n="hero_title">Your Property in Paradise</h1>
+            <p data-i18n="hero_subtitle">Exclusive apartments and villas in Punta Cana, Dominican Republic</p>
+            <a href="#properties" class="btn btn-primary" data-i18n="hero_cta">View Properties</a>
         </div>
     </section>
 
     <!-- Properties -->
     <section id="properties" class="section properties-section">
         <div class="container">
-            <h2 class="section-title" data-es="Propiedades Disponibles" data-en="Available Properties">Propiedades Disponibles</h2>
+            <h2 class="section-title" data-i18n="section_available">Available Properties</h2>
             <div class="properties-grid">
 
                 <!-- Property 1 - Cocotal -->
                 <a href="cocotal-2bdr.html" class="property-card">
                     <div class="property-image">
                         <div class="property-image-placeholder">
-                            <span>Fotos Proximamente</span>
+                            <span data-i18n="photos_coming">Photos Coming Soon</span>
                         </div>
                         <div class="property-badges">
                             <span class="badge badge-confotur">CONFOTUR</span>
-                            <span class="badge badge-featured">Destacado</span>
+                            <span class="badge badge-featured" data-i18n="featured">Featured</span>
                         </div>
                         <div class="property-price">US$315,000</div>
                     </div>
                     <div class="property-info">
-                        <h3>Apartamento 2BR en Cocotal Golf</h3>
-                        <p class="property-location">Cocotal Golf & Country Club, Bavaro</p>
+                        <h3 data-i18n="cocotal_title">2BR Apartment in Cocotal Golf</h3>
+                        <p class="property-location" data-i18n="cocotal_location">Cocotal Golf & Country Club, Bavaro, Punta Cana</p>
                         <div class="property-specs">
-                            <span>2 Hab.</span>
-                            <span>2 Banos</span>
-                            <span>144 m2</span>
-                            <span>2 Parqueos</span>
+                            <span>2 Bed</span>
+                            <span>2 Bath</span>
+                            <span>144 m&sup2;</span>
+                            <span>2 Parking</span>
                         </div>
-                        <p class="property-highlight" data-es="Vista al campo de golf | Acceso Hotel Melia | CONFOTUR incluido" data-en="Golf course views | Melia Hotel access | CONFOTUR tax benefits included">Vista al campo de golf | Acceso Hotel Melia | CONFOTUR incluido</p>
+                        <p class="property-highlight" data-i18n="cocotal_highlight">Golf course views | Melia Hotel access | CONFOTUR tax benefits included</p>
                     </div>
                 </a>
 
@@ -80,11 +85,11 @@
                 <div class="property-card coming-soon">
                     <div class="property-image">
                         <div class="property-image-placeholder">
-                            <span data-es="Proximamente" data-en="Coming Soon">Proximamente</span>
+                            <span data-i18n="coming_soon">Coming Soon</span>
                         </div>
                     </div>
                     <div class="property-info">
-                        <h3 data-es="Nueva Propiedad Proximamente" data-en="New Property Coming Soon">Nueva Propiedad Proximamente</h3>
+                        <h3 data-i18n="new_property_soon">New Property Coming Soon</h3>
                     </div>
                 </div>
 
@@ -92,11 +97,11 @@
                 <div class="property-card coming-soon">
                     <div class="property-image">
                         <div class="property-image-placeholder">
-                            <span data-es="Proximamente" data-en="Coming Soon">Proximamente</span>
+                            <span data-i18n="coming_soon">Coming Soon</span>
                         </div>
                     </div>
                     <div class="property-info">
-                        <h3 data-es="Nueva Propiedad Proximamente" data-en="New Property Coming Soon">Nueva Propiedad Proximamente</h3>
+                        <h3 data-i18n="new_property_soon">New Property Coming Soon</h3>
                     </div>
                 </div>
 
@@ -104,11 +109,11 @@
                 <div class="property-card coming-soon">
                     <div class="property-image">
                         <div class="property-image-placeholder">
-                            <span data-es="Proximamente" data-en="Coming Soon">Proximamente</span>
+                            <span data-i18n="coming_soon">Coming Soon</span>
                         </div>
                     </div>
                     <div class="property-info">
-                        <h3 data-es="Nueva Propiedad Proximamente" data-en="New Property Coming Soon">Nueva Propiedad Proximamente</h3>
+                        <h3 data-i18n="new_property_soon">New Property Coming Soon</h3>
                     </div>
                 </div>
             </div>
@@ -118,27 +123,27 @@
     <!-- Why Punta Cana -->
     <section id="why-punta-cana" class="section why-section">
         <div class="container">
-            <h2 class="section-title" data-es="Por que Invertir en Punta Cana?" data-en="Why Invest in Punta Cana?">Por que Invertir en Punta Cana?</h2>
+            <h2 class="section-title" data-i18n="why_invest_title">Why Invest in Punta Cana?</h2>
             <div class="benefits-grid">
                 <div class="benefit-card">
                     <div class="benefit-icon">$</div>
                     <h3>CONFOTUR</h3>
-                    <p data-es="Exencion de impuestos por 15 anos. Sin impuesto de transferencia, sin IPI, sin ganancia de capital." data-en="15-year tax exemption. No transfer tax, no property tax (IPI), no capital gains tax.">Exencion de impuestos por 15 anos. Sin impuesto de transferencia, sin IPI, sin ganancia de capital.</p>
+                    <p data-i18n="why_confotur_desc">15-year tax exemption. No transfer tax, no property tax (IPI), no capital gains tax.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">&#9992;</div>
-                    <h3 data-es="Conectividad" data-en="Connectivity">Conectividad</h3>
-                    <p data-es="Vuelos directos desde USA, Canada, Europa. Aeropuerto internacional PUJ a minutos." data-en="Direct flights from USA, Canada, Europe. PUJ international airport minutes away.">Vuelos directos desde USA, Canada, Europa. Aeropuerto internacional PUJ a minutos.</p>
+                    <h3 data-i18n="why_connectivity">Connectivity</h3>
+                    <p data-i18n="why_connectivity_desc">Direct flights from USA, Canada, Europe. PUJ international airport minutes away.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">&#8593;</div>
                     <h3>ROI</h3>
-                    <p data-es="Plusvalia constante. Retorno de 8-12% anual en renta vacacional (Airbnb)." data-en="Constant appreciation. 8-12% annual ROI on vacation rentals (Airbnb).">Plusvalia constante. Retorno de 8-12% anual en renta vacacional (Airbnb).</p>
+                    <p data-i18n="why_roi_desc">Constant appreciation. 8-12% annual ROI on vacation rentals (Airbnb).</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">&#9728;</div>
-                    <h3 data-es="Calidad de Vida" data-en="Quality of Life">Calidad de Vida</h3>
-                    <p data-es="365 dias de sol. Playas de clase mundial. Comunidad internacional creciente." data-en="365 days of sunshine. World-class beaches. Growing international community.">365 dias de sol. Playas de clase mundial. Comunidad internacional creciente.</p>
+                    <h3 data-i18n="why_lifestyle">Quality of Life</h3>
+                    <p data-i18n="why_lifestyle_desc">365 days of sunshine. World-class beaches. Growing international community.</p>
                 </div>
             </div>
         </div>
@@ -147,11 +152,11 @@
     <!-- Contact / CTA -->
     <section id="contact" class="section contact-section">
         <div class="container">
-            <h2 class="section-title" data-es="Interesado? Hablemos" data-en="Interested? Let's Talk">Interesado? Hablemos</h2>
-            <p class="contact-subtitle" data-es="Escribeme directamente por WhatsApp para mas informacion, fotos, o agendar una visita." data-en="Message me directly on WhatsApp for more info, photos, or to schedule a visit.">Escribeme directamente por WhatsApp para mas informacion, fotos, o agendar una visita.</p>
-            <a href="https://wa.me/18094865386?text=Hola!%20Me%20interesa%20una%20propiedad%20en%20Punta%20Cana" class="btn btn-whatsapp" target="_blank">
+            <h2 class="section-title" data-i18n="contact_title">Interested? Let's Talk</h2>
+            <p class="contact-subtitle" data-i18n="contact_subtitle">Message me directly on WhatsApp for more info, photos, or to schedule a visit.</p>
+            <a href="https://wa.me/18094865386?text=Hello!%20I'm%20interested%20in%20a%20property%20in%20Punta%20Cana" class="btn btn-whatsapp" target="_blank">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                WhatsApp
+                <span data-i18n="whatsapp_btn">WhatsApp</span>
             </a>
         </div>
     </section>
@@ -159,10 +164,11 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>PC Properties &mdash; Punta Cana, Republica Dominicana</p>
+            <p>Rent & Go PC &mdash; <span data-i18n="footer">Punta Cana, Dominican Republic</span></p>
         </div>
     </footer>
 
+    <script src="translations.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
