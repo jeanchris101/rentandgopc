@@ -338,58 +338,130 @@ textarea { resize: vertical; }
 
 <script>
 // ========== DATA LAYER ==========
+// Data source priority: Remote (Google Sheets / JSON file) > localStorage cache > built-in fallback
 const STORAGE_KEY = 'pcprops_data';
+const DATA_SOURCE_URL = 'airbnb-data.json'; // Swap to Google Sheets published URL later
+// Example Google Sheets URL:
+// const DATA_SOURCE_URL = 'https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/gviz/tq?tqx=out:json';
 
-function loadData() {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (raw) return JSON.parse(raw);
-  return getDefaultData();
+let DATA = getLocalCache() || getFallbackData();
+let DATA_LOADED_FROM = 'cache';
+
+function getLocalCache() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) { console.warn('Failed to read localStorage cache:', e); }
+  return null;
 }
 
 function saveData() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA));
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA)); }
+  catch(e) { console.warn('Failed to save to localStorage:', e); }
 }
 
-let DATA = loadData();
+async function fetchRemoteData() {
+  try {
+    const resp = await fetch(DATA_SOURCE_URL);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const contentType = resp.headers.get('content-type') || '';
 
-function getDefaultData() {
-  const today = new Date();
-  const d = (offset) => {
-    const dt = new Date(today); dt.setDate(dt.getDate() + offset);
-    return dt.toISOString().split('T')[0];
-  };
+    let parsed;
+    if (contentType.includes('text/javascript') || DATA_SOURCE_URL.includes('gviz/tq')) {
+      // Google Sheets returns JSONP-like: google.visualization.Query.setResponse({...})
+      const text = await resp.text();
+      const match = text.match(/google\.visualization\.Query\.setResponse\((.+)\)/s);
+      if (match) {
+        parsed = parseGoogleSheetsResponse(JSON.parse(match[1]));
+      } else {
+        throw new Error('Could not parse Google Sheets response');
+      }
+    } else {
+      parsed = await resp.json();
+    }
+
+    // Validate the response has required fields
+    if (parsed && parsed.properties && parsed.bookings) {
+      // Ensure all expected arrays exist
+      parsed.expenses = parsed.expenses || [];
+      parsed.cleaners = parsed.cleaners || [];
+      parsed.cleaningTasks = parsed.cleaningTasks || [];
+      parsed.guestNotes = parsed.guestNotes || {};
+      parsed.nextId = parsed.nextId || 200;
+      return parsed;
+    }
+    throw new Error('Invalid data structure: missing properties or bookings');
+  } catch(e) {
+    console.warn('Remote data fetch failed, using local cache:', e.message);
+    return null;
+  }
+}
+
+function parseGoogleSheetsResponse(gvizData) {
+  // Parse Google Visualization API response into our schema
+  // This handles a single-sheet response; for multi-tab, fetch each tab separately
+  const table = gvizData.table;
+  if (!table || !table.rows) return null;
+
+  const headers = table.cols.map(c => c.label || c.id);
+  const rows = table.rows.map(r => {
+    const obj = {};
+    r.c.forEach((cell, i) => {
+      obj[headers[i]] = cell ? (cell.v !== null ? cell.v : '') : '';
+    });
+    return obj;
+  });
+
+  // For now, return as-is; the multi-tab parsing would need separate fetches per tab
+  return { _rawRows: rows };
+}
+
+async function initData() {
+  const remote = await fetchRemoteData();
+  if (remote && remote.properties) {
+    DATA = remote;
+    DATA_LOADED_FROM = DATA_SOURCE_URL.includes('google') ? 'google-sheets' : 'json-file';
+    saveData(); // Cache remotely-loaded data locally
+    console.log('Data loaded from:', DATA_LOADED_FROM);
+  } else {
+    const cached = getLocalCache();
+    if (cached) {
+      DATA = cached;
+      DATA_LOADED_FROM = 'cache';
+      console.log('Data loaded from: localStorage cache');
+    } else {
+      DATA = getFallbackData();
+      DATA_LOADED_FROM = 'fallback';
+      console.log('Data loaded from: built-in fallback');
+    }
+  }
+  autoUpdateStatuses();
+  renderAll();
+  showDataSourceIndicator();
+}
+
+function showDataSourceIndicator() {
+  const labels = { 'json-file': 'JSON File', 'google-sheets': 'Google Sheets', 'cache': 'Local Cache', 'fallback': 'Sample Data' };
+  const colors = { 'json-file': 'var(--positive)', 'google-sheets': 'var(--positive)', 'cache': 'var(--gold)', 'fallback': 'var(--alert)' };
+  const bar = document.getElementById('topBar');
+  if (bar) {
+    const pill = document.createElement('div');
+    pill.className = 'stat-pill';
+    pill.style.marginLeft = 'auto';
+    pill.innerHTML = `<span class="stat-icon" style="color:${colors[DATA_LOADED_FROM]}">&#9679;</span><div><div class="stat-val" style="font-size:0.85rem;color:${colors[DATA_LOADED_FROM]}">${labels[DATA_LOADED_FROM]}</div><div class="stat-label">Data Source</div></div>`;
+    bar.appendChild(pill);
+  }
+}
+
+function getFallbackData() {
   return {
     properties: [
-      { id: 'p1', name: 'Villa Bavaro Sunrise', status: 'occupied', nightlyRate: 185 },
-      { id: 'p2', name: 'Condo Cap Cana Marina', status: 'occupied', nightlyRate: 220 },
-      { id: 'p3', name: 'Studio Los Corales Beach', status: 'vacant', nightlyRate: 95 },
-      { id: 'p4', name: 'Penthouse Cocotal Golf', status: 'cleaning', nightlyRate: 310 },
-      { id: 'p5', name: 'Townhouse Palma Real', status: 'vacant', nightlyRate: 150 },
-      { id: 'p6', name: 'Villa Punta Espada', status: 'maintenance', nightlyRate: 425 },
-      { id: 'p7', name: 'Apt Downtown Bavaro', status: 'vacant', nightlyRate: 75 },
+      { id: 'p1', name: 'Villa Bavaro Sunrise', status: 'vacant', nightlyRate: 185 },
+      { id: 'p2', name: 'Condo Cap Cana Marina', status: 'vacant', nightlyRate: 220 },
     ],
-    bookings: [
-      { id: 'b1', propertyId: 'p1', guest: 'Sarah Thompson', checkIn: d(-3), checkOut: d(4), nightlyRate: 185, platform: 'Airbnb', country: 'USA', notes: '' },
-      { id: 'b2', propertyId: 'p2', guest: 'Marc Dupont', checkIn: d(-5), checkOut: d(2), nightlyRate: 220, platform: 'Airbnb', country: 'Canada', notes: 'Asked about buying property nearby' },
-      { id: 'b3', propertyId: 'p4', guest: 'Elena Rodriguez', checkIn: d(-8), checkOut: d(0), nightlyRate: 310, platform: 'VRBO', country: 'Spain', notes: '' },
-      { id: 'b4', propertyId: 'p1', guest: 'James Wilson', checkIn: d(7), checkOut: d(17), nightlyRate: 195, platform: 'Airbnb', country: 'USA', notes: 'Repeat guest, loves the area' },
-      { id: 'b5', propertyId: 'p3', guest: 'Anna Kowalski', checkIn: d(2), checkOut: d(5), nightlyRate: 95, platform: 'Booking.com', country: 'Germany', notes: '' },
-      { id: 'b6', propertyId: 'p5', guest: 'Robert Chen', checkIn: d(5), checkOut: d(15), nightlyRate: 155, platform: 'Airbnb', country: 'USA', notes: 'Interested in investment properties' },
-      { id: 'b7', propertyId: 'p2', guest: 'Marc Dupont', checkIn: d(10), checkOut: d(20), nightlyRate: 230, platform: 'Direct', country: 'Canada', notes: 'Returning guest - very interested in area' },
-      { id: 'b8', propertyId: 'p7', guest: 'Lisa Park', checkIn: d(-2), checkOut: d(1), nightlyRate: 80, platform: 'Airbnb', country: 'South Korea', notes: '' },
-    ],
-    expenses: [
-      { id: 'e1', propertyId: 'p1', date: d(-5), category: 'Cleaning', amount: 45, note: 'Turnover clean' },
-      { id: 'e2', propertyId: 'p4', date: d(-1), category: 'Maintenance', amount: 120, note: 'AC repair' },
-      { id: 'e3', propertyId: 'p2', date: d(-10), category: 'Supplies', amount: 35, note: 'Toiletries restock' },
-      { id: 'e4', propertyId: 'p1', date: d(-15), category: 'HOA', amount: 250, note: 'Monthly HOA' },
-      { id: 'e5', propertyId: 'p3', date: d(-12), category: 'Utilities', amount: 85, note: 'Electric bill' },
-    ],
-    cleaners: [
-      { id: 'c1', name: 'Maria Santos', phone: '18091234567' },
-      { id: 'c2', name: 'Juan Perez', phone: '18097654321' },
-      { id: 'c3', name: 'Rosa Martinez', phone: '18095551234' },
-    ],
+    bookings: [],
+    expenses: [],
+    cleaners: [],
     cleaningTasks: [],
     guestNotes: {},
     nextId: 100
@@ -1205,9 +1277,8 @@ function autoUpdateStatuses() {
   saveData();
 }
 
-// INIT
-autoUpdateStatuses();
-renderAll();
+// INIT — load remote data, fall back to cache, then render
+initData();
 </script>
 </body>
 </html>

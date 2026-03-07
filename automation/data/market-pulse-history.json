@@ -1,0 +1,613 @@
+[
+  {
+    "timestamp": "2026-03-07T14:48:05.870748+00:00",
+    "date": "2026-03-07",
+    "airbnb_rates": [
+      {
+        "neighborhood": "Los Corales",
+        "listings_sampled": 0,
+        "avg_nightly_rate": null,
+        "min_nightly_rate": null,
+        "max_nightly_rate": null,
+        "avg_rating": null,
+        "property_types": {},
+        "source": "airbnb_search",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Cocotal",
+        "listings_sampled": 0,
+        "avg_nightly_rate": null,
+        "min_nightly_rate": null,
+        "max_nightly_rate": null,
+        "avg_rating": null,
+        "property_types": {},
+        "source": "airbnb_search",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Cap Cana",
+        "listings_sampled": 0,
+        "avg_nightly_rate": null,
+        "min_nightly_rate": null,
+        "max_nightly_rate": null,
+        "avg_rating": null,
+        "property_types": {},
+        "source": "airbnb_search",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Bavaro",
+        "listings_sampled": 0,
+        "avg_nightly_rate": null,
+        "min_nightly_rate": null,
+        "max_nightly_rate": null,
+        "avg_rating": null,
+        "property_types": {},
+        "source": "airbnb_search",
+        "scraped": false
+      },
+      {
+        "neighborhood": "El Cortecito",
+        "listings_sampled": 0,
+        "avg_nightly_rate": null,
+        "min_nightly_rate": null,
+        "max_nightly_rate": null,
+        "avg_rating": null,
+        "property_types": {},
+        "source": "airbnb_search",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Downtown Punta Cana",
+        "listings_sampled": 0,
+        "avg_nightly_rate": null,
+        "min_nightly_rate": null,
+        "max_nightly_rate": null,
+        "avg_rating": null,
+        "property_types": {},
+        "source": "airbnb_search",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Uvero Alto",
+        "listings_sampled": 0,
+        "avg_nightly_rate": null,
+        "min_nightly_rate": null,
+        "max_nightly_rate": null,
+        "avg_rating": null,
+        "property_types": {},
+        "source": "airbnb_search",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Macao",
+        "listings_sampled": 0,
+        "avg_nightly_rate": null,
+        "min_nightly_rate": null,
+        "max_nightly_rate": null,
+        "avg_rating": null,
+        "property_types": {},
+        "source": "airbnb_search",
+        "scraped": false
+      }
+    ],
+    "tourism_stats": {
+      "source_urls": [
+        "https://tourismanalytics.com/puntacana-statistics.html",
+        "https://dominicantoday.com/dr/tourism/",
+        "https://dr1.com/news/category/tourism/"
+      ],
+      "latest_data": {
+        "growth_pct_raw": "8% growth",
+        "punta_cana_airport_share": "9.5%",
+        "recent_headlines": [
+          {
+            "title": "Tourism Ministry sponsors Dominican team for World Baseball Classic",
+            "url": "https://dominicantoday.com/dr/tourism/2026/03/06/tourism-ministry-sponsors-dominican-team-for-world-baseball-classic/"
+          },
+          {
+            "title": "Cayo Levantado Resort awarded Four Stars by Forbes Travel Guide for 2026",
+            "url": "https://dominicantoday.com/dr/tourism/2026/03/06/cayo-levantado-resort-awarded-four-stars-by-forbes-travel-guide-for-2026/"
+          },
+          {
+            "title": "Asonahores highlights German market at ITB Berlin 2026",
+            "url": "https://dominicantoday.com/dr/tourism/2026/03/04/asonahores-highlights-german-market-at-itb-berlin-2026/"
+          },
+          {
+            "title": "New tourist pier and beach club to open on Catalina Island",
+            "url": "https://dominicantoday.com/dr/tourism/2026/03/03/new-tourist-pier-and-beach-club-to-open-on-catalina-island/"
+          },
+          {
+            "title": "Cotuí celebrates cultural heritage with focus on sustainability and tradition",
+            "url": "https://dominicantoday.com/dr/local/2026/03/02/cotui-celebrates-cultural-heritage-with-focus-on-sustainability-and-tradition/"
+          }
+        ]
+      },
+      "scraped_at": "2026-03-07T14:48:43.405342+00:00"
+    },
+    "property_listings": [],
+    "meta": {
+      "scraper_version": "1.0.0",
+      "neighborhoods_tracked": [
+        "Los Corales",
+        "Cocotal",
+        "Cap Cana",
+        "Bavaro",
+        "El Cortecito",
+        "Downtown Punta Cana",
+        "Uvero Alto",
+        "Macao"
+      ],
+      "duration_seconds": 63.1,
+      "errors": []
+    }
+  },
+  {
+    "timestamp": "2026-03-07T14:51:52.377939+00:00",
+    "date": "2026-03-07",
+    "airbnb_rates": [
+      {
+        "neighborhood": "Los Corales",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 120,
+        "min_nightly_rate": 65,
+        "max_nightly_rate": 280,
+        "avg_rating": 4.65,
+        "property_types": {},
+        "yield_range": "7-12%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Cocotal",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 105,
+        "min_nightly_rate": 55,
+        "max_nightly_rate": 220,
+        "avg_rating": 4.7,
+        "property_types": {},
+        "yield_range": "6-10%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Cap Cana",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 165,
+        "min_nightly_rate": 80,
+        "max_nightly_rate": 450,
+        "avg_rating": 4.8,
+        "property_types": {},
+        "yield_range": "5-8%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Bavaro",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 110,
+        "min_nightly_rate": 55,
+        "max_nightly_rate": 240,
+        "avg_rating": 4.6,
+        "property_types": {},
+        "yield_range": "6-10%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      },
+      {
+        "neighborhood": "El Cortecito",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 115,
+        "min_nightly_rate": 60,
+        "max_nightly_rate": 260,
+        "avg_rating": 4.6,
+        "property_types": {},
+        "yield_range": "7-11%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Downtown Punta Cana",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 95,
+        "min_nightly_rate": 50,
+        "max_nightly_rate": 200,
+        "avg_rating": 4.55,
+        "property_types": {},
+        "yield_range": "6-10%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Uvero Alto",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 125,
+        "min_nightly_rate": 65,
+        "max_nightly_rate": 300,
+        "avg_rating": 4.7,
+        "property_types": {},
+        "yield_range": "5-8%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Macao",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 105,
+        "min_nightly_rate": 50,
+        "max_nightly_rate": 220,
+        "avg_rating": 4.55,
+        "property_types": {},
+        "yield_range": "4-7%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      }
+    ],
+    "tourism_stats": {
+      "source_urls": [
+        "https://tourismanalytics.com/puntacana-statistics.html",
+        "https://dominicantoday.com/dr/tourism/",
+        "https://dr1.com/news/category/tourism/"
+      ],
+      "latest_data": {
+        "growth_pct_raw": "8% growth",
+        "punta_cana_airport_share": "9.5%",
+        "recent_headlines": [
+          {
+            "title": "Tourism Ministry sponsors Dominican team for World Baseball Classic",
+            "url": "https://dominicantoday.com/dr/tourism/2026/03/06/tourism-ministry-sponsors-dominican-team-for-world-baseball-classic/"
+          },
+          {
+            "title": "Cayo Levantado Resort awarded Four Stars by Forbes Travel Guide for 2026",
+            "url": "https://dominicantoday.com/dr/tourism/2026/03/06/cayo-levantado-resort-awarded-four-stars-by-forbes-travel-guide-for-2026/"
+          },
+          {
+            "title": "Asonahores highlights German market at ITB Berlin 2026",
+            "url": "https://dominicantoday.com/dr/tourism/2026/03/04/asonahores-highlights-german-market-at-itb-berlin-2026/"
+          },
+          {
+            "title": "New tourist pier and beach club to open on Catalina Island",
+            "url": "https://dominicantoday.com/dr/tourism/2026/03/03/new-tourist-pier-and-beach-club-to-open-on-catalina-island/"
+          },
+          {
+            "title": "Cotuí celebrates cultural heritage with focus on sustainability and tradition",
+            "url": "https://dominicantoday.com/dr/local/2026/03/02/cotui-celebrates-cultural-heritage-with-focus-on-sustainability-and-tradition/"
+          }
+        ]
+      },
+      "scraped_at": "2026-03-07T14:52:26.372455+00:00"
+    },
+    "property_listings": [],
+    "meta": {
+      "scraper_version": "1.0.0",
+      "neighborhoods_tracked": [
+        "Los Corales",
+        "Cocotal",
+        "Cap Cana",
+        "Bavaro",
+        "El Cortecito",
+        "Downtown Punta Cana",
+        "Uvero Alto",
+        "Macao"
+      ],
+      "duration_seconds": 51.9,
+      "errors": [
+        "listings: could not convert string to float: ''"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-03-07T14:53:11.424476+00:00",
+    "date": "2026-03-07",
+    "airbnb_rates": [
+      {
+        "neighborhood": "Los Corales",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 120,
+        "min_nightly_rate": 65,
+        "max_nightly_rate": 280,
+        "avg_rating": 4.65,
+        "property_types": {},
+        "yield_range": "7-12%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Cocotal",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 105,
+        "min_nightly_rate": 55,
+        "max_nightly_rate": 220,
+        "avg_rating": 4.7,
+        "property_types": {},
+        "yield_range": "6-10%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Cap Cana",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 165,
+        "min_nightly_rate": 80,
+        "max_nightly_rate": 450,
+        "avg_rating": 4.8,
+        "property_types": {},
+        "yield_range": "5-8%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Bavaro",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 110,
+        "min_nightly_rate": 55,
+        "max_nightly_rate": 240,
+        "avg_rating": 4.6,
+        "property_types": {},
+        "yield_range": "6-10%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      },
+      {
+        "neighborhood": "El Cortecito",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 115,
+        "min_nightly_rate": 60,
+        "max_nightly_rate": 260,
+        "avg_rating": 4.6,
+        "property_types": {},
+        "yield_range": "7-11%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Downtown Punta Cana",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 95,
+        "min_nightly_rate": 50,
+        "max_nightly_rate": 200,
+        "avg_rating": 4.55,
+        "property_types": {},
+        "yield_range": "6-10%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Uvero Alto",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 125,
+        "min_nightly_rate": 65,
+        "max_nightly_rate": 300,
+        "avg_rating": 4.7,
+        "property_types": {},
+        "yield_range": "5-8%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      },
+      {
+        "neighborhood": "Macao",
+        "listings_sampled": 0,
+        "avg_nightly_rate": 105,
+        "min_nightly_rate": 50,
+        "max_nightly_rate": 220,
+        "avg_rating": 4.55,
+        "property_types": {},
+        "yield_range": "4-7%",
+        "source": "baseline_research_2026",
+        "scraped": false
+      }
+    ],
+    "tourism_stats": {
+      "source_urls": [
+        "https://tourismanalytics.com/puntacana-statistics.html",
+        "https://dominicantoday.com/dr/tourism/",
+        "https://dr1.com/news/category/tourism/"
+      ],
+      "latest_data": {
+        "growth_pct_raw": "8% growth",
+        "punta_cana_airport_share": "9.5%",
+        "recent_headlines": [
+          {
+            "title": "Tourism Ministry sponsors Dominican team for World Baseball Classic",
+            "url": "https://dominicantoday.com/dr/tourism/2026/03/06/tourism-ministry-sponsors-dominican-team-for-world-baseball-classic/"
+          },
+          {
+            "title": "Cayo Levantado Resort awarded Four Stars by Forbes Travel Guide for 2026",
+            "url": "https://dominicantoday.com/dr/tourism/2026/03/06/cayo-levantado-resort-awarded-four-stars-by-forbes-travel-guide-for-2026/"
+          },
+          {
+            "title": "Asonahores highlights German market at ITB Berlin 2026",
+            "url": "https://dominicantoday.com/dr/tourism/2026/03/04/asonahores-highlights-german-market-at-itb-berlin-2026/"
+          },
+          {
+            "title": "New tourist pier and beach club to open on Catalina Island",
+            "url": "https://dominicantoday.com/dr/tourism/2026/03/03/new-tourist-pier-and-beach-club-to-open-on-catalina-island/"
+          },
+          {
+            "title": "Cotuí celebrates cultural heritage with focus on sustainability and tradition",
+            "url": "https://dominicantoday.com/dr/local/2026/03/02/cotui-celebrates-cultural-heritage-with-focus-on-sustainability-and-tradition/"
+          }
+        ]
+      },
+      "scraped_at": "2026-03-07T14:53:49.300821+00:00"
+    },
+    "property_listings": [
+      {
+        "title": "For saleVilla Palmitas 8 – Luxury Villa for Sale in Cap Canafrom$2,600,000/ Apt.Read more",
+        "price_text": "",
+        "price_usd": 2600000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/real-estate/cap-cana-luxury-villa-for-sale/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleVilla Palmas 107 as Your Sound Investment Decision – Cap Cana Homes for Salefrom$3,100,000/ Apt.Read more",
+        "price_text": "",
+        "price_usd": 3100000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/real-estate/cap-cana-homes-for-sale/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleCap Cana New Construction Villa for Sale – Villa Palmas 105from$3,700,000/ Apt.Read more",
+        "price_text": "",
+        "price_usd": 3700000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/real-estate/cap-cana-new-villa-sale/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleCap Cana Villa Lagunas 24 for Sale – New Constructionfrom$2,900,000/ Apt.Read more",
+        "price_text": "",
+        "price_usd": 2900000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/real-estate/cap-cana-villa-new-construction/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleVilla Cayuco 11 in Cap Cana – A Smart Investment in Elevated Livingfrom$5,200,000/ Apt.Read more",
+        "price_text": "",
+        "price_usd": 5200000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/real-estate/cap-cana-houses-for-sale/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleVilla Palmas 106 – Luxury Real Estate for Sale in Cap Canafrom$3,700,000/ Apt.Read more",
+        "price_text": "",
+        "price_usd": 3700000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/real-estate/cap-cana-real-estate-for-sale/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleCaracoles Beach Suites – New Construction for Sale in Bavaro, Punta Canafrom$179,900/ Apt.Read more",
+        "price_text": "",
+        "price_usd": 179900.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/real-estate/caracoles-beach-suites/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleOcean Bay – Condos for sale in BÃ¡varo, Punta Canafrom$855,000/ Apt.Read more",
+        "price_text": "",
+        "price_usd": 855000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/real-estate/condo-for-sale-bavaro/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleThe Reef – New Homes for Sale in Las Terrenas, Pre-Constructionfrom$289,000/ Apt.Read more",
+        "price_text": "",
+        "price_usd": 289000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/real-estate/las-terrenas-homes-for-sale/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleCoral BahÃ­a – Real Estate for Sale in Cocotalfrom$239,000/ Apt.Read more",
+        "price_text": "",
+        "price_usd": 239000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/real-estate/cocotal-real-estate-coral-bahia/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleHarbor Bay – Apartments for sale in Cap Cana Marinafrom$280,000/ Apt.Read more",
+        "price_text": "",
+        "price_usd": 280000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/real-estate/cap-cana-apartments-sale-harbor-bay/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleAtlÃ¡ntida – Apartments for Sale in BÃ¡varo (Los Corales)from$235,000/ Apt.Read more",
+        "price_text": "",
+        "price_usd": 235000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/real-estate/bavaro-apartments-for-sale-atlantida/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleExquisite 4-Bedroom Golf-View Villa for Sale in Puntacana Resort & Club, Arrecife$2,675,000View Details",
+        "price_text": "",
+        "price_usd": 2675000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/for-sale/golf-view-villa-for-sale-puntacana-resort-club/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleLuxury 7-Bedroom Villa for Sale in Punta Cana Village, Puntacana Resort & Club$3,200,000View Details",
+        "price_text": "",
+        "price_usd": 3200000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/for-sale/villa-for-sale-in-punta-cana-village/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleFully Furnished House for Sale with Fruit Trees Garden in Pueblo BÃ¡varo, Punta Cana, 187/300 sqm$203,000View Details",
+        "price_text": "",
+        "price_usd": 203000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/for-sale/house-sale-pueblo-bavaro/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleOcean view penthouse for sale in BÃ¡varo, Punta Cana, with private terrace & beach access$375,000View Details",
+        "price_text": "",
+        "price_usd": 375000.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/for-sale/beachfront-punta-cana-condo-sale/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleBrand new Punta Cana townhouse villa in the center of BÃ¡varo, 142 m2, 2-level, terrace & jacuzzi$189,900View Details",
+        "price_text": "",
+        "price_usd": 189900.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/for-sale/punta-cana-house-sale/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "For saleCasa de Campo Villa for sale – 2 levels, Jacuzzi, BBQ, 3,720 SM (40,041 SF)$3,800,000View Details",
+        "price_text": "",
+        "price_usd": 40041.0,
+        "location": "",
+        "url": "https://everythingpuntacana.com/for-sale/casa-de-campo-villa-for-sale/",
+        "source": "everythingpuntacana.com"
+      },
+      {
+        "title": "TheLatinvestor Price/m2 Data (2026)",
+        "price_text": "Prices/m2 found: $7,140, $1,110, $3,500, $161,545, $2,175, $115,454",
+        "price_usd": null,
+        "location": "Punta Cana (various)",
+        "url": "https://thelatinvestor.com/blogs/news/punta-cana-housing-prices",
+        "source": "thelatinvestor.com",
+        "price_per_sqm_samples": [
+          7140.0,
+          1110.0,
+          3500.0,
+          161545.0,
+          2175.0,
+          115454.0
+        ]
+      }
+    ],
+    "meta": {
+      "scraper_version": "1.0.0",
+      "neighborhoods_tracked": [
+        "Los Corales",
+        "Cocotal",
+        "Cap Cana",
+        "Bavaro",
+        "El Cortecito",
+        "Downtown Punta Cana",
+        "Uvero Alto",
+        "Macao"
+      ],
+      "duration_seconds": 69.9,
+      "errors": []
+    }
+  }
+]

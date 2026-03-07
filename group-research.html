@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Research | Rent & Go PC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: #faf9f6; color: #333; }
+
+        /* Header */
+        .header {
+            background: #1a3a2a; padding: 0; position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .header .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .header-content {
+            display: flex; align-items: center; justify-content: space-between; height: 64px;
+        }
+        .logo {
+            font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700;
+            color: #c8a45e; text-decoration: none; letter-spacing: 0.5px;
+        }
+        .nav { display: flex; align-items: center; gap: 24px; }
+        .nav a {
+            color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.9rem;
+            font-weight: 500; transition: color 0.2s;
+        }
+        .nav a:hover { color: #c8a45e; }
+        .nav a.active { color: #c8a45e; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* Page header */
+        .page-header { padding: 40px 0 20px; }
+        .page-header h1 {
+            font-family: 'Playfair Display', serif; font-size: 2rem; color: #1a3a2a;
+            margin-bottom: 8px;
+        }
+        .page-header p { color: #666; font-size: 0.95rem; line-height: 1.5; }
+
+        /* Stats bar */
+        .stats-bar {
+            display: flex; gap: 24px; flex-wrap: wrap; padding: 16px 20px;
+            background: #1a3a2a; border-radius: 12px; margin-bottom: 24px;
+        }
+        .stat-item {
+            display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.9);
+            font-size: 0.85rem;
+        }
+        .stat-number {
+            font-size: 1.3rem; font-weight: 700; color: #c8a45e;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end;
+            margin-bottom: 16px; background: white; padding: 16px 20px;
+            border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .control-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 180px; }
+        .control-group label {
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            color: #888; letter-spacing: 0.5px;
+        }
+        .search-input {
+            padding: 10px 14px; border: 1.5px solid #ddd; border-radius: 8px;
+            font-size: 0.9rem; font-family: inherit; background: white; width: 100%;
+        }
+        .search-input:focus { outline: none; border-color: #1a3a2a; }
+        select.search-input { cursor: pointer; }
+
+        /* Filter tabs */
+        .filter-tabs {
+            display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;
+        }
+        .filter-tab {
+            padding: 6px 16px; border: 1.5px solid #ddd; border-radius: 20px;
+            background: white; font-size: 0.8rem; font-weight: 500; cursor: pointer;
+            transition: all 0.2s; font-family: inherit; color: #555;
+        }
+        .filter-tab:hover { border-color: #1a3a2a; color: #1a3a2a; }
+        .filter-tab.active { background: #c8a45e; color: white; border-color: #c8a45e; }
+
+        /* Table */
+        .table-wrap {
+            background: white; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 32px;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        thead { background: #1a3a2a; }
+        thead th {
+            padding: 14px 16px; text-align: left; color: rgba(255,255,255,0.9);
+            font-weight: 600; font-size: 0.75rem; text-transform: uppercase;
+            letter-spacing: 0.5px; white-space: nowrap; cursor: pointer;
+            user-select: none;
+        }
+        thead th:hover { color: #c8a45e; }
+        thead th .sort-arrow { font-size: 0.7rem; margin-left: 4px; opacity: 0.5; }
+        thead th.sorted .sort-arrow { opacity: 1; color: #c8a45e; }
+        tbody tr { border-bottom: 1px solid #f0ede8; transition: background 0.15s; }
+        tbody tr:hover { background: #faf5ee; }
+        tbody tr.hidden { display: none; }
+        tbody td { padding: 12px 16px; vertical-align: top; }
+        td a { color: #1a3a2a; text-decoration: none; font-weight: 600; }
+        td a:hover { color: #c8a45e; text-decoration: underline; }
+
+        /* Badges */
+        .badge {
+            display: inline-block; padding: 2px 10px; border-radius: 12px;
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-fb { background: rgba(66,103,178,0.12); color: #4267b2; }
+        .badge-reddit { background: rgba(255,69,0,0.1); color: #ff4500; }
+        .badge-forum { background: rgba(26,58,42,0.1); color: #1a3a2a; }
+        .badge-linkedin { background: rgba(0,119,181,0.1); color: #0077b5; }
+        .badge-youtube { background: rgba(255,0,0,0.08); color: #cc0000; }
+
+        .badge-en { background: rgba(200,164,94,0.15); color: #9a7a2e; }
+        .badge-es { background: rgba(233,69,96,0.12); color: #c23a52; }
+        .badge-fr { background: rgba(0,85,164,0.1); color: #0055a4; }
+
+        .badge-high { background: rgba(83,215,105,0.15); color: #2a8a3e; }
+        .badge-medium { background: rgba(200,164,94,0.15); color: #9a7a2e; }
+        .badge-low { background: rgba(150,150,150,0.15); color: #777; }
+
+        .star { color: #c8a45e; font-weight: 700; margin-right: 2px; }
+
+        /* Section headers in table */
+        .section-row td {
+            background: #f5f2ec; font-weight: 700; color: #1a3a2a;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;
+            padding: 10px 16px;
+        }
+
+        /* Strategy section */
+        .strategy-section {
+            background: white; border-radius: 12px; padding: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 32px;
+        }
+        .strategy-section h2 {
+            font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #1a3a2a;
+            margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #f0ede8;
+        }
+        .strategy-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .strategy-card {
+            background: #faf9f6; border-radius: 10px; padding: 16px;
+            border-left: 3px solid #c8a45e;
+        }
+        .strategy-card h3 { font-size: 0.85rem; color: #1a3a2a; margin-bottom: 6px; }
+        .strategy-card .freq { font-size: 0.75rem; color: #c8a45e; font-weight: 600; margin-bottom: 4px; }
+        .strategy-card .tone { font-size: 0.75rem; color: #888; }
+        .strategy-card p { font-size: 0.82rem; color: #555; line-height: 1.5; }
+
+        /* Priority list */
+        .priority-list {
+            counter-reset: priority;
+            list-style: none; padding: 0;
+        }
+        .priority-list li {
+            counter-increment: priority;
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 16px; border-bottom: 1px solid #f0ede8;
+            font-size: 0.88rem;
+        }
+        .priority-list li::before {
+            content: counter(priority);
+            display: flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px; border-radius: 50%;
+            background: #1a3a2a; color: #c8a45e; font-weight: 700;
+            font-size: 0.8rem; flex-shrink: 0;
+        }
+        .priority-list li:nth-child(-n+3)::before {
+            background: #c8a45e; color: white;
+        }
+
+        /* Rules list */
+        .rules-list { list-style: none; padding: 0; }
+        .rules-list li {
+            padding: 8px 0; border-bottom: 1px solid #f0ede8;
+            font-size: 0.85rem; color: #555; line-height: 1.5;
+        }
+        .rules-list li strong { color: #1a3a2a; }
+
+        /* Results count */
+        .results-count {
+            font-size: 0.82rem; color: #888; margin-bottom: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .controls { flex-direction: column; }
+            .control-group { min-width: 100%; }
+            table { font-size: 0.8rem; }
+            thead th, tbody td { padding: 10px 12px; }
+            .strategy-grid { grid-template-columns: 1fr; }
+            .page-header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="hub.html" class="logo">Rent & Go PC</a>
+                <nav class="nav">
+                    <a href="hub.html">Hub</a>
+                    <a href="response-bank.html">Response Bank</a>
+                    <a href="strategy.html">Strategy</a>
+                    <a href="group-research.html" class="active">Groups</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <h1>Community & Group Research</h1>
+            <p>Strategic list of Facebook groups, Reddit subs, forums, and channels for building presence and sharing content. Prioritize starred groups.</p>
+        </div>
+
+        <!-- STATS BAR -->
+        <div class="stats-bar">
+            <div class="stat-item"><span class="stat-number" id="stat-total">0</span> Total Groups</div>
+            <div class="stat-item"><span class="stat-number" id="stat-fb">0</span> Facebook</div>
+            <div class="stat-item"><span class="stat-number" id="stat-reddit">0</span> Reddit</div>
+            <div class="stat-item"><span class="stat-number" id="stat-forum">0</span> Forums</div>
+            <div class="stat-item"><span class="stat-number" id="stat-youtube">0</span> YouTube</div>
+            <div class="stat-item"><span class="stat-number" id="stat-linkedin">0</span> LinkedIn</div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="controls">
+            <div class="control-group" style="flex:2">
+                <label>Search</label>
+                <input type="text" class="search-input" id="search" placeholder="Search groups, keywords, notes...">
+            </div>
+            <div class="control-group">
+                <label>Platform</label>
+                <select class="search-input" id="filter-platform">
+                    <option value="all">All Platforms</option>
+                    <option value="facebook">Facebook</option>
+                    <option value="reddit">Reddit</option>
+                    <option value="forum">Forums</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="linkedin">LinkedIn</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Language</label>
+                <select class="search-input" id="filter-lang">
+                    <option value="all">All Languages</option>
+                    <option value="EN">English</option>
+                    <option value="ES">Spanish</option>
+                    <option value="FR">French</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>Activity</label>
+                <select class="search-input" id="filter-activity">
+                    <option value="all">All Activity</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Category filter tabs -->
+        <div class="filter-tabs" id="category-tabs">
+            <button class="filter-tab active" data-cat="all">All Categories</button>
+            <button class="filter-tab" data-cat="real-estate">Real Estate</button>
+            <button class="filter-tab" data-cat="expat">Expat</button>
+            <button class="filter-tab" data-cat="canadian">Canadian/Quebec</button>
+            <button class="filter-tab" data-cat="diaspora">Diaspora</button>
+            <button class="filter-tab" data-cat="nomad">Digital Nomad</button>
+            <button class="filter-tab" data-cat="airbnb">Airbnb/Rental</button>
+            <button class="filter-tab" data-cat="retirement">Retirement</button>
+            <button class="filter-tab" data-cat="intl-re">Intl Real Estate</button>
+        </div>
+
+        <!-- RESULTS COUNT -->
+        <div class="results-count" id="results-count"></div>
+
+        <!-- TABLE -->
+        <div class="table-wrap">
+            <table id="groups-table">
+                <thead>
+                    <tr>
+                        <th data-sort="name">Group <span class="sort-arrow">&#9650;</span></th>
+                        <th data-sort="platform">Platform <span class="sort-arrow">&#9650;</span></th>
+                        <th data-sort="category">Category <span class="sort-arrow">&#9650;</span></th>
+                        <th data-sort="members">Members <span class="sort-arrow">&#9650;</span></th>
+                        <th data-sort="activity">Activity <span class="sort-arrow">&#9650;</span></th>
+                        <th data-sort="language">Lang <span class="sort-arrow">&#9650;</span></th>
+                        <th>Best Content</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="groups-body"></tbody>
+            </table>
+        </div>
+
+        <!-- POSTING STRATEGY -->
+        <div class="strategy-section">
+            <h2>Posting Strategy by Platform</h2>
+            <div class="strategy-grid" id="strategy-grid">
+                <div class="strategy-card">
+                    <h3>FB Real Estate Groups</h3>
+                    <div class="freq">2-3x / week</div>
+                    <div class="tone">Tone: Professional, informative</div>
+                    <p>Listings with photos, price comparisons, market updates</p>
+                </div>
+                <div class="strategy-card">
+                    <h3>FB Expat Groups</h3>
+                    <div class="freq">1-2x / week</div>
+                    <div class="tone">Tone: Helpful, community-oriented</div>
+                    <p>Area guides, cost of living, lifestyle tips</p>
+                </div>
+                <div class="strategy-card">
+                    <h3>FB French Groups</h3>
+                    <div class="freq">1-2x / week</div>
+                    <div class="tone">Tone: Friendly, relatable</div>
+                    <p>French-language guides, Quebec-specific info (flights, banking)</p>
+                </div>
+                <div class="strategy-card">
+                    <h3>Reddit</h3>
+                    <div class="freq">As questions arise</div>
+                    <div class="tone">Tone: Helpful, no self-promo</div>
+                    <p>Data-driven answers to questions, yield analysis</p>
+                </div>
+                <div class="strategy-card">
+                    <h3>DR1 Forum</h3>
+                    <div class="freq">2-3x / week</div>
+                    <div class="tone">Tone: Authoritative</div>
+                    <p>Expert answers to property questions, market insights</p>
+                </div>
+                <div class="strategy-card">
+                    <h3>LinkedIn</h3>
+                    <div class="freq">1x / week</div>
+                    <div class="tone">Tone: Professional</div>
+                    <p>Market analysis articles, investment ROI breakdowns</p>
+                </div>
+                <div class="strategy-card">
+                    <h3>YouTube</h3>
+                    <div class="freq">1-2x / month</div>
+                    <div class="tone">Tone: Engaging, educational</div>
+                    <p>Property tours, neighborhood guides, ROI calculators</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- RULES -->
+        <div class="strategy-section">
+            <h2>Rules to Follow</h2>
+            <ul class="rules-list">
+                <li><strong>No spam</strong> -- provide value first, promote second</li>
+                <li><strong>Read group rules</strong> before posting (many ban direct listings)</li>
+                <li><strong>Engage first</strong> -- comment on others' posts for 1-2 weeks before posting your own content</li>
+                <li><strong>Localize</strong> -- use French in Quebec groups, Spanish where appropriate</li>
+                <li><strong>Share data</strong> -- groups love market stats, yield numbers, price comparisons</li>
+                <li><strong>Answer questions</strong> -- position yourself as the knowledgeable expert</li>
+                <li><strong>Link subtly</strong> -- link to your site's market-intel or ROI calculator pages as "resources" rather than sales pages</li>
+            </ul>
+        </div>
+
+        <!-- PRIORITY JOIN LIST -->
+        <div class="strategy-section">
+            <h2>Priority Groups (Join First)</h2>
+            <ol class="priority-list">
+                <li>Punta Cana Real Estate Listings -- direct real estate audience</li>
+                <li>Punta Cana Expats -- core expat community</li>
+                <li>Canadien et Quebecois en Republique Dominicaine -- French audience</li>
+                <li>Les Snowbirds Quebecois de la Republique Dominicaine -- seasonal buyers</li>
+                <li>Expats living in The Dominican Republic -- broad reach</li>
+                <li>For Sale/Rent By Owner DR -- direct listings</li>
+                <li>DR1 Forums -- oldest, most trusted community</li>
+                <li>r/expats + r/realestateinvesting -- Reddit presence</li>
+                <li>Real Estate in the DR (KASH) YouTube -- engage in comments</li>
+            </ol>
+        </div>
+
+        <!-- WHATSAPP NOTE -->
+        <div class="strategy-section">
+            <h2>WhatsApp / Telegram Notes</h2>
+            <p style="font-size:0.88rem; color:#555; line-height:1.6;">
+                WhatsApp groups are the primary communication channel for DR real estate transactions. They are typically <strong>invite-only</strong>, <strong>agent-run</strong>, and <strong>location-specific</strong> (separate groups for Cap Cana, Bavaro, Cocotal, etc.).
+            </p>
+            <p style="font-size:0.85rem; color:#888; margin-top:12px; line-height:1.6;">
+                <strong>How to find them:</strong> Ask DR real estate agents directly (they all have groups), join Facebook groups above and look for WhatsApp invite links, attend InterNations or expat meetups in DR, connect with property managers on the ground.
+            </p>
+            <p style="font-size:0.82rem; color:#aaa; margin-top:8px;">Telegram: Less common for DR real estate. No major public channels found.</p>
+        </div>
+
+    </div>
+
+    <script>
+    // ==================== GROUP DATA ====================
+    const groups = [
+        // FACEBOOK - Real Estate
+        { name: "Punta Cana Real Estate Listings", url: "https://www.facebook.com/groups/realestatepuntacana/", platform: "facebook", category: "real-estate", members: "10K+", membersNum: 10000, activity: "high", languages: ["EN","ES"], bestContent: "Listings, market updates, property photos", notes: "Primary target -- direct real estate group", priority: true },
+        { name: "For Sale/Rent By Owner Dominican Republic", url: "https://www.facebook.com/groups/fsbodr/", platform: "facebook", category: "real-estate", members: "5K+", membersNum: 5000, activity: "high", languages: ["EN","ES"], bestContent: "Direct listings, price comparisons", notes: "FSBO community, post listings directly", priority: true },
+        { name: "Dominican Real Estate Group", url: "https://www.facebook.com/DominicanREgroup/", platform: "facebook", category: "real-estate", members: "600+", membersNum: 600, activity: "medium", languages: ["EN"], bestContent: "Investment content, market analysis", notes: "Page not group -- engage via comments" },
+        { name: "Dominican Republic Real Estate Group", url: "https://www.facebook.com/dominicanrealestategroup/", platform: "facebook", category: "real-estate", members: "1K+", membersNum: 1000, activity: "medium", languages: ["EN"], bestContent: "Property showcases, investment tips", notes: "Business page -- share content in comments" },
+
+        // FACEBOOK - Expat
+        { name: "Punta Cana Expats", url: "https://www.facebook.com/groups/312506675935209/", platform: "facebook", category: "expat", members: "15K+", membersNum: 15000, activity: "high", languages: ["EN"], bestContent: "Living tips, area guides, investment advice", notes: "Core audience -- expats already in PC", priority: true },
+        { name: "Expats living in The Dominican Republic", url: "https://www.facebook.com/groups/604142596286067/", platform: "facebook", category: "expat", members: "20K+", membersNum: 20000, activity: "high", languages: ["EN"], bestContent: "Lifestyle content, relocation guides", notes: "Broad DR expat community", priority: true },
+        { name: "Dominican Republic Expats", url: "https://www.facebook.com/groups/709518516460301/", platform: "facebook", category: "expat", members: "15K+", membersNum: 15000, activity: "high", languages: ["EN"], bestContent: "Market updates, neighborhood guides", notes: "General DR expat hub", priority: true },
+        { name: "Expats in the Dominican Republic", url: "https://www.facebook.com/groups/expatsinthedominicanrepublic/", platform: "facebook", category: "expat", members: "10K+", membersNum: 10000, activity: "medium", languages: ["EN"], bestContent: "Helpful guides, area comparisons", notes: "Established community" },
+        { name: "Make Life Happen: Dominican Republic Expats", url: "https://www.facebook.com/groups/makelifehappendominicanrepublic/", platform: "facebook", category: "expat", members: "5K+", membersNum: 5000, activity: "medium", languages: ["EN"], bestContent: "Lifestyle, practical advice", notes: "Positive community vibe" },
+        { name: "Everything in Punta Cana Dominican Republic", url: "https://www.facebook.com/groups/432695243880566/", platform: "facebook", category: "expat", members: "10K+", membersNum: 10000, activity: "high", languages: ["EN","ES"], bestContent: "Local tips, lifestyle, events", notes: "Broad Punta Cana lifestyle group" },
+
+        // FACEBOOK - Canadian/Quebec
+        { name: "Canadians Living in the Dominican Republic", url: "https://www.facebook.com/groups/CanadiansLivingInDominicanRepublic/", platform: "facebook", category: "canadian", members: "10K+", membersNum: 10000, activity: "high", languages: ["EN","FR"], bestContent: "Investment guides, snowbird tips", notes: "Large Canadian audience -- key for FR content", priority: true },
+        { name: "Canadien et Quebecois en Republique Dominicaine", url: "https://www.facebook.com/groups/429272671315684/", platform: "facebook", category: "canadian", members: "5K+", membersNum: 5000, activity: "high", languages: ["FR"], bestContent: "French content, immobilier, lifestyle", notes: "PRIMARY target for French-language marketing", priority: true },
+        { name: "Les Quebecois a Punta Cana", url: "https://www.facebook.com/groups/482782860160135/", platform: "facebook", category: "canadian", members: "3K+", membersNum: 3000, activity: "medium", languages: ["FR"], bestContent: "Punta Cana lifestyle, property tips", notes: "Hyper-targeted Quebec + Punta Cana", priority: true },
+        { name: "Les Snowbirds Quebecois de la Republique Dominicaine", url: "https://www.facebook.com/groups/snowbirdsquebecoisrepubliquedominicaine/", platform: "facebook", category: "canadian", members: "5K+", membersNum: 5000, activity: "high", languages: ["FR"], bestContent: "Winter stay guides, property rental", notes: "Peak activity Nov-Apr, snowbird season", priority: true },
+
+        // FACEBOOK - Diaspora
+        { name: "Dominican Republic (general)", url: "https://www.facebook.com/groups/341107257950/", platform: "facebook", category: "diaspora", members: "50K+", membersNum: 50000, activity: "high", languages: ["EN","ES"], bestContent: "Investment opportunities, nostalgia content", notes: "Large diaspora audience" },
+        { name: "Friends of the Dominican Republic", url: "https://www.facebook.com/groups/138204071776/", platform: "facebook", category: "diaspora", members: "10K+", membersNum: 10000, activity: "medium", languages: ["EN"], bestContent: "Cultural content, investment articles", notes: "Engaged community" },
+
+        // FACEBOOK - Digital Nomads
+        { name: "Digital Nomads Dominican Republic", url: "", platform: "facebook", category: "nomad", members: "3K+", membersNum: 3000, activity: "medium", languages: ["EN"], bestContent: "Coworking, coliving, long-term rentals", notes: "Good for rental content, not sales" },
+        { name: "Remote Workers Punta Cana", url: "", platform: "facebook", category: "nomad", members: "500+", membersNum: 500, activity: "low", languages: ["EN"], bestContent: "Local nomad meetups, workspace tips", notes: "Niche but targeted" },
+
+        // FACEBOOK - Airbnb
+        { name: "Airbnb Hosts Community (global)", url: "", platform: "facebook", category: "airbnb", members: "100K+", membersNum: 100000, activity: "high", languages: ["EN"], bestContent: "ROI data, management tips", notes: "Share DR-specific yield content" },
+        { name: "Vacation Rental Owners and Managers", url: "", platform: "facebook", category: "airbnb", members: "50K+", membersNum: 50000, activity: "high", languages: ["EN"], bestContent: "Revenue tips, market comparisons", notes: "Post Punta Cana occupancy data" },
+        { name: "Caribbean Vacation Rental Hosts", url: "", platform: "facebook", category: "airbnb", members: "2K+", membersNum: 2000, activity: "medium", languages: ["EN"], bestContent: "Caribbean-specific hosting tips", notes: "Smaller but targeted" },
+
+        // FACEBOOK - Retirement
+        { name: "Retire Abroad", url: "", platform: "facebook", category: "retirement", members: "20K+", membersNum: 20000, activity: "high", languages: ["EN"], bestContent: "Cost of living, lifestyle comparisons", notes: "Share DR cost-of-living content" },
+        { name: "Snowbirds (general)", url: "", platform: "facebook", category: "retirement", members: "30K+", membersNum: 30000, activity: "high", languages: ["EN"], bestContent: "Winter destination comparisons", notes: "Active Oct-Mar" },
+        { name: "Canadian Snowbirds", url: "", platform: "facebook", category: "retirement", members: "15K+", membersNum: 15000, activity: "high", languages: ["EN","FR"], bestContent: "Insurance, flights, long-term stays", notes: "Key Canadian audience" },
+
+        // FACEBOOK - Intl Real Estate
+        { name: "International Real Estate Investors", url: "", platform: "facebook", category: "intl-re", members: "15K+", membersNum: 15000, activity: "medium", languages: ["EN"], bestContent: "Market analysis, yield comparisons", notes: "Share 'Punta Cana vs' comparisons" },
+        { name: "Overseas Property Investors", url: "", platform: "facebook", category: "intl-re", members: "10K+", membersNum: 10000, activity: "medium", languages: ["EN"], bestContent: "Country comparisons, due diligence tips", notes: "Good for educational content" },
+
+        // REDDIT
+        { name: "r/Dominican", url: "https://reddit.com/r/Dominican", platform: "reddit", category: "expat", members: "63K+", membersNum: 63000, activity: "high", languages: ["EN"], bestContent: "Cultural content with subtle real estate angles", notes: "" },
+        { name: "r/DominicanRepublic", url: "https://reddit.com/r/DominicanRepublic", platform: "reddit", category: "expat", members: "20K+", membersNum: 20000, activity: "medium", languages: ["EN"], bestContent: "Travel/expat questions, property advice", notes: "" },
+        { name: "r/expats", url: "https://reddit.com/r/expats", platform: "reddit", category: "expat", members: "300K+", membersNum: 300000, activity: "high", languages: ["EN"], bestContent: "DR relocation guides, cost comparisons", notes: "" },
+        { name: "r/digitalnomad", url: "https://reddit.com/r/digitalnomad", platform: "reddit", category: "nomad", members: "2M+", membersNum: 2000000, activity: "high", languages: ["EN"], bestContent: "Punta Cana as nomad base, coworking/coliving", notes: "" },
+        { name: "r/realestateinvesting", url: "https://reddit.com/r/realestateinvesting", platform: "reddit", category: "real-estate", members: "500K+", membersNum: 500000, activity: "high", languages: ["EN"], bestContent: "International investment posts, yield analysis", notes: "" },
+        { name: "r/personalfinance", url: "https://reddit.com/r/personalfinance", platform: "reddit", category: "intl-re", members: "18M+", membersNum: 18000000, activity: "high", languages: ["EN"], bestContent: "Investment diversification angles", notes: "Strict rules -- careful" },
+        { name: "r/IWantOut", url: "https://reddit.com/r/IWantOut", platform: "reddit", category: "expat", members: "800K+", membersNum: 800000, activity: "high", languages: ["EN"], bestContent: "Relocation guides, visa info, cost of living", notes: "" },
+        { name: "r/Airbnb_Hosts", url: "https://reddit.com/r/Airbnb_Hosts", platform: "reddit", category: "airbnb", members: "50K+", membersNum: 50000, activity: "high", languages: ["EN"], bestContent: "Occupancy data, management tips for DR", notes: "" },
+
+        // FORUMS
+        { name: "DR1 Forums", url: "https://dr1.com/forums/", platform: "forum", category: "expat", members: "100K+ posts", membersNum: 100000, activity: "high", languages: ["EN"], bestContent: "Real estate subforum, 1M+ posts", notes: "Oldest DR expat forum, highly trusted", priority: true },
+        { name: "Expat.com -- Dominican Republic", url: "https://www.expat.com/forum/viewforum.php?id=234", platform: "forum", category: "expat", members: "Large", membersNum: 10000, activity: "medium", languages: ["EN","FR"], bestContent: "International expat platform with active DR section", notes: "" },
+        { name: "ExpatExchange -- Dominican Republic", url: "https://www.expatexchange.com/dominican-rep/liveindominican-rep.html", platform: "forum", category: "expat", members: "Medium", membersNum: 5000, activity: "medium", languages: ["EN"], bestContent: "Q&A format, good for positioning as expert", notes: "" },
+        { name: "TripAdvisor -- DR Forum", url: "https://www.tripadvisor.com/ShowForum-g147288-i27-Dominican_Republic.html", platform: "forum", category: "expat", members: "Very Large", membersNum: 50000, activity: "high", languages: ["EN"], bestContent: "Tourism-focused but real estate questions appear", notes: "" },
+        { name: "InterNations -- Santo Domingo", url: "https://www.internations.org/santo-domingo-expats", platform: "forum", category: "expat", members: "5K+", membersNum: 5000, activity: "medium", languages: ["EN"], bestContent: "Formal networking events, professional audience", notes: "" },
+
+        // LINKEDIN
+        { name: "Caribbean Real Estate Professionals", url: "", platform: "linkedin", category: "real-estate", members: "1-5K", membersNum: 3000, activity: "medium", languages: ["EN"], bestContent: "Professional networking", notes: "Search LinkedIn Groups" },
+        { name: "Dominican Republic Business Network", url: "", platform: "linkedin", category: "diaspora", members: "1-5K", membersNum: 3000, activity: "medium", languages: ["EN"], bestContent: "Professional networking, B2B connections", notes: "" },
+        { name: "International Real Estate Investment", url: "", platform: "linkedin", category: "intl-re", members: "10K+", membersNum: 10000, activity: "medium", languages: ["EN"], bestContent: "Share market analysis articles", notes: "" },
+        { name: "Latin America Real Estate", url: "", platform: "linkedin", category: "intl-re", members: "1-5K", membersNum: 3000, activity: "medium", languages: ["EN","ES"], bestContent: "Regional investment community", notes: "" },
+
+        // YOUTUBE
+        { name: "Real Estate in the DR (KASH)", url: "", platform: "youtube", category: "real-estate", members: "400K+", membersNum: 400000, activity: "high", languages: ["EN"], bestContent: "DR property tours, investment advice, market updates", notes: "Largest DR RE channel -- collaborate, comment, share", priority: true },
+        { name: "Go Punta Cana Real Estate", url: "", platform: "youtube", category: "real-estate", members: "5K+", membersNum: 5000, activity: "medium", languages: ["EN"], bestContent: "Property walkthroughs, Punta Cana area guides", notes: "Niche-focused" },
+        { name: "Tropical Realty DR", url: "", platform: "youtube", category: "real-estate", members: "2K+", membersNum: 2000, activity: "medium", languages: ["EN"], bestContent: "Weekly DR property/lifestyle videos", notes: "Emerging channel, partnership potential" },
+        { name: "TheLatinvestor", url: "", platform: "youtube", category: "real-estate", members: "10K+", membersNum: 10000, activity: "medium", languages: ["EN"], bestContent: "Data-driven DR market analysis", notes: "Professional content, good for cross-referencing" }
+    ];
+
+    // ==================== RENDER TABLE ====================
+    const tbody = document.getElementById('groups-body');
+    const searchInput = document.getElementById('search');
+    const platformFilter = document.getElementById('filter-platform');
+    const langFilter = document.getElementById('filter-lang');
+    const activityFilter = document.getElementById('filter-activity');
+    const categoryTabs = document.querySelectorAll('.filter-tab');
+    let activeCategory = 'all';
+
+    const platformLabels = { facebook: 'Facebook', reddit: 'Reddit', forum: 'Forum', linkedin: 'LinkedIn', youtube: 'YouTube' };
+    const platformBadgeClass = { facebook: 'badge-fb', reddit: 'badge-reddit', forum: 'badge-forum', linkedin: 'badge-linkedin', youtube: 'badge-youtube' };
+    const activityBadgeClass = { high: 'badge-high', medium: 'badge-medium', low: 'badge-low' };
+
+    function renderTable() {
+        const search = searchInput.value.toLowerCase();
+        const platform = platformFilter.value;
+        const lang = langFilter.value;
+        const activity = activityFilter.value;
+
+        let visible = 0;
+        tbody.innerHTML = '';
+
+        groups.forEach(g => {
+            // Filter
+            if (platform !== 'all' && g.platform !== platform) return;
+            if (lang !== 'all' && !g.languages.includes(lang)) return;
+            if (activity !== 'all' && g.activity !== activity) return;
+            if (activeCategory !== 'all' && g.category !== activeCategory) return;
+            if (search) {
+                const haystack = (g.name + ' ' + g.bestContent + ' ' + g.notes + ' ' + g.languages.join(' ')).toLowerCase();
+                if (!haystack.includes(search)) return;
+            }
+
+            visible++;
+            const tr = document.createElement('tr');
+
+            const nameCell = g.url
+                ? `<a href="${g.url}" target="_blank">${g.priority ? '<span class="star">*</span>' : ''}${g.name}</a>`
+                : `${g.priority ? '<span class="star">*</span>' : ''}${g.name}`;
+
+            const langBadges = g.languages.map(l => {
+                const cls = l === 'EN' ? 'badge-en' : l === 'ES' ? 'badge-es' : l === 'FR' ? 'badge-fr' : 'badge-en';
+                return `<span class="badge ${cls}">${l}</span>`;
+            }).join(' ');
+
+            tr.innerHTML = `
+                <td>${nameCell}</td>
+                <td><span class="badge ${platformBadgeClass[g.platform]}">${platformLabels[g.platform]}</span></td>
+                <td style="font-size:0.78rem;color:#888;text-transform:capitalize;">${g.category.replace('-',' ')}</td>
+                <td style="white-space:nowrap;">${g.members}</td>
+                <td><span class="badge ${activityBadgeClass[g.activity]}">${g.activity}</span></td>
+                <td>${langBadges}</td>
+                <td style="font-size:0.82rem;color:#555;">${g.bestContent}</td>
+                <td style="font-size:0.82rem;color:#888;">${g.notes}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        document.getElementById('results-count').textContent = `Showing ${visible} of ${groups.length} groups`;
+    }
+
+    function updateStats() {
+        document.getElementById('stat-total').textContent = groups.length;
+        document.getElementById('stat-fb').textContent = groups.filter(g => g.platform === 'facebook').length;
+        document.getElementById('stat-reddit').textContent = groups.filter(g => g.platform === 'reddit').length;
+        document.getElementById('stat-forum').textContent = groups.filter(g => g.platform === 'forum').length;
+        document.getElementById('stat-youtube').textContent = groups.filter(g => g.platform === 'youtube').length;
+        document.getElementById('stat-linkedin').textContent = groups.filter(g => g.platform === 'linkedin').length;
+    }
+
+    // Event listeners
+    searchInput.addEventListener('input', renderTable);
+    platformFilter.addEventListener('change', renderTable);
+    langFilter.addEventListener('change', renderTable);
+    activityFilter.addEventListener('change', renderTable);
+
+    categoryTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            categoryTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            activeCategory = tab.dataset.cat;
+            renderTable();
+        });
+    });
+
+    // Sort
+    document.querySelectorAll('thead th[data-sort]').forEach(th => {
+        th.addEventListener('click', () => {
+            const key = th.dataset.sort;
+            const dir = th.classList.contains('sorted-asc') ? -1 : 1;
+
+            document.querySelectorAll('thead th').forEach(h => {
+                h.classList.remove('sorted', 'sorted-asc', 'sorted-desc');
+            });
+            th.classList.add('sorted', dir === 1 ? 'sorted-asc' : 'sorted-desc');
+
+            groups.sort((a, b) => {
+                let va, vb;
+                if (key === 'members') { va = a.membersNum; vb = b.membersNum; }
+                else if (key === 'activity') {
+                    const order = { high: 3, medium: 2, low: 1 };
+                    va = order[a.activity] || 0; vb = order[b.activity] || 0;
+                } else {
+                    va = (a[key] || '').toLowerCase(); vb = (b[key] || '').toLowerCase();
+                }
+                if (va < vb) return -1 * dir;
+                if (va > vb) return 1 * dir;
+                return 0;
+            });
+            renderTable();
+        });
+    });
+
+    // Init
+    updateStats();
+    renderTable();
+    </script>
+
+</body>
+</html>

@@ -162,7 +162,7 @@ const BLOG_FR = {
   // Nav (shared keys)
   nav_properties: "Propriétés",
   blog_nav: "Guide",
-  nav_contact: "Contact",
+  nav_contact: "Nous joindre",
 
   // Hero
   blog_title: "Guide pour acheter une propriété à Punta Cana",
@@ -271,7 +271,7 @@ const BLOG_FR = {
   blog_s6_box2: "Taux d'occupation : 65-80% annuellement",
   blog_s6_box3: "Revenu brut annuel : $25,000-$45,000",
   blog_s6_box4: "Après frais de gestion (20%) : $20,000-$36,000",
-  blog_s6_box5: "ROI net sur une propriété de $315,000 : 6-11%",
+  blog_s6_box5: "Rendement net sur une propriété de $315,000 : 6-11%",
   blog_s6_p2: "La haute saison va de décembre à avril (l'hiver nord-américain — parfait pour les snowbirds du Québec!). Les mois d'été (juin-septembre) ont un taux d'occupation plus bas, mais les touristes européens aident à combler l'écart. Les propriétés avec accès piscine, vue sur le golf ou proximité de la plage obtiennent des tarifs premium.",
   blog_s6_p3: "La plupart des propriétaires engagent une compagnie locale de gestion de propriétés pour s'occuper des réservations, du ménage, de l'entretien et de la communication avec les invités. Les frais typiques sont de 15-25% des revenus locatifs. C'est complètement clé en main — tu n'as pas besoin d'être sur place.",
 

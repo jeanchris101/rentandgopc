@@ -1054,7 +1054,7 @@
             // PC value
             const tdPC = document.createElement('td');
             if (cat.key === 'propertyTax') {
-                tdPC.innerHTML = '$0 <span class="confotur-badge">CONFOTUR</span>';
+                tdPC.innerHTML = '$0 <span class="confotur-badge">Exempt*</span>';
             } else {
                 tdPC.innerHTML = formatUSD(pcVal) + (cat.unit ? ' <span class="unit-label">' + cat.unit + '</span>' : '');
             }

@@ -1,0 +1,55 @@
+{
+  "properties": [
+    { "id": "p1", "name": "Villa Bavaro Sunrise", "status": "occupied", "nightlyRate": 185, "address": "Bavaro, Los Corales", "bedrooms": 3, "bathrooms": 2, "maxGuests": 6, "airbnbUrl": "", "icalUrl": "", "cleaningFee": 45, "monthlyHOA": 250 },
+    { "id": "p2", "name": "Condo Cap Cana Marina", "status": "occupied", "nightlyRate": 220, "address": "Cap Cana, Marina", "bedrooms": 2, "bathrooms": 2, "maxGuests": 4, "airbnbUrl": "", "icalUrl": "", "cleaningFee": 55, "monthlyHOA": 350 },
+    { "id": "p3", "name": "Studio Los Corales Beach", "status": "vacant", "nightlyRate": 95, "address": "Los Corales, Bavaro", "bedrooms": 1, "bathrooms": 1, "maxGuests": 2, "airbnbUrl": "", "icalUrl": "", "cleaningFee": 30, "monthlyHOA": 150 },
+    { "id": "p4", "name": "Penthouse Cocotal Golf", "status": "cleaning", "nightlyRate": 310, "address": "Cocotal Golf & Country Club", "bedrooms": 3, "bathrooms": 3, "maxGuests": 8, "airbnbUrl": "", "icalUrl": "", "cleaningFee": 65, "monthlyHOA": 400 },
+    { "id": "p5", "name": "Townhouse Palma Real", "status": "vacant", "nightlyRate": 150, "address": "Palma Real, Bavaro", "bedrooms": 2, "bathrooms": 2, "maxGuests": 5, "airbnbUrl": "", "icalUrl": "", "cleaningFee": 40, "monthlyHOA": 200 },
+    { "id": "p6", "name": "Villa Punta Espada", "status": "maintenance", "nightlyRate": 425, "address": "Cap Cana, Punta Espada", "bedrooms": 4, "bathrooms": 4, "maxGuests": 10, "airbnbUrl": "", "icalUrl": "", "cleaningFee": 85, "monthlyHOA": 600 },
+    { "id": "p7", "name": "Apt Downtown Bavaro", "status": "vacant", "nightlyRate": 75, "address": "Downtown Bavaro", "bedrooms": 1, "bathrooms": 1, "maxGuests": 2, "airbnbUrl": "", "icalUrl": "", "cleaningFee": 25, "monthlyHOA": 120 }
+  ],
+  "bookings": [
+    { "id": "b1", "propertyId": "p1", "guest": "Sarah Thompson", "checkIn": "2026-03-04", "checkOut": "2026-03-11", "nightlyRate": 185, "platform": "Airbnb", "country": "USA", "notes": "", "totalPayout": 1295, "status": "confirmed", "guestEmail": "", "guestPhone": "" },
+    { "id": "b2", "propertyId": "p2", "guest": "Marc Dupont", "checkIn": "2026-03-02", "checkOut": "2026-03-09", "nightlyRate": 220, "platform": "Airbnb", "country": "Canada", "notes": "Asked about buying property nearby", "totalPayout": 1540, "status": "confirmed", "guestEmail": "", "guestPhone": "" },
+    { "id": "b3", "propertyId": "p4", "guest": "Elena Rodriguez", "checkIn": "2026-02-27", "checkOut": "2026-03-07", "nightlyRate": 310, "platform": "VRBO", "country": "Spain", "notes": "", "totalPayout": 2480, "status": "completed", "guestEmail": "", "guestPhone": "" },
+    { "id": "b4", "propertyId": "p1", "guest": "James Wilson", "checkIn": "2026-03-14", "checkOut": "2026-03-24", "nightlyRate": 195, "platform": "Airbnb", "country": "USA", "notes": "Repeat guest, loves the area", "totalPayout": 1950, "status": "confirmed", "guestEmail": "", "guestPhone": "" },
+    { "id": "b5", "propertyId": "p3", "guest": "Anna Kowalski", "checkIn": "2026-03-09", "checkOut": "2026-03-12", "nightlyRate": 95, "platform": "Booking.com", "country": "Germany", "notes": "", "totalPayout": 285, "status": "confirmed", "guestEmail": "", "guestPhone": "" },
+    { "id": "b6", "propertyId": "p5", "guest": "Robert Chen", "checkIn": "2026-03-12", "checkOut": "2026-03-22", "nightlyRate": 155, "platform": "Airbnb", "country": "USA", "notes": "Interested in investment properties", "totalPayout": 1550, "status": "confirmed", "guestEmail": "", "guestPhone": "" },
+    { "id": "b7", "propertyId": "p2", "guest": "Marc Dupont", "checkIn": "2026-03-17", "checkOut": "2026-03-27", "nightlyRate": 230, "platform": "Direct", "country": "Canada", "notes": "Returning guest - very interested in area", "totalPayout": 2300, "status": "confirmed", "guestEmail": "", "guestPhone": "" },
+    { "id": "b8", "propertyId": "p7", "guest": "Lisa Park", "checkIn": "2026-03-05", "checkOut": "2026-03-08", "nightlyRate": 80, "platform": "Airbnb", "country": "South Korea", "notes": "", "totalPayout": 240, "status": "confirmed", "guestEmail": "", "guestPhone": "" },
+    { "id": "b9", "propertyId": "p6", "guest": "Thomas Mueller", "checkIn": "2026-02-15", "checkOut": "2026-02-28", "nightlyRate": 425, "platform": "Airbnb", "country": "Germany", "notes": "Wants to see properties for sale", "totalPayout": 5525, "status": "completed", "guestEmail": "", "guestPhone": "" },
+    { "id": "b10", "propertyId": "p3", "guest": "Marie Tremblay", "checkIn": "2026-02-20", "checkOut": "2026-02-27", "nightlyRate": 110, "platform": "Airbnb", "country": "Canada", "notes": "From Quebec, loved the area", "totalPayout": 770, "status": "completed", "guestEmail": "", "guestPhone": "" }
+  ],
+  "expenses": [
+    { "id": "e1", "propertyId": "p1", "date": "2026-03-02", "category": "Cleaning", "amount": 45, "note": "Turnover clean", "recurring": false },
+    { "id": "e2", "propertyId": "p4", "date": "2026-03-06", "category": "Maintenance", "amount": 120, "note": "AC repair", "recurring": false },
+    { "id": "e3", "propertyId": "p2", "date": "2026-02-25", "category": "Supplies", "amount": 35, "note": "Toiletries restock", "recurring": false },
+    { "id": "e4", "propertyId": "p1", "date": "2026-02-20", "category": "HOA", "amount": 250, "note": "Monthly HOA", "recurring": true },
+    { "id": "e5", "propertyId": "p3", "date": "2026-02-23", "category": "Utilities", "amount": 85, "note": "Electric bill", "recurring": false },
+    { "id": "e6", "propertyId": "p2", "date": "2026-03-01", "category": "HOA", "amount": 350, "note": "Monthly HOA", "recurring": true },
+    { "id": "e7", "propertyId": "p5", "date": "2026-03-01", "category": "HOA", "amount": 200, "note": "Monthly HOA", "recurring": true },
+    { "id": "e8", "propertyId": "p6", "date": "2026-02-15", "category": "Maintenance", "amount": 380, "note": "Pool pump replacement", "recurring": false },
+    { "id": "e9", "propertyId": "p4", "date": "2026-03-01", "category": "HOA", "amount": 400, "note": "Monthly HOA", "recurring": true },
+    { "id": "e10", "propertyId": "p7", "date": "2026-03-01", "category": "HOA", "amount": 120, "note": "Monthly HOA", "recurring": true }
+  ],
+  "cleaners": [
+    { "id": "c1", "name": "Maria Santos", "phone": "18091234567" },
+    { "id": "c2", "name": "Juan Perez", "phone": "18097654321" },
+    { "id": "c3", "name": "Rosa Martinez", "phone": "18095551234" }
+  ],
+  "cleaningTasks": [],
+  "guestNotes": {
+    "marc dupont": "Very interested in buying a 2BR condo in Cap Cana. Budget ~$250K. Follow up after March stay.",
+    "robert chen": "Tech investor from SF. Looking at rental income properties. Wants ROI calculator.",
+    "thomas mueller": "German entrepreneur. Interested in luxury villas. Connected with real estate team.",
+    "james wilson": "Repeat guest. Loves Bavaro area. Mentioned retirement plans in DR."
+  },
+  "nextId": 200,
+  "_meta": {
+    "version": "1.0",
+    "lastUpdated": "2026-03-07T12:00:00Z",
+    "source": "local-json",
+    "googleSheetId": "",
+    "googleSheetUrl": ""
+  }
+}

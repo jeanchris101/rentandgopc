@@ -1,0 +1,51 @@
+name: Daily Content Generation & Posting
+
+on:
+  schedule:
+    # Every day at 1 PM UTC (9 AM DR time)
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+    inputs:
+      skip_posting:
+        description: 'Generate content but skip Facebook posting'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  generate-and-post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install -r automation/requirements.txt
+
+      - name: Run content generator
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python automation/content_generator.py
+
+      - name: Run Facebook auto-poster
+        if: ${{ github.event.inputs.skip_posting != 'true' }}
+        env:
+          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+        run: python automation/fb_autoposter.py
+
+      - name: Commit generated content log
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add automation/data/content-log.json || true
+          git diff --cached --quiet || git commit -m "chore: daily content generation log"
+          git push || true

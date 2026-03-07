@@ -1,0 +1,118 @@
+{
+  "neighborhoods": [
+    {
+      "id": "bavaro",
+      "name": "Bavaro Beach",
+      "adr_range": [95, 135],
+      "occupancy_range": [55, 68],
+      "price_range_usd": [100000, 400000],
+      "price_per_m2": [1800, 2800]
+    },
+    {
+      "id": "cocotal",
+      "name": "Cocotal Golf",
+      "adr_range": [90, 120],
+      "occupancy_range": [50, 64],
+      "price_range_usd": [150000, 500000],
+      "price_per_m2": [2000, 3000]
+    },
+    {
+      "id": "capcana",
+      "name": "Cap Cana",
+      "adr_range": [120, 250],
+      "occupancy_range": [42, 56],
+      "price_range_usd": [300000, 3000000],
+      "price_per_m2": [2500, 3500]
+    },
+    {
+      "id": "village",
+      "name": "Punta Cana Village",
+      "adr_range": [80, 110],
+      "occupancy_range": [46, 58],
+      "price_range_usd": [80000, 250000],
+      "price_per_m2": [1800, 2400]
+    },
+    {
+      "id": "cortecito",
+      "name": "El Cortecito",
+      "adr_range": [100, 135],
+      "occupancy_range": [54, 66],
+      "price_range_usd": [120000, 400000],
+      "price_per_m2": [2000, 2800]
+    },
+    {
+      "id": "corales",
+      "name": "Los Corales",
+      "adr_range": [100, 140],
+      "occupancy_range": [52, 65],
+      "price_range_usd": [100000, 350000],
+      "price_per_m2": [1800, 2600]
+    },
+    {
+      "id": "vistacana",
+      "name": "Vista Cana",
+      "adr_range": [50, 80],
+      "occupancy_range": [35, 48],
+      "price_range_usd": [90000, 300000],
+      "price_per_m2": [1800, 2200]
+    },
+    {
+      "id": "uveroalto",
+      "name": "Uvero Alto",
+      "adr_range": [110, 140],
+      "occupancy_range": [40, 52],
+      "price_range_usd": [150000, 600000],
+      "price_per_m2": [2200, 3200]
+    }
+  ],
+  "market_stats": {
+    "median_property_price": 262000,
+    "avg_2br_price": 244000,
+    "median_adr": 105,
+    "top_25pct_adr": 154,
+    "top_10pct_adr": 249,
+    "avg_occupancy_pct": 51,
+    "peak_occupancy_pct": [60, 69],
+    "low_occupancy_pct": [10, 35],
+    "tourist_arrivals_2025": 11600000,
+    "jan_2026_growth_pct": 9.5,
+    "str_yield_range_pct": [6, 12],
+    "ltr_yield_range_pct": [5, 8]
+  },
+  "schedule": {
+    "weekly_refresh_cron": "0 23 * * 0",
+    "daily_content_cron": "0 13 * * *",
+    "timezone": "America/Santo_Domingo",
+    "content_post_time_local": "09:00",
+    "data_refresh_day": "Sunday"
+  },
+  "budget_caps": {
+    "daily_ai_usd": 0.25,
+    "monthly_ai_usd": 7.50,
+    "daily_fb_boost_usd": 0,
+    "monthly_fb_ads_usd": 0,
+    "ai_model": "claude-haiku-4-5-20251001"
+  },
+  "content": {
+    "languages": ["en", "es", "fr"],
+    "post_types": ["property_spotlight", "neighborhood_guide", "market_insight", "lifestyle", "testimonial", "roi_breakdown"],
+    "max_posts_per_day": 1,
+    "image_required": true,
+    "hashtags_en": ["#PuntaCana", "#DominicanRepublic", "#RealEstate", "#Investment", "#Caribbean", "#AirbnbHost"],
+    "hashtags_es": ["#PuntaCana", "#RepublicaDominicana", "#Inversiones", "#BienesRaices", "#Caribe"],
+    "hashtags_fr": ["#PuntaCana", "#RepubliqueDominicaine", "#Immobilier", "#Investissement", "#Caraibes"]
+  },
+  "facebook": {
+    "page_id_env": "FB_PAGE_ID",
+    "access_token_env": "FB_PAGE_ACCESS_TOKEN",
+    "api_version": "v21.0"
+  },
+  "vercel": {
+    "deploy_hook_env": "VERCEL_DEPLOY_HOOK"
+  },
+  "data_sources": {
+    "market_pulse": "automation/data/market-pulse.json",
+    "airbnb_rates": "automation/data/airbnb-rates.json",
+    "content_log": "automation/data/content-log.json"
+  }
+}
