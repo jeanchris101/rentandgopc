@@ -946,7 +946,7 @@ function renderCleaning() {
       <td style="font-weight:600;">${esc(pn)}</td>
       <td>${t.checkOut}${isPast && t.status !== 'Done' ? ' <span class="text-alert">(overdue)</span>' : ''}</td>
       <td>${esc(t.guest)}</td>
-      <td><select onchange="assignCleaner('${t.id}',this.value)" style="width:140px;"><option value="">Unassigned</option>${cleanerOpts}</select><script>document.currentScript.previousElementSibling.value='${t.cleanerId||''}'</script></td>
+      <td><select id="clean-sel-${t.id}" onchange="assignCleaner('${t.id}',this.value)" style="width:140px;"><option value="">Unassigned</option>${cleanerOpts}</select></td>
       <td><select onchange="setCleanStatus('${t.id}',this.value)" style="width:120px;">
         <option ${t.status==='Pending'?'selected':''}>Pending</option>
         <option ${t.status==='In Progress'?'selected':''}>In Progress</option>
@@ -955,6 +955,13 @@ function renderCleaning() {
       <td>${cleaner ? `<a href="${waLink}" target="_blank" class="btn btn-sm btn-whatsapp">Notify</a>` : ''}</td>
     </tr>`;
   }).join('');
+  // Set cleaner select values after DOM update
+  tasks.forEach(t => {
+    if (t.cleanerId) {
+      const sel = document.getElementById('clean-sel-' + t.id);
+      if (sel) sel.value = t.cleanerId;
+    }
+  });
 }
 
 function assignCleaner(tid, cid) {
