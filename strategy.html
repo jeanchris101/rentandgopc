@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategy Dashboard | Rent & Go PC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #1a1a2e;
+            --card: #16213e;
+            --accent: #0f3460;
+            --gold: #c8a45e;
+            --green: #53d769;
+            --red: #e94560;
+            --blue: #4a9eff;
+            --purple: #a78bfa;
+            --orange: #f59e0b;
+            --text: #e0e0e0;
+            --text-muted: #8892a4;
+            --border: rgba(200,164,94,0.15);
+            --glow: rgba(200,164,94,0.25);
+            --sidebar-w: 260px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-w);
+            background: var(--card);
+            border-right: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 200;
+            padding: 24px 0;
+            transition: transform 0.3s;
+        }
+
+        .sidebar-brand {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+
+        .sidebar-brand h1 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .sidebar-brand span {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .sidebar-section {
+            padding: 8px 16px 4px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--text-muted);
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-link:hover {
+            background: rgba(200,164,94,0.08);
+            color: var(--text);
+        }
+
+        .sidebar-link.active {
+            color: var(--gold);
+            background: rgba(200,164,94,0.1);
+            border-left-color: var(--gold);
+        }
+
+        .sidebar-link .icon { font-size: 16px; width: 22px; text-align: center; }
+
+        .sidebar-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 8px;
+            transition: color 0.2s;
+        }
+
+        .sidebar-back:hover { color: var(--gold); }
+
+        /* MAIN CONTENT */
+        .main {
+            margin-left: var(--sidebar-w);
+            flex: 1;
+            padding: 32px 40px;
+            max-width: 1200px;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-header h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+
+        .page-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* SECTIONS */
+        .strategy-section {
+            margin-bottom: 32px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px 12px 0 0;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .section-header:hover {
+            background: rgba(200,164,94,0.08);
+        }
+
+        .section-header.collapsed {
+            border-radius: 12px;
+        }
+
+        .section-header h3 {
+            font-size: 17px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header h3 .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--gold);
+            color: var(--bg);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .section-chevron {
+            font-size: 18px;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+
+        .section-header.collapsed .section-chevron {
+            transform: rotate(-90deg);
+        }
+
+        .section-body {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            padding: 24px;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s;
+        }
+
+        .section-body.hidden {
+            max-height: 0 !important;
+            padding: 0 24px;
+            border: none;
+        }
+
+        /* CARDS, TABLES */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .card-grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .card {
+            background: var(--accent);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card p, .card li {
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card ul li::before {
+            content: ">";
+            color: var(--gold);
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-en { background: rgba(83,215,105,0.15); color: var(--green); }
+        .tag-es { background: rgba(233,69,96,0.15); color: var(--red); }
+        .tag-gold { background: rgba(200,164,94,0.15); color: var(--gold); }
+        .tag-blue { background: rgba(74,158,255,0.15); color: var(--blue); }
+        .tag-purple { background: rgba(167,139,250,0.15); color: var(--purple); }
+        .tag-orange { background: rgba(245,158,11,0.15); color: var(--orange); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        th {
+            text-align: left;
+            padding: 10px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            background: rgba(200,164,94,0.04);
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+        }
+
+        tr:hover td {
+            background: rgba(200,164,94,0.03);
+        }
+
+        /* CALENDAR GRID */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-top: 16px;
+        }
+
+        .cal-header {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 8px 4px;
+        }
+
+        .cal-day {
+            background: var(--accent);
+            border-radius: 6px;
+            padding: 6px;
+            min-height: 64px;
+            font-size: 11px;
+            position: relative;
+        }
+
+        .cal-day.empty {
+            background: transparent;
+        }
+
+        .cal-day .day-num {
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .cal-day .cal-tag {
+            display: block;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+            letter-spacing: 0.3px;
+        }
+
+        .cal-tag.invest { background: rgba(74,158,255,0.2); color: var(--blue); }
+        .cal-tag.lifestyle { background: rgba(83,215,105,0.2); color: var(--green); }
+        .cal-tag.social { background: rgba(167,139,250,0.2); color: var(--purple); }
+
+        /* PERSONA CARDS */
+        .persona-card {
+            background: var(--accent);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .persona-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .persona-card.golf::before { background: var(--green); }
+        .persona-card.romantic::before { background: var(--red); }
+        .persona-card.family::before { background: var(--blue); }
+        .persona-card.nomad::before { background: var(--orange); }
+        .persona-card.luxury::before { background: var(--gold); }
+        .persona-card.party::before { background: var(--purple); }
+
+        .persona-name {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .persona-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .persona-field {
+            margin-bottom: 10px;
+        }
+
+        .persona-field label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .persona-field p {
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* COPY BUTTON */
+        .btn-copy {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--gold);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-copy:hover {
+            background: var(--gold);
+            color: var(--bg);
+        }
+
+        .btn-copy.copied {
+            background: var(--green);
+            border-color: var(--green);
+            color: #fff;
+        }
+
+        /* TEMPLATE BOX */
+        .template-box {
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            position: relative;
+            font-size: 13px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .template-box .btn-copy {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 11px;
+            padding: 4px 10px;
+        }
+
+        /* CHECKLIST */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 13px;
+            line-height: 1.6;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .checklist li:last-child { border-bottom: none; }
+
+        .check-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--text-muted);
+            border-radius: 5px;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-top: 2px;
+        }
+
+        .check-box.checked {
+            background: var(--green);
+            border-color: var(--green);
+        }
+
+        .check-box.checked::after {
+            content: "\2713";
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .checklist li.done {
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
+
+        /* STEP COUNTER */
+        .step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--bg);
+            font-size: 14px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .step-content h5 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* PRICING TABLE */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .pricing-block {
+            background: var(--accent);
+            border-radius: 8px;
+            padding: 14px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .pricing-block .period {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .pricing-block .amount {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .pricing-block .detail {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* FLOW DIAGRAM */
+        .flow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-step {
+            background: var(--accent);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .flow-arrow {
+            color: var(--gold);
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* SUBHEADING */
+        .sub-heading {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 20px 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sub-heading:first-child { margin-top: 0; }
+
+        .note-box {
+            background: rgba(200,164,94,0.08);
+            border-left: 3px solid var(--gold);
+            border-radius: 0 8px 8px 0;
+            padding: 12px 16px;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 12px 0;
+        }
+
+        .note-box strong { color: var(--gold); }
+
+        /* HAMBURGER (mobile) */
+        .hamburger {
+            display: none;
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 300;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 10px;
+            cursor: pointer;
+            color: var(--gold);
+            font-size: 20px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 150;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .overlay.open { display: block; }
+            .hamburger { display: block; }
+            .main { margin-left: 0; padding: 20px 16px; padding-top: 56px; }
+            .card-grid { grid-template-columns: 1fr; }
+            .card-grid-3 { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+            .calendar-grid { font-size: 10px; }
+            .cal-day { min-height: 48px; padding: 4px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Mobile hamburger -->
+<div class="hamburger" onclick="toggleSidebar()">&#9776;</div>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <h1>Rent & Go PC</h1>
+        <span>Strategy Dashboard</span>
+    </div>
+    <a href="hub.html" class="sidebar-back">&larr; Back to Command Center</a>
+
+    <div class="sidebar-section">Facebook</div>
+    <a class="sidebar-link active" data-target="sec-calendar" onclick="scrollToSection('sec-calendar')">
+        <span class="icon">&#128197;</span> Posting Calendar
+    </a>
+    <a class="sidebar-link" data-target="sec-ads" onclick="scrollToSection('sec-ads')">
+        <span class="icon">&#128184;</span> Ads Strategy
+    </a>
+
+    <div class="sidebar-section">Airbnb</div>
+    <a class="sidebar-link" data-target="sec-personas" onclick="scrollToSection('sec-personas')">
+        <span class="icon">&#127968;</span> Listing Personas
+    </a>
+    <a class="sidebar-link" data-target="sec-fix7" onclick="scrollToSection('sec-fix7')">
+        <span class="icon">&#128295;</span> Fix Listing #7
+    </a>
+    <a class="sidebar-link" data-target="sec-launch1" onclick="scrollToSection('sec-launch1')">
+        <span class="icon">&#128640;</span> Launch Listing #1
+    </a>
+
+    <div class="sidebar-section">Pipeline</div>
+    <a class="sidebar-link" data-target="sec-pipeline" onclick="scrollToSection('sec-pipeline')">
+        <span class="icon">&#128176;</span> Guest-to-Investor
+    </a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+    <div class="page-header">
+        <h2>Marketing & Airbnb Strategy</h2>
+        <p>Internal playbook — Facebook marketing calendar, ad funnels, Airbnb listing optimization, and guest-to-investor pipeline.</p>
+    </div>
+
+    <!-- ===== SECTION 1: FACEBOOK POSTING CALENDAR ===== -->
+    <div class="strategy-section" id="sec-calendar">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h3><span class="num">1</span> Facebook Posting Calendar</h3>
+            <span class="section-chevron">&#9660;</span>
+        </div>
+        <div class="section-body">
+
+            <div class="sub-heading">Weekly Schedule: 3 Posts / Week</div>
+            <div class="card-grid card-grid-3">
+                <div class="card">
+                    <h4>&#128200; Monday — Investment / ROI</h4>
+                    <p><span class="tag tag-blue">Template</span> Investment, CONFOTUR, Objection Killer</p>
+                    <ul>
+                        <li>CONFOTUR tax savings breakdowns</li>
+                        <li>ROI numbers and rental yield data</li>
+                        <li>Comparison to US/CA real estate markets</li>
+                    </ul>
+                    <p style="margin-top:10px;"><strong>Best times:</strong><br>9-11 AM EST (US/CA) or 2-4 PM EST (Europe)</p>
+                    <p><span class="tag tag-en">English</span></p>
+                </div>
+                <div class="card">
+                    <h4>&#127796; Wednesday — Lifestyle / FOMO</h4>
+                    <p><span class="tag tag-blue">Template</span> Lifestyle, Hook, Seasonal</p>
+                    <ul>
+                        <li>Beach/pool/golf lifestyle photos</li>
+                        <li>Weather comparisons (snow vs sun)</li>
+                        <li>"Imagine waking up here" posts</li>
+                    </ul>
+                    <p style="margin-top:10px;"><strong>Best times:</strong><br>11 AM EST (lunch scroll) or 7-9 PM EST (diaspora)</p>
+                    <p><span class="tag tag-en">English</span> or <span class="tag tag-es">Spanish</span> (alternate)</p>
+                </div>
+                <div class="card">
+                    <h4>&#11088; Friday — Social Proof / Story</h4>
+                    <p><span class="tag tag-blue">Template</span> Social Proof, Story, Engagement</p>
+                    <ul>
+                        <li>Guest testimonials and Airbnb reviews</li>
+                        <li>Buyer journey stories</li>
+                        <li>Poll questions ("Would you invest?")</li>
+                    </ul>
+                    <p style="margin-top:10px;"><strong>Best times:</strong><br>10 AM EST (US) or 3 PM EST (Europe)</p>
+                    <p><span class="tag tag-es">Spanish</span></p>
+                </div>
+            </div>
+
+            <div class="note-box">
+                <strong>Language rotation:</strong> 2 English + 1 Spanish per week. Every 3rd week, swap one English for French (Quebec market). Always match language to target Facebook group.
+            </div>
+
+            <div class="sub-heading">12-Week Content Rotation Calendar</div>
+            <div id="calendar-container"></div>
+
+        </div>
+    </div>
+
+    <!-- ===== SECTION 2: FACEBOOK ADS STRATEGY ===== -->
+    <div class="strategy-section" id="sec-ads">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h3><span class="num">2</span> Facebook Ads Strategy</h3>
+            <span class="section-chevron">&#9660;</span>
+        </div>
+        <div class="section-body">
+
+            <div class="sub-heading">3-Phase Funnel</div>
+            <div class="flow">
+                <div class="flow-step">Phase 1<br><small>Awareness</small></div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-step">Phase 2<br><small>Retargeting</small></div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-step">Phase 3<br><small>Lookalike + Dynamic</small></div>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h4><span class="tag tag-gold">Phase 1</span> Awareness (Week 1-2)</h4>
+                    <ul>
+                        <li>Boost top-performing organic posts</li>
+                        <li>Budget: $5-10/day ($70-140 total)</li>
+                        <li>Target: US/CA expats, 35-65 years old</li>
+                        <li>Interests: Caribbean real estate, retirement abroad, golf, Punta Cana, DR travel</li>
+                        <li>Objective: Traffic to property page or guide download</li>
+                    </ul>
+                    <p style="margin-top:10px;"><strong>Creative:</strong> Cocotal aerial (pool + golf), lifestyle shots, ROI headline overlay</p>
+                </div>
+                <div class="card">
+                    <h4><span class="tag tag-blue">Phase 2</span> Retargeting (Week 3-4)</h4>
+                    <ul>
+                        <li>Pixel-based retargeting of site visitors (7-30 day window)</li>
+                        <li>Lead form ads for guide download ("Free Punta Cana Investment Guide")</li>
+                        <li>Budget: $10-15/day ($140-210 total)</li>
+                        <li>Retarget: Visited cocotal-2bdr, ROI calculator, or cost-of-living pages</li>
+                        <li>CTA: "Download the Guide" or "WhatsApp Us"</li>
+                    </ul>
+                    <p style="margin-top:10px;"><strong>Creative:</strong> Guide cover mockup, testimonial carousel, CONFOTUR savings graphic</p>
+                </div>
+                <div class="card">
+                    <h4><span class="tag tag-purple">Phase 3</span> Lookalike + Dynamic (Month 2+)</h4>
+                    <ul>
+                        <li>Lookalike audiences from guide downloaders (1-3%)</li>
+                        <li>Dynamic retargeting of property viewers with specific listings</li>
+                        <li>Budget: $15-25/day ($450-750/month)</li>
+                        <li>A/B test: Video walkthrough vs. photo carousel vs. single hero image</li>
+                        <li>Expand to similar markets: Florida, Texas, NYC metro, Quebec, Ontario</li>
+                    </ul>
+                    <p style="margin-top:10px;"><strong>Creative:</strong> Video tours, before/after ROI slider, "Your neighbor bought here" angle</p>
+                </div>
+            </div>
+
+            <div class="sub-heading">Monthly Budget vs. Expected Leads</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Monthly Spend</th>
+                        <th>Est. Reach</th>
+                        <th>Est. Clicks</th>
+                        <th>Est. Leads</th>
+                        <th>Cost/Lead</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="tag tag-gold">Phase 1</span></td>
+                        <td>$150-300</td>
+                        <td>15K-30K</td>
+                        <td>200-500</td>
+                        <td>5-15</td>
+                        <td>$20-30</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-blue">Phase 2</span></td>
+                        <td>$300-450</td>
+                        <td>5K-10K (warm)</td>
+                        <td>150-350</td>
+                        <td>15-35</td>
+                        <td>$10-20</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tag tag-purple">Phase 3</span></td>
+                        <td>$450-750</td>
+                        <td>30K-60K</td>
+                        <td>400-900</td>
+                        <td>30-60</td>
+                        <td>$10-15</td>
+                    </tr>
+                    <tr style="font-weight:700;">
+                        <td>Total</td>
+                        <td>$900-1,500</td>
+                        <td>50K-100K</td>
+                        <td>750-1,750</td>
+                        <td>50-110</td>
+                        <td>~$14</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note-box">
+                <strong>Ad Creative Tips:</strong> Always lead with the Cocotal pool/golf aerial photo. Use lifestyle imagery — not stock photos. Include specific ROI numbers ("8-12% annual yield"). Test short-form video (15-30s Reels) alongside static. Spanish ads for DR diaspora in US outperform English by ~40% CTR.
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SECTION 3: AIRBNB LISTING PERSONAS ===== -->
+    <div class="strategy-section" id="sec-personas">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h3><span class="num">3</span> Airbnb Listing Personas</h3>
+            <span class="section-chevron">&#9660;</span>
+        </div>
+        <div class="section-body">
+
+            <div class="sub-heading">6 Cocotal Golf Listings + 1 Bavaro</div>
+            <div class="card-grid" style="grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));">
+
+                <!-- Persona 1: Golf Lovers -->
+                <div class="persona-card golf">
+                    <div class="persona-name" style="color:var(--green);">The Fairway Suite</div>
+                    <div class="persona-subtitle">Listing #2 — Golf Lovers</div>
+                    <div class="persona-field">
+                        <label>Suggested Title</label>
+                        <p>Golf View 2BR at Cocotal - Pool & Melia</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>Hero Photo Priority</label>
+                        <p>Terrace overlooking golf course at golden hour</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>3 Key Amenities</label>
+                        <p>Golf course access, private terrace with fairway view, Melia Hotel resort privileges</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>Target Guest</label>
+                        <p>Male 45-65, golf trip with friends, US/CA, mid-high budget, 4-7 night stays</p>
+                    </div>
+                </div>
+
+                <!-- Persona 2: Romantic Getaway -->
+                <div class="persona-card romantic">
+                    <div class="persona-name" style="color:var(--red);">The Sunset Escape</div>
+                    <div class="persona-subtitle">Listing #3 — Romantic Getaway</div>
+                    <div class="persona-field">
+                        <label>Suggested Title</label>
+                        <p>Romantic 1BR Retreat - Pool, Spa & Beach</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>Hero Photo Priority</label>
+                        <p>Candlelit balcony or pool at sunset, cozy interior lighting</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>3 Key Amenities</label>
+                        <p>King bed with luxury linens, spa access at Melia, private balcony with ambient lighting</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>Target Guest</label>
+                        <p>Couples 28-45, anniversaries/honeymoons, 3-5 night stays, willing to pay premium for ambiance</p>
+                    </div>
+                </div>
+
+                <!-- Persona 3: Family Paradise -->
+                <div class="persona-card family">
+                    <div class="persona-name" style="color:var(--blue);">Casa Cocotal Family</div>
+                    <div class="persona-subtitle">Listing #4 — Family Paradise</div>
+                    <div class="persona-field">
+                        <label>Suggested Title</label>
+                        <p>Family 3BR - Pool, Beach & Kids Welcome</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>Hero Photo Priority</label>
+                        <p>Spacious living area with kid-friendly setup, pool area with family vibe</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>3 Key Amenities</label>
+                        <p>Pack-n-play & high chair available, full kitchen for meal prep, resort pool with kids section</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>Target Guest</label>
+                        <p>Families with kids 2-12, US/CA/EU, need space + safety, 5-10 night stays, price-sensitive</p>
+                    </div>
+                </div>
+
+                <!-- Persona 4: Digital Nomad -->
+                <div class="persona-card nomad">
+                    <div class="persona-name" style="color:var(--orange);">The Nomad Pad</div>
+                    <div class="persona-subtitle">Listing #5 — Digital Nomad</div>
+                    <div class="persona-field">
+                        <label>Suggested Title</label>
+                        <p>Work & Surf - Fast WiFi, Desk, Pool View</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>Hero Photo Priority</label>
+                        <p>Dedicated workspace with monitor/desk, laptop-on-balcony lifestyle shot</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>3 Key Amenities</label>
+                        <p>100+ Mbps WiFi, ergonomic desk setup, weekly/monthly discount (15-30% off)</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>Target Guest</label>
+                        <p>Remote workers 25-40, solo or couple, 2-8 week stays, values reliability + quiet daytime</p>
+                    </div>
+                </div>
+
+                <!-- Persona 5: Luxury Retreat -->
+                <div class="persona-card luxury">
+                    <div class="persona-name" style="color:var(--gold);">The Gold Standard</div>
+                    <div class="persona-subtitle">Listing #6 — Luxury Retreat</div>
+                    <div class="persona-field">
+                        <label>Suggested Title</label>
+                        <p>Luxury 2BR - Premium Finishes & Golf View</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>Hero Photo Priority</label>
+                        <p>Designer interior wide shot, marble bathroom, premium kitchen</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>3 Key Amenities</label>
+                        <p>Premium furnishings & finishes, Nespresso machine + wine glasses, concierge/transfer service available</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>Target Guest</label>
+                        <p>High earners 35-60, expect boutique-hotel quality, 3-7 nights, leave 5-star reviews if impressed</p>
+                    </div>
+                </div>
+
+                <!-- Persona 6: Party Crew -->
+                <div class="persona-card party">
+                    <div class="persona-name" style="color:var(--purple);">The Hangout Hub</div>
+                    <div class="persona-subtitle">Listing #7 — Party Crew</div>
+                    <div class="persona-field">
+                        <label>Suggested Title</label>
+                        <p>Group Apt - Pool, Nightlife & Good Vibes</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>Hero Photo Priority</label>
+                        <p>Group enjoying pool/terrace area, spacious living room, nightlife proximity</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>3 Key Amenities</label>
+                        <p>Fits 4-6 guests comfortably, Bluetooth speaker + Netflix, 10 min to Coco Bongo / downtown Bavaro</p>
+                    </div>
+                    <div class="persona-field">
+                        <label>Target Guest</label>
+                        <p>Friends groups 25-40, bachelor/ette trips, 3-5 night stays, accept higher damage deposit</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="sub-heading">Pricing Strategy</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Listing Type</th>
+                        <th>Low Season (May-Nov) Weekday</th>
+                        <th>Low Season Weekend</th>
+                        <th>High Season (Dec-Apr) Weekday</th>
+                        <th>High Season Weekend</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1BR (Romantic / Nomad)</td>
+                        <td>$55-65</td>
+                        <td>$70-85</td>
+                        <td>$85-100</td>
+                        <td>$110-130</td>
+                    </tr>
+                    <tr>
+                        <td>2BR (Golf / Luxury / Party)</td>
+                        <td>$75-90</td>
+                        <td>$95-115</td>
+                        <td>$120-145</td>
+                        <td>$150-180</td>
+                    </tr>
+                    <tr>
+                        <td>3BR (Family)</td>
+                        <td>$95-110</td>
+                        <td>$120-140</td>
+                        <td>$155-185</td>
+                        <td>$190-230</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="note-box">
+                <strong>Pricing rules:</strong> Weekend = Fri-Sat (+25-35%). Holidays (Christmas, Easter, Long weekends) = +50-75%. Weekly discount: 10%. Monthly discount: 25-30%. Always undercut top 3 comparable listings by $5-10 during low season to maintain occupancy.
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SECTION 4: FIX LISTING #7 ===== -->
+    <div class="strategy-section" id="sec-fix7">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h3><span class="num">4</span> Fix Listing #7 (4.78 Rating)</h3>
+            <span class="section-chevron">&#9660;</span>
+        </div>
+        <div class="section-body">
+
+            <div class="sub-heading">Diagnostic Checklist</div>
+            <ul class="checklist" id="checklist-fix7">
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Review all sub-4-star reviews from last 6 months — identify recurring complaints (cleanliness? check-in? accuracy?)</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Check average response time in Airbnb inbox — must be under 1 hour for Superhost</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Verify all listing photos are current — no outdated furniture, missing items, or misleading angles</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Compare pricing vs. top 5 competitors within 1km — are you overpriced for what you deliver?</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Audit listing description for accuracy — every promised amenity must be present and working</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Check cleaning crew consistency — same team every time, use a checklist with photos</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Test all appliances, AC units, water pressure, WiFi speed — log the results</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Review check-in process — is it smooth? Self-check-in with lockbox or smart lock?</span></li>
+            </ul>
+
+            <div class="sub-heading">5-Step Action Plan: 4.78 &rarr; 4.9+</div>
+
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h5>Deep Clean & Refresh</h5>
+                    <p>Professional deep clean. Replace stained linens, worn towels, scratched cookware. Add new mattress topper. First impressions drive 60% of the rating. Budget: $200-400 one-time.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h5>Upgrade the Welcome Experience</h5>
+                    <p>Printed welcome guide (WiFi, local restaurants, emergency numbers). Small welcome basket (water, snacks, local coffee). Handwritten "Welcome!" card. These drive 5-star "check-in" scores.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h5>Proactive Messaging Sequence</h5>
+                    <p>Day 1 message: "How's everything? Need anything?" — catches problems early before they become bad reviews. Day before checkout: "Anything we can improve?" — gives them a vent channel that isn't the review.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                    <h5>Re-Shoot Photos</h5>
+                    <p>Hire a local photographer ($50-100). Shoot at golden hour. Stage the space: fresh flowers, made bed, set dining table. Update all listing photos. Better photos = better-matched guests = better reviews.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                    <h5>Price Down Temporarily for Review Volume</h5>
+                    <p>Drop price 15% for 4-6 weeks to attract more bookings. More stays = more reviews = dilute old low scores faster. After 10+ new 5-star reviews, gradually return to normal pricing.</p>
+                </div>
+            </div>
+
+            <div class="sub-heading">Review Response Templates</div>
+
+            <div class="template-box" id="tmpl-negative">
+                <button class="btn-copy" onclick="copyTemplate('tmpl-negative')">Copy</button><strong>Negative Review — Empathetic + Solution</strong>
+
+Thank you for your feedback, [Name]. I'm sorry your stay didn't meet expectations. You're right about [specific issue] — we've already [specific fix: replaced the AC unit / hired a new cleaning team / upgraded the WiFi].
+
+We take every review seriously because we want every guest to have an amazing experience. If you're ever back in Punta Cana, I'd love to host you again and show you the improvements. Thank you for helping us get better.</div>
+
+            <div class="template-box" id="tmpl-mixed">
+                <button class="btn-copy" onclick="copyTemplate('tmpl-mixed')">Copy</button><strong>Mixed Review — Acknowledge + Redirect</strong>
+
+Thanks so much for staying with us, [Name]! Really glad you enjoyed [positive they mentioned: the pool / the location / the golf views].
+
+Regarding [issue], I completely understand — we've taken steps to fix that by [specific action]. Your comfort is our priority and we appreciate you letting us know. Hope to welcome you back soon!</div>
+
+            <div class="template-box" id="tmpl-unfair">
+                <button class="btn-copy" onclick="copyTemplate('tmpl-unfair')">Copy</button><strong>Unfair/Inaccurate Review — Professional Correction</strong>
+
+Thank you for your review, [Name]. I want to clarify a few points for future guests: [factual correction, e.g., "the listing clearly states the beach is a 5-minute drive, not walking distance"].
+
+We strive for transparency in our listing and photos so guests know exactly what to expect. We're sorry if there was any confusion and we're always available to help during your stay. We wish you the best.</div>
+
+        </div>
+    </div>
+
+    <!-- ===== SECTION 5: LAUNCH LISTING #1 ===== -->
+    <div class="strategy-section" id="sec-launch1">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h3><span class="num">5</span> Launch Listing #1 (New Bavaro)</h3>
+            <span class="section-chevron">&#9660;</span>
+        </div>
+        <div class="section-body">
+
+            <div class="sub-heading">Smart Pricing Ramp</div>
+            <div class="pricing-grid">
+                <div class="pricing-block">
+                    <div class="period">Week 1-2</div>
+                    <div class="amount">60%</div>
+                    <div class="detail">of target price<br>+ 40% new listing discount</div>
+                </div>
+                <div class="pricing-block">
+                    <div class="period">Week 3-4</div>
+                    <div class="amount">75%</div>
+                    <div class="detail">of target price<br>building momentum</div>
+                </div>
+                <div class="pricing-block">
+                    <div class="period">Month 2</div>
+                    <div class="amount">90%</div>
+                    <div class="detail">of target price<br>reviews coming in</div>
+                </div>
+                <div class="pricing-block">
+                    <div class="period">Month 3+</div>
+                    <div class="amount">100%</div>
+                    <div class="detail">full target price<br>established listing</div>
+                </div>
+            </div>
+
+            <div class="note-box">
+                <strong>40% discount for first 5 bookings:</strong> Airbnb's "New listing promotion" setting handles this automatically. Enable it in Pricing > Promotions. This stacks with your manual pricing ramp — first guests get the steepest deal, which maximizes booking velocity and early reviews.
+            </div>
+
+            <div class="sub-heading">New Listing Boost Checklist</div>
+            <ul class="checklist" id="checklist-launch">
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Complete 100% of Airbnb profile fields — every field filled gives search ranking boost</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Enable Instant Book — Airbnb heavily favors instant-book listings in search results</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Set 2-night minimum (not 3) for first month — lower barrier = more bookings = more reviews faster</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Professional photos — 20+ photos covering every room, bathroom, view, building exterior, pool, neighborhood</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Write a compelling description with local keywords: "Bavaro", "Punta Cana", "beach", "pool", "airport"</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Add all amenities — even obvious ones (AC, hot water, hangers). More checked = better search match</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Set up automated messages: booking confirmation, check-in instructions (24h before), mid-stay check-in, checkout reminder</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Calendar open for at least 3 months ahead — Airbnb penalizes short availability windows</span></li>
+                <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Share listing link on personal social media — first external traffic signals help ranking</span></li>
+            </ul>
+
+            <div class="sub-heading">First Review Strategy</div>
+
+            <div class="template-box" id="tmpl-welcome">
+                <button class="btn-copy" onclick="copyTemplate('tmpl-welcome')">Copy</button><strong>Day 1 — Welcome Message</strong>
+
+Hi [Name]! Welcome to Punta Cana! I hope you had a smooth trip. Everything should be ready for you — fresh towels, cold water in the fridge, and the AC is on.
+
+WiFi: [network name] / Password: [password]
+
+If you need ANYTHING at all — restaurant recommendations, airport transfer, beach directions — just message me. I'm always available. Enjoy your stay!</div>
+
+            <div class="template-box" id="tmpl-midstay">
+                <button class="btn-copy" onclick="copyTemplate('tmpl-midstay')">Copy</button><strong>Day 2-3 — Mid-Stay Check-in</strong>
+
+Hey [Name]! Just checking in — how's everything going? Is the apartment comfortable? Anything you need?
+
+If you're looking for something fun today: [suggest local activity based on guest type — beach, golf, restaurant, excursion].
+
+Let me know if I can help with anything at all!</div>
+
+            <div class="template-box" id="tmpl-checkout">
+                <button class="btn-copy" onclick="copyTemplate('tmpl-checkout')">Copy</button><strong>Checkout Day — Review Nudge</strong>
+
+Hi [Name]! Thank you so much for staying with us — it was a pleasure hosting you! I hope you enjoyed Punta Cana.
+
+If you have a moment, I'd really appreciate a review on Airbnb. As a new listing, every review helps us tremendously. And if there's anything we could improve, I'd love to hear it.
+
+Safe travels home! You're always welcome back.</div>
+
+        </div>
+    </div>
+
+    <!-- ===== SECTION 6: GUEST-TO-INVESTOR PIPELINE ===== -->
+    <div class="strategy-section" id="sec-pipeline">
+        <div class="section-header" onclick="toggleSection(this)">
+            <h3><span class="num">6</span> Guest-to-Investor Pipeline</h3>
+            <span class="section-chevron">&#9660;</span>
+        </div>
+        <div class="section-body">
+
+            <div class="sub-heading">QR Code Placement Strategy</div>
+            <div class="card-grid card-grid-3">
+                <div class="card">
+                    <h4>Welcome Binder</h4>
+                    <p>Inside the guest info binder on the coffee table. Full-page spread: "Love this place? You could OWN one." QR links to guest-investor.html</p>
+                </div>
+                <div class="card">
+                    <h4>Fridge Magnet</h4>
+                    <p>Custom magnet with QR code + "Invest in Punta Cana" tagline. Guests see it every time they open the fridge — passive, high-impression placement.</p>
+                </div>
+                <div class="card">
+                    <h4>Checkout Message</h4>
+                    <p>Automated Airbnb message at checkout includes the link: "Loved your stay? See how you can own a property just like this one and earn rental income."</p>
+                </div>
+            </div>
+
+            <div class="sub-heading">Follow-Up Messaging Sequence</div>
+
+            <div class="template-box" id="tmpl-day1">
+                <button class="btn-copy" onclick="copyTemplate('tmpl-day1')">Copy</button><strong>Day 1 — Welcome + QR Mention</strong>
+
+Welcome to your Punta Cana home! You'll find a welcome guide on the coffee table with everything you need — WiFi, local tips, restaurant recommendations, and emergency contacts.
+
+Fun fact: the property you're staying in earns its owner 8-12% annual ROI on Airbnb. There's a QR code in the guide if you're curious about investing here. No pressure — just enjoy your vacation!</div>
+
+            <div class="template-box" id="tmpl-day3">
+                <button class="btn-copy" onclick="copyTemplate('tmpl-day3')">Copy</button><strong>Day 3 — Neighborhood Tips + Soft Sell</strong>
+
+Hope you're enjoying Cocotal! Here are my local favorites:
+- Breakfast: [restaurant name]
+- Beach club: [name] (tell them you're staying at Cocotal for a discount)
+- Sunset spot: [location]
+
+BTW, properties in this complex start around $150K with CONFOTUR tax benefits (15 years tax-free). If you're even a little curious, the info is in the welcome binder or just ask me!</div>
+
+            <div class="template-box" id="tmpl-checkoutinvestor">
+                <button class="btn-copy" onclick="copyTemplate('tmpl-checkoutinvestor')">Copy</button><strong>Checkout Day — Thank You + Investor Page Link</strong>
+
+Thank you for choosing us, [Name]! It was wonderful hosting you.
+
+Before you go — if you ever thought "I could see myself owning a place here," I'd love to chat. Properties in Cocotal Golf start at $150K, qualify for 15 years of tax-free status, and earn real rental income.
+
+No pressure at all. Here's the info page whenever you're ready: [guest-investor link]
+
+Safe travels!</div>
+
+            <div class="sub-heading">Conversion Funnel Tracking</div>
+            <div class="flow">
+                <div class="flow-step">QR Scans<br><small>Track with UTM</small></div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-step">Page Views<br><small>guest-investor.html</small></div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-step">WhatsApp Inquiry<br><small>wa.me click</small></div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-step">Property Visit<br><small>Schedule tour</small></div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-step">Sale<br><small>$$$</small></div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>How to Track</th>
+                        <th>Target (Monthly)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>QR Code Scans</td>
+                        <td>Bitly or UTM-tagged short link — unique per unit for source attribution</td>
+                        <td>30-50 scans</td>
+                    </tr>
+                    <tr>
+                        <td>Page Views (guest-investor.html)</td>
+                        <td>Google Analytics — filter by UTM source "qr-[unit]"</td>
+                        <td>20-35 views</td>
+                    </tr>
+                    <tr>
+                        <td>WhatsApp Inquiries</td>
+                        <td>Count wa.me clicks (Bitly) + manual tally of incoming messages</td>
+                        <td>5-10 inquiries</td>
+                    </tr>
+                    <tr>
+                        <td>Property Visits Scheduled</td>
+                        <td>Manual CRM / spreadsheet — tag lead source as "Airbnb Guest"</td>
+                        <td>1-3 visits</td>
+                    </tr>
+                    <tr>
+                        <td>Closed Sales</td>
+                        <td>Manual — ultimate KPI. Even 1 sale from Airbnb guests pays for the entire effort.</td>
+                        <td>1 per quarter</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note-box">
+                <strong>Key insight:</strong> Airbnb guests are pre-qualified investors. They already love Punta Cana enough to visit, they see the property quality firsthand, and they experience the rental demand. A guest who stays 5 nights and thinks "this place is always booked" is 10x more likely to buy than a cold Facebook lead. The QR code costs $0 and the conversion rate is dramatically higher.
+            </div>
+        </div>
+    </div>
+
+</div><!-- /main -->
+
+<script>
+// ===== SIDEBAR NAV =====
+function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Update active
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        document.querySelector(`[data-target="${id}"]`)?.classList.add('active');
+        // Close mobile sidebar
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('overlay').classList.remove('open');
+    }
+}
+
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('open');
+}
+
+// Scroll spy
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('.strategy-section');
+    let current = '';
+    sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 120) {
+            current = sec.id;
+        }
+    });
+    if (current) {
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        document.querySelector(`[data-target="${current}"]`)?.classList.add('active');
+    }
+});
+
+// ===== COLLAPSIBLE SECTIONS =====
+function toggleSection(header) {
+    const body = header.nextElementSibling;
+    header.classList.toggle('collapsed');
+    body.classList.toggle('hidden');
+}
+
+// ===== CHECKLIST =====
+function toggleCheck(box) {
+    box.classList.toggle('checked');
+    box.parentElement.classList.toggle('done');
+    saveChecklist();
+}
+
+function saveChecklist() {
+    const state = {};
+    document.querySelectorAll('.checklist').forEach(cl => {
+        const id = cl.id;
+        state[id] = [];
+        cl.querySelectorAll('.check-box').forEach((box, i) => {
+            state[id].push(box.classList.contains('checked'));
+        });
+    });
+    localStorage.setItem('strategy-checklist', JSON.stringify(state));
+}
+
+function loadChecklist() {
+    try {
+        const state = JSON.parse(localStorage.getItem('strategy-checklist'));
+        if (!state) return;
+        Object.keys(state).forEach(id => {
+            const cl = document.getElementById(id);
+            if (!cl) return;
+            cl.querySelectorAll('.check-box').forEach((box, i) => {
+                if (state[id][i]) {
+                    box.classList.add('checked');
+                    box.parentElement.classList.add('done');
+                }
+            });
+        });
+    } catch(e) {}
+}
+
+// ===== COPY TO CLIPBOARD =====
+function copyTemplate(id) {
+    const el = document.getElementById(id);
+    // Get text content, skip the button text and the bold label line
+    const lines = el.innerText.split('\n');
+    // Remove first line (button "Copy") and second line (bold label)
+    const text = lines.slice(2).join('\n').trim();
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = el.querySelector('.btn-copy');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+}
+
+// ===== CALENDAR GENERATOR =====
+function generateCalendar() {
+    const container = document.getElementById('calendar-container');
+    const weeks = 12;
+    // Start on a Monday
+    const postDays = {
+        1: { type: 'invest', label: 'Investment/ROI', lang: 'EN' },
+        3: { type: 'lifestyle', label: 'Lifestyle/FOMO', lang: 'EN' },
+        5: { type: 'social', label: 'Social Proof', lang: 'ES' }
+    };
+
+    // Language rotation: every 3rd week, Wednesday becomes French
+    const langRotation = [
+        { 1: 'EN', 3: 'EN', 5: 'ES' },
+        { 1: 'EN', 3: 'ES', 5: 'EN' },
+        { 1: 'EN', 3: 'FR', 5: 'ES' }
+    ];
+
+    // Template rotation
+    const templates = {
+        invest: ['Investment', 'CONFOTUR', 'Comparison', 'Objection Killer', 'Investment', 'CONFOTUR'],
+        lifestyle: ['Lifestyle', 'Hook', 'Seasonal', 'Lifestyle', 'Hook', 'Seasonal'],
+        social: ['Social Proof', 'Story', 'Engagement', 'Social Proof', 'Story', 'Engagement']
+    };
+
+    let html = '<div class="calendar-grid">';
+    const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    dayNames.forEach(d => {
+        html += `<div class="cal-header">${d}</div>`;
+    });
+
+    for (let w = 0; w < weeks; w++) {
+        const langWeek = langRotation[w % 3];
+        for (let d = 0; d < 7; d++) {
+            const dayOfWeek = d + 1; // 1=Mon, 7=Sun
+            const dayNum = w * 7 + d + 1;
+            const weekLabel = `W${w + 1}`;
+
+            if (postDays[dayOfWeek]) {
+                const post = postDays[dayOfWeek];
+                const lang = langWeek[dayOfWeek] || post.lang;
+                const tmplIdx = w % 6;
+                const template = templates[post.type][tmplIdx];
+                const langClass = lang === 'EN' ? 'tag-en' : lang === 'ES' ? 'tag-es' : 'tag-blue';
+                html += `<div class="cal-day">
+                    <div class="day-num">${weekLabel} ${dayNames[d]}</div>
+                    <span class="cal-tag ${post.type}">${template}</span>
+                    <span class="tag ${langClass}" style="font-size:9px;padding:1px 5px;">${lang}</span>
+                </div>`;
+            } else {
+                html += `<div class="cal-day empty"></div>`;
+            }
+        }
+    }
+
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+    generateCalendar();
+    loadChecklist();
+});
+</script>
+
+</body>
+</html>

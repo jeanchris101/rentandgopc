@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Complete Guide to Buying Property in Punta Cana — 2026 Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a3a2a;
+            --primary-light: #2a5a3a;
+            --accent: #c8a45e;
+            --accent-light: #d4b876;
+            --bg: #faf9f6;
+            --text: #2c2c2c;
+            --text-light: #666;
+            --border: #e8e4de;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ========== SCREEN LAYOUT ========== */
+        .guide-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== COVER PAGE ========== */
+        .cover-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 40px;
+            position: relative;
+            background: linear-gradient(165deg, var(--primary) 0%, #0d1f15 100%);
+            color: #fff;
+        }
+
+        .cover-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23c8a45e' stroke-width='0.3' opacity='0.08'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .cover-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 48px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-brand::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--accent);
+            margin: 16px auto 0;
+        }
+
+        .cover-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+
+        .cover-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--accent);
+            margin-bottom: 48px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-edition {
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-footer {
+            position: absolute;
+            bottom: 40px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 1px;
+            z-index: 1;
+        }
+
+        /* ========== TABLE OF CONTENTS ========== */
+        .toc {
+            padding: 80px 0;
+        }
+
+        .toc h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .toc-list {
+            list-style: none;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .toc-list li {
+            display: flex;
+            align-items: baseline;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .toc-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            min-width: 36px;
+        }
+
+        .toc-title {
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .toc-dots {
+            flex: 1;
+            border-bottom: 1px dotted var(--border);
+            margin: 0 8px;
+            min-width: 20px;
+            position: relative;
+            top: -4px;
+        }
+
+        .toc-page {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* ========== SECTIONS ========== */
+        .guide-section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .guide-section + .guide-section {
+            border-top: 1px solid var(--border);
+        }
+
+        .section-header {
+            margin-bottom: 48px;
+        }
+
+        .section-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--accent);
+            opacity: 0.3;
+            line-height: 1;
+            margin-bottom: -12px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.3;
+        }
+
+        .section-intro {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-top: 16px;
+            line-height: 1.8;
+            max-width: 680px;
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 36px 0 16px;
+        }
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        /* ========== HIGHLIGHT BOXES ========== */
+        .highlight-box {
+            background: linear-gradient(135deg, #f5f1eb 0%, #faf9f6 100%);
+            border-left: 4px solid var(--accent);
+            padding: 24px 28px;
+            margin: 28px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box strong {
+            color: var(--primary);
+        }
+
+        .highlight-box.green {
+            background: linear-gradient(135deg, #edf5f0 0%, #faf9f6 100%);
+            border-left-color: var(--primary);
+        }
+
+        /* ========== KEY STAT ========== */
+        .key-stat {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        /* ========== STATS GRID ========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 28px 20px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ========== NEIGHBORHOOD CARDS ========== */
+        .neighborhood-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 28px;
+            margin: 36px 0;
+        }
+
+        .neighborhood-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .neighborhood-card:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .neighborhood-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .neighborhood-vibe {
+            font-style: italic;
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 14px;
+        }
+
+        .neighborhood-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .neighborhood-meta {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+
+        .neighborhood-meta span {
+            color: var(--text-light);
+        }
+
+        .neighborhood-meta strong {
+            color: var(--primary);
+        }
+
+        /* ========== STEP LIST ========== */
+        .steps-list {
+            counter-reset: step-counter;
+            list-style: none;
+            margin: 36px 0;
+        }
+
+        .steps-list li {
+            counter-increment: step-counter;
+            position: relative;
+            padding: 24px 24px 24px 80px;
+            margin-bottom: 20px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .steps-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 24px;
+            top: 24px;
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+        }
+
+        .step-desc {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        /* ========== COST TABLE ========== */
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 28px 0;
+            font-size: 0.95rem;
+        }
+
+        .cost-table thead th {
+            text-align: left;
+            padding: 12px 16px;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cost-table thead th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        .cost-table thead th:last-child {
+            border-radius: 0 8px 0 0;
+            text-align: right;
+        }
+
+        .cost-table tbody td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cost-table tbody td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .cost-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .cost-table tfoot td {
+            padding: 14px 16px;
+            background: #f5f1eb;
+            font-weight: 700;
+            color: var(--primary);
+            border-radius: 0 0 8px 8px;
+        }
+
+        .cost-table tfoot td:last-child {
+            text-align: right;
+        }
+
+        /* ========== COMPARISON COLUMNS ========== */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 28px 0;
+        }
+
+        .compare-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+        }
+
+        .compare-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--primary);
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .compare-card ul {
+            list-style: none;
+            font-size: 0.95rem;
+        }
+
+        .compare-card ul li {
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+            color: var(--text-light);
+        }
+
+        .compare-card ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        /* ========== RENTAL TABLE ========== */
+        .rental-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 28px 0;
+        }
+
+        .rental-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .rental-card .zone-name {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .rental-card .adr {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+
+        .rental-card .adr-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        .rental-card .occupancy {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* ========== AGENT / ABOUT ========== */
+        .agent-section {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(165deg, var(--primary) 0%, #0d1f15 100%);
+            color: #fff;
+            border-radius: 16px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23c8a45e' stroke-width='0.3' opacity='0.06'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .agent-section > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .agent-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 auto 20px;
+            border: 3px solid rgba(200,164,94,0.4);
+        }
+
+        .agent-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .agent-title {
+            color: var(--accent);
+            font-style: italic;
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+        }
+
+        .agent-section p {
+            max-width: 560px;
+            margin: 0 auto 16px;
+            color: rgba(255,255,255,0.8);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .agent-badges {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 28px 0;
+            flex-wrap: wrap;
+        }
+
+        .agent-badge {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(200,164,94,0.3);
+            border-radius: 8px;
+            padding: 14px 20px;
+            text-align: center;
+        }
+
+        .agent-badge .badge-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        .agent-badge .badge-label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .agent-cta {
+            display: inline-block;
+            margin-top: 28px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            padding: 14px 36px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            transition: background 0.2s ease;
+        }
+
+        .agent-cta:hover {
+            background: var(--accent-light);
+        }
+
+        /* ========== SCREEN FOOTER ========== */
+        .guide-footer {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            border-top: 1px solid var(--border);
+        }
+
+        .guide-footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 600px) {
+            .cover-title {
+                font-size: 2rem;
+            }
+            .cover-subtitle {
+                font-size: 1.2rem;
+            }
+            .section-number {
+                font-size: 3rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .neighborhood-grid {
+                grid-template-columns: 1fr;
+            }
+            .compare-grid {
+                grid-template-columns: 1fr;
+            }
+            .steps-list li {
+                padding-left: 70px;
+            }
+        }
+
+        /* ========================================================
+           PRINT STYLES
+           ======================================================== */
+        @media print {
+            @page {
+                size: A4;
+                margin: 20mm 18mm 25mm 18mm;
+            }
+
+            body {
+                font-family: 'Georgia', 'Times New Roman', serif;
+                font-size: 10.5pt;
+                line-height: 1.6;
+                color: #000;
+                background: #fff;
+            }
+
+            .guide-container {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            /* Page breaks */
+            .cover-page {
+                min-height: auto;
+                padding: 100px 40px;
+                page-break-after: always;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .toc {
+                page-break-after: always;
+            }
+
+            .guide-section {
+                page-break-before: always;
+                padding: 40px 0;
+                border-top: none;
+            }
+
+            .guide-section:first-of-type {
+                page-break-before: avoid;
+            }
+
+            /* Avoid breaking inside cards/steps */
+            .neighborhood-card,
+            .steps-list li,
+            .stat-card,
+            .rental-card,
+            .highlight-box {
+                break-inside: avoid;
+            }
+
+            /* Print-friendly colors */
+            .cover-page {
+                background: var(--primary) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .agent-section {
+                background: var(--primary) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .cost-table thead th {
+                background: var(--primary) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .steps-list li::before {
+                background: var(--accent) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            /* Watermark / running footer */
+            .guide-section::after {
+                content: 'rentandgopc.com  |  WhatsApp: +1 809-486-5386';
+                display: block;
+                text-align: center;
+                font-size: 8pt;
+                color: #999;
+                margin-top: 40px;
+                padding-top: 12px;
+                border-top: 0.5pt solid #ddd;
+                letter-spacing: 0.5px;
+            }
+
+            /* Brand watermark top-right */
+            .guide-section::before {
+                content: 'Rent & Go PC';
+                display: block;
+                text-align: right;
+                font-size: 7pt;
+                color: #ccc;
+                margin-bottom: 12px;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+            }
+
+            /* Hide screen-only elements */
+            .agent-cta {
+                border: 1px solid var(--accent);
+            }
+
+            .guide-footer {
+                display: none;
+            }
+
+            /* Shadows off */
+            .neighborhood-card:hover {
+                box-shadow: none;
+            }
+
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================
+     COVER PAGE
+     ============================================================ -->
+<div class="cover-page">
+    <div class="cover-brand">Rent & Go PC</div>
+    <h1 class="cover-title">The Complete Guide to Buying Property in Punta Cana</h1>
+    <p class="cover-subtitle">Everything you need to know before investing in paradise</p>
+    <p class="cover-edition">2026 Edition</p>
+    <div class="cover-footer">rentandgopc.com &nbsp;|&nbsp; WhatsApp: +1 809-486-5386</div>
+</div>
+
+<!-- ============================================================
+     TABLE OF CONTENTS
+     ============================================================ -->
+<div class="guide-container">
+    <div class="toc">
+        <h2>What's Inside</h2>
+        <ul class="toc-list">
+            <li>
+                <span class="toc-number">01</span>
+                <span class="toc-title">Why Punta Cana?</span>
+                <span class="toc-dots"></span>
+            </li>
+            <li>
+                <span class="toc-number">02</span>
+                <span class="toc-title">The CONFOTUR Advantage</span>
+                <span class="toc-dots"></span>
+            </li>
+            <li>
+                <span class="toc-number">03</span>
+                <span class="toc-title">Neighborhoods Overview</span>
+                <span class="toc-dots"></span>
+            </li>
+            <li>
+                <span class="toc-number">04</span>
+                <span class="toc-title">The Buying Process Step by Step</span>
+                <span class="toc-dots"></span>
+            </li>
+            <li>
+                <span class="toc-number">05</span>
+                <span class="toc-title">Financing & Payment Options</span>
+                <span class="toc-dots"></span>
+            </li>
+            <li>
+                <span class="toc-number">06</span>
+                <span class="toc-title">Rental Income Potential</span>
+                <span class="toc-dots"></span>
+            </li>
+            <li>
+                <span class="toc-number">07</span>
+                <span class="toc-title">About Your Agent</span>
+                <span class="toc-dots"></span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ============================================================
+         SECTION 1 — WHY PUNTA CANA?
+         ============================================================ -->
+    <section class="guide-section">
+        <div class="section-header">
+            <div class="section-number">01</div>
+            <h2 class="section-title">Why Punta Cana?</h2>
+            <p class="section-intro">The Dominican Republic's eastern coast has quietly become one of the most compelling real estate markets in the Caribbean. Here's what the numbers say.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">8M+</div>
+                <div class="stat-label">Visitors per year</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">#1</div>
+                <div class="stat-label">Caribbean destination</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">5.1%</div>
+                <div class="stat-label">GDP growth (2025)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">300+</div>
+                <div class="stat-label">Sunny days per year</div>
+            </div>
+        </div>
+
+        <h3>A Tourism Powerhouse</h3>
+        <p>Punta Cana International Airport (PUJ) is the busiest airport in the Caribbean, receiving direct flights from over 100 cities across North America, Europe, and South America. The region welcomed more than 8 million visitors in 2025, a figure that has grown consistently year over year since the post-pandemic rebound.</p>
+
+        <p>This isn't a trend&mdash;it's structural demand. New direct routes are added every season, and the Dominican Republic's tourism ministry projects 12 million annual visitors by 2030.</p>
+
+        <h3>Infrastructure That Keeps Improving</h3>
+        <p>The past three years have seen billions invested in highway expansion, a new cruise port in Cap Cana, improved water and power infrastructure, and high-speed fiber internet throughout the resort corridor. The government treats Punta Cana as a national economic priority.</p>
+
+        <h3>Safety & International Community</h3>
+        <p>Punta Cana's resort zones are among the safest areas in the Caribbean, with dedicated tourist police and gated residential communities. The international community is thriving&mdash;you'll find expats from the US, Canada, France, Germany, Italy, and across Latin America. English, Spanish, and French are widely spoken. Grocery stores stock international products, and private schools offer bilingual education.</p>
+
+        <div class="highlight-box">
+            <strong>The bottom line:</strong> Punta Cana combines first-world resort infrastructure with Caribbean cost of living and a welcoming legal framework for foreign property ownership. You don't need residency or citizenship to buy. Foreigners have the same property rights as Dominican citizens.
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 2 — CONFOTUR
+         ============================================================ -->
+    <section class="guide-section">
+        <div class="section-header">
+            <div class="section-number">02</div>
+            <h2 class="section-title">The CONFOTUR Advantage</h2>
+            <p class="section-intro">The Dominican Republic's Law 158-01 offers one of the most generous tax incentive programs in the Caribbean&mdash;and most buyers don't realize how much they can save.</p>
+        </div>
+
+        <h3>What Is CONFOTUR?</h3>
+        <p>CONFOTUR (Consejo de Fomento Tur&iacute;stico) is a government program that grants tax exemptions to qualifying tourism-related real estate projects. It was established under Law 158-01 to incentivize investment in the Dominican Republic's tourism zones, and Punta Cana is one of the primary beneficiary areas.</p>
+
+        <p>When a developer builds a project with CONFOTUR certification, <strong>every buyer in that project</strong> inherits the tax benefits automatically. You don't have to apply separately.</p>
+
+        <h3>What's Exempt?</h3>
+
+        <div class="highlight-box green">
+            <p style="margin:0;"><strong>The following taxes are waived for 15 years from the project's certification date:</strong></p>
+            <br>
+            <p style="margin:0 0 8px;">&#10003; &nbsp;<strong>Property Transfer Tax</strong> &mdash; Normally 3% of the sale price. On a $300K property, that's $9,000 saved at closing.</p>
+            <p style="margin:0 0 8px;">&#10003; &nbsp;<strong>Annual Property Tax (IPI)</strong> &mdash; Normally 1% of assessed value above RD$9.86M (~$168K). Over 15 years, this can save $20,000&ndash;$50,000+.</p>
+            <p style="margin:0 0 8px;">&#10003; &nbsp;<strong>Capital Gains Tax</strong> &mdash; Normally 27% on profit when you sell. On a $100K gain, that's $27,000 saved.</p>
+            <p style="margin:0;">&#10003; &nbsp;<strong>Import duties</strong> on construction materials and furnishings for the project.</p>
+        </div>
+
+        <h3>Real Savings on a $300,000 Property</h3>
+
+        <table class="cost-table">
+            <thead>
+                <tr>
+                    <th>Tax</th>
+                    <th>Without CONFOTUR</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Transfer Tax (3%)</td>
+                    <td>$9,000</td>
+                </tr>
+                <tr>
+                    <td>Annual Property Tax (15 years)</td>
+                    <td>$19,800+</td>
+                </tr>
+                <tr>
+                    <td>Capital Gains on $100K profit</td>
+                    <td>$27,000</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>Total potential savings</td>
+                    <td>$40,000 &ndash; $80,000+</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <p>The exact savings depend on how long you hold the property and how much it appreciates. But on a typical $300K condo held for 10+ years, <span class="key-stat">$40K&ndash;$80K in tax savings</span> is realistic.</p>
+
+        <div class="highlight-box">
+            <strong>Important:</strong> Not every project has CONFOTUR. Always verify the certification status before buying. Your lawyer can confirm this with the tourism council. At Rent & Go PC, we flag which projects carry CONFOTUR so you never have to guess.
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 3 — NEIGHBORHOODS
+         ============================================================ -->
+    <section class="guide-section">
+        <div class="section-header">
+            <div class="section-number">03</div>
+            <h2 class="section-title">Neighborhoods Overview</h2>
+            <p class="section-intro">Punta Cana isn't one place&mdash;it's a collection of distinct zones, each with its own personality, price point, and buyer profile. Here are the six you should know.</p>
+        </div>
+
+        <div class="neighborhood-grid">
+            <div class="neighborhood-card">
+                <div class="neighborhood-name">Bavaro</div>
+                <div class="neighborhood-vibe">The bustling heart of it all</div>
+                <p>The most developed area with the widest selection of restaurants, shopping, nightlife, and services. Bavaro Beach consistently ranks among the best in the world. Ideal for buyers who want walkable convenience and strong short-term rental demand.</p>
+                <div class="neighborhood-meta">
+                    <span>From <strong>$120K</strong></span>
+                    <span>Best for: <strong>Rental investors</strong></span>
+                </div>
+            </div>
+
+            <div class="neighborhood-card">
+                <div class="neighborhood-name">Cocotal Golf & Country Club</div>
+                <div class="neighborhood-vibe">Gated luxury, resort lifestyle</div>
+                <p>A master-planned golf community centered around an Oscar de la Renta-designed course. Gated security, lush landscaping, multiple pools, and a real sense of community. Popular with families and retirees who want resort living without the all-inclusive bubble.</p>
+                <div class="neighborhood-meta">
+                    <span>From <strong>$150K</strong></span>
+                    <span>Best for: <strong>Families & retirees</strong></span>
+                </div>
+            </div>
+
+            <div class="neighborhood-card">
+                <div class="neighborhood-name">Cap Cana</div>
+                <div class="neighborhood-vibe">Ultra-premium, marina lifestyle</div>
+                <p>The crown jewel of Dominican luxury real estate. Home to the Caribbean's largest marina, a Jack Nicklaus golf course, Juanillo Beach, and ultra-high-end developments. Cap Cana attracts HNW buyers looking for prestige and exclusivity.</p>
+                <div class="neighborhood-meta">
+                    <span>From <strong>$250K</strong></span>
+                    <span>Best for: <strong>Luxury buyers</strong></span>
+                </div>
+            </div>
+
+            <div class="neighborhood-card">
+                <div class="neighborhood-name">Punta Cana Village</div>
+                <div class="neighborhood-vibe">Quiet, authentic, close to the airport</div>
+                <p>A smaller, more residential neighborhood near the airport and the original Punta Cana resort. Less touristy, more local flavor. Great for buyers who want a quieter base or a second home they can access quickly after landing.</p>
+                <div class="neighborhood-meta">
+                    <span>From <strong>$100K</strong></span>
+                    <span>Best for: <strong>Quiet lifestyle</strong></span>
+                </div>
+            </div>
+
+            <div class="neighborhood-card">
+                <div class="neighborhood-name">Vista Cana</div>
+                <div class="neighborhood-vibe">New development, value play</div>
+                <p>An emerging master-planned community along the highway corridor, about 20 minutes from the beach. Modern projects with competitive pre-construction prices. Vista Cana appeals to budget-conscious investors betting on the area's rapid growth trajectory.</p>
+                <div class="neighborhood-meta">
+                    <span>From <strong>$85K</strong></span>
+                    <span>Best for: <strong>Value investors</strong></span>
+                </div>
+            </div>
+
+            <div class="neighborhood-card">
+                <div class="neighborhood-name">Uvero Alto</div>
+                <div class="neighborhood-vibe">Untouched beaches, nature-forward</div>
+                <p>Located 30 minutes north of Bavaro, Uvero Alto is where you go for unspoiled coastline and a more secluded feel. All-inclusive resorts dot the coast, but residential development is still early&mdash;making it a frontier opportunity for long-horizon buyers.</p>
+                <div class="neighborhood-meta">
+                    <span>From <strong>$95K</strong></span>
+                    <span>Best for: <strong>Nature lovers</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <strong>Pro tip:</strong> If maximum rental income is your priority, Bavaro and Cap Cana command the highest nightly rates. If long-term appreciation is the goal, keep an eye on Vista Cana and Uvero Alto&mdash;they're 3&ndash;5 years behind the curve but developing fast.
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 4 — BUYING PROCESS
+         ============================================================ -->
+    <section class="guide-section">
+        <div class="section-header">
+            <div class="section-number">04</div>
+            <h2 class="section-title">The Buying Process Step by Step</h2>
+            <p class="section-intro">Buying property in the Dominican Republic is straightforward when you follow the right process. Here's exactly what to expect, from first inquiry to getting your keys.</p>
+        </div>
+
+        <ol class="steps-list">
+            <li>
+                <div class="step-title">Research & Shortlist</div>
+                <p class="step-desc">Define your budget, goals (personal use, rental income, or both), and preferred zone. We'll send you a curated selection of properties that match your criteria, complete with financials and CONFOTUR status.</p>
+            </li>
+            <li>
+                <div class="step-title">Visit & Tour</div>
+                <p class="step-desc">Nothing replaces seeing properties in person. We organize full-day tours covering 4&ndash;6 properties, the surrounding neighborhoods, and key amenities. Virtual tours are available for remote buyers, but we strongly recommend at least one in-person visit.</p>
+            </li>
+            <li>
+                <div class="step-title">Make an Offer & Reserve</div>
+                <p class="step-desc">Once you've chosen a property, we submit your offer. For pre-construction, a reservation fee of $2,000&ndash;$5,000 typically holds the unit while paperwork is prepared. This is usually deducted from your first payment.</p>
+            </li>
+            <li>
+                <div class="step-title">Legal Due Diligence</div>
+                <p class="step-desc">Your lawyer verifies the property title, confirms CONFOTUR status, checks for liens or encumbrances, and reviews the developer's permits and legal standing. <strong>This step is non-negotiable.</strong> We can recommend experienced bilingual lawyers.</p>
+            </li>
+            <li>
+                <div class="step-title">Promise of Sale Contract</div>
+                <p class="step-desc">A formal "Contrato de Promesa de Venta" is signed by both parties. This legally binding agreement outlines the price, payment schedule, delivery date, and penalties for non-compliance. Your lawyer reviews every clause before you sign.</p>
+            </li>
+            <li>
+                <div class="step-title">Payment per Schedule</div>
+                <p class="step-desc">For pre-construction, payments are made in installments according to the agreed schedule (see Section 5). For ready-to-move-in properties, the full balance is typically due within 30&ndash;60 days of signing.</p>
+            </li>
+            <li>
+                <div class="step-title">Notarize & Register</div>
+                <p class="step-desc">Once fully paid, the definitive sale contract is notarized and submitted to the Title Registry (Registro de T&iacute;tulos) for official transfer. This process takes 30&ndash;60 days. Your lawyer handles the filing.</p>
+            </li>
+            <li>
+                <div class="step-title">Receive Your Keys</div>
+                <p class="step-desc">For ready properties, keys are handed over at closing. For pre-construction, you'll do a final walk-through inspection before accepting delivery. We coordinate the entire handover process.</p>
+            </li>
+        </ol>
+
+        <h3>Typical Timeline</h3>
+        <p>From offer to keys, expect <strong>60&ndash;90 days</strong> for a ready property. Pre-construction timelines depend on the project phase&mdash;typically 12&ndash;36 months from reservation to delivery.</p>
+
+        <h3>Closing Costs Breakdown</h3>
+        <table class="cost-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Typical Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Property Transfer Tax</td>
+                    <td>3% (waived with CONFOTUR)</td>
+                </tr>
+                <tr>
+                    <td>Legal Fees (lawyer)</td>
+                    <td>1% &ndash; 1.5% of purchase price</td>
+                </tr>
+                <tr>
+                    <td>Notary Fees</td>
+                    <td>~$300 &ndash; $600</td>
+                </tr>
+                <tr>
+                    <td>Title Registry</td>
+                    <td>~$200 &ndash; $500</td>
+                </tr>
+                <tr>
+                    <td>Title Insurance (optional)</td>
+                    <td>0.5% &ndash; 1%</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>Total (with CONFOTUR)</td>
+                    <td>~1.5% &ndash; 2.5%</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="highlight-box green">
+            <strong>Compare that to the US</strong>, where closing costs routinely run 4&ndash;6% of the purchase price. In Punta Cana with CONFOTUR, you're looking at roughly half that.
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 5 — FINANCING & PAYMENT
+         ============================================================ -->
+    <section class="guide-section">
+        <div class="section-header">
+            <div class="section-number">05</div>
+            <h2 class="section-title">Financing & Payment Options</h2>
+            <p class="section-intro">One of the biggest advantages of buying in Punta Cana is the flexible payment structures offered by developers. You don't necessarily need a mortgage to own property here.</p>
+        </div>
+
+        <div class="compare-grid">
+            <div class="compare-card">
+                <h4>Developer Financing</h4>
+                <ul>
+                    <li>Most common structure: 30% during construction, 70% at delivery</li>
+                    <li>Some offer 50/50 splits or even 40/60</li>
+                    <li>Monthly installments during construction (typically 12&ndash;36 months)</li>
+                    <li>0% interest during construction is standard</li>
+                    <li>No credit check or income verification</li>
+                    <li>Post-delivery financing available from some developers (3&ndash;5 years, 5&ndash;8% interest)</li>
+                </ul>
+            </div>
+            <div class="compare-card">
+                <h4>Cash Purchase</h4>
+                <ul>
+                    <li>Strongest negotiating position (3&ndash;8% discounts common)</li>
+                    <li>Fastest closing (30&ndash;45 days)</li>
+                    <li>Eliminates all interest costs</li>
+                    <li>Required for resale / secondary market properties</li>
+                    <li>Wire transfer or cashier's check from any international bank</li>
+                    <li>Dominican bank account not required but recommended</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Bank Mortgages for Foreigners</h3>
+        <p>Dominican banks do offer mortgages to foreign nationals, but the terms are less favorable than what you might be used to at home. Expect interest rates of 9&ndash;12%, loan-to-value ratios of 60&ndash;70%, and substantial documentation requirements. In practice, most foreign buyers prefer developer financing or cash for this reason.</p>
+
+        <p>If you own property in the US or Canada, consider leveraging a home equity line of credit (HELOC) at your domestic bank&mdash;rates will be significantly lower than a Dominican mortgage.</p>
+
+        <h3>Cryptocurrency</h3>
+        <p>A growing number of developers in Punta Cana now accept Bitcoin, Ethereum, and USDT for property purchases. Transactions are typically processed through a third-party escrow service that converts crypto to USD at the time of payment. If this interests you, let us know&mdash;we work with crypto-friendly developers.</p>
+
+        <div class="highlight-box">
+            <strong>Real example:</strong> On a $200,000 pre-construction condo with a 30/70 structure over 24 months, your construction payments would be approximately $2,500/month over 24 months ($60,000 total), with the remaining $140,000 due at delivery. That's a manageable path to ownership without any bank involvement.
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 6 — RENTAL INCOME
+         ============================================================ -->
+    <section class="guide-section">
+        <div class="section-header">
+            <div class="section-number">06</div>
+            <h2 class="section-title">Rental Income Potential</h2>
+            <p class="section-intro">Many buyers in Punta Cana aren't just looking for a vacation home&mdash;they want their property to work for them. Here's what realistic rental performance looks like.</p>
+        </div>
+
+        <h3>Average Daily Rates by Zone</h3>
+        <div class="rental-grid">
+            <div class="rental-card">
+                <div class="zone-name">Bavaro</div>
+                <div class="adr">$100&ndash;160</div>
+                <div class="adr-label">Per night (1-2 BR)</div>
+                <div class="occupancy">Occupancy: 70&ndash;80%</div>
+            </div>
+            <div class="rental-card">
+                <div class="zone-name">Cocotal Golf</div>
+                <div class="adr">$120&ndash;180</div>
+                <div class="adr-label">Per night (1-2 BR)</div>
+                <div class="occupancy">Occupancy: 65&ndash;75%</div>
+            </div>
+            <div class="rental-card">
+                <div class="zone-name">Cap Cana</div>
+                <div class="adr">$180&ndash;250+</div>
+                <div class="adr-label">Per night (1-2 BR)</div>
+                <div class="occupancy">Occupancy: 65&ndash;75%</div>
+            </div>
+        </div>
+
+        <h3>Short-Term (Airbnb) vs. Long-Term Rentals</h3>
+        <div class="compare-grid">
+            <div class="compare-card">
+                <h4>Short-Term / Airbnb</h4>
+                <ul>
+                    <li>Higher gross income potential</li>
+                    <li>Seasonal fluctuations (peak: Dec&ndash;Apr)</li>
+                    <li>Requires furnished unit</li>
+                    <li>Higher turnover and maintenance</li>
+                    <li>Property management: 20&ndash;25% of revenue</li>
+                    <li>Net yields: 6&ndash;10% annually</li>
+                </ul>
+            </div>
+            <div class="compare-card">
+                <h4>Long-Term / Annual Lease</h4>
+                <ul>
+                    <li>Predictable monthly income</li>
+                    <li>Lower management burden</li>
+                    <li>Typically unfurnished</li>
+                    <li>Less wear and tear</li>
+                    <li>Property management: 8&ndash;10% of revenue</li>
+                    <li>Net yields: 5&ndash;7% annually</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Property Management</h3>
+        <p>Unless you live in Punta Cana full-time, you'll want a property management company. The standard fee is <strong>20&ndash;25% of gross rental income</strong> for short-term rentals, which typically covers guest communication, check-in/out, cleaning coordination, maintenance, and listing optimization.</p>
+
+        <p>As an Airbnb Superhost myself, I can advise on listing strategy, pricing optimization, and connecting you with vetted management partners who deliver results.</p>
+
+        <div class="highlight-box">
+            <strong>Real numbers:</strong> A well-managed 1-bedroom condo in Bavaro purchased at $150K can generate $18,000&ndash;$24,000 in gross rental income annually. After management fees, maintenance, and HOA, net cash flow of $10,000&ndash;$15,000/year is achievable&mdash;representing a 7&ndash;10% net yield. With CONFOTUR tax savings on top, the effective return is even higher.
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 7 — ABOUT YOUR AGENT
+         ============================================================ -->
+    <section class="guide-section" style="border-top: none; padding-bottom: 0;">
+        <div class="section-header">
+            <div class="section-number">07</div>
+            <h2 class="section-title">About Your Agent</h2>
+        </div>
+
+        <div class="agent-section">
+            <div class="agent-avatar">A</div>
+            <h3 class="agent-name" style="color: #fff; margin-top: 0;">Ari</h3>
+            <p class="agent-title">Real Estate Advisor &amp; Airbnb Superhost</p>
+
+            <p>Based full-time in Punta Cana, I help international buyers navigate the local market with confidence. Whether you're looking for a rental investment, a retirement home, or a vacation property your family will enjoy for decades, I provide hands-on guidance through every step of the process.</p>
+
+            <p>I don't just sell properties&mdash;I help you build a strategy. From choosing the right zone to optimizing your rental listing, I'm invested in your long-term success.</p>
+
+            <div class="agent-badges">
+                <div class="agent-badge">
+                    <div class="badge-value">123</div>
+                    <div class="badge-label">Airbnb Reviews</div>
+                </div>
+                <div class="agent-badge">
+                    <div class="badge-value">Superhost</div>
+                    <div class="badge-label">Airbnb Status</div>
+                </div>
+                <div class="agent-badge">
+                    <div class="badge-value">EN / ES / FR</div>
+                    <div class="badge-label">Trilingual</div>
+                </div>
+            </div>
+
+            <p style="margin-top: 32px; color: rgba(255,255,255,0.6); font-size: 0.9rem;">Ready to start your Punta Cana journey?</p>
+
+            <a href="https://wa.me/18094865386?text=Hi%20Ari!%20I%20just%20read%20the%20buying%20guide%20and%20I'd%20like%20to%20learn%20more." class="agent-cta">WhatsApp: +1 809-486-5386</a>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         SCREEN FOOTER
+         ============================================================ -->
+    <footer class="guide-footer">
+        <p><strong>Rent & Go PC</strong> &nbsp;|&nbsp; <a href="https://rentandgopc.com">rentandgopc.com</a> &nbsp;|&nbsp; WhatsApp: <a href="https://wa.me/18094865386">+1 809-486-5386</a></p>
+        <p style="margin-top: 8px; font-size: 0.8rem; color: #aaa;">&copy; 2026 Rent & Go PC. All rights reserved. Information is believed accurate but not guaranteed. Consult a licensed attorney before making any purchase decision.</p>
+    </footer>
+</div>
+
+</body>
+</html>
