@@ -6,7 +6,8 @@
     { "id": "p4", "name": "Penthouse Cocotal Golf", "status": "cleaning", "nightlyRate": 310, "address": "Cocotal Golf & Country Club", "bedrooms": 3, "bathrooms": 3, "maxGuests": 8, "airbnbUrl": "", "icalUrl": "", "cleaningFee": 65, "monthlyHOA": 400 },
     { "id": "p5", "name": "Townhouse Palma Real", "status": "vacant", "nightlyRate": 150, "address": "Palma Real, Bavaro", "bedrooms": 2, "bathrooms": 2, "maxGuests": 5, "airbnbUrl": "", "icalUrl": "", "cleaningFee": 40, "monthlyHOA": 200 },
     { "id": "p6", "name": "Villa Punta Espada", "status": "maintenance", "nightlyRate": 425, "address": "Cap Cana, Punta Espada", "bedrooms": 4, "bathrooms": 4, "maxGuests": 10, "airbnbUrl": "", "icalUrl": "", "cleaningFee": 85, "monthlyHOA": 600 },
-    { "id": "p7", "name": "Apt Downtown Bavaro", "status": "vacant", "nightlyRate": 75, "address": "Downtown Bavaro", "bedrooms": 1, "bathrooms": 1, "maxGuests": 2, "airbnbUrl": "", "icalUrl": "", "cleaningFee": 25, "monthlyHOA": 120 }
+    { "id": "p7", "name": "Apt Downtown Bavaro", "status": "vacant", "nightlyRate": 75, "address": "Downtown Bavaro", "bedrooms": 1, "bathrooms": 1, "maxGuests": 2, "airbnbUrl": "", "icalUrl": "", "cleaningFee": 25, "monthlyHOA": 120 },
+    { "id": "p8", "name": "B-201 Josefina", "status": "vacant", "nightlyRate": 0, "address": "", "bedrooms": 0, "bathrooms": 0, "maxGuests": 0, "airbnbUrl": "", "icalUrl": "", "cleaningFee": 0, "monthlyHOA": 0 }
   ],
   "bookings": [
     { "id": "b1", "propertyId": "p1", "guest": "Sarah Thompson", "checkIn": "2026-03-04", "checkOut": "2026-03-11", "nightlyRate": 185, "platform": "Airbnb", "country": "USA", "notes": "", "totalPayout": 1295, "status": "confirmed", "guestEmail": "", "guestPhone": "" },
