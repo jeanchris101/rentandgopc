@@ -31,6 +31,7 @@
 
     var NAV_LINKS = [
         { href: 'index.html',            anchor: '#properties', i18nKey: 'nav_properties', label: 'Properties' },
+        { href: 'index.html',            anchor: '#rentals',    i18nKey: null,              label: 'Rentals' },
         { href: 'neighborhoods.html',    anchor: null,          i18nKey: null,              label: 'Neighborhoods' },
         { href: 'blog.html',             anchor: null,          i18nKey: 'blog_nav',        label: 'Guide' },
         { href: 'try-before-you-buy.html', anchor: null,        i18nKey: null,              label: 'Try Before You Buy' },
@@ -143,7 +144,39 @@
     function buildFooter() {
         return '<footer class="footer">' +
             '\n        <div class="container">' +
-            '\n            <p>Rent & Go PC &mdash; <span data-i18n="footer">Punta Cana, Dominican Republic</span></p>' +
+            '\n            <div class="footer-grid">' +
+            '\n                <div class="footer-col">' +
+            '\n                    <a href="index.html" class="footer-logo">Rent &amp; Go PC</a>' +
+            '\n                    <p class="footer-tagline">Your trusted real estate partner in Punta Cana, Dominican Republic.</p>' +
+            '\n                </div>' +
+            '\n                <div class="footer-col">' +
+            '\n                    <h4>Explore</h4>' +
+            '\n                    <ul>' +
+            '\n                        <li><a href="index.html#properties">Properties</a></li>' +
+            '\n                        <li><a href="index.html#rentals">Rentals</a></li>' +
+            '\n                        <li><a href="neighborhoods.html">Neighborhoods</a></li>' +
+            '\n                        <li><a href="blog.html">Guide</a></li>' +
+            '\n                    </ul>' +
+            '\n                </div>' +
+            '\n                <div class="footer-col">' +
+            '\n                    <h4>Tools</h4>' +
+            '\n                    <ul>' +
+            '\n                        <li><a href="roi-calculator.html">ROI Calculator</a></li>' +
+            '\n                        <li><a href="buying-guide-2026.html">Buying Guide</a></li>' +
+            '\n                        <li><a href="cost-of-living.html">Cost of Living</a></li>' +
+            '\n                    </ul>' +
+            '\n                </div>' +
+            '\n                <div class="footer-col">' +
+            '\n                    <h4>Contact</h4>' +
+            '\n                    <ul>' +
+            '\n                        <li><a href="https://wa.me/18094865386" target="_blank">WhatsApp: +1 (809) 486-5386</a></li>' +
+            '\n                        <li><span data-i18n="footer">Punta Cana, Dominican Republic</span></li>' +
+            '\n                    </ul>' +
+            '\n                </div>' +
+            '\n            </div>' +
+            '\n            <div class="footer-bottom">' +
+            '\n                <p>&copy; 2026 Rent &amp; Go PC. All rights reserved.</p>' +
+            '\n            </div>' +
             '\n        </div>' +
             '\n    </footer>';
     }

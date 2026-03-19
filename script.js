@@ -173,4 +173,175 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'ArrowLeft') lightboxNav(-1);
         if (e.key === 'ArrowRight') lightboxNav(1);
     });
+
+    // === Auto-apply .animate-on-scroll to key elements ===
+    const animateSelectors = [
+        '.section-title',
+        '.property-card',
+        '.benefit-card',
+        '.stat-item',
+        '.rental-card',
+        '.tool-card'
+    ];
+    animateSelectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach(el => {
+            el.classList.add('animate-on-scroll');
+        });
+    });
+
+    // === Initialize scroll animations ===
+    initScrollAnimations();
 });
+
+// === Scroll Animations ===
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/**
+ * Initialize all scroll-based animations
+ */
+function initScrollAnimations() {
+    initScrollReveal();
+    initNumberCounters();
+    initHeroParallax();
+    initHeaderTransition();
+}
+
+// --- 1. Scroll-reveal animations ---
+function initScrollReveal() {
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    if (!elements.length) return;
+
+    // If user prefers reduced motion, show everything immediately
+    if (prefersReducedMotion) {
+        elements.forEach(el => el.classList.add('visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    elements.forEach(el => observer.observe(el));
+}
+
+// --- 2. Animated number counters ---
+function initNumberCounters() {
+    const counters = document.querySelectorAll('[data-count-to]');
+    if (!counters.length) return;
+
+    // If reduced motion, show final values immediately
+    if (prefersReducedMotion) {
+        counters.forEach(el => {
+            const target = parseFloat(el.getAttribute('data-count-to'));
+            const suffix = el.getAttribute('data-count-suffix') || '';
+            el.textContent = formatCounterValue(target) + suffix;
+        });
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    counters.forEach(el => observer.observe(el));
+}
+
+function formatCounterValue(value) {
+    // If it's a whole number, show without decimals; otherwise keep one decimal
+    return Number.isInteger(value) ? value.toString() : value.toFixed(1);
+}
+
+function animateCounter(el) {
+    const target = parseFloat(el.getAttribute('data-count-to'));
+    const suffix = el.getAttribute('data-count-suffix') || '';
+    const duration = 2000; // ~2 seconds
+    let start = null;
+
+    function easeOutQuart(t) {
+        return 1 - Math.pow(1 - t, 4);
+    }
+
+    function step(timestamp) {
+        if (!start) start = timestamp;
+        const elapsed = timestamp - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const easedProgress = easeOutQuart(progress);
+        const current = easedProgress * target;
+
+        el.textContent = formatCounterValue(Math.round(current * 10) / 10) + suffix;
+
+        if (progress < 1) {
+            requestAnimationFrame(step);
+        } else {
+            el.textContent = formatCounterValue(target) + suffix;
+        }
+    }
+
+    requestAnimationFrame(step);
+}
+
+// --- 3. Parallax on hero background ---
+function initHeroParallax() {
+    if (prefersReducedMotion) return;
+
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+                // Only apply when hero is in view range
+                if (scrollY < window.innerHeight * 1.5) {
+                    hero.style.backgroundPositionY = (scrollY * 0.3) + 'px';
+                }
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+}
+
+// --- 4. Smooth header transition on scroll ---
+function initHeaderTransition() {
+    const header = document.querySelector('.header');
+    if (!header) return;
+
+    // Remove the basic scroll handler — we replace it with an enhanced one
+    // (The old one in DOMContentLoaded only set box-shadow)
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+                const scrolled = scrollY > 10;
+
+                header.style.boxShadow = scrolled
+                    ? '0 2px 20px rgba(0,0,0,0.15)'
+                    : 'none';
+                header.style.backdropFilter = scrolled
+                    ? 'blur(12px)'
+                    : 'blur(8px)';
+                header.style.height = scrolled ? '60px' : '70px';
+                header.style.transition = 'box-shadow 0.3s, backdrop-filter 0.3s, height 0.3s';
+
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+}

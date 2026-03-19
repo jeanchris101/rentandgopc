@@ -40,6 +40,7 @@
                 <a href="index.html" class="logo">Rent & Go PC</a>
                 <nav class="nav">
                     <a href="#properties" data-i18n="nav_properties">Properties</a>
+                    <a href="#rentals">Rentals</a>
                     <a href="neighborhoods.html">Neighborhoods</a>
                     <a href="blog.html" data-i18n="blog_nav">Guide</a>
                     <a href="try-before-you-buy.html">Try Before You Buy</a>
@@ -60,77 +61,248 @@
 
     <!-- Hero -->
     <section class="hero">
+        <div class="hero-bg" style="background-image: url('images/arboleda/pool-golf-aerial.jpg');"></div>
         <div class="hero-overlay"></div>
         <div class="container hero-content">
             <h1 data-i18n="hero_title">Own Your Piece of Paradise</h1>
             <p data-i18n="hero_subtitle">Apartments and villas in Punta Cana — 8-12% rental ROI</p>
             <a href="#properties" class="btn btn-primary" data-i18n="hero_cta">View Properties</a>
         </div>
+        <div class="hero-scroll-indicator">
+            <span>Scroll</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+        </div>
+    </section>
+
+    <!-- Stats Strip -->
+    <section class="stats-strip">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item animate-on-scroll">
+                    <span class="stat-number">11.6M+</span>
+                    <span class="stat-label">Visitors in 2025</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item animate-on-scroll">
+                    <span class="stat-number">8-12%</span>
+                    <span class="stat-label">Rental ROI</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item animate-on-scroll">
+                    <span class="stat-number">Direct Flights</span>
+                    <span class="stat-label">from US, CA, EU</span>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Properties -->
     <section id="properties" class="section properties-section">
         <div class="container">
-            <h2 class="section-title" data-i18n="section_available">Available Properties</h2>
-            <div class="properties-grid">
+            <h2 class="section-title animate-on-scroll" data-i18n="section_available">Available Properties</h2>
 
-                <!-- Property 1 - Cocotal -->
-                <a href="cocotal-2bdr.html" class="property-card">
-                    <div class="property-image">
-                        <img src="images/arboleda/pool-golf-aerial.jpg" alt="Pool and golf course at Cocotal Golf" class="property-card-img">
-                        <div class="property-badges">
-                            <span class="badge badge-featured" data-i18n="featured">Featured</span>
-                        </div>
-                        <div class="property-price">US$315,000</div>
+            <!-- Featured Property - Cocotal -->
+            <a href="cocotal-2bdr.html" class="featured-property-card animate-on-scroll">
+                <div class="featured-property-image">
+                    <img src="images/arboleda/pool-golf-aerial.jpg" alt="Pool and golf course at Cocotal Golf" class="property-card-img">
+                    <div class="property-badges">
+                        <span class="badge badge-featured" data-i18n="featured">Featured</span>
                     </div>
-                    <div class="property-info">
-                        <h3 data-i18n="cocotal_title">2BR Apartment in Cocotal Golf</h3>
-                        <p class="property-location" data-i18n="cocotal_location">Cocotal Golf & Country Club, Bavaro, Punta Cana</p>
-                        <div class="property-specs">
-                            <span>2 Bed</span>
-                            <span>2 Bath</span>
-                            <span>144 m&sup2;</span>
-                            <span>2 Parking</span>
-                        </div>
-                        <p class="property-highlight" data-i18n="cocotal_highlight">Golf course views | Melia Hotel access | 8-12% rental ROI</p>
+                </div>
+                <div class="featured-property-info">
+                    <div class="featured-property-price">US$315,000</div>
+                    <h3 data-i18n="cocotal_title">2BR Apartment in Cocotal Golf</h3>
+                    <p class="property-location" data-i18n="cocotal_location">Cocotal Golf & Country Club, Bavaro, Punta Cana</p>
+                    <div class="property-specs">
+                        <span>2 Bed</span>
+                        <span>2 Bath</span>
+                        <span>144 m&sup2;</span>
+                        <span>2 Parking</span>
                     </div>
-                </a>
+                    <p class="property-highlight" data-i18n="cocotal_highlight">Golf course views | Melia Hotel access | 8-12% rental ROI</p>
+                    <span class="btn btn-primary featured-property-btn">View Property</span>
+                </div>
+            </a>
 
-                <!-- Property 2 - Coming Soon -->
-                <div class="property-card coming-soon">
-                    <div class="property-image">
-                        <div class="property-image-placeholder">
-                            <span data-i18n="coming_soon">Coming Soon</span>
-                        </div>
+            <p class="properties-coming-soon animate-on-scroll">More properties coming soon &mdash; <a href="#contact">contact us</a> for off-market listings.</p>
+        </div>
+    </section>
+
+    <!-- Vacation Rentals -->
+    <section id="rentals" class="section rentals-section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Vacation Rentals in Punta Cana</h2>
+            <p class="section-subtitle animate-on-scroll">Superhost-managed apartments in Punta Cana &mdash; book on Airbnb or message us directly.</p>
+            <div class="rentals-grid">
+
+                <!-- Rental 1: Arboleda A102 -->
+                <div class="rental-card animate-on-scroll">
+                    <div class="rental-card-image">
+                        <img src="images/arboleda/pool-golf-aerial.jpg" alt="Modern 2BR with Pool & Golf View — Arboleda A102">
+                        <div class="rental-rating">★ 4.94 <span>(32)</span></div>
                     </div>
-                    <div class="property-info">
-                        <h3 data-i18n="new_property_soon">New Property Coming Soon</h3>
+                    <div class="rental-card-info">
+                        <h3>Modern 2BR with Pool & Golf View</h3>
+                        <p class="rental-location">Cocotal Golf, Bavaro, Punta Cana</p>
+                        <div class="rental-specs">
+                            <span>3 Guests</span>
+                            <span>2 Bedrooms</span>
+                            <span>Pool Access</span>
+                        </div>
+                        <p class="rental-desc">Stylish retreat with stunning golf course views from both bedrooms and direct pool access from the terrace.</p>
+                        <div class="rental-buttons">
+                            <a href="https://www.airbnb.com/h/arboledaa102" class="btn btn-rental-airbnb" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.001 18.5c-1.3 0-2.4-.8-3.2-1.7-.8.9-1.9 1.7-3.2 1.7-2.1 0-3.6-1.6-3.6-3.5 0-.7.2-1.4.5-2.1.8-1.7 2.7-3.7 5.1-6.2.4-.4.8-.8 1.2-1.2.4.4.8.8 1.2 1.2 2.4 2.5 4.3 4.5 5.1 6.2.3.7.5 1.4.5 2.1 0 1.9-1.6 3.5-3.6 3.5z"/></svg>
+                                Book on Airbnb
+                            </a>
+                            <a href="https://wa.me/18094865386?text=Hi!%20I'm%20interested%20in%20Arboleda%20A102" class="btn btn-rental-wa" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                WhatsApp
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Property 3 - Coming Soon -->
-                <div class="property-card coming-soon">
-                    <div class="property-image">
-                        <div class="property-image-placeholder">
-                            <span data-i18n="coming_soon">Coming Soon</span>
-                        </div>
+                <!-- Rental 2: Arboleda A103 -->
+                <div class="rental-card animate-on-scroll">
+                    <div class="rental-card-image">
+                        <img src="images/arboleda/terrace.jpg" alt="Arboleda A103 — Cocotal Golf">
+                        <div class="rental-rating">★ New</div>
                     </div>
-                    <div class="property-info">
-                        <h3 data-i18n="new_property_soon">New Property Coming Soon</h3>
+                    <div class="rental-card-info">
+                        <h3>2BR Apartment in Arboleda A103</h3>
+                        <p class="rental-location">Cocotal Golf, Bavaro, Punta Cana</p>
+                        <div class="rental-specs">
+                            <span>2 Guests</span>
+                            <span>2 Bedrooms</span>
+                            <span>Golf View</span>
+                        </div>
+                        <p class="rental-desc">Comfortable apartment in the Arboleda complex with terrace views overlooking the golf course and pool area.</p>
+                        <div class="rental-buttons">
+                            <a href="https://www.airbnb.com/h/harboledaa103" class="btn btn-rental-airbnb" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.001 18.5c-1.3 0-2.4-.8-3.2-1.7-.8.9-1.9 1.7-3.2 1.7-2.1 0-3.6-1.6-3.6-3.5 0-.7.2-1.4.5-2.1.8-1.7 2.7-3.7 5.1-6.2.4-.4.8-.8 1.2-1.2.4.4.8.8 1.2 1.2 2.4 2.5 4.3 4.5 5.1 6.2.3.7.5 1.4.5 2.1 0 1.9-1.6 3.5-3.6 3.5z"/></svg>
+                                Book on Airbnb
+                            </a>
+                            <a href="https://wa.me/18094865386?text=Hi!%20I'm%20interested%20in%20Arboleda%20A103" class="btn btn-rental-wa" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                WhatsApp
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Property 4 - Coming Soon -->
-                <div class="property-card coming-soon">
-                    <div class="property-image">
-                        <div class="property-image-placeholder">
-                            <span data-i18n="coming_soon">Coming Soon</span>
+                <!-- Rental 3: Arboleda B103 -->
+                <div class="rental-card animate-on-scroll">
+                    <div class="rental-card-image">
+                        <img src="images/arboleda/living-room.jpg" alt="Elegant 2BDR Golf View Unit — Arboleda B103">
+                        <div class="rental-rating">★ 4.8 <span>(10)</span></div>
+                    </div>
+                    <div class="rental-card-info">
+                        <h3>Elegant 2BDR Golf View Unit</h3>
+                        <p class="rental-location">Cocotal Golf, Bavaro, Punta Cana</p>
+                        <div class="rental-specs">
+                            <span>2 Guests</span>
+                            <span>2 Bedrooms</span>
+                            <span>1,450 ft²</span>
+                        </div>
+                        <p class="rental-desc">Spacious apartment with golf course views overlooking fairways, direct pool access, and contemporary furnishings.</p>
+                        <div class="rental-buttons">
+                            <a href="https://www.airbnb.com/h/arboledab103" class="btn btn-rental-airbnb" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.001 18.5c-1.3 0-2.4-.8-3.2-1.7-.8.9-1.9 1.7-3.2 1.7-2.1 0-3.6-1.6-3.6-3.5 0-.7.2-1.4.5-2.1.8-1.7 2.7-3.7 5.1-6.2.4-.4.8-.8 1.2-1.2.4.4.8.8 1.2 1.2 2.4 2.5 4.3 4.5 5.1 6.2.3.7.5 1.4.5 2.1 0 1.9-1.6 3.5-3.6 3.5z"/></svg>
+                                Book on Airbnb
+                            </a>
+                            <a href="https://wa.me/18094865386?text=Hi!%20I'm%20interested%20in%20Arboleda%20B103" class="btn btn-rental-wa" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                WhatsApp
+                            </a>
                         </div>
                     </div>
-                    <div class="property-info">
-                        <h3 data-i18n="new_property_soon">New Property Coming Soon</h3>
+                </div>
+
+                <!-- Rental 4: Arboleda B101 -->
+                <div class="rental-card animate-on-scroll">
+                    <div class="rental-card-image">
+                        <img src="images/arboleda/kitchen-island.jpg" alt="New Modern 2BDR in Cocotal Golf — Arboleda B101">
+                        <div class="rental-rating">★ 4.89 <span>(18)</span></div>
+                    </div>
+                    <div class="rental-card-info">
+                        <h3>New Modern 2BDR in Cocotal Golf</h3>
+                        <p class="rental-location">Cocotal Golf, Bavaro, Punta Cana</p>
+                        <div class="rental-specs">
+                            <span>2 Guests</span>
+                            <span>2 Bedrooms</span>
+                            <span>Ground Floor</span>
+                        </div>
+                        <p class="rental-desc">Cozy ground-floor apartment with a private patio, pool &amp; golf course views, and a fully equipped kitchen for BBQs.</p>
+                        <div class="rental-buttons">
+                            <a href="https://www.airbnb.com/h/arboledab101" class="btn btn-rental-airbnb" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.001 18.5c-1.3 0-2.4-.8-3.2-1.7-.8.9-1.9 1.7-3.2 1.7-2.1 0-3.6-1.6-3.6-3.5 0-.7.2-1.4.5-2.1.8-1.7 2.7-3.7 5.1-6.2.4-.4.8-.8 1.2-1.2.4.4.8.8 1.2 1.2 2.4 2.5 4.3 4.5 5.1 6.2.3.7.5 1.4.5 2.1 0 1.9-1.6 3.5-3.6 3.5z"/></svg>
+                                Book on Airbnb
+                            </a>
+                            <a href="https://wa.me/18094865386?text=Hi!%20I'm%20interested%20in%20Arboleda%20B101" class="btn btn-rental-wa" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                WhatsApp
+                            </a>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Rental 5: Paseo B202 -->
+                <div class="rental-card animate-on-scroll">
+                    <div class="rental-card-image">
+                        <img src="images/cocotal/hero-pool-golf.jpg" alt="Cozy 2BD with Amazing Golf View — Paseo B202">
+                        <div class="rental-rating">★ 4.89 <span>(9)</span></div>
+                    </div>
+                    <div class="rental-card-info">
+                        <h3>Cozy 2BD with Amazing Golf View</h3>
+                        <p class="rental-location">Cocotal Golf, Bavaro, Punta Cana</p>
+                        <div class="rental-specs">
+                            <span>2 Guests</span>
+                            <span>2 Bedrooms</span>
+                            <span>2nd Floor</span>
+                        </div>
+                        <p class="rental-desc">Relax with beautiful golf course and pool views from the terrace. A peaceful 2nd-floor retreat with privacy and convenience.</p>
+                        <div class="rental-buttons">
+                            <a href="https://www.airbnb.com/h/paseob202" class="btn btn-rental-airbnb" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.001 18.5c-1.3 0-2.4-.8-3.2-1.7-.8.9-1.9 1.7-3.2 1.7-2.1 0-3.6-1.6-3.6-3.5 0-.7.2-1.4.5-2.1.8-1.7 2.7-3.7 5.1-6.2.4-.4.8-.8 1.2-1.2.4.4.8.8 1.2 1.2 2.4 2.5 4.3 4.5 5.1 6.2.3.7.5 1.4.5 2.1 0 1.9-1.6 3.5-3.6 3.5z"/></svg>
+                                Book on Airbnb
+                            </a>
+                            <a href="https://wa.me/18094865386?text=Hi!%20I'm%20interested%20in%20Paseo%20B202" class="btn btn-rental-wa" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rental 6: Los Corales -->
+                <div class="rental-card animate-on-scroll">
+                    <div class="rental-card-image">
+                        <img src="images/cocotal/pool-architecture.jpg" alt="Pool-View Apt, Walk to Beach — Los Corales">
+                        <div class="rental-rating">★ 5.0 <span>(1)</span></div>
+                    </div>
+                    <div class="rental-card-info">
+                        <h3>Pool-View Apt | Walk to Beach</h3>
+                        <p class="rental-location">Los Corales, Bavaro, Punta Cana</p>
+                        <div class="rental-specs">
+                            <span>2-3 Guests</span>
+                            <span>1 Bedroom</span>
+                            <span>Beach 10 min</span>
+                        </div>
+                        <p class="rental-desc">Wake up to a pool view and be on Bavaro's white-sand beaches in 10 minutes. Kitchen, gym, BBQ, and free parking.</p>
+                        <div class="rental-buttons">
+                            <a href="https://www.airbnb.com/h/loscorales1" class="btn btn-rental-airbnb" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.001 18.5c-1.3 0-2.4-.8-3.2-1.7-.8.9-1.9 1.7-3.2 1.7-2.1 0-3.6-1.6-3.6-3.5 0-.7.2-1.4.5-2.1.8-1.7 2.7-3.7 5.1-6.2.4-.4.8-.8 1.2-1.2.4.4.8.8 1.2 1.2 2.4 2.5 4.3 4.5 5.1 6.2.3.7.5 1.4.5 2.1 0 1.9-1.6 3.5-3.6 3.5z"/></svg>
+                                Book on Airbnb
+                            </a>
+                            <a href="https://wa.me/18094865386?text=Hi!%20I'm%20interested%20in%20Los%20Corales%20apt" class="btn btn-rental-wa" target="_blank">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -139,24 +311,50 @@
     <section id="why-punta-cana" class="section why-section">
         <div class="container">
             <h2 class="section-title" data-i18n="why_invest_title">Why Invest in Punta Cana?</h2>
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="benefit-icon">$</div>
+
+            <div class="why-row animate-on-scroll">
+                <div class="why-icon-col">
+                    <div class="why-icon-circle">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                </div>
+                <div class="why-text-col">
                     <h3 data-i18n="why_tax_title">Tax Advantages</h3>
                     <p data-i18n="why_tax_desc">Favorable tax environment for foreign investors. Low property taxes and investor-friendly regulations.</p>
                 </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">&#9992;</div>
+            </div>
+
+            <div class="why-row why-row-reverse animate-on-scroll">
+                <div class="why-icon-col">
+                    <div class="why-icon-circle">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                    </div>
+                </div>
+                <div class="why-text-col">
                     <h3 data-i18n="why_connectivity">Connectivity</h3>
                     <p data-i18n="why_connectivity_desc">Direct flights from USA, Canada, Europe. PUJ international airport minutes away.</p>
                 </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">&#8593;</div>
+            </div>
+
+            <div class="why-row animate-on-scroll">
+                <div class="why-icon-col">
+                    <div class="why-icon-circle">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    </div>
+                </div>
+                <div class="why-text-col">
                     <h3>ROI</h3>
                     <p data-i18n="why_roi_desc">Constant appreciation. 8-12% annual ROI on vacation rentals (Airbnb).</p>
                 </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">&#9728;</div>
+            </div>
+
+            <div class="why-row why-row-reverse animate-on-scroll">
+                <div class="why-icon-col">
+                    <div class="why-icon-circle">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    </div>
+                </div>
+                <div class="why-text-col">
                     <h3 data-i18n="why_lifestyle">Quality of Life</h3>
                     <p data-i18n="why_lifestyle_desc">365 days of sunshine. World-class beaches. Growing international community.</p>
                 </div>
@@ -165,66 +363,78 @@
     </section>
 
     <!-- Free Tools -->
-    <section class="section" style="background: var(--color-bg);">
+    <section class="section tools-section">
         <div class="container">
-            <h2 class="section-title">Free Tools for Buyers</h2>
-            <div class="benefits-grid">
-                <a href="roi-calculator.html" class="benefit-card" style="text-decoration:none; cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
-                    <div class="benefit-icon">%</div>
+            <h2 class="section-title animate-on-scroll">Free Tools for Buyers</h2>
+            <div class="tools-grid">
+                <a href="roi-calculator.html" class="tool-card tool-card-accent-gold animate-on-scroll">
+                    <div class="tool-icon">%</div>
                     <h3>ROI Calculator</h3>
                     <p>Calculate your rental income, ROI, and break-even timeline for any Punta Cana property.</p>
                 </a>
-                <a href="buying-guide-2026.html" class="benefit-card" style="text-decoration:none; cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
-                    <div class="benefit-icon">$</div>
+                <a href="buying-guide-2026.html" class="tool-card tool-card-accent-green animate-on-scroll">
+                    <div class="tool-icon">$</div>
                     <h3>Buying Guide 2026</h3>
                     <p>Everything you need to know about buying property in the Dominican Republic.</p>
                 </a>
-                <a href="neighborhoods.html" class="benefit-card" style="text-decoration:none; cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
-                    <div class="benefit-icon">&#9873;</div>
+                <a href="neighborhoods.html" class="tool-card tool-card-accent-blue animate-on-scroll">
+                    <div class="tool-icon">&#9873;</div>
                     <h3>Neighborhood Guide</h3>
                     <p>Compare 6 Punta Cana zones. Take the quiz to find your perfect neighborhood.</p>
                 </a>
-                <a href="guide-download.html" class="benefit-card" style="text-decoration:none; cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
-                    <div class="benefit-icon">&#9997;</div>
+                <a href="guide-download.html" class="tool-card tool-card-accent-coral animate-on-scroll">
+                    <div class="tool-icon">&#9997;</div>
                     <h3>Free Buying Guide</h3>
                     <p>Download the complete 2026 guide to buying property in the Dominican Republic.</p>
                 </a>
-                <a href="cost-of-living.html" class="benefit-card" style="text-decoration:none; cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
-                    <div class="benefit-icon">&#127758;</div>
+                <a href="cost-of-living.html" class="tool-card tool-card-accent-teal animate-on-scroll">
+                    <div class="tool-icon">&#127758;</div>
                     <h3>Cost of Living</h3>
-                    <p>Compare living costs: Punta Cana vs Miami, NYC, Montreal, Madrid & more.</p>
+                    <p>Compare living costs: Punta Cana vs Miami, NYC, Montreal, Madrid &amp; more.</p>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- About Ari -->
-    <section class="section" style="background: #fff;">
-        <div class="container" style="max-width: 800px; text-align: center;">
+    <!-- About / Agent -->
+    <section class="section about-section">
+        <div class="container">
             <h2 class="section-title">Your Agent in Punta Cana</h2>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
-                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 8px;">
-                    <div style="background: #e8f5e9; border-radius: 8px; padding: 10px 18px; font-size: 0.9rem;">
-                        <strong style="color: #2e7d32;">Airbnb Superhost</strong> &mdash; 123+ reviews
-                    </div>
-                    <div style="background: #faf3e0; border-radius: 8px; padding: 10px 18px; font-size: 0.9rem;">
-                        <strong style="color: #c8a45e;">Trilingual</strong> &mdash; English, Spanish, French
-                    </div>
-                    <div style="background: #e3f2fd; border-radius: 8px; padding: 10px 18px; font-size: 0.9rem;">
-                        <strong style="color: #1565c0;">Based in Punta Cana</strong> &mdash; local expertise
+            <div class="about-credentials">
+                <div class="credential-badge credential-green animate-on-scroll">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+                    <div>
+                        <strong>Airbnb Superhost</strong>
+                        <span>123+ reviews</span>
                     </div>
                 </div>
-                <p style="color: #6b6b6b; line-height: 1.8; max-width: 600px;">I manage 7 vacation rentals in Punta Cana and help international buyers find the right property. Whether you're looking for rental income, a second home, or both &mdash; I'll guide you from first visit to keys in hand.</p>
+                <div class="credential-badge credential-gold animate-on-scroll">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
+                    <div>
+                        <strong>Trilingual</strong>
+                        <span>English, Spanish, French</span>
+                    </div>
+                </div>
+                <div class="credential-badge credential-blue animate-on-scroll">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <div>
+                        <strong>Based in Punta Cana</strong>
+                        <span>Local expertise</span>
+                    </div>
+                </div>
             </div>
+            <blockquote class="about-quote animate-on-scroll">
+                I manage 7 vacation rentals in Punta Cana and help international buyers find the right property. Whether you're looking for rental income, a second home, or both &mdash; I'll guide you from first visit to keys in hand.
+            </blockquote>
         </div>
     </section>
 
     <!-- Contact / CTA -->
     <section id="contact" class="section contact-section">
         <div class="container">
-            <h2 class="section-title" data-i18n="contact_title">Interested? Let's Talk</h2>
-            <p class="contact-subtitle" data-i18n="contact_subtitle">Message me directly on WhatsApp for more info, photos, or to schedule a visit.</p>
-            <a href="https://wa.me/18094865386?text=Hello!%20I'm%20interested%20in%20a%20property%20in%20Punta%20Cana" class="btn btn-whatsapp" target="_blank">
+            <h2 class="section-title animate-on-scroll" data-i18n="contact_title">Interested? Let's Talk</h2>
+            <p class="contact-subtitle animate-on-scroll" data-i18n="contact_subtitle">Message me directly on WhatsApp for more info, photos, or to schedule a visit.</p>
+            <a href="https://wa.me/18094865386?text=Hello!%20I'm%20interested%20in%20a%20property%20in%20Punta%20Cana" class="btn btn-whatsapp animate-on-scroll" target="_blank">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 <span data-i18n="whatsapp_btn">WhatsApp</span>
             </a>
@@ -234,11 +444,65 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>Rent & Go PC &mdash; <span data-i18n="footer">Punta Cana, Dominican Republic</span></p>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">Rent & Go PC</a>
+                    <p class="footer-tagline">Your trusted real estate partner in Punta Cana, Dominican Republic.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="#properties">Properties</a></li>
+                        <li><a href="#rentals">Rentals</a></li>
+                        <li><a href="neighborhoods.html">Neighborhoods</a></li>
+                        <li><a href="blog.html">Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="roi-calculator.html">ROI Calculator</a></li>
+                        <li><a href="buying-guide-2026.html">Buying Guide</a></li>
+                        <li><a href="cost-of-living.html">Cost of Living</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="https://wa.me/18094865386" target="_blank">WhatsApp: +1 (809) 486-5386</a></li>
+                        <li><span data-i18n="footer">Punta Cana, Dominican Republic</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Rent & Go PC. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/18094865386?text=Hello!%20I'm%20interested%20in%20a%20property%20in%20Punta%20Cana" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
     <script src="translations.js"></script>
     <script src="script.js"></script>
+
+    <!-- Scroll Animation Observer -->
+    <script>
+    (function() {
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(function(el) {
+            observer.observe(el);
+        });
+    })();
+    </script>
 </body>
 </html>
