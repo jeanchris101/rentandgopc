@@ -43,6 +43,7 @@
             --white: #ffffff;
             --shadow: 0 2px 16px rgba(26, 58, 42, 0.08);
             --shadow-lg: 0 8px 32px rgba(26, 58, 42, 0.12);
+            --shadow-xl: 0 12px 48px rgba(26, 58, 42, 0.18);
         }
 
         body {
@@ -50,6 +51,18 @@
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
+        }
+
+        /* Scroll Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Header */
@@ -117,17 +130,52 @@
 
         /* Hero */
         .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, #2a5a40 100%);
-            padding: 3.5rem 2rem 3rem;
+            position: relative;
+            min-height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
             color: var(--white);
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            background-image: url('https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?w=1600&h=600&fit=crop');
+            background-size: cover;
+            background-position: center 40%;
+            will-change: transform;
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 58, 42, 0.82) 0%, rgba(42, 90, 64, 0.72) 50%, rgba(26, 58, 42, 0.85) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 4.5rem 2rem 4rem;
+            max-width: 750px;
         }
 
         .hero h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.4rem;
+            font-size: 2.8rem;
             font-weight: 700;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         .hero h1 span {
@@ -135,11 +183,44 @@
         }
 
         .hero p {
-            font-size: 1.05rem;
-            opacity: 0.85;
+            font-size: 1.1rem;
+            opacity: 0.9;
             max-width: 650px;
             margin: 0 auto;
             font-weight: 300;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(200, 164, 94, 0.2);
+            border: 1px solid rgba(200, 164, 94, 0.4);
+            color: var(--accent);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Wave Divider */
+        .wave-divider {
+            position: relative;
+            height: 60px;
+            overflow: hidden;
+        }
+
+        .wave-divider svg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+        }
+
+        .wave-divider-flip {
+            transform: scaleY(-1);
         }
 
         /* Main */
@@ -186,8 +267,8 @@
         }
 
         .neighborhood-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
         }
 
         .neighborhood-card.selected {
@@ -200,10 +281,30 @@
         }
 
         .card-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            padding: 1.25rem 1.5rem;
-            color: var(--white);
             position: relative;
+            padding: 1.5rem 1.5rem;
+            color: var(--white);
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(26, 58, 42, 0.25) 0%, rgba(26, 58, 42, 0.85) 100%);
+            z-index: 1;
+        }
+
+        .card-header > *:not(.card-header-overlay) {
+            position: relative;
+            z-index: 2;
         }
 
         .card-icon {
@@ -216,11 +317,12 @@
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 0.15rem;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
         }
 
         .card-tagline {
             font-size: 0.78rem;
-            opacity: 0.8;
+            opacity: 0.85;
             font-weight: 300;
         }
 
@@ -234,6 +336,8 @@
             font-weight: 700;
             padding: 0.3rem 0.6rem;
             border-radius: 20px;
+            z-index: 3;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .card-body {
@@ -409,6 +513,15 @@
             transform: rotate(180deg);
         }
 
+        /* Section Backgrounds */
+        .section-alt {
+            background: #f4f2ed;
+        }
+
+        .section-wrapper {
+            padding: 3rem 0;
+        }
+
         /* Compare Section */
         .compare-section {
             margin-bottom: 3rem;
@@ -543,9 +656,10 @@
         .quiz-section {
             background: var(--white);
             border-radius: 12px;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-lg);
             padding: 2.5rem;
             margin-bottom: 3rem;
+            border: 1px solid rgba(200, 164, 94, 0.15);
         }
 
         .quiz-section .section-title {
@@ -715,10 +829,38 @@
 
         /* CTA */
         .cta-section {
+            position: relative;
             text-align: center;
-            padding: 3.5rem 2rem;
-            background: linear-gradient(135deg, var(--primary) 0%, #2a5a40 100%);
+            padding: 5rem 2rem;
             color: var(--white);
+            overflow: hidden;
+        }
+
+        .cta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=1400&h=500&fit=crop');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+        }
+
+        .cta-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 58, 42, 0.9) 0%, rgba(42, 90, 64, 0.85) 100%);
+            z-index: 1;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
         }
 
         .cta-section h2 {
@@ -726,11 +868,12 @@
             font-size: 1.8rem;
             font-weight: 600;
             margin-bottom: 0.75rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .cta-section p {
             font-size: 1rem;
-            opacity: 0.85;
+            opacity: 0.9;
             margin-bottom: 1.5rem;
             font-weight: 300;
         }
@@ -762,13 +905,81 @@
             fill: currentColor;
         }
 
-        /* Footer */
+        /* Footer (multi-column, matches homepage) */
         footer {
             background: var(--primary);
-            color: rgba(255,255,255,0.6);
+            color: rgba(255,255,255,0.75);
+            padding: 60px 2rem 24px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .footer-tagline {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            opacity: 0.7;
+        }
+
+        .footer-col h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent);
+            font-size: 1rem;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-col ul li {
+            font-size: 0.85rem;
+        }
+
+        .footer-col ul a {
+            color: rgba(255,255,255,0.65);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-col ul a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
             text-align: center;
-            padding: 1.5rem 2rem;
             font-size: 0.82rem;
+        }
+
+        /* Quiz wrapper background */
+        .quiz-wrapper {
+            background: linear-gradient(180deg, #f4f2ed 0%, var(--bg) 100%);
+            padding: 3rem 0 0;
         }
 
         /* Animations */
@@ -778,6 +989,13 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 32px;
+            }
+        }
+
         @media (max-width: 900px) {
             .neighborhoods-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -805,7 +1023,11 @@
             }
 
             .hero h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
+            }
+
+            .hero {
+                min-height: 320px;
             }
 
             .quiz-options {
@@ -819,11 +1041,15 @@
             }
 
             .hero {
-                padding: 2.5rem 1.25rem 2rem;
+                min-height: 280px;
+            }
+
+            .hero-content {
+                padding: 3rem 1.25rem 2.5rem;
             }
 
             .hero h1 {
-                font-size: 1.5rem;
+                font-size: 1.6rem;
             }
 
             .main-container {
@@ -862,7 +1088,7 @@
             }
 
             .cta-section {
-                padding: 2.5rem 1.25rem;
+                padding: 3rem 1.25rem;
             }
 
             .cta-section h2 {
@@ -875,6 +1101,11 @@
 
             .card-quick-stats {
                 grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
             }
         }
     </style>
@@ -891,6 +1122,7 @@
             </button>
             <nav>
                 <a href="index.html">Properties</a>
+                <a href="index.html#rentals">Rentals</a>
                 <a href="neighborhoods.html" class="active">Neighborhoods</a>
                 <a href="blog.html">Guide</a>
                 <a href="try-before-you-buy.html">Try Before You Buy</a>
@@ -899,23 +1131,36 @@
         </div>
     </header>
 
+    <!-- Hero with photo background + parallax -->
     <section class="hero">
-        <h1>Punta Cana <span>Neighborhoods</span></h1>
-        <p>Six distinct zones, each with its own character. Compare them side by side to find the one that fits your lifestyle and investment goals.</p>
+        <div class="hero-bg" id="heroBg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">6 Distinct Zones</div>
+            <h1>Punta Cana <span>Neighborhoods</span></h1>
+            <p>Six distinct zones, each with its own character. Compare them side by side to find the one that fits your lifestyle and investment goals.</p>
+        </div>
     </section>
+
+    <!-- Wave divider: hero to content -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="none">
+            <path d="M0 0L48 5.3C96 10.7 192 21.3 288 26.7C384 32 480 32 576 26.7C672 21.3 768 10.7 864 10.7C960 10.7 1056 21.3 1152 26.7C1248 32 1344 32 1392 32L1440 32V60H0V0Z" fill="#faf9f6"/>
+        </svg>
+    </div>
 
     <div class="main-container">
 
         <!-- Neighborhood Cards -->
-        <h2 class="section-title">Explore Each Zone</h2>
-        <p class="section-subtitle">Click any card to see full details. Select two to compare them below.</p>
+        <h2 class="section-title animate-on-scroll">Explore Each Zone</h2>
+        <p class="section-subtitle animate-on-scroll">Click any card to see full details. Select two to compare them below.</p>
 
         <div class="neighborhoods-grid" id="neighborhoodsGrid">
             <!-- Cards rendered by JS -->
         </div>
 
         <!-- Side-by-Side Compare -->
-        <div class="compare-section" id="compareSection">
+        <div class="compare-section animate-on-scroll" id="compareSection">
             <h2 class="section-title">Compare Two Zones</h2>
             <p class="section-subtitle">Select neighborhoods from the dropdowns or click two cards above</p>
 
@@ -939,166 +1184,216 @@
             </div>
         </div>
 
-        <!-- Quiz -->
-        <div class="quiz-section" id="quizSection">
-            <h2 class="section-title">Which Zone Is Right for You?</h2>
-            <p class="section-subtitle">Answer 5 quick questions and we'll recommend the best fit</p>
-
-            <div class="quiz-progress" id="quizProgress">
-                <div class="quiz-dot active"></div>
-                <div class="quiz-dot"></div>
-                <div class="quiz-dot"></div>
-                <div class="quiz-dot"></div>
-                <div class="quiz-dot"></div>
-            </div>
-
-            <div id="quizQuestions">
-                <!-- Q1 -->
-                <div class="quiz-question active" data-q="0">
-                    <h3>What's your primary goal?</h3>
-                    <div class="quiz-options">
-                        <div class="quiz-option" onclick="answerQuiz(0, 'rental')">
-                            <span class="quiz-option-icon">&#128176;</span>
-                            Rental income (Airbnb)
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(0, 'lifestyle')">
-                            <span class="quiz-option-icon">&#127796;</span>
-                            Personal lifestyle
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(0, 'appreciation')">
-                            <span class="quiz-option-icon">&#128200;</span>
-                            Long-term appreciation
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(0, 'luxury')">
-                            <span class="quiz-option-icon">&#128142;</span>
-                            Luxury & exclusivity
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Q2 -->
-                <div class="quiz-question" data-q="1">
-                    <h3>What's your budget range?</h3>
-                    <div class="quiz-options">
-                        <div class="quiz-option" onclick="answerQuiz(1, 'budget')">
-                            <span class="quiz-option-icon">&#128181;</span>
-                            Under $150K
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(1, 'mid')">
-                            <span class="quiz-option-icon">&#128182;</span>
-                            $150K - $350K
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(1, 'high')">
-                            <span class="quiz-option-icon">&#127974;</span>
-                            $350K - $600K
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(1, 'luxury')">
-                            <span class="quiz-option-icon">&#127960;</span>
-                            $600K+
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Q3 -->
-                <div class="quiz-question" data-q="2">
-                    <h3>How important is beach proximity?</h3>
-                    <div class="quiz-options">
-                        <div class="quiz-option" onclick="answerQuiz(2, 'beachfront')">
-                            <span class="quiz-option-icon">&#127754;</span>
-                            Must be beachfront
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(2, 'close')">
-                            <span class="quiz-option-icon">&#128694;</span>
-                            Walking distance (< 10 min)
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(2, 'drive')">
-                            <span class="quiz-option-icon">&#128663;</span>
-                            Short drive is fine
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(2, 'irrelevant')">
-                            <span class="quiz-option-icon">&#127969;</span>
-                            Not a priority
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Q4 -->
-                <div class="quiz-question" data-q="3">
-                    <h3>What kind of community do you prefer?</h3>
-                    <div class="quiz-options">
-                        <div class="quiz-option" onclick="answerQuiz(3, 'bustling')">
-                            <span class="quiz-option-icon">&#127879;</span>
-                            Bustling & social
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(3, 'resort')">
-                            <span class="quiz-option-icon">&#9971;</span>
-                            Resort/golf community
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(3, 'local')">
-                            <span class="quiz-option-icon">&#127963;</span>
-                            Local Dominican feel
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(3, 'secluded')">
-                            <span class="quiz-option-icon">&#127795;</span>
-                            Secluded & private
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Q5 -->
-                <div class="quiz-question" data-q="4">
-                    <h3>Are you buying to live in or purely investing?</h3>
-                    <div class="quiz-options">
-                        <div class="quiz-option" onclick="answerQuiz(4, 'live')">
-                            <span class="quiz-option-icon">&#127968;</span>
-                            I'll live there full-time
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(4, 'vacation')">
-                            <span class="quiz-option-icon">&#9992;&#65039;</span>
-                            Vacation home + rent out
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(4, 'invest')">
-                            <span class="quiz-option-icon">&#128202;</span>
-                            Pure investment
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(4, 'retire')">
-                            <span class="quiz-option-icon">&#9728;&#65039;</span>
-                            Future retirement
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quiz Result -->
-            <div class="quiz-result" id="quizResult">
-                <div class="quiz-result-icon" id="resultIcon"></div>
-                <h3 id="resultName"></h3>
-                <div class="result-tagline" id="resultTagline"></div>
-                <p id="resultDescription"></p>
-                <div class="quiz-result-stats" id="resultStats"></div>
-                <a id="resultWhatsApp" class="btn-whatsapp" href="#" target="_blank">
-                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    Ask me about this zone
-                </a>
-                <br>
-                <button class="btn-restart" onclick="restartQuiz()">Take the quiz again</button>
-            </div>
-        </div>
-
     </div>
 
-    <!-- WhatsApp CTA -->
+    <!-- Quiz with subtle background -->
+    <div class="quiz-wrapper">
+        <div class="main-container" style="padding-top:0">
+            <div class="quiz-section animate-on-scroll" id="quizSection">
+                <h2 class="section-title">Which Zone Is Right for You?</h2>
+                <p class="section-subtitle">Answer 5 quick questions and we'll recommend the best fit</p>
+
+                <div class="quiz-progress" id="quizProgress">
+                    <div class="quiz-dot active"></div>
+                    <div class="quiz-dot"></div>
+                    <div class="quiz-dot"></div>
+                    <div class="quiz-dot"></div>
+                    <div class="quiz-dot"></div>
+                </div>
+
+                <div id="quizQuestions">
+                    <!-- Q1 -->
+                    <div class="quiz-question active" data-q="0">
+                        <h3>What's your primary goal?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="answerQuiz(0, 'rental')">
+                                <span class="quiz-option-icon">&#128176;</span>
+                                Rental income (Airbnb)
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(0, 'lifestyle')">
+                                <span class="quiz-option-icon">&#127796;</span>
+                                Personal lifestyle
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(0, 'appreciation')">
+                                <span class="quiz-option-icon">&#128200;</span>
+                                Long-term appreciation
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(0, 'luxury')">
+                                <span class="quiz-option-icon">&#128142;</span>
+                                Luxury & exclusivity
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="quiz-question" data-q="1">
+                        <h3>What's your budget range?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="answerQuiz(1, 'budget')">
+                                <span class="quiz-option-icon">&#128181;</span>
+                                Under $150K
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(1, 'mid')">
+                                <span class="quiz-option-icon">&#128182;</span>
+                                $150K - $350K
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(1, 'high')">
+                                <span class="quiz-option-icon">&#127974;</span>
+                                $350K - $600K
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(1, 'luxury')">
+                                <span class="quiz-option-icon">&#127960;</span>
+                                $600K+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="quiz-question" data-q="2">
+                        <h3>How important is beach proximity?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="answerQuiz(2, 'beachfront')">
+                                <span class="quiz-option-icon">&#127754;</span>
+                                Must be beachfront
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(2, 'close')">
+                                <span class="quiz-option-icon">&#128694;</span>
+                                Walking distance (< 10 min)
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(2, 'drive')">
+                                <span class="quiz-option-icon">&#128663;</span>
+                                Short drive is fine
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(2, 'irrelevant')">
+                                <span class="quiz-option-icon">&#127969;</span>
+                                Not a priority
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="quiz-question" data-q="3">
+                        <h3>What kind of community do you prefer?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="answerQuiz(3, 'bustling')">
+                                <span class="quiz-option-icon">&#127879;</span>
+                                Bustling & social
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(3, 'resort')">
+                                <span class="quiz-option-icon">&#9971;</span>
+                                Resort/golf community
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(3, 'local')">
+                                <span class="quiz-option-icon">&#127963;</span>
+                                Local Dominican feel
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(3, 'secluded')">
+                                <span class="quiz-option-icon">&#127795;</span>
+                                Secluded & private
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="quiz-question" data-q="4">
+                        <h3>Are you buying to live in or purely investing?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="answerQuiz(4, 'live')">
+                                <span class="quiz-option-icon">&#127968;</span>
+                                I'll live there full-time
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(4, 'vacation')">
+                                <span class="quiz-option-icon">&#9992;&#65039;</span>
+                                Vacation home + rent out
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(4, 'invest')">
+                                <span class="quiz-option-icon">&#128202;</span>
+                                Pure investment
+                            </div>
+                            <div class="quiz-option" onclick="answerQuiz(4, 'retire')">
+                                <span class="quiz-option-icon">&#9728;&#65039;</span>
+                                Future retirement
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Result -->
+                <div class="quiz-result" id="quizResult">
+                    <div class="quiz-result-icon" id="resultIcon"></div>
+                    <h3 id="resultName"></h3>
+                    <div class="result-tagline" id="resultTagline"></div>
+                    <p id="resultDescription"></p>
+                    <div class="quiz-result-stats" id="resultStats"></div>
+                    <a id="resultWhatsApp" class="btn-whatsapp" href="#" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Ask me about this zone
+                    </a>
+                    <br>
+                    <button class="btn-restart" onclick="restartQuiz()">Take the quiz again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wave divider before CTA -->
+    <div class="wave-divider wave-divider-flip" style="background: var(--bg);">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="none">
+            <path d="M0 0L48 5.3C96 10.7 192 21.3 288 26.7C384 32 480 32 576 26.7C672 21.3 768 10.7 864 10.7C960 10.7 1056 21.3 1152 26.7C1248 32 1344 32 1392 32L1440 32V60H0V0Z" fill="#1a3a2a"/>
+        </svg>
+    </div>
+
+    <!-- WhatsApp CTA with photo background -->
     <section class="cta-section" id="contact">
-        <h2>Not Sure Which Zone Fits?</h2>
-        <p>I know every neighborhood in Punta Cana personally. Let's talk and find the perfect match for you.</p>
-        <a href="https://wa.me/18094865386?text=Hello!%20I'm%20comparing%20Punta%20Cana%20neighborhoods%20and%20need%20your%20advice" class="btn-whatsapp" target="_blank">
-            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            WhatsApp &mdash; I know every neighborhood
-        </a>
+        <div class="cta-bg"></div>
+        <div class="cta-overlay"></div>
+        <div class="cta-content animate-on-scroll">
+            <h2>Not Sure Which Zone Fits?</h2>
+            <p>I know every neighborhood in Punta Cana personally. Let's talk and find the perfect match for you.</p>
+            <a href="https://wa.me/18094865386?text=Hello!%20I'm%20comparing%20Punta%20Cana%20neighborhoods%20and%20need%20your%20advice" class="btn-whatsapp" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                WhatsApp &mdash; I know every neighborhood
+            </a>
+        </div>
     </section>
 
+    <!-- Footer (multi-column, matches homepage) -->
     <footer>
-        <p>Rent & Go PC &mdash; Punta Cana, Dominican Republic</p>
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">Rent & Go PC</a>
+                    <p class="footer-tagline">Your trusted real estate partner in Punta Cana, Dominican Republic.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="index.html#properties">Properties</a></li>
+                        <li><a href="index.html#rentals">Rentals</a></li>
+                        <li><a href="neighborhoods.html">Neighborhoods</a></li>
+                        <li><a href="blog.html">Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="roi-calculator.html">ROI Calculator</a></li>
+                        <li><a href="buying-guide-2026.html">Buying Guide</a></li>
+                        <li><a href="cost-of-living.html">Cost of Living</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="https://wa.me/18094865386" target="_blank">WhatsApp: +1 (809) 486-5386</a></li>
+                        <li><span>Punta Cana, Dominican Republic</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Rent & Go PC. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
 <script>
@@ -1109,6 +1404,7 @@ const neighborhoods = [
         name: 'Bavaro',
         tagline: 'Tourist Hub',
         icon: '&#127958;',
+        image: 'https://images.unsplash.com/photo-1580237541049-2d715a09486e?w=600&h=300&fit=crop',
         priceRange: '$100K - $400K',
         priceLow: 100, priceHigh: 400,
         vibe: 'Busy, commercial, walking distance to everything',
@@ -1128,6 +1424,7 @@ const neighborhoods = [
         name: 'Cocotal Golf',
         tagline: 'Golf Community',
         icon: '&#9971;',
+        image: 'images/arboleda/golf-course.jpg',
         priceRange: '$150K - $500K',
         priceLow: 150, priceHigh: 500,
         vibe: 'Quiet, residential, resort-style',
@@ -1147,6 +1444,7 @@ const neighborhoods = [
         name: 'Cap Cana',
         tagline: 'Luxury Enclave',
         icon: '&#128142;',
+        image: 'https://images.unsplash.com/photo-1545579133-99bb5ab189bd?w=600&h=300&fit=crop',
         priceRange: '$300K - $3M+',
         priceLow: 300, priceHigh: 3000,
         vibe: 'Exclusive, gated, high-end',
@@ -1166,6 +1464,7 @@ const neighborhoods = [
         name: 'Punta Cana Village',
         tagline: 'Local & Convenient',
         icon: '&#127963;',
+        image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=600&h=300&fit=crop',
         priceRange: '$80K - $250K',
         priceLow: 80, priceHigh: 250,
         vibe: 'Local community, convenient',
@@ -1185,6 +1484,7 @@ const neighborhoods = [
         name: 'Vista Cana',
         tagline: 'New Development',
         icon: '&#127961;',
+        image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=300&fit=crop',
         priceRange: '$90K - $300K',
         priceLow: 90, priceHigh: 300,
         vibe: 'Modern, growing, family-friendly',
@@ -1204,6 +1504,7 @@ const neighborhoods = [
         name: 'Uvero Alto',
         tagline: 'Secluded Paradise',
         icon: '&#127796;',
+        image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=300&fit=crop',
         priceRange: '$150K - $600K',
         priceLow: 150, priceHigh: 600,
         vibe: 'Remote, natural, undeveloped',
@@ -1232,8 +1533,9 @@ const ratingLabels = {
 function renderCards() {
     const grid = document.getElementById('neighborhoodsGrid');
     grid.innerHTML = neighborhoods.map(n => `
-        <div class="neighborhood-card" id="card-${n.id}" onclick="toggleDetails('${n.id}')">
-            <div class="card-header">
+        <div class="neighborhood-card animate-on-scroll" id="card-${n.id}" onclick="toggleDetails('${n.id}')">
+            <div class="card-header" style="background-image: url('${n.image}')">
+                <div class="card-header-overlay"></div>
                 <div class="card-icon">${n.icon}</div>
                 <h3>${n.name}</h3>
                 <div class="card-tagline">${n.tagline}</div>
@@ -1528,6 +1830,32 @@ function restartQuiz() {
 // ========== INIT ==========
 renderCards();
 populateSelects();
+
+// ========== PARALLAX ==========
+(function() {
+    var heroBg = document.getElementById('heroBg');
+    if (heroBg) {
+        window.addEventListener('scroll', function() {
+            var scrolled = window.pageYOffset;
+            heroBg.style.transform = 'translateY(' + (scrolled * 0.35) + 'px)';
+        }, { passive: true });
+    }
+})();
+
+// ========== SCROLL ANIMATION OBSERVER ==========
+(function() {
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(function(el) {
+        observer.observe(el);
+    });
+})();
 </script>
 
 </body>
