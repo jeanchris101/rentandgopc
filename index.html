@@ -582,6 +582,18 @@
             observer.observe(el);
         });
     })();
+
+    // Make rental card images clickable → open Airbnb in new tab
+    document.querySelectorAll('.rental-card-image').forEach(function(img) {
+        var card = img.closest('.rental-card');
+        if (!card) return;
+        var airbnbLink = card.querySelector('.btn-rental-airbnb');
+        if (!airbnbLink) return;
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', function() {
+            window.open(airbnbLink.href, '_blank');
+        });
+    });
     </script>
 </body>
 </html>
