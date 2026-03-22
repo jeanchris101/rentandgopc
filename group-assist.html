@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Group Assist — Rent&Go PC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#1a1a2e;--card:#16213e;--gold:#c8a45e;--gold-hover:#d4b36a;--text:#e0e0e0;
+  --text-dim:#8a8a9a;--green:#2ecc71;--red:#e74c3c;--blue:#3498db;--card-radius:12px;
+  --btn-radius:8px;--border:#2a2a4a;
+}
+html{font-size:16px;-webkit-tap-highlight-color:transparent}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px}
+h1,h2,h3{font-family:'Playfair Display',serif}
+
+/* Top Bar */
+.topbar{position:sticky;top:0;z-index:100;background:rgba(22,33,62,0.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar-left{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.topbar-left svg{width:22px;height:22px;color:var(--gold)}
+.topbar-left span{font-weight:700;font-size:1.05rem;color:var(--gold)}
+.topbar-center{font-size:0.78rem;color:var(--text-dim);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar-right{display:flex;gap:10px;flex-shrink:0;font-size:0.78rem}
+.stat{display:flex;align-items:center;gap:4px}
+.stat-num{background:var(--gold);color:#111;font-weight:700;border-radius:10px;padding:1px 7px;font-size:0.72rem;min-width:20px;text-align:center}
+.stat-num.green{background:var(--green)}
+
+/* Filter Bar */
+.filters{padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;border-bottom:1px solid var(--border);background:rgba(26,26,46,0.6)}
+.pill{padding:6px 14px;border-radius:20px;font-size:0.78rem;font-weight:500;border:1px solid var(--border);
+  background:transparent;color:var(--text-dim);cursor:pointer;transition:all .2s;white-space:nowrap}
+.pill:hover{border-color:var(--gold);color:var(--text)}
+.pill.active{background:var(--gold);color:#111;border-color:var(--gold);font-weight:600}
+.filter-sep{width:1px;height:20px;background:var(--border);margin:0 4px}
+.refresh-btn{margin-left:auto;padding:6px 12px;border-radius:var(--btn-radius);font-size:0.78rem;font-weight:500;
+  border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:4px;transition:all .2s}
+.refresh-btn:hover{border-color:var(--gold);color:var(--gold)}
+.refresh-btn.spinning svg{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Card List */
+.card-list{max-width:720px;margin:0 auto;padding:12px 12px 40px}
+.card{background:var(--card);border-radius:var(--card-radius);padding:16px;margin-bottom:12px;border:1px solid var(--border);
+  transition:border-color .2s,box-shadow .2s}
+.card.focused{border-color:var(--gold);box-shadow:0 0 0 2px rgba(200,164,94,0.2)}
+.card.status-answered{opacity:0.55}
+.card.status-skipped{opacity:0.4}
+.card-header{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:8px}
+.badge{padding:3px 9px;border-radius:12px;font-size:0.68rem;font-weight:600;line-height:1.3}
+.badge-group{background:rgba(200,164,94,0.15);color:var(--gold);border:1px solid rgba(200,164,94,0.3)}
+.badge-lang{color:#fff;font-size:0.65rem;text-transform:uppercase}
+.badge-lang.en{background:var(--green)}
+.badge-lang.es{background:var(--red)}
+.badge-lang.fr{background:var(--blue)}
+.badge-topic{background:rgba(255,255,255,0.06);color:var(--text-dim);border:1px solid var(--border);font-size:0.65rem;text-transform:capitalize}
+.badge-status{font-size:0.65rem;padding:2px 8px;border-radius:10px}
+.badge-status.answered{background:rgba(46,204,113,0.15);color:var(--green)}
+.badge-status.skipped{background:rgba(231,76,60,0.15);color:var(--red)}
+.time-ago{margin-left:auto;font-size:0.72rem;color:var(--text-dim);white-space:nowrap}
+.author{font-weight:600;font-size:0.88rem;margin-bottom:6px}
+.question-text{font-size:0.88rem;line-height:1.55;color:var(--text);margin-bottom:12px;position:relative}
+.question-text.clamped{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.expand-btn{background:none;border:none;color:var(--gold);font-size:0.78rem;cursor:pointer;padding:0;margin-top:4px;font-weight:500}
+
+/* Reply Box */
+.reply-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:12px}
+.reply-label{font-size:0.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.reply-label svg{width:13px;height:13px}
+.reply-text{font-size:0.85rem;line-height:1.55;color:var(--text);white-space:pre-wrap}
+.reply-text[contenteditable="true"]{outline:none;border:1px dashed var(--gold);border-radius:4px;padding:6px;background:rgba(200,164,94,0.05);min-height:60px}
+.save-edit-btn{margin-top:8px;padding:6px 16px;border-radius:var(--btn-radius);font-size:0.78rem;font-weight:600;
+  border:none;background:var(--gold);color:#111;cursor:pointer}
+
+/* Action Buttons */
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.btn{padding:10px 16px;border-radius:var(--btn-radius);font-size:0.8rem;font-weight:600;border:none;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;transition:all .2s;min-height:44px;line-height:1}
+.btn svg{width:15px;height:15px;flex-shrink:0}
+.btn-copy{background:var(--gold);color:#111;flex:1;justify-content:center}
+.btn-copy:hover{background:var(--gold-hover)}
+.btn-copy.copied{background:var(--green);color:#fff}
+.btn-fb{background:var(--blue);color:#fff}
+.btn-fb:hover{background:#2980b9}
+.btn-edit{background:transparent;border:1px solid var(--border);color:var(--text-dim)}
+.btn-edit:hover{border-color:var(--text);color:var(--text)}
+.btn-skip{background:transparent;border:1px solid rgba(231,76,60,0.3);color:var(--red)}
+.btn-skip:hover{background:rgba(231,76,60,0.1)}
+.btn-done{background:var(--green);color:#fff;flex:1;justify-content:center}
+.btn-done:hover{background:#27ae60}
+
+/* Empty State */
+.empty-state{text-align:center;padding:60px 20px;color:var(--text-dim)}
+.empty-state svg{width:56px;height:56px;margin-bottom:16px;opacity:0.4}
+.empty-state h3{font-size:1.1rem;color:var(--text);margin-bottom:8px}
+.empty-state p{font-size:0.88rem}
+
+/* Toast */
+.toast-container{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:999;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+.toast{padding:10px 20px;border-radius:8px;font-size:0.82rem;font-weight:500;color:#fff;opacity:0;transform:translateY(12px);
+  transition:all .3s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.success{background:var(--green)}
+.toast.info{background:var(--blue)}
+.toast.warn{background:var(--red)}
+
+/* Tab Bar */
+.tab-bar{display:flex;justify-content:center;gap:8px;position:sticky;top:48px;z-index:99;background:rgba(22,33,62,0.97);backdrop-filter:blur(12px);
+  border-bottom:2px solid var(--border);padding:4px 16px 0}
+.tab-btn{padding:14px 32px;border:none;background:transparent;color:var(--text-dim);font-size:0.95rem;font-weight:600;letter-spacing:0.3px;
+  font-family:'Inter',sans-serif;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;border-radius:8px 8px 0 0}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);background:rgba(200,164,94,0.08)}
+.tab-btn:hover{color:var(--text);background:rgba(255,255,255,0.03)}
+
+/* Overview Grids (Group/Topic views) */
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;max-width:720px;margin:0 auto;padding:12px 12px 40px}
+.overview-card{background:var(--card);border-radius:var(--card-radius);padding:16px 18px;border:1px solid var(--border);
+  border-left:3px solid var(--gold);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between}
+.overview-card:hover{border-color:var(--gold);box-shadow:0 0 0 2px rgba(200,164,94,0.15);transform:translateY(-1px)}
+.overview-card .card-name{font-weight:600;font-size:0.92rem;color:var(--text);display:flex;align-items:center;gap:8px}
+.overview-card .card-count{background:var(--gold);color:#111;font-weight:700;border-radius:12px;padding:3px 10px;font-size:0.78rem;min-width:24px;text-align:center}
+.topic-dot{display:inline-block;width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--gold);font-size:0.85rem;
+  font-weight:500;cursor:pointer;padding:12px 12px 4px;max-width:720px;margin:0 auto;font-family:'Inter',sans-serif}
+.back-btn:hover{color:var(--gold-hover)}
+
+/* Footer */
+.footer{text-align:center;padding:16px;font-size:0.72rem;color:var(--text-dim);opacity:0.6}
+
+/* Keyboard hint */
+.kbd-hint{position:fixed;bottom:8px;right:12px;font-size:0.65rem;color:var(--text-dim);opacity:0.4;display:none}
+@media(min-width:769px){.kbd-hint{display:block}}
+
+/* Responsive */
+@media(max-width:600px){
+  .topbar{padding:10px 12px}
+  .topbar-left span{font-size:0.92rem}
+  .topbar-center{display:none}
+  .filters{padding:8px 12px;gap:6px}
+  .pill{padding:5px 10px;font-size:0.73rem}
+  .filter-sep{display:none}
+  .tab-bar{padding:4px 8px 0;top:42px;gap:4px}
+  .tab-btn{padding:10px 16px;font-size:0.82rem}
+  .card-list{padding:8px 8px 40px}
+  .overview-grid{padding:8px 8px 40px;gap:8px}
+  .card{padding:14px 12px}
+  .actions{gap:6px}
+  .btn{padding:10px 12px;font-size:0.76rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <div class="topbar-left">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span>Group Assist</span>
+  </div>
+  <div class="topbar-center" id="scanTime">Loading...</div>
+  <div class="topbar-right">
+    <div class="stat"><span style="color:var(--gold)">Pending</span><span class="stat-num" id="pendingCount">0</span></div>
+    <div class="stat"><span style="color:var(--green)">Sent</span><span class="stat-num green" id="answeredCount">0</span></div>
+  </div>
+</div>
+
+<!-- Filter Bar -->
+<div class="filters">
+  <button class="pill active" data-filter="all">All</button>
+  <button class="pill" data-filter="pending">Pending</button>
+  <button class="pill" data-filter="answered">Answered</button>
+  <button class="pill" data-filter="skipped">Skipped</button>
+  <div class="filter-sep"></div>
+  <button class="pill" data-lang="all">All Lang</button>
+  <button class="pill" data-lang="en">EN</button>
+  <button class="pill" data-lang="es">ES</button>
+  <button class="pill" data-lang="fr">FR</button>
+  <button class="refresh-btn" id="refreshBtn" title="Refresh data">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+    Refresh
+  </button>
+</div>
+
+<!-- Tab Bar -->
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="all">All Questions</button>
+  <button class="tab-btn" data-tab="by-group">By Group</button>
+  <button class="tab-btn" data-tab="by-topic">By Topic</button>
+</div>
+
+<!-- Card List -->
+<div class="card-list" id="cardList"></div>
+<div class="card-list" id="groupView" style="display:none"></div>
+<div class="card-list" id="topicView" style="display:none"></div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Footer -->
+<div class="footer">Powered by AI — Always review before posting</div>
+
+<!-- Keyboard Hints -->
+<div class="kbd-hint">c=copy &middot; o=open &middot; s=skip &middot; d=done &middot; e=edit &middot; j/k=nav</div>
+
+<script>
+// No demo data — load from real JSON only
+
+// State
+let data = null;
+let statusMap = {};
+let activeFilter = 'all';
+let activeLang = 'all';
+let focusedIdx = -1;
+let activeTab = 'all';
+let expandedGroup = null;
+let expandedTopic = null;
+
+// Load persisted status & tab
+try { statusMap = JSON.parse(localStorage.getItem('group-assist-status') || '{}'); } catch(e) {}
+try { activeTab = localStorage.getItem('group-assist-tab') || 'all'; } catch(e) {}
+
+function saveStatus() {
+  localStorage.setItem('group-assist-status', JSON.stringify(statusMap));
+}
+
+function saveTab() {
+  localStorage.setItem('group-assist-tab', activeTab);
+}
+
+function getStatus(id) {
+  return statusMap[id] || null;
+}
+
+function setStatus(id, status) {
+  statusMap[id] = status;
+  saveStatus();
+  renderAll();
+  updateCounts();
+}
+
+// Time helpers
+function timeAgo(isoStr) {
+  const diff = Date.now() - new Date(isoStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return mins + 'm ago';
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return hrs + 'h ago';
+  const days = Math.floor(hrs / 24);
+  return days + 'd ago';
+}
+
+function formatScanTime(isoStr) {
+  return 'Scanned ' + timeAgo(isoStr);
+}
+
+// Topic display
+const TOPIC_LABELS = {
+  cost_of_living: 'Cost of Living',
+  neighborhoods: 'Neighborhoods',
+  buying_process: 'Buying Property',
+  rental_income: 'Rentals & Airbnb',
+  visa_residency: 'Visa & Residency',
+  lifestyle: 'Lifestyle',
+  schools: 'Schools & Education',
+  safety: 'Safety & Security',
+  healthcare: 'Healthcare',
+  restaurants_food: 'Restaurants & Food',
+  travel_tips: 'Travel Tips',
+  construction_renovation: 'Construction & Renovation',
+  legal: 'Legal',
+  car_rentals: 'Car Rentals',
+  other: 'Other'
+};
+
+const TOPIC_COLORS = {
+  cost_of_living: '#e74c3c',
+  neighborhoods: '#3498db',
+  buying_process: '#c8a45e',
+  rental_income: '#2ecc71',
+  visa_residency: '#9b59b6',
+  lifestyle: '#f39c12',
+  schools: '#1abc9c',
+  safety: '#e67e22',
+  healthcare: '#e84393',
+  restaurants_food: '#fd79a8',
+  travel_tips: '#00cec9',
+  construction_renovation: '#6c5ce7',
+  legal: '#636e72',
+  car_rentals: '#00b894',
+  other: '#8a8a9a'
+};
+
+function topicLabel(t) { return TOPIC_LABELS[t] || t.replace(/_/g,' '); }
+function topicColor(t) { return TOPIC_COLORS[t] || '#8a8a9a'; }
+
+// Toast
+function toast(msg, type='success') {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  c.appendChild(t);
+  requestAnimationFrame(() => t.classList.add('show'));
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 2200);
+}
+
+// Copy to clipboard
+async function copyText(text, btnEl) {
+  try {
+    await navigator.clipboard.writeText(text);
+    if (btnEl) {
+      btnEl.classList.add('copied');
+      btnEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Copied!';
+      setTimeout(() => {
+        btnEl.classList.remove('copied');
+        btnEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Reply';
+      }, 2000);
+    }
+    toast('Reply copied to clipboard!');
+    return true;
+  } catch(e) {
+    toast('Failed to copy', 'warn');
+    return false;
+  }
+}
+
+// Open FB with deep link fallback
+function openFB(url, groupId) {
+  const target = (url && url !== 'undefined')
+    ? url
+    : (groupId ? 'https://www.facebook.com/groups/' + groupId : '');
+  if (!target) {
+    toast('No Facebook link available', 'warn');
+    return;
+  }
+  const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+  if (isMobile) {
+    const fbUrl = target.replace('https://facebook.com/', 'fb://');
+    const w = window.open(fbUrl, '_blank');
+    setTimeout(() => {
+      if (!w || w.closed) window.open(target, '_blank');
+    }, 500);
+  } else {
+    window.open(target, '_blank');
+  }
+}
+
+// Get effective question status
+function effectiveStatus(q) {
+  return getStatus(q.id) || q.status || 'pending';
+}
+
+// Filter questions
+function getFilteredQuestions() {
+  if (!data || !data.questions) return [];
+  let qs = data.questions.map(q => ({...q, _status: effectiveStatus(q)}));
+  if (activeFilter !== 'all') qs = qs.filter(q => q._status === activeFilter);
+  if (activeLang !== 'all') qs = qs.filter(q => q.language === activeLang);
+  qs.sort((a, b) => new Date(b.detected_at) - new Date(a.detected_at));
+  return qs;
+}
+
+// Update counts
+function updateCounts() {
+  if (!data) return;
+  let pending = 0, answered = 0;
+  data.questions.forEach(q => {
+    const s = effectiveStatus(q);
+    if (s === 'pending') pending++;
+    if (s === 'answered') answered++;
+  });
+  document.getElementById('pendingCount').textContent = pending;
+  document.getElementById('answeredCount').textContent = answered;
+}
+
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+// Reusable per-card HTML generator
+function renderCardHTML(q, idx) {
+  const s = q._status;
+  const langClass = q.language || 'en';
+  const replyText = q.reply ? q.reply.text : '';
+  const isLong = q.text.length > 200;
+  const showDone = s === 'pending';
+
+  return `
+  <div class="card status-${s}" data-idx="${idx}" data-id="${q.id}" id="card-${idx}">
+    <div class="card-header">
+      <span class="badge badge-group">${esc(q.group_name)}</span>
+      <span class="badge badge-lang ${langClass}">${q.language.toUpperCase()}</span>
+      <span class="badge badge-topic">${topicLabel(q.topic)}</span>
+      ${s !== 'pending' ? `<span class="badge badge-status ${s}">${s === 'answered' ? 'Sent' : 'Skipped'}</span>` : ''}
+      <span class="time-ago">${timeAgo(q.detected_at)}</span>
+    </div>
+    <div class="author">${esc(q.author)}</div>
+    <div class="question-text ${isLong ? 'clamped' : ''}" id="qtext-${idx}">${esc(q.text)}</div>
+    ${isLong ? `<button class="expand-btn" onclick="toggleExpand(${idx})">Show more</button>` : ''}
+    ${replyText ? `
+    <div class="reply-box">
+      <div class="reply-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Suggested Reply
+      </div>
+      <div class="reply-text" id="reply-${q.id}">${esc(replyText)}</div>
+    </div>` : ''}
+    <div class="actions">
+      ${showDone ? `
+      <button class="btn btn-copy" onclick="handleCopy('${q.id}', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy Reply
+      </button>
+      <button class="btn btn-fb" onclick="openFB('${esc(q.post_url || '')}', '${esc(q.group_id || '')}')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        FB
+      </button>
+      <button class="btn btn-edit" onclick="handleEdit('${q.id}')">Edit</button>
+      <button class="btn btn-skip" onclick="handleSkip('${q.id}')">Skip</button>
+      <button class="btn btn-done" onclick="handleDone('${q.id}')" style="display:none" id="done-${q.id}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        Mark Sent
+      </button>
+      ` : `
+      <button class="btn btn-edit" onclick="handleUndo('${q.id}')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h4l3-7 4 14 3-7h4"/></svg>
+        Undo
+      </button>
+      `}
+    </div>
+  </div>`;
+}
+
+// Render empty state
+function renderEmptyHTML() {
+  return `
+    <div class="empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 15h8M9 9h.01M15 9h.01"/></svg>
+      <h3>${activeFilter === 'pending' ? 'No pending questions' : 'No questions found'}</h3>
+      <p>${activeFilter === 'pending' ? 'All caught up! Next scan will find new ones.' : 'Try changing filters or refresh data.'}</p>
+    </div>`;
+}
+
+// Render cards (All Questions tab)
+function renderCards() {
+  const list = document.getElementById('cardList');
+  const qs = getFilteredQuestions();
+
+  if (qs.length === 0) {
+    list.innerHTML = renderEmptyHTML();
+    return;
+  }
+
+  list.innerHTML = qs.map((q, idx) => renderCardHTML(q, idx)).join('');
+
+  // Restore focus
+  if (focusedIdx >= 0 && focusedIdx < qs.length) {
+    const card = document.getElementById('card-' + focusedIdx);
+    if (card) card.classList.add('focused');
+  }
+}
+
+// Render Group View
+function renderGroupView() {
+  const container = document.getElementById('groupView');
+  const qs = getFilteredQuestions();
+
+  if (expandedGroup) {
+    // Show questions for this group
+    const groupQs = qs.filter(q => q.group_name === expandedGroup);
+    let html = `<button class="back-btn" onclick="expandedGroup=null;renderAll();">&larr; Back to groups</button>`;
+    if (groupQs.length === 0) {
+      html += renderEmptyHTML();
+    } else {
+      html += groupQs.map((q, idx) => renderCardHTML(q, idx)).join('');
+    }
+    container.innerHTML = html;
+    return;
+  }
+
+  // Show group overview grid
+  const groupCounts = {};
+  qs.forEach(q => {
+    if (!groupCounts[q.group_name]) groupCounts[q.group_name] = 0;
+    groupCounts[q.group_name]++;
+  });
+
+  const groups = Object.entries(groupCounts).sort((a, b) => b[1] - a[1]);
+
+  if (groups.length === 0) {
+    container.innerHTML = renderEmptyHTML();
+    return;
+  }
+
+  container.innerHTML = `<div class="overview-grid">${groups.map(([name, count], i) => `
+    <div class="overview-card" data-group-idx="${i}">
+      <span class="card-name">${esc(name)}</span>
+      <span class="card-count">${count}</span>
+    </div>`).join('')}</div>`;
+  container.querySelectorAll('[data-group-idx]').forEach(card => {
+    const idx = parseInt(card.dataset.groupIdx);
+    card.addEventListener('click', () => { expandedGroup = groups[idx][0]; renderAll(); });
+  });
+}
+
+// Render Topic View
+function renderTopicView() {
+  const container = document.getElementById('topicView');
+  const qs = getFilteredQuestions();
+
+  if (expandedTopic) {
+    // Show questions for this topic
+    const topicQs = qs.filter(q => q.topic === expandedTopic);
+    let html = `<button class="back-btn" onclick="expandedTopic=null;renderAll();">&larr; Back to topics</button>`;
+    if (topicQs.length === 0) {
+      html += renderEmptyHTML();
+    } else {
+      html += topicQs.map((q, idx) => renderCardHTML(q, idx)).join('');
+    }
+    container.innerHTML = html;
+    return;
+  }
+
+  // Show topic overview grid
+  const topicCounts = {};
+  qs.forEach(q => {
+    const t = q.topic || 'other';
+    if (!topicCounts[t]) topicCounts[t] = 0;
+    topicCounts[t]++;
+  });
+
+  const topics = Object.entries(topicCounts).sort((a, b) => b[1] - a[1]);
+
+  if (topics.length === 0) {
+    container.innerHTML = renderEmptyHTML();
+    return;
+  }
+
+  container.innerHTML = `<div class="overview-grid">${topics.map(([key, count], i) => `
+    <div class="overview-card" data-topic-idx="${i}">
+      <span class="card-name"><span class="topic-dot" style="background:${topicColor(key)}"></span>${esc(topicLabel(key))}</span>
+      <span class="card-count">${count}</span>
+    </div>`).join('')}</div>`;
+  container.querySelectorAll('[data-topic-idx]').forEach(card => {
+    const idx = parseInt(card.dataset.topicIdx);
+    card.addEventListener('click', () => { expandedTopic = topics[idx][0]; renderAll(); });
+  });
+}
+
+// Master render dispatcher
+function renderAll() {
+  const cardList = document.getElementById('cardList');
+  const groupView = document.getElementById('groupView');
+  const topicView = document.getElementById('topicView');
+
+  cardList.style.display = activeTab === 'all' ? '' : 'none';
+  groupView.style.display = activeTab === 'by-group' ? '' : 'none';
+  topicView.style.display = activeTab === 'by-topic' ? '' : 'none';
+
+  if (activeTab === 'all') {
+    renderCards();
+  } else if (activeTab === 'by-group') {
+    renderGroupView();
+  } else if (activeTab === 'by-topic') {
+    renderTopicView();
+  }
+}
+
+function toggleExpand(idx) {
+  const el = document.getElementById('qtext-' + idx);
+  const btn = el.nextElementSibling;
+  el.classList.toggle('clamped');
+  btn.textContent = el.classList.contains('clamped') ? 'Show more' : 'Show less';
+}
+
+function handleCopy(id, btn) {
+  const el = document.getElementById('reply-' + id);
+  if (!el) return;
+  copyText(el.textContent, btn).then(ok => {
+    if (ok) {
+      const doneBtn = document.getElementById('done-' + id);
+      if (doneBtn) doneBtn.style.display = 'inline-flex';
+    }
+  });
+}
+
+function handleEdit(id) {
+  const el = document.getElementById('reply-' + id);
+  if (!el) return;
+  if (el.contentEditable === 'true') return;
+  el.contentEditable = 'true';
+  el.focus();
+  const save = document.createElement('button');
+  save.className = 'save-edit-btn';
+  save.textContent = 'Save Edit';
+  save.onclick = () => {
+    el.contentEditable = 'false';
+    save.remove();
+    toast('Reply edited', 'info');
+  };
+  el.parentElement.appendChild(save);
+}
+
+function handleSkip(id) {
+  setStatus(id, 'skipped');
+  toast('Skipped', 'info');
+}
+
+function handleDone(id) {
+  setStatus(id, 'answered');
+  toast('Marked as sent!', 'success');
+}
+
+function handleUndo(id) {
+  delete statusMap[id];
+  saveStatus();
+  renderAll();
+  updateCounts();
+  toast('Restored to pending', 'info');
+}
+
+// Tab click handlers
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeTab = btn.dataset.tab;
+    saveTab();
+    // Reset expanded state when switching tabs
+    expandedGroup = null;
+    expandedTopic = null;
+    focusedIdx = -1;
+    renderAll();
+  });
+});
+
+// Restore active tab on load
+(function restoreTab() {
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === activeTab);
+  });
+})();
+
+// Filters
+document.querySelectorAll('.pill[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pill[data-filter]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    focusedIdx = -1;
+    renderAll();
+  });
+});
+
+document.querySelectorAll('.pill[data-lang]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pill[data-lang]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeLang = btn.dataset.lang;
+    focusedIdx = -1;
+    renderAll();
+  });
+});
+
+// Refresh
+document.getElementById('refreshBtn').addEventListener('click', loadData);
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.target.contentEditable === 'true' || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+  const qs = getFilteredQuestions();
+  if (!qs.length) return;
+
+  const key = e.key.toLowerCase();
+
+  if (key === 'j') {
+    e.preventDefault();
+    focusedIdx = Math.min(focusedIdx + 1, qs.length - 1);
+    updateFocus(qs);
+  } else if (key === 'k') {
+    e.preventDefault();
+    focusedIdx = Math.max(focusedIdx - 1, 0);
+    updateFocus(qs);
+  } else if (focusedIdx >= 0 && focusedIdx < qs.length) {
+    const q = qs[focusedIdx];
+    if (key === 'c') {
+      e.preventDefault();
+      const btn = document.querySelector(`#card-${focusedIdx} .btn-copy`);
+      if (btn) handleCopy(q.id, btn);
+    } else if (key === 'o') {
+      e.preventDefault();
+      openFB(q.post_url || '', q.group_id || '');
+    } else if (key === 's') {
+      e.preventDefault();
+      if (effectiveStatus(q) === 'pending') handleSkip(q.id);
+    } else if (key === 'd') {
+      e.preventDefault();
+      if (effectiveStatus(q) === 'pending') handleDone(q.id);
+    } else if (key === 'e') {
+      e.preventDefault();
+      handleEdit(q.id);
+    }
+  }
+});
+
+function updateFocus(qs) {
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('focused'));
+  const card = document.getElementById('card-' + focusedIdx);
+  if (card) {
+    card.classList.add('focused');
+    card.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+}
+
+// Load data
+async function loadData() {
+  const btn = document.getElementById('refreshBtn');
+  btn.classList.add('spinning');
+
+  try {
+    const resp = await fetch('automation/data/group-questions.json', {cache: 'no-store'});
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    data = await resp.json();
+  } catch(e) {
+    console.error('Failed to load group-questions.json:', e);
+    btn.classList.remove('spinning');
+    if (!data) {
+      data = {last_scan: new Date().toISOString(), groups: [], questions: []};
+      document.getElementById('scanTime').textContent = 'Failed to load data';
+      document.getElementById('cardList').innerHTML = `
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 15h8M9 9h.01M15 9h.01"/></svg>
+          <h3>Could not load questions</h3>
+          <p>Check that the server is serving from the correct directory and that <code>automation/data/group-questions.json</code> is accessible.</p>
+        </div>`;
+      updateCounts();
+    } else {
+      toast('Refresh failed — showing cached data', 'warn');
+    }
+    return;
+  }
+
+  btn.classList.remove('spinning');
+  document.getElementById('scanTime').textContent = formatScanTime(data.last_scan);
+  updateCounts();
+  renderAll();
+}
+
+// Init
+loadData();
+
+// Update time-ago every minute
+setInterval(() => {
+  if (data) {
+    document.getElementById('scanTime').textContent = formatScanTime(data.last_scan);
+    renderAll();
+  }
+}, 60000);
+</script>
+</body>
+</html>
