@@ -68,12 +68,19 @@
         }
 
         .logo a {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
             text-decoration: none;
-            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 65px;
+            width: auto;
+        }
+        @media (max-width: 768px) {
+            .logo img { height: 55px; }
+        }
+        @media (max-width: 480px) {
+            .logo img { height: 45px; }
         }
 
         nav {
