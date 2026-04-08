@@ -63,16 +63,19 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70px;
+    height: 80px;
 }
 
 .logo {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-primary);
     text-decoration: none;
-    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo img {
+    height: 65px;
+    width: auto;
 }
 
 .nav {
@@ -1215,11 +1218,13 @@ body {
 }
 
 .footer-logo {
-    font-family: var(--font-heading);
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: white;
     text-decoration: none;
+    display: inline-block;
+}
+
+.footer-logo img {
+    height: 60px;
+    width: auto;
     display: block;
     margin-bottom: 12px;
 }
@@ -1716,6 +1721,16 @@ body {
 }
 
 @media (max-width: 768px) {
+    .header-content {
+        height: 70px;
+        padding: 0;
+    }
+    .logo img {
+        height: 55px;
+    }
+    .footer-logo img {
+        height: 50px;
+    }
     .nav { display: none; }
     .nav.active {
         display: flex;
@@ -1730,12 +1745,40 @@ body {
         border-bottom: 1px solid var(--color-border);
         box-shadow: var(--shadow);
     }
+    .nav.active a {
+        font-size: 1rem;
+        padding: 8px 0;
+    }
     .nav.active .lang-selector {
         align-self: flex-start;
     }
     .mobile-menu-btn { display: flex; }
 
     .hero { height: 75vh; }
+
+    /* Mobile typography */
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+
+    /* Mobile touch targets — min 44px */
+    .btn, .btn-rental-airbnb, .btn-rental-wa {
+        min-height: 44px;
+        padding: 12px 20px;
+    }
+
+    /* Prevent horizontal overflow */
+    body {
+        overflow-x: hidden;
+    }
+    .container {
+        padding: 0 16px;
+    }
+
+    /* Better card images on mobile */
+    .rental-card-image {
+        height: 220px;
+    }
 
     /* Stats strip mobile */
     .stats-grid {
@@ -1833,9 +1876,30 @@ body {
 }
 
 @media (max-width: 480px) {
+    .header-content {
+        height: 60px;
+    }
+    .logo img {
+        height: 45px;
+    }
+    .footer-logo img {
+        height: 40px;
+    }
+    .nav.active {
+        top: 60px;
+    }
     .hero { height: 70vh; min-height: 450px; }
     .hero-scroll-indicator { display: none; }
     .stat-number { font-size: 1.4rem; }
     .featured-property-info h3 { font-size: 1.2rem; }
     .featured-property-price { font-size: 1.6rem; }
+    .rental-card-info {
+        padding: 16px;
+    }
+    .rental-card-info h3 {
+        font-size: 1rem;
+    }
+    .rental-specs span {
+        font-size: 0.7rem;
+    }
 }
