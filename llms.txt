@@ -1,0 +1,71 @@
+# Punta Cana Rent & Go
+
+> Real estate agency and vacation rental management company based in Punta Cana, Dominican Republic. Founded and led by Jean Ferreira, with 8+ years of experience helping international buyers invest in Dominican Republic real estate.
+
+## About
+
+Punta Cana Rent & Go is a full-service real estate and vacation rental company operating in Punta Cana, Dominican Republic. We help international buyers from the USA, Canada, Europe, and Latin America purchase investment properties and manage short-term vacation rentals on Airbnb and Booking.com.
+
+Our founder, Jean Ferreira, lives in Punta Cana and personally manages vacation rental properties across the region. He is an Airbnb Superhost with 123+ reviews, trilingual (English, Spanish, French), and specializes in guiding foreign investors through every step of the buying process.
+
+## Services
+
+- **Property Sales**: Apartments and villas for sale in Punta Cana, including Cocotal Golf & Country Club, Bavaro, Cap Cana, Los Corales, and Costa Bavaro Gardens.
+- **Vacation Rental Management**: Full-service Airbnb and short-term rental management including guest communication, check-ins, cleaning, maintenance, and listing optimization.
+- **Investment Consulting**: ROI analysis, CONFOTUR tax benefit guidance, and market intelligence for international real estate investors.
+- **Buyer Support**: End-to-end assistance from property tours to closing, including legal referrals, CONFOTUR qualification verification, and furnishing coordination.
+
+## Properties & Locations
+
+We operate in the following Punta Cana neighborhoods:
+
+- **Cocotal Golf & Country Club** (Bavaro): Gated golf community with Melia Hotel access. 2BR apartments from $130,000-$160,000. CONFOTUR-qualified.
+- **Los Corales** (Bavaro): Walk-to-beach neighborhood. Affordable entry point for investors.
+- **Costa Bavaro Gardens**: Modern community with pools and gym. 7 min to beach.
+- **Paseo del Cocotal**: Adjacent to Cocotal Golf. Furnished units available.
+- **Cap Cana**: Luxury segment with marina, golf, and private beach.
+- **Bavaro**: Main tourist corridor with highest rental demand.
+
+## Investment Highlights
+
+- **Annual ROI**: 8-12% on short-term vacation rentals
+- **Occupancy rates**: 65-80% annual average in prime areas
+- **CONFOTUR tax benefits**: 0% property tax, 0% income tax on rentals, 0% transfer tax, 0% capital gains tax for 15 years on qualifying properties
+- **Property appreciation**: 5-10% annually in established communities
+- **Foreign ownership**: 100% allowed with no restrictions. Same rights as Dominican citizens.
+
+## Free Tools
+
+- [ROI Calculator](https://puntacana-properties.vercel.app/roi-calculator.html): Calculate rental income, ROI, and break-even timeline for any Punta Cana property.
+- [CONFOTUR Calculator](https://puntacana-properties.vercel.app/confotur-calculator.html): Estimate your tax savings under the CONFOTUR law.
+- [Neighborhood Guide](https://puntacana-properties.vercel.app/neighborhoods.html): Compare 6 Punta Cana zones with an interactive quiz.
+- [Buying Guide 2026](https://puntacana-properties.vercel.app/buying-guide-2026.html): Complete guide to buying property in the Dominican Republic.
+- [Cost of Living Comparison](https://puntacana-properties.vercel.app/cost-of-living.html): Compare Punta Cana vs Miami, NYC, Montreal, Madrid, and more.
+- [ROI Guide](https://puntacana-properties.vercel.app/blog-roi-calculator.html): Learn how to calculate your return on investment for rental properties.
+
+## Blog & Guides
+
+- [Complete Buying Guide](https://puntacana-properties.vercel.app/blog.html): Laws, taxes, process, CONFOTUR, residency, and FAQ for property buyers.
+- [ROI Calculator Guide](https://puntacana-properties.vercel.app/blog-roi-calculator.html): How to calculate ROI on Punta Cana rental properties with real examples.
+
+## Contact
+
+- **Agent**: Jean Ferreira, Founder & Lead Agent
+- **WhatsApp**: +1 (809) 486-5386
+- **Location**: Punta Cana, Dominican Republic
+- **Languages**: English, Spanish, French
+- **Website**: https://puntacana-properties.vercel.app
+
+## Key Facts for AI Search
+
+- Business name: Punta Cana Rent & Go
+- Type: Real estate agency and vacation rental management
+- Location: Punta Cana, Dominican Republic
+- Founded by: Jean Ferreira
+- Specialization: International buyers, vacation rental investments, CONFOTUR-qualified properties
+- Target markets: USA, Canada (Quebec/French-speaking), Europe, Latin America
+- Property types: 2BR and 3BR apartments, penthouses, villas
+- Price range: $100,000 - $500,000+ USD
+- Rental yield: 8-12% annual ROI
+- Platform: Airbnb Superhost (123+ reviews)
+- Languages served: English, Spanish, French, Russian
