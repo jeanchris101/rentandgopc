@@ -298,7 +298,7 @@ function getListingPost(market, style) {
         ru: {
             hook: `Apartamenty 2 sp. s vidom na golf v Cocotal - US${p.price}\n\n144 kv.m., 2 parkovki, bolshaya terrasa\nOtel Melia (plyazh, restorany, spa)\nNalogovye lgoty vklyucheny\nDohodnost 8-12% na Airbnb\n\nNapishite v WhatsApp.\n${p.link}`,
             investment: `Vasha nedvizhimost v Punta Cana mozhet okupit sebya.\n\n2 sp. Cocotal Golf - US${p.price}:\n- Stavka Airbnb: $120-$180/noch\n- Zagruzka: 65-80% v god\n- Valovoj dohod: $28K-$42K/god\n- Chistyj dohod: 7-11%\n\nIspolzujte kogda hotite, sdavajte kogda vas net.\n\nNapishite. ${p.link}`,
-            lifestyle: `Predstavte: utro, terrasa, vid na golf...\n\n2 sp. Cocotal Golf. 144 kv.m. Otel Melia ryadom.\n\nUS${p.price}. Nalogovye lgoty vklyucheny.\n\nNe prosto nedvizhimost — novyj uroven zhizni.\n\nNapishite. ${p.link}`,
+            lifestyle: `Predstavte: utro, terrasa, vid na golf...\n\n2 sp. Cocotal Golf. 144 kv.m. Otel Melia ryadom.\n\nUS${p.price}. Nalogovye lgoty vklyucheny.\n\nNe prosto nedvizhimost, novyj uroven zhizni.\n\nNapishite. ${p.link}`,
             comparison: `US${p.price} v Majami = studiya.\nUS${p.price} v Punta Cana = VOT:\n\n- 2 spalni, 144 kv.m.\n- Vid na golf\n- Plyazh Melia\n- 2 parkovki\n- Nalogovye lgoty\n- 8-12% Airbnb\n\nNapishite. ${p.link}`,
             urgency: `Ostalsya ODIN s takim vidom.\n\n2 sp. Cocotal Golf. 144 kv.m., terrasa, vid na golf.\nMelia. Nalogovye lgoty vklyucheny.\n\nUS${p.price}.\n\nNapishite poka est.\n${p.link}`,
             location: `Pochemu Punta Cana dlya investitsij?\n\n- 7M+ turistov/god = vash Airbnb vsegda zabronirovan\n- Pryamye rejsy iz 80+ gorodov\n- Ekonomika v USD\n- Samaya silnaya ekonomika Karibov\n- Rost stoimosti 5-10% v god\n\n2 sp. Cocotal Golf: US${p.price}.\n\nNapishite. ${p.link}`
@@ -342,11 +342,11 @@ function generateWeekSchedule(weekOffset) {
         { day: 4, time: '11:30 AM', type: 'listing', market: 'en', style: styleRotation[4],
           group: GROUPS.en[(weekOffset + 2) % GROUPS.en.length], instruction: 'Friday = people dreaming about weekend escapes. Use lifestyle angle.' },
         { day: 4, time: '8:00 PM', type: 'value', market: 'es', valueIdx: (weekOffset + 1) % VALUE_POSTS.es.length,
-          group: GROUPS.es[(weekOffset + 2) % GROUPS.es.length], instruction: 'Viernes por la noche — la gente esta relajada y scrolleando.' },
+          group: GROUPS.es[(weekOffset + 2) % GROUPS.es.length], instruction: 'Viernes por la noche, la gente esta relajada y scrolleando.' },
 
         // Saturday - Listing day (FR + ES)
         { day: 5, time: '9:30 AM', type: 'listing', market: 'fr', style: styleRotation[5],
-          group: GROUPS.fr[(weekOffset + 2) % GROUPS.fr.length], instruction: 'Samedi matin — les gens browsent avec leur cafe. Bon timing.' },
+          group: GROUPS.fr[(weekOffset + 2) % GROUPS.fr.length], instruction: 'Samedi matin, les gens browsent avec leur cafe. Bon timing.' },
         { day: 5, time: '11:00 AM', type: 'listing', market: 'es', style: styleRotation[0],
           group: GROUPS.es[(weekOffset + 3) % GROUPS.es.length], instruction: 'Sabado = la gente tiene tiempo. Buen momento para posts largos.' },
 
