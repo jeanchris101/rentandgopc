@@ -1751,6 +1751,13 @@ body {
     }
     .nav.active .lang-selector {
         align-self: flex-start;
+        gap: 4px;
+        padding: 4px;
+    }
+    .nav.active .lang-btn {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+        min-height: 40px;
     }
     .mobile-menu-btn { display: flex; }
 
@@ -1847,9 +1854,31 @@ body {
     }
 
     /* Footer mobile */
+    .footer {
+        padding: 40px 0 20px;
+    }
     .footer-grid {
         grid-template-columns: 1fr;
         gap: 28px;
+        text-align: center;
+    }
+    .footer-logo {
+        display: flex;
+        justify-content: center;
+    }
+    .footer-logo img {
+        height: 55px;
+    }
+    .footer-col h4 {
+        margin-bottom: 12px;
+    }
+    .footer-col ul {
+        gap: 8px;
+    }
+    .footer-col ul a {
+        font-size: 0.9rem;
+        padding: 4px 0;
+        display: inline-block;
     }
 
     /* Contact mobile */

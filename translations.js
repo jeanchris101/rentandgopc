@@ -58,7 +58,16 @@ const TRANSLATIONS = {
     all_properties: "All Properties",
     blog_nav: "Guide",
     details: "Details",
-    footer: "Punta Cana, Dominican Republic"
+    footer: "Punta Cana, Dominican Republic",
+    footer_tagline: "Your trusted real estate partner in Punta Cana, Dominican Republic.",
+    footer_explore: "Explore",
+    footer_rentals: "Rentals",
+    footer_neighborhoods: "Neighborhoods",
+    footer_tools: "Tools",
+    footer_roi: "ROI Calculator",
+    footer_buying_guide: "Buying Guide",
+    footer_cost_living: "Cost of Living",
+    footer_copyright: "\u00a9 2026 Punta Cana Rent & Go. All rights reserved."
   },
 
   es: {
@@ -120,7 +129,16 @@ const TRANSLATIONS = {
     all_properties: "Todas las Propiedades",
     blog_nav: "Gu\u00eda",
     details: "Detalles",
-    footer: "Punta Cana, Rep\u00fablica Dominicana"
+    footer: "Punta Cana, Rep\u00fablica Dominicana",
+    footer_tagline: "Tu socio de confianza en bienes ra\u00edces en Punta Cana, Rep\u00fablica Dominicana.",
+    footer_explore: "Explorar",
+    footer_rentals: "Alquileres",
+    footer_neighborhoods: "Vecindarios",
+    footer_tools: "Herramientas",
+    footer_roi: "Calculadora ROI",
+    footer_buying_guide: "Gu\u00eda de Compra",
+    footer_cost_living: "Costo de Vida",
+    footer_copyright: "\u00a9 2026 Punta Cana Rent & Go. Todos los derechos reservados."
   },
 
   // Quebec French — adapted for Canadian/Quebecois buyers
@@ -183,7 +201,16 @@ const TRANSLATIONS = {
     blog_nav: "Guide",
     all_properties: "Toutes les Propri\u00e9t\u00e9s",
     details: "D\u00e9tails",
-    footer: "Punta Cana, R\u00e9publique dominicaine"
+    footer: "Punta Cana, R\u00e9publique dominicaine",
+    footer_tagline: "Votre partenaire immobilier de confiance \u00e0 Punta Cana, R\u00e9publique dominicaine.",
+    footer_explore: "Explorer",
+    footer_rentals: "Locations",
+    footer_neighborhoods: "Quartiers",
+    footer_tools: "Outils",
+    footer_roi: "Calculateur ROI",
+    footer_buying_guide: "Guide d\u2019achat",
+    footer_cost_living: "Co\u00fbt de la vie",
+    footer_copyright: "\u00a9 2026 Punta Cana Rent & Go. Tous droits r\u00e9serv\u00e9s."
   },
 
   // Russian — agent-verified translations
@@ -246,6 +273,15 @@ const TRANSLATIONS = {
     blog_nav: "\u0413\u0438\u0434",
     all_properties: "\u0412\u0441\u0435 \u043e\u0431\u044a\u0435\u043a\u0442\u044b",
     details: "\u041f\u043e\u0434\u0440\u043e\u0431\u043d\u0435\u0435",
-    footer: "Punta Cana, \u0414\u043e\u043c\u0438\u043d\u0438\u043a\u0430\u043d\u0441\u043a\u0430\u044f \u0420\u0435\u0441\u043f\u0443\u0431\u043b\u0438\u043a\u0430"
+    footer: "Punta Cana, \u0414\u043e\u043c\u0438\u043d\u0438\u043a\u0430\u043d\u0441\u043a\u0430\u044f \u0420\u0435\u0441\u043f\u0443\u0431\u043b\u0438\u043a\u0430",
+    footer_tagline: "\u0412\u0430\u0448 \u043d\u0430\u0434\u0451\u0436\u043d\u044b\u0439 \u043f\u0430\u0440\u0442\u043d\u0451\u0440 \u043f\u043e \u043d\u0435\u0434\u0432\u0438\u0436\u0438\u043c\u043e\u0441\u0442\u0438 \u0432 \u041f\u0443\u043d\u0442\u0430-\u041a\u0430\u043d\u0430, \u0414\u043e\u043c\u0438\u043d\u0438\u043a\u0430\u043d\u0441\u043a\u0430\u044f \u0420\u0435\u0441\u043f\u0443\u0431\u043b\u0438\u043a\u0430.",
+    footer_explore: "\u041d\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044f",
+    footer_rentals: "\u0410\u0440\u0435\u043d\u0434\u0430",
+    footer_neighborhoods: "\u0420\u0430\u0439\u043e\u043d\u044b",
+    footer_tools: "\u0418\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u044b",
+    footer_roi: "\u041a\u0430\u043b\u044c\u043a\u0443\u043b\u044f\u0442\u043e\u0440 ROI",
+    footer_buying_guide: "\u0413\u0438\u0434 \u043f\u043e \u043f\u043e\u043a\u0443\u043f\u043a\u0435",
+    footer_cost_living: "\u0421\u0442\u043e\u0438\u043c\u043e\u0441\u0442\u044c \u0436\u0438\u0437\u043d\u0438",
+    footer_copyright: "\u00a9 2026 Punta Cana Rent & Go. \u0412\u0441\u0435 \u043f\u0440\u0430\u0432\u0430 \u0437\u0430\u0449\u0438\u0449\u0435\u043d\u044b."
   }
 };
