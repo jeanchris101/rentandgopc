@@ -954,12 +954,11 @@ body {
 }
 
 .why-row {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 32px;
+    display: flex;
     align-items: center;
+    gap: 28px;
     max-width: 700px;
-    margin: 0 auto 48px;
+    margin: 0 auto 40px;
 }
 
 .why-row:last-child {
@@ -967,22 +966,18 @@ body {
 }
 
 .why-row-reverse {
-    grid-template-columns: 1fr 120px;
-    direction: rtl;
-}
-
-.why-row-reverse > * {
-    direction: ltr;
+    flex-direction: row-reverse;
 }
 
 .why-icon-col {
     display: flex;
     justify-content: center;
+    flex-shrink: 0;
 }
 
 .why-icon-circle {
-    width: 80px;
-    height: 80px;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
     background: rgba(200, 164, 94, 0.15);
     border: 2px solid rgba(200, 164, 94, 0.3);
@@ -991,6 +986,11 @@ body {
     justify-content: center;
     color: var(--color-accent);
     flex-shrink: 0;
+}
+
+.why-text-col {
+    flex: 1;
+    min-width: 0;
 }
 
 .why-text-col h3 {
@@ -1805,15 +1805,34 @@ body {
         grid-template-columns: 1fr;
     }
 
-    /* Why section mobile — single column */
+    /* Why section mobile */
+    .why-section {
+        padding: 60px 0;
+    }
+    .why-section .section-title {
+        margin-bottom: 36px;
+        font-size: 1.5rem;
+    }
     .why-row,
     .why-row-reverse {
-        grid-template-columns: 1fr;
+        flex-direction: column;
         text-align: center;
-        gap: 16px;
+        gap: 14px;
+        margin-bottom: 36px;
     }
-    .why-row-reverse {
-        direction: ltr;
+    .why-icon-circle {
+        width: 64px;
+        height: 64px;
+    }
+    .why-icon-circle svg {
+        width: 32px;
+        height: 32px;
+    }
+    .why-text-col h3 {
+        font-size: 1.15rem;
+    }
+    .why-text-col p {
+        font-size: 0.9rem;
     }
 
     /* Tools grid mobile */
