@@ -90,14 +90,14 @@
             align-items: center;
         }
         .logo img {
-            height: 65px;
+            height: 85px;
             width: auto;
         }
         @media (max-width: 768px) {
-            .logo img { height: 55px; }
+            .logo img { height: 65px; }
         }
         @media (max-width: 480px) {
-            .logo img { height: 45px; }
+            .logo img { height: 55px; }
         }
 
         nav {
@@ -932,13 +932,14 @@
         }
 
         .footer-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--accent);
             text-decoration: none;
             display: block;
             margin-bottom: 12px;
+        }
+        .footer-logo img {
+            height: 55px;
+            width: auto;
+            filter: brightness(0) invert(1);
         }
 
         .footer-tagline {

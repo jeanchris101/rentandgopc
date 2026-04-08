@@ -74,7 +74,7 @@ body {
 }
 
 .logo img {
-    height: 65px;
+    height: 85px;
     width: auto;
 }
 
@@ -1810,10 +1810,10 @@ body {
         padding: 0;
     }
     .logo img {
-        height: 55px;
+        height: 65px;
     }
     .footer-logo img {
-        height: 45px;
+        height: 50px;
     }
     .nav { display: none; }
     .nav.active {
@@ -2050,10 +2050,10 @@ body {
         height: 60px;
     }
     .logo img {
-        height: 45px;
+        height: 55px;
     }
     .footer-logo img {
-        height: 38px;
+        height: 42px;
     }
     .nav.active {
         top: 60px;
