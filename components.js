@@ -122,7 +122,7 @@
         return '<header class="header">' +
             '\n        <div class="container">' +
             '\n            <div class="header-content">' +
-            '\n                <a href="index.html" class="logo">Rent & Go PC</a>' +
+            '\n                <a href="index.html" class="logo"><img src="images/logo.png" alt="Rent & Go Punta Cana"></a>' +
             '\n                <nav class="nav">' +
             '\n                    ' + navLinksHtml +
             '\n                    <div class="lang-selector">' +
@@ -146,7 +146,7 @@
             '\n        <div class="container">' +
             '\n            <div class="footer-grid">' +
             '\n                <div class="footer-col">' +
-            '\n                    <a href="index.html" class="footer-logo">Rent &amp; Go PC</a>' +
+            '\n                    <a href="index.html" class="footer-logo"><img src="images/logo.png" alt="Rent &amp; Go Punta Cana"></a>' +
             '\n                    <p class="footer-tagline">Your trusted real estate partner in Punta Cana, Dominican Republic.</p>' +
             '\n                </div>' +
             '\n                <div class="footer-col">' +

@@ -2,23 +2,23 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-    --color-primary: #1a3a2a;
-    --color-primary-light: #2d5a3f;
-    --color-accent: #c8a45e;
-    --color-accent-light: #dbb96e;
-    --color-bg: #faf9f6;
+    --color-primary: #1B3A2D;
+    --color-primary-light: #2A5440;
+    --color-accent: #C4A265;
+    --color-accent-light: #D4B87A;
+    --color-bg: #F5F0E8;
     --color-white: #ffffff;
-    --color-text: #2c2c2c;
-    --color-text-light: #666;
-    --color-border: #e8e5df;
+    --color-text: #1B3A2D;
+    --color-text-light: #5A6B60;
+    --color-border: #DDD5C8;
     --color-whatsapp: #25D366;
     --color-confotur: #0066cc;
     --font-heading: 'Playfair Display', Georgia, serif;
     --font-body: 'Inter', -apple-system, sans-serif;
     --max-width: 1200px;
     --radius: 12px;
-    --shadow: 0 4px 20px rgba(0,0,0,0.08);
-    --shadow-hover: 0 8px 32px rgba(0,0,0,0.14);
+    --shadow: 0 4px 20px rgba(27,58,45,0.06);
+    --shadow-hover: 0 8px 32px rgba(27,58,45,0.12);
 }
 
 html { scroll-behavior: smooth; }
@@ -53,8 +53,8 @@ body {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(10px);
+    background: rgba(245,240,232,0.97);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-border);
     transition: all 0.3s;
 }
@@ -74,7 +74,7 @@ body {
 }
 
 .logo img {
-    height: 85px;
+    height: 65px;
     width: auto;
 }
 
@@ -166,8 +166,8 @@ body {
     inset: 0;
     background: linear-gradient(
         to bottom,
-        rgba(26, 58, 42, 0.65) 0%,
-        rgba(13, 43, 26, 0.75) 100%
+        rgba(27, 58, 45, 0.6) 0%,
+        rgba(27, 58, 45, 0.8) 100%
     );
 }
 
@@ -231,8 +231,8 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--color-accent), var(--color-accent-light), var(--color-accent));
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
 }
 
 .stats-grid {
@@ -615,7 +615,7 @@ body {
 .rental-service-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(26,58,42,0.92) 0%, rgba(13,43,26,0.85) 50%, rgba(26,58,42,0.75) 100%);
+    background: linear-gradient(135deg, rgba(27,58,45,0.92) 0%, rgba(27,58,45,0.85) 50%, rgba(27,58,45,0.75) 100%);
 }
 
 .rental-service-content {
@@ -934,7 +934,7 @@ body {
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    background: rgba(200, 164, 94, 0.06);
+    background: rgba(196, 162, 101, 0.08);
 }
 
 .why-section::after {
@@ -945,7 +945,7 @@ body {
     width: 300px;
     height: 300px;
     border-radius: 50%;
-    background: rgba(200, 164, 94, 0.04);
+    background: rgba(196, 162, 101, 0.05);
 }
 
 .why-section .section-title {
@@ -984,8 +984,8 @@ body {
     min-width: 72px;
     min-height: 72px;
     border-radius: 50%;
-    background: rgba(200, 164, 94, 0.15);
-    border: 2px solid rgba(200, 164, 94, 0.3);
+    background: rgba(196, 162, 101, 0.15);
+    border: 2px solid rgba(196, 162, 101, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1048,7 +1048,7 @@ body {
 }
 
 .tool-card-accent-gold { border-top-color: var(--color-accent); }
-.tool-card-accent-green { border-top-color: #2d5a3f; }
+.tool-card-accent-green { border-top-color: var(--color-primary-light); }
 .tool-card-accent-blue { border-top-color: #3b82f6; }
 .tool-card-accent-coral { border-top-color: #f97066; }
 .tool-card-accent-teal { border-top-color: #14b8a6; }
@@ -1087,8 +1087,8 @@ body {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle at 20% 50%, rgba(200,164,94,0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 50%, rgba(200,164,94,0.05) 0%, transparent 50%);
+        radial-gradient(circle at 20% 50%, rgba(196,162,101,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(245,240,232,0.05) 0%, transparent 50%);
 }
 
 .agent-card {
@@ -1112,7 +1112,7 @@ body {
     border-radius: 50%;
     overflow: hidden;
     border: 4px solid var(--color-accent);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.3), 0 0 0 8px rgba(200,164,94,0.12);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3), 0 0 0 8px rgba(196,162,101,0.15);
 }
 
 .agent-photo-wrapper img {
@@ -1247,7 +1247,7 @@ body {
 /* === Contact / CTA === */
 .contact-section {
     text-align: center;
-    background: linear-gradient(135deg, var(--color-bg) 0%, #f0ede6 50%, var(--color-bg) 100%);
+    background: linear-gradient(135deg, var(--color-bg) 0%, #EDE7DC 50%, var(--color-bg) 100%);
     position: relative;
     padding: 100px 0;
     overflow: hidden;
@@ -1265,8 +1265,8 @@ body {
             45deg,
             transparent,
             transparent 40px,
-            rgba(200,164,94,0.03) 40px,
-            rgba(200,164,94,0.03) 80px
+            rgba(196,162,101,0.04) 40px,
+            rgba(196,162,101,0.04) 80px
         );
     pointer-events: none;
 }
@@ -1303,13 +1303,14 @@ body {
 .footer-logo {
     text-decoration: none;
     display: inline-block;
+    margin-bottom: 12px;
 }
 
 .footer-logo img {
-    height: 60px;
+    height: 55px;
     width: auto;
     display: block;
-    margin-bottom: 12px;
+    filter: brightness(0) invert(1);
 }
 
 .footer-tagline {
@@ -1809,10 +1810,10 @@ body {
         padding: 0;
     }
     .logo img {
-        height: 70px;
+        height: 55px;
     }
     .footer-logo img {
-        height: 55px;
+        height: 45px;
     }
     .nav { display: none; }
     .nav.active {
@@ -1822,7 +1823,7 @@ body {
         top: 70px;
         left: 0;
         right: 0;
-        background: white;
+        background: var(--color-bg);
         padding: 24px;
         gap: 16px;
         border-bottom: 1px solid var(--color-border);
@@ -1965,7 +1966,7 @@ body {
         border-left: none;
         padding-left: 0;
         text-align: center;
-        border-top: 2px solid rgba(200,164,94,0.3);
+        border-top: 2px solid rgba(196,162,101,0.3);
         padding-top: 20px;
     }
     .agent-cta {
@@ -1988,7 +1989,7 @@ body {
         justify-content: center;
     }
     .footer-logo img {
-        height: 55px;
+        height: 45px;
     }
     .footer-col h4 {
         margin-bottom: 12px;
@@ -2049,10 +2050,10 @@ body {
         height: 60px;
     }
     .logo img {
-        height: 60px;
+        height: 45px;
     }
     .footer-logo img {
-        height: 45px;
+        height: 38px;
     }
     .nav.active {
         top: 60px;
