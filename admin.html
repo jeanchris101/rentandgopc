@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Punta Cana Rent & Go</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --primary: #1a3a2a;
+            --accent: #c8a45e;
+            --bg: #f5f5f0;
+            --card: #ffffff;
+            --text: #2c2c2c;
+            --text-light: #666;
+            --border: #e8e5df;
+            --green: #22c55e;
+            --red: #ef4444;
+            --blue: #3b82f6;
+            --purple: #8b5cf6;
+            --orange: #f97316;
+        }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); }
+
+        /* Login */
+        .login-screen {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            background: var(--primary);
+        }
+        .login-box {
+            background: var(--card); padding: 40px; border-radius: 16px; width: 100%; max-width: 380px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center;
+        }
+        .login-box img { height: 60px; margin-bottom: 20px; }
+        .login-box h2 { font-size: 1.2rem; margin-bottom: 20px; color: var(--primary); }
+        .login-box input {
+            width: 100%; padding: 12px 16px; border: 2px solid var(--border); border-radius: 10px;
+            font-size: 1rem; margin-bottom: 12px; outline: none; transition: border-color 0.2s;
+        }
+        .login-box input:focus { border-color: var(--accent); }
+        .login-box button {
+            width: 100%; padding: 12px; background: var(--primary); color: white; border: none;
+            border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s;
+        }
+        .login-box button:hover { background: #2d5a3f; }
+        .login-error { color: var(--red); font-size: 0.85rem; margin-top: 8px; display: none; }
+
+        /* Dashboard */
+        .dashboard { display: none; min-height: 100vh; }
+        .dash-header {
+            background: var(--primary); color: white; padding: 20px 24px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .dash-header h1 { font-size: 1.2rem; font-weight: 600; }
+        .dash-header-right { display: flex; align-items: center; gap: 12px; }
+        .refresh-btn {
+            background: rgba(255,255,255,0.15); border: none; color: white; padding: 8px 16px;
+            border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: background 0.2s;
+        }
+        .refresh-btn:hover { background: rgba(255,255,255,0.25); }
+        .last-updated { font-size: 0.75rem; opacity: 0.6; }
+
+        .dash-body { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+        /* Stats Cards */
+        .stats-row {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px; margin-bottom: 28px;
+        }
+        .stat-card {
+            background: var(--card); border-radius: 12px; padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid var(--accent);
+        }
+        .stat-card.whatsapp { border-left-color: var(--green); }
+        .stat-card.airbnb { border-left-color: var(--red); }
+        .stat-card.property { border-left-color: var(--blue); }
+        .stat-card.pageview { border-left-color: var(--purple); }
+        .stat-card.tool { border-left-color: var(--orange); }
+        .stat-label { font-size: 0.8rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+        .stat-number { font-size: 2rem; font-weight: 700; color: var(--text); margin-top: 4px; }
+
+        /* Tables */
+        .panel { background: var(--card); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 24px; overflow: hidden; }
+        .panel-header { padding: 16px 20px; border-bottom: 1px solid var(--border); font-weight: 600; font-size: 1rem; }
+        .panel-body { padding: 0; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 10px 20px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-light); background: var(--bg); font-weight: 600; }
+        td { padding: 12px 20px; border-top: 1px solid var(--border); font-size: 0.9rem; }
+        tr:hover td { background: rgba(200,164,94,0.04); }
+        .click-count { font-weight: 700; font-variant-numeric: tabular-nums; }
+        .bar-cell { width: 40%; }
+        .bar-bg { background: var(--bg); border-radius: 4px; height: 8px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+        .bar-fill.green { background: var(--green); }
+        .bar-fill.red { background: var(--red); }
+        .bar-fill.blue { background: var(--blue); }
+        .bar-fill.purple { background: var(--purple); }
+        .bar-fill.orange { background: var(--orange); }
+        .bar-fill.gold { background: var(--accent); }
+
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .empty-state { padding: 40px 20px; text-align: center; color: var(--text-light); font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            .stats-row { grid-template-columns: 1fr 1fr; }
+            .two-col { grid-template-columns: 1fr; }
+            .dash-header { flex-direction: column; gap: 12px; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .stats-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div class="login-screen" id="loginScreen">
+    <div class="login-box">
+        <img src="images/logo.png" alt="Punta Cana Rent & Go">
+        <h2>Admin Panel</h2>
+        <input type="password" id="adminKey" placeholder="Enter admin key" onkeydown="if(event.key==='Enter')login()">
+        <button onclick="login()">Access Dashboard</button>
+        <div class="login-error" id="loginError">Invalid admin key</div>
+    </div>
+</div>
+
+<!-- Dashboard -->
+<div class="dashboard" id="dashboard">
+    <div class="dash-header">
+        <h1>Punta Cana Rent & Go  &mdash; Analytics</h1>
+        <div class="dash-header-right">
+            <span class="last-updated" id="lastUpdated"></span>
+            <button class="refresh-btn" onclick="loadStats()">Refresh</button>
+        </div>
+    </div>
+
+    <div class="dash-body">
+        <!-- Top Stats -->
+        <div class="stats-row" id="statsRow"></div>
+
+        <!-- Click Details -->
+        <div class="two-col">
+            <div class="panel">
+                <div class="panel-header">WhatsApp Clicks</div>
+                <div class="panel-body" id="whatsappTable"></div>
+            </div>
+            <div class="panel">
+                <div class="panel-header">Airbnb Clicks</div>
+                <div class="panel-body" id="airbnbTable"></div>
+            </div>
+        </div>
+
+        <div class="two-col">
+            <div class="panel">
+                <div class="panel-header">Property Views</div>
+                <div class="panel-body" id="propertyTable"></div>
+            </div>
+            <div class="panel">
+                <div class="panel-header">Tools Used</div>
+                <div class="panel-body" id="toolTable"></div>
+            </div>
+        </div>
+
+        <div class="two-col">
+            <div class="panel">
+                <div class="panel-header">Page Views</div>
+                <div class="panel-body" id="pageTable"></div>
+            </div>
+            <div class="panel">
+                <div class="panel-header">Daily Activity (Last 14 Days)</div>
+                <div class="panel-body" id="dailyTable"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let adminKey = '';
+
+function login() {
+    adminKey = document.getElementById('adminKey').value;
+    if (!adminKey) return;
+    loadStats().then(ok => {
+        if (ok) {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            sessionStorage.setItem('adminKey', adminKey);
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+        }
+    });
+}
+
+// Auto-login if key stored in session
+(function () {
+    const saved = sessionStorage.getItem('adminKey');
+    if (saved) { adminKey = saved; loadStats().then(ok => { if (ok) { document.getElementById('loginScreen').style.display = 'none'; document.getElementById('dashboard').style.display = 'block'; } }); }
+})();
+
+async function loadStats() {
+    try {
+        const res = await fetch(`/api/stats?key=${encodeURIComponent(adminKey)}`);
+        if (!res.ok) return false;
+        const data = await res.json();
+        renderDashboard(data);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+function sumCategory(clicks, cat) {
+    if (!clicks[cat]) return 0;
+    return Object.values(clicks[cat]).reduce((a, b) => a + b, 0);
+}
+
+function renderDashboard(data) {
+    const clicks = data.clicks || {};
+    const daily = data.daily || {};
+    const pages = data.pages || {};
+
+    // Last updated
+    if (data.lastUpdated) {
+        document.getElementById('lastUpdated').textContent = 'Last: ' + new Date(data.lastUpdated).toLocaleString();
+    }
+
+    // Top stats
+    const categories = [
+        { key: 'pageview', label: 'Page Views', cls: 'pageview' },
+        { key: 'whatsapp', label: 'WhatsApp Clicks', cls: 'whatsapp' },
+        { key: 'airbnb', label: 'Airbnb Clicks', cls: 'airbnb' },
+        { key: 'property', label: 'Property Views', cls: 'property' },
+        { key: 'tool', label: 'Tool Clicks', cls: 'tool' },
+    ];
+
+    document.getElementById('statsRow').innerHTML = categories.map(c =>
+        `<div class="stat-card ${c.cls}">
+            <div class="stat-label">${c.label}</div>
+            <div class="stat-number">${sumCategory(clicks, c.key).toLocaleString()}</div>
+        </div>`
+    ).join('');
+
+    // Detail tables
+    renderClickTable('whatsappTable', clicks.whatsapp, 'green');
+    renderClickTable('airbnbTable', clicks.airbnb, 'red');
+    renderClickTable('propertyTable', clicks.property, 'blue');
+    renderClickTable('toolTable', clicks.tool, 'orange');
+
+    // Pages table
+    renderClickTable('pageTable', pages, 'purple');
+
+    // Daily table
+    renderDailyTable(daily);
+}
+
+function renderClickTable(id, obj, color) {
+    const el = document.getElementById(id);
+    if (!obj || !Object.keys(obj).length) {
+        el.innerHTML = '<div class="empty-state">No data yet</div>';
+        return;
+    }
+    const sorted = Object.entries(obj).sort((a, b) => b[1] - a[1]);
+    const max = sorted[0][1];
+    el.innerHTML = `<table>
+        <thead><tr><th>Item</th><th>Clicks</th><th class="bar-cell">Share</th></tr></thead>
+        <tbody>${sorted.map(([name, count]) =>
+            `<tr>
+                <td>${escHtml(name)}</td>
+                <td class="click-count">${count.toLocaleString()}</td>
+                <td class="bar-cell"><div class="bar-bg"><div class="bar-fill ${color}" style="width:${(count/max*100).toFixed(1)}%"></div></div></td>
+            </tr>`
+        ).join('')}</tbody>
+    </table>`;
+}
+
+function renderDailyTable(daily) {
+    const el = document.getElementById('dailyTable');
+    const days = Object.keys(daily).sort().reverse().slice(0, 14);
+    if (!days.length) { el.innerHTML = '<div class="empty-state">No data yet</div>'; return; }
+
+    el.innerHTML = `<table>
+        <thead><tr><th>Date</th><th>Views</th><th>WhatsApp</th><th>Airbnb</th></tr></thead>
+        <tbody>${days.map(d => {
+            const day = daily[d] || {};
+            return `<tr>
+                <td>${d}</td>
+                <td class="click-count">${(day.pageview || 0).toLocaleString()}</td>
+                <td class="click-count">${(day.whatsapp || 0).toLocaleString()}</td>
+                <td class="click-count">${(day.airbnb || 0).toLocaleString()}</td>
+            </tr>`;
+        }).join('')}</tbody>
+    </table>`;
+}
+
+function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+</script>
+</body>
+</html>
