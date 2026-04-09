@@ -1412,8 +1412,10 @@ body {
 
 .slideshow-track {
     display: flex;
-    transition: transform 0.4s ease;
+    transition: transform 0.3s ease;
     will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .slide {
@@ -1428,6 +1430,9 @@ body {
     object-fit: contain;
     display: block;
     background: #111;
+    -webkit-user-drag: none;
+    user-select: none;
+    touch-action: pan-y;
 }
 
 .slide-label {
@@ -2011,8 +2016,14 @@ body {
         padding: 60px 0;
     }
 
+    .slideshow {
+        margin-top: 60px;
+        border-radius: 0;
+    }
+
     .slide img {
-        height: 300px;
+        height: 56vw;
+        max-height: 350px;
     }
 
     .slide-btn {
@@ -2025,6 +2036,10 @@ body {
     .slide-next { right: 6px; }
 
     .slide-dots { bottom: 36px; }
+    .slide-dot {
+        width: 7px;
+        height: 7px;
+    }
 
     .lightbox-prev,
     .lightbox-next {
@@ -2033,9 +2048,19 @@ body {
         font-size: 1.8rem;
     }
 
+    .lightbox-prev { left: 4px; }
+    .lightbox-next { right: 4px; }
+
     .lightbox img {
-        max-width: 95vw;
-        max-height: 80vh;
+        max-width: 98vw;
+        max-height: 85vh;
+    }
+
+    .lightbox-close {
+        top: 8px;
+        right: 8px;
+        font-size: 2rem;
+        padding: 12px;
     }
 
     .detail-header { flex-direction: column; }

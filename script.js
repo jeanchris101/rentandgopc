@@ -64,6 +64,13 @@ function initGallery() {
         return { src: img.src, alt: img.alt };
     });
 
+    // Add lazy loading to off-screen slide images
+    slides.forEach((s, i) => {
+        const img = s.querySelector('img');
+        if (i > 0) img.loading = 'lazy';
+        img.decoding = 'async';
+    });
+
     // Build dots
     const dotsEl = document.getElementById('slide-dots');
     if (dotsEl) {
@@ -80,13 +87,56 @@ function initGallery() {
         s.addEventListener('click', () => openLightbox(i));
     });
 
-    // Touch/swipe support
+    // Touch/swipe support with visual drag feedback
     const track = document.getElementById('slideshow-track');
     if (track) {
-        track.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
-        track.addEventListener('touchend', (e) => {
-            const diff = touchStartX - e.changedTouches[0].clientX;
-            if (Math.abs(diff) > 50) slideNav(diff > 0 ? 1 : -1);
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchDeltaX = 0;
+        let isSwiping = false;
+
+        track.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            touchDeltaX = 0;
+            isSwiping = false;
+            track.style.transition = 'none';
+        }, { passive: true });
+
+        track.addEventListener('touchmove', (e) => {
+            const dx = e.touches[0].clientX - touchStartX;
+            const dy = e.touches[0].clientY - touchStartY;
+            // Lock to horizontal swipe after 10px movement
+            if (!isSwiping && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+                isSwiping = true;
+            }
+            if (isSwiping) {
+                touchDeltaX = dx;
+                const base = -(currentIndex * 100);
+                const pct = (dx / track.offsetWidth) * 100;
+                track.style.transform = 'translateX(' + (base + pct) + '%)';
+            }
+        }, { passive: true });
+
+        track.addEventListener('touchend', () => {
+            track.style.transition = 'transform 0.3s ease';
+            if (isSwiping && Math.abs(touchDeltaX) > 40) {
+                slideNav(touchDeltaX < 0 ? 1 : -1);
+            } else {
+                goToSlide(currentIndex);
+            }
+            isSwiping = false;
+        }, { passive: true });
+    }
+
+    // Lightbox swipe support
+    const lb = document.getElementById('lightbox');
+    if (lb) {
+        let lbStartX = 0;
+        lb.addEventListener('touchstart', (e) => { lbStartX = e.touches[0].clientX; }, { passive: true });
+        lb.addEventListener('touchend', (e) => {
+            const diff = lbStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) lightboxNav(diff > 0 ? 1 : -1);
         }, { passive: true });
     }
 }
