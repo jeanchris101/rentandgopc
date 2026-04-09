@@ -386,7 +386,7 @@ function initHeaderTransition() {
                 header.style.backdropFilter = scrolled
                     ? 'blur(12px)'
                     : 'blur(8px)';
-                header.style.height = scrolled ? '60px' : '70px';
+                header.style.height = scrolled ? '70px' : '95px';
                 header.style.transition = 'box-shadow 0.3s, backdrop-filter 0.3s, height 0.3s';
 
                 ticking = false;

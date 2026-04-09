@@ -63,7 +63,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 80px;
+    height: 95px;
 }
 
 .logo {
@@ -74,7 +74,7 @@ body {
 }
 
 .logo img {
-    height: 85px;
+    height: 100px;
     width: auto;
 }
 
@@ -1400,7 +1400,7 @@ body {
 
 /* === Slideshow === */
 .slideshow {
-    margin-top: 70px;
+    margin-top: 95px;
     position: relative;
     width: 100%;
     max-width: 1000px;
