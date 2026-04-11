@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>75,000 m² Development Land — New Autovía del Este Frontage | Rent & Go PC</title>
+    <meta name="description" content="75,000 m² development land with direct frontage on the new 4-lane highway connecting Circunvalación to Autovía del Este. US$45/m². Owner will segregate 48,000 m².">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="75,000 m² Development Land — New Highway Frontage, Punta Cana">
+    <meta property="og:description" content="Direct frontage on the new 4-lane highway near the toll area. Cliff views at the rear. US$45/m². Segregation available from 48,000 m².">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://www.rentandgopc.com/images/land-autovia-este/photo-01.jpg">
+    <meta property="og:url" content="https://www.rentandgopc.com/land-autovia-este.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">Rent & Go PC</a>
+                <nav class="nav">
+                    <a href="index.html" data-i18n="all_properties">All Properties</a>
+                    <a href="neighborhoods.html">Neighborhoods</a>
+                    <a href="blog.html" data-i18n="blog_nav">Guide</a>
+                    <a href="try-before-you-buy.html">Try Before You Buy</a>
+                    <a href="#contact-cta" data-i18n="nav_contact">Contact</a>
+                    <div class="lang-selector">
+                        <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+                        <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+                        <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+                        <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
+                    </div>
+                </nav>
+                <button class="mobile-menu-btn" onclick="toggleMenu()">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Gallery Slideshow -->
+    <div class="slideshow" id="slideshow">
+        <div class="slideshow-track" id="slideshow-track">
+            <div class="slide"><img src="images/land-autovia-este/photo-01.jpg" alt="Development land with frontage on the new 4-lane highway"><span class="slide-label">Highway Frontage</span></div>
+            <div class="slide"><img src="images/land-autovia-este/photo-02.jpg" alt="View of the new 4-lane highway under construction"><span class="slide-label">New Highway</span></div>
+            <div class="slide"><img src="images/land-autovia-este/photo-03.jpg" alt="Land parcel near Autovía del Este toll area"><span class="slide-label">Near Toll Area</span></div>
+            <div class="slide"><img src="images/land-autovia-este/photo-04.jpg" alt="Cliff (farallón) at the rear of the property with panoramic views"><span class="slide-label">Farallón & View</span></div>
+            <div class="slide"><img src="images/land-autovia-este/photo-05.jpg" alt="Land surface and vegetation"><span class="slide-label">Terrain</span></div>
+            <div class="slide"><img src="images/land-autovia-este/photo-06.jpg" alt="Surrounding area with nearby developments"><span class="slide-label">Surroundings</span></div>
+            <div class="slide"><img src="images/land-autovia-este/photo-07.jpg" alt="Adjacent development in the farallón zone"><span class="slide-label">Adjacent Project</span></div>
+        </div>
+        <button class="slide-btn slide-prev" onclick="slideNav(-1)">&#8249;</button>
+        <button class="slide-btn slide-next" onclick="slideNav(1)">&#8250;</button>
+        <div class="slide-counter" id="slide-counter">1 / 7</div>
+        <div class="slide-dots" id="slide-dots"></div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <button class="lightbox-prev" onclick="lightboxNav(-1)">&#8249;</button>
+        <button class="lightbox-next" onclick="lightboxNav(1)">&#8250;</button>
+        <img id="lightbox-img" src="" alt="">
+        <div class="lightbox-counter" id="lightbox-counter">1 / 7</div>
+    </div>
+
+    <!-- Detail Content -->
+    <div class="detail-content" id="details">
+        <!-- Header: Title + Price -->
+        <div class="detail-header">
+            <div class="detail-title">
+                <h1>75,000 m² Development Land — New Highway Frontage</h1>
+                <p class="location">Near the new Circunvalación–Autovía del Este connector, Punta Cana</p>
+            </div>
+            <div class="detail-price">
+                <div class="price">US$45 / m²</div>
+                <span class="confotur-tag" style="background: var(--color-primary); color: #fff;">Development Land</span>
+            </div>
+        </div>
+
+        <!-- Specs Bar -->
+        <div class="specs-bar">
+            <div class="spec-item">
+                <div class="spec-value">75,000</div>
+                <div class="spec-label">m² Total</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-value">48,000</div>
+                <div class="spec-label">m² Segregable</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-value">US$45</div>
+                <div class="spec-label">per m²</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-value">4-Lane</div>
+                <div class="spec-label">Highway Frontage</div>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="detail-description">
+            <h2>Description</h2>
+            <p>Exceptional 75,000 m² development parcel located along the new 4-lane highway currently under construction, which will connect the Punta Cana Circunvalación to the Autovía del Este near the toll area. The property has direct frontage on the new road — a key commercial and development advantage once the highway is fully operational.</p>
+            <p>At the rear of the lot, a natural cliff (<em>farallón</em>) provides elevated views and additional development possibilities. An adjacent project is already being developed on the same cliff zone, confirming the area's growth trajectory.</p>
+            <p>The owner is willing to segregate 48,000 m² according to the buyer's needs, making this an unusually flexible opportunity for residential, mixed-use, or commercial development. The surrounding area includes Larimar City and several other residential projects currently in progress.</p>
+            <p>The road is actively under construction and the land is fully accessible for on-site visits.</p>
+        </div>
+
+        <!-- Features -->
+        <h2 style="font-family: var(--font-heading); font-size: 1.4rem; color: var(--color-primary); margin-bottom: 16px;">Key Features</h2>
+        <ul class="features-list">
+            <li>75,000 m² total area</li>
+            <li>Direct frontage on the new 4-lane highway</li>
+            <li>Near the Autovía del Este toll area</li>
+            <li>Rear cliff (farallón) with panoramic views</li>
+            <li>Owner will segregate 48,000 m² to suit buyer</li>
+            <li>US$45 per m² — unified price</li>
+            <li>Accessible for visits — road under construction</li>
+            <li>Adjacent residential project already in development</li>
+            <li>Surrounded by Larimar City and other active developments</li>
+            <li>Strong commercial value once highway is complete</li>
+            <li>Flexible use: residential, mixed-use or commercial</li>
+        </ul>
+
+        <!-- Location Highlights -->
+        <div style="background: #f0ede5; border-radius: 12px; padding: 28px; margin-top: 32px;">
+            <h3 style="font-family: 'Playfair Display', serif; color: #1a3a2a; margin-bottom: 16px; font-size: 1.3rem;">Location Advantages</h3>
+            <p style="color: #444; line-height: 1.7; margin-bottom: 16px;">The new Circunvalación–Autovía del Este connector is one of the most significant infrastructure projects in the Punta Cana region. Land with direct frontage on this corridor is positioned to appreciate substantially as the road opens and surrounding developments mature.</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                <div style="background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #e0ddd5;">
+                    <strong style="color: #1a3a2a;">New Highway</strong><br>
+                    <span style="font-size: 0.85rem; color: #6b6b6b;">Direct frontage on 4-lane road</span>
+                </div>
+                <div style="background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #e0ddd5;">
+                    <strong style="color: #1a3a2a;">Toll Area</strong><br>
+                    <span style="font-size: 0.85rem; color: #6b6b6b;">Minutes from Autovía del Este</span>
+                </div>
+                <div style="background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #e0ddd5;">
+                    <strong style="color: #1a3a2a;">Larimar City</strong><br>
+                    <span style="font-size: 0.85rem; color: #6b6b6b;">Nearby active development</span>
+                </div>
+                <div style="background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #e0ddd5;">
+                    <strong style="color: #1a3a2a;">Elevation</strong><br>
+                    <span style="font-size: 0.85rem; color: #6b6b6b;">Rear cliff with panoramic views</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Price Summary -->
+        <div style="background: #1a3a2a; color: #fff; border-radius: 12px; padding: 28px; margin-top: 32px;">
+            <h3 style="font-family: 'Playfair Display', serif; color: #c8a45e; margin-bottom: 16px; font-size: 1.3rem;">Price Summary</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+                <div>
+                    <div style="font-size: 0.85rem; color: #c8a45e; text-transform: uppercase; letter-spacing: 1px;">Unit Price</div>
+                    <div style="font-size: 1.8rem; font-weight: 600;">US$45 / m²</div>
+                </div>
+                <div>
+                    <div style="font-size: 0.85rem; color: #c8a45e; text-transform: uppercase; letter-spacing: 1px;">Full Parcel (75,000 m²)</div>
+                    <div style="font-size: 1.8rem; font-weight: 600;">US$3,375,000</div>
+                </div>
+                <div>
+                    <div style="font-size: 0.85rem; color: #c8a45e; text-transform: uppercase; letter-spacing: 1px;">Segregated (48,000 m²)</div>
+                    <div style="font-size: 1.8rem; font-weight: 600;">US$2,160,000</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Rent & Go PC &mdash; <span data-i18n="footer">Punta Cana, Dominican Republic</span></p>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

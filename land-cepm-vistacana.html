@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>48,000 m² Development Land — Between CEPM & Vista Cana | Rent & Go PC</title>
+    <meta name="description" content="48,000 m² development land in an active construction zone between the CEPM entrance and Vista Cana, Punta Cana. US$45/m².">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="48,000 m² Development Land — CEPM / Vista Cana, Punta Cana">
+    <meta property="og:description" content="Active growth corridor between the CEPM entrance and Vista Cana. 48,000 m² at US$45/m².">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://www.rentandgopc.com/images/land-cepm-vistacana/map.jpg">
+    <meta property="og:url" content="https://www.rentandgopc.com/land-cepm-vistacana.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">Rent & Go PC</a>
+                <nav class="nav">
+                    <a href="index.html" data-i18n="all_properties">All Properties</a>
+                    <a href="neighborhoods.html">Neighborhoods</a>
+                    <a href="blog.html" data-i18n="blog_nav">Guide</a>
+                    <a href="try-before-you-buy.html">Try Before You Buy</a>
+                    <div class="lang-selector">
+                        <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+                        <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+                        <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+                        <button class="lang-btn" data-lang="ru" onclick="setLang('ru')">RU</button>
+                    </div>
+                </nav>
+                <button class="mobile-menu-btn" onclick="toggleMenu()">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Gallery Slideshow -->
+    <div class="slideshow" id="slideshow">
+        <div class="slideshow-track" id="slideshow-track">
+            <div class="slide"><img src="images/land-cepm-vistacana/map.jpg" alt="Map view showing land location between CEPM entrance and Cocotal"><span class="slide-label">Map View</span></div>
+            <div class="slide"><img src="images/land-cepm-vistacana/road-1.jpg" alt="Road view of the land parcel"><span class="slide-label">Road View 1</span></div>
+            <div class="slide"><img src="images/land-cepm-vistacana/road-2.jpg" alt="Road view of the land parcel — alternate angle"><span class="slide-label">Road View 2</span></div>
+        </div>
+        <button class="slide-btn slide-prev" onclick="slideNav(-1)">&#8249;</button>
+        <button class="slide-btn slide-next" onclick="slideNav(1)">&#8250;</button>
+        <div class="slide-counter" id="slide-counter">1 / 3</div>
+        <div class="slide-dots" id="slide-dots"></div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <button class="lightbox-prev" onclick="lightboxNav(-1)">&#8249;</button>
+        <button class="lightbox-next" onclick="lightboxNav(1)">&#8250;</button>
+        <img id="lightbox-img" src="" alt="">
+        <div class="lightbox-counter" id="lightbox-counter">1 / 3</div>
+    </div>
+
+    <!-- Detail Content -->
+    <div class="detail-content" id="details">
+        <!-- Header: Title + Price -->
+        <div class="detail-header">
+            <div class="detail-title">
+                <h1>48,000 m² Development Land — Between CEPM & Vista Cana</h1>
+                <p class="location">Active construction zone between the CEPM entrance and Vista Cana, Punta Cana</p>
+            </div>
+            <div class="detail-price">
+                <div class="price">US$45 / m²</div>
+                <span class="confotur-tag" style="background: var(--color-primary); color: #fff;">Development Land</span>
+            </div>
+        </div>
+
+        <!-- Specs Bar -->
+        <div class="specs-bar">
+            <div class="spec-item">
+                <div class="spec-value">48,000</div>
+                <div class="spec-label">m² Total</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-value">US$45</div>
+                <div class="spec-label">per m²</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-value">US$2.16M</div>
+                <div class="spec-label">Total Price</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-value">Growth</div>
+                <div class="spec-label">Corridor</div>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="detail-description">
+            <h2>Description</h2>
+            <p>48,000 m² development parcel located in an active construction zone between the CEPM entrance and Vista Cana — one of the fastest-growing residential corridors in Punta Cana. The area sits between two anchor references: Cocotal Golf & Country Club to one side, and the CEPM power substation entrance on the other, with Vista Cana expanding immediately adjacent.</p>
+            <p>Surrounding projects are actively under construction, making this land a strategic entry point for residential, mixed-use, or investment development in a zone where values are already moving upward.</p>
+        </div>
+
+        <!-- Map Legend -->
+        <div style="background: #f0ede5; border-radius: 12px; padding: 28px; margin-top: 32px;">
+            <h3 style="font-family: 'Playfair Display', serif; color: #1a3a2a; margin-bottom: 16px; font-size: 1.3rem;">Map Legend</h3>
+            <p style="color: #444; line-height: 1.7; margin-bottom: 20px;">Refer to the first image in the gallery to locate the parcel in context. The colored circles on the map identify the key reference points:</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+                <div style="background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #e0ddd5; display: flex; align-items: center; gap: 14px;">
+                    <span style="display: inline-block; width: 20px; height: 20px; border-radius: 50%; background: #e53935; border: 2px solid #b71c1c; flex-shrink: 0;"></span>
+                    <div>
+                        <strong style="color: #1a3a2a;">Red — Cocotal</strong><br>
+                        <span style="font-size: 0.85rem; color: #6b6b6b;">Cocotal Golf & Country Club</span>
+                    </div>
+                </div>
+                <div style="background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #e0ddd5; display: flex; align-items: center; gap: 14px;">
+                    <span style="display: inline-block; width: 20px; height: 20px; border-radius: 50%; background: #2e7d32; border: 2px solid #1b5e20; flex-shrink: 0;"></span>
+                    <div>
+                        <strong style="color: #1a3a2a;">Green — CEPM Entrance</strong><br>
+                        <span style="font-size: 0.85rem; color: #6b6b6b;">Main CEPM access point</span>
+                    </div>
+                </div>
+                <div style="background: #fff; border-radius: 8px; padding: 16px; border: 1px solid #e0ddd5; display: flex; align-items: center; gap: 14px;">
+                    <span style="display: inline-block; width: 20px; height: 20px; border-radius: 50%; background: #fbc02d; border: 2px solid #f57f17; flex-shrink: 0;"></span>
+                    <div>
+                        <strong style="color: #1a3a2a;">Yellow — Land</strong><br>
+                        <span style="font-size: 0.85rem; color: #6b6b6b;">Placement of the 48,000 m² parcel</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <h2 style="font-family: var(--font-heading); font-size: 1.4rem; color: var(--color-primary); margin-bottom: 16px; margin-top: 32px;">Key Features</h2>
+        <ul class="features-list">
+            <li>48,000 m² total area</li>
+            <li>US$45 per m² — US$2,160,000 total</li>
+            <li>Active construction zone</li>
+            <li>Between CEPM entrance and Vista Cana</li>
+            <li>Close proximity to Cocotal Golf & Country Club</li>
+            <li>Surrounded by ongoing residential developments</li>
+            <li>Strategic growth corridor in Punta Cana</li>
+            <li>Suitable for residential, mixed-use or investment projects</li>
+        </ul>
+
+        <!-- Price Summary -->
+        <div style="background: #1a3a2a; color: #fff; border-radius: 12px; padding: 28px; margin-top: 32px;">
+            <h3 style="font-family: 'Playfair Display', serif; color: #c8a45e; margin-bottom: 16px; font-size: 1.3rem;">Price Summary</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+                <div>
+                    <div style="font-size: 0.85rem; color: #c8a45e; text-transform: uppercase; letter-spacing: 1px;">Unit Price</div>
+                    <div style="font-size: 1.8rem; font-weight: 600;">US$45 / m²</div>
+                </div>
+                <div>
+                    <div style="font-size: 0.85rem; color: #c8a45e; text-transform: uppercase; letter-spacing: 1px;">Total Area</div>
+                    <div style="font-size: 1.8rem; font-weight: 600;">48,000 m²</div>
+                </div>
+                <div>
+                    <div style="font-size: 0.85rem; color: #c8a45e; text-transform: uppercase; letter-spacing: 1px;">Total Price</div>
+                    <div style="font-size: 1.8rem; font-weight: 600;">US$2,160,000</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Rent & Go PC &mdash; <span data-i18n="footer">Punta Cana, Dominican Republic</span></p>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
