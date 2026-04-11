@@ -44,7 +44,7 @@
                 <nav class="nav">
                     <a href="#properties" data-i18n="nav_properties">Properties</a>
                     <a href="#rentals">Rentals</a>
-                    <a href="neighborhoods.html">Neighborhoods</a>
+                    <a href="neighborhoods.html" data-i18n="nav_neighborhoods">Neighborhoods</a>
                     <a href="blog.html" data-i18n="blog_nav">Guide</a>
                     <!-- <a href="try-before-you-buy.html">Try Before You Buy</a> -->
                     <a href="#contact" data-i18n="nav_contact">Contact</a>
@@ -179,8 +179,8 @@
     <!-- Development Land -->
     <section id="land" class="section properties-section" style="background: #faf8f3;">
         <div class="container">
-            <h2 class="section-title animate-on-scroll">Development Land</h2>
-            <p class="section-subtitle animate-on-scroll">Two strategic parcels in Punta Cana's fastest-growing corridors &mdash; priced at US$45 per m&sup2;.</p>
+            <h2 class="section-title animate-on-scroll" data-i18n="home_land_h">Development Land</h2>
+            <p class="section-subtitle animate-on-scroll" data-i18n="home_land_sub">Two strategic parcels in Punta Cana's fastest-growing corridors — priced at US$45 per m².</p>
 
             <div class="land-grid">
                 <!-- Land 1 -->
@@ -188,20 +188,20 @@
                     <div class="land-card-image">
                         <img src="images/land-autovia-este/photo-01.jpg" alt="75,000 m² land with frontage on the new Autovía del Este connector">
                         <div class="property-badges">
-                            <span class="badge badge-featured">Land</span>
+                            <span class="badge badge-featured" data-i18n="home_badge_land">Land</span>
                         </div>
                     </div>
                     <div class="land-card-info">
                         <div class="featured-property-price">US$45 / m²</div>
-                        <h3>75,000 m² — New Highway Frontage</h3>
-                        <p class="property-location">New Circunvalación–Autovía del Este connector, Punta Cana</p>
+                        <h3 data-i18n="home_l1_title">75,000 m² — New Highway Frontage</h3>
+                        <p class="property-location" data-i18n="home_l1_loc">New Circunvalación–Autovía del Este connector, Punta Cana</p>
                         <div class="property-specs">
                             <span>75,000 m²</span>
-                            <span>48,000 m² segregable</span>
-                            <span>4-lane frontage</span>
+                            <span data-i18n="home_l1_spec_seg">48,000 m² segregable</span>
+                            <span data-i18n="home_l1_spec_front">4-lane frontage</span>
                         </div>
-                        <p class="property-highlight">Direct highway frontage | Rear cliff views | Near Larimar City | Owner will segregate</p>
-                        <span class="btn btn-primary featured-property-btn">View Land</span>
+                        <p class="property-highlight" data-i18n="home_l1_hl">Direct highway frontage | Rear cliff views | Near Larimar City | Owner will segregate</p>
+                        <span class="btn btn-primary featured-property-btn" data-i18n="home_view_land">View Land</span>
                     </div>
                 </a>
 
@@ -210,20 +210,20 @@
                     <div class="land-card-image">
                         <img src="images/land-cepm-vistacana/map.jpg" alt="48,000 m² land between CEPM entrance and Vista Cana">
                         <div class="property-badges">
-                            <span class="badge badge-featured">Land</span>
+                            <span class="badge badge-featured" data-i18n="home_badge_land">Land</span>
                         </div>
                     </div>
                     <div class="land-card-info">
                         <div class="featured-property-price">US$45 / m²</div>
-                        <h3>48,000 m² — CEPM &amp; Vista Cana</h3>
-                        <p class="property-location">Between CEPM entrance and Vista Cana, Punta Cana</p>
+                        <h3 data-i18n="home_l2_title">48,000 m² — CEPM & Vista Cana</h3>
+                        <p class="property-location" data-i18n="home_l2_loc">Between CEPM entrance and Vista Cana, Punta Cana</p>
                         <div class="property-specs">
                             <span>48,000 m²</span>
-                            <span>US$2.16M total</span>
-                            <span>Growth corridor</span>
+                            <span data-i18n="home_l2_spec_total">US$2.16M total</span>
+                            <span data-i18n="home_l2_spec_corridor">Growth corridor</span>
                         </div>
-                        <p class="property-highlight">Active construction zone | Close to Cocotal | Strategic entry into Vista Cana</p>
-                        <span class="btn btn-primary featured-property-btn">View Land</span>
+                        <p class="property-highlight" data-i18n="home_l2_hl">Active construction zone | Close to Cocotal | Strategic entry into Vista Cana</p>
+                        <span class="btn btn-primary featured-property-btn" data-i18n="home_view_land">View Land</span>
                     </div>
                 </a>
             </div>
@@ -692,6 +692,81 @@
     </a>
 
     <script src="translations.js"></script>
+    <script>
+    (function(){
+      const HOME = {
+        en: {
+          home_land_h: "Development Land",
+          home_land_sub: "Two strategic parcels in Punta Cana's fastest-growing corridors — priced at US$45 per m².",
+          home_badge_land: "Land",
+          home_view_land: "View Land",
+          home_l1_title: "75,000 m² — New Highway Frontage",
+          home_l1_loc: "New Circunvalación–Autovía del Este connector, Punta Cana",
+          home_l1_spec_seg: "48,000 m² segregable",
+          home_l1_spec_front: "4-lane frontage",
+          home_l1_hl: "Direct highway frontage | Rear cliff views | Near Larimar City | Owner will segregate",
+          home_l2_title: "48,000 m² — CEPM & Vista Cana",
+          home_l2_loc: "Between CEPM entrance and Vista Cana, Punta Cana",
+          home_l2_spec_total: "US$2.16M total",
+          home_l2_spec_corridor: "Growth corridor",
+          home_l2_hl: "Active construction zone | Close to Cocotal | Strategic entry into Vista Cana"
+        },
+        es: {
+          home_land_h: "Terrenos de Desarrollo",
+          home_land_sub: "Dos parcelas estratégicas en los corredores de mayor crecimiento de Punta Cana — a US$45 por m².",
+          home_badge_land: "Terreno",
+          home_view_land: "Ver Terreno",
+          home_l1_title: "75,000 m² — Frente a la Nueva Autopista",
+          home_l1_loc: "Nuevo conector Circunvalación–Autovía del Este, Punta Cana",
+          home_l1_spec_seg: "48,000 m² segregables",
+          home_l1_spec_front: "Frente de 4 carriles",
+          home_l1_hl: "Frente directo a autopista | Vistas desde farallón | Cerca de Larimar City | Propietario puede segregar",
+          home_l2_title: "48,000 m² — CEPM y Vista Cana",
+          home_l2_loc: "Entre la entrada de CEPM y Vista Cana, Punta Cana",
+          home_l2_spec_total: "US$2.16M en total",
+          home_l2_spec_corridor: "Corredor de crecimiento",
+          home_l2_hl: "Zona de construcción activa | Cerca de Cocotal | Entrada estratégica a Vista Cana"
+        },
+        fr: {
+          home_land_h: "Terrains à Développer",
+          home_land_sub: "Deux parcelles stratégiques dans les corridors à la croissance la plus rapide de Punta Cana — à 45 US$ le m².",
+          home_badge_land: "Terrain",
+          home_view_land: "Voir le Terrain",
+          home_l1_title: "75 000 m² — Façade sur la Nouvelle Autoroute",
+          home_l1_loc: "Nouveau lien Circunvalación–Autovía del Este, Punta Cana",
+          home_l1_spec_seg: "48 000 m² séparables",
+          home_l1_spec_front: "Façade sur 4 voies",
+          home_l1_hl: "Façade directe sur autoroute | Vues sur farallón | Près de Larimar City | Le propriétaire peut séparer",
+          home_l2_title: "48 000 m² — CEPM et Vista Cana",
+          home_l2_loc: "Entre l'entrée de CEPM et Vista Cana, Punta Cana",
+          home_l2_spec_total: "2,16 M US$ au total",
+          home_l2_spec_corridor: "Corridor de croissance",
+          home_l2_hl: "Zone de construction active | Près de Cocotal | Entrée stratégique vers Vista Cana"
+        },
+        ru: {
+          home_land_h: "Участки под застройку",
+          home_land_sub: "Два стратегических участка в самых быстрорастущих коридорах Пунта-Каны — по 45 долл. США за м².",
+          home_badge_land: "Участок",
+          home_view_land: "Смотреть участок",
+          home_l1_title: "75 000 м² — Фасад на новое шоссе",
+          home_l1_loc: "Новая развязка Circunvalación–Autovía del Este, Пунта-Кана",
+          home_l1_spec_seg: "48 000 м² к разделу",
+          home_l1_spec_front: "Фасад на 4 полосы",
+          home_l1_hl: "Прямой фасад на шоссе | Виды с обрыва | Рядом Larimar City | Владелец выделит участок",
+          home_l2_title: "48 000 м² — CEPM и Vista Cana",
+          home_l2_loc: "Между въездом CEPM и Vista Cana, Пунта-Кана",
+          home_l2_spec_total: "2,16 млн долл. США всего",
+          home_l2_spec_corridor: "Коридор роста",
+          home_l2_hl: "Активная стройзона | Рядом с Cocotal | Стратегический вход в Vista Cana"
+        }
+      };
+      for (const lang of ['en','es','fr','ru']) {
+        if (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[lang]) {
+          Object.assign(TRANSLATIONS[lang], HOME[lang]);
+        }
+      }
+    })();
+    </script>
     <script src="script.js"></script>
     <script src="analytics.js" defer></script>
 

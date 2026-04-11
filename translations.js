@@ -2,6 +2,8 @@ const TRANSLATIONS = {
   en: {
     site_name: "PC Properties",
     nav_properties: "Properties",
+    nav_neighborhoods: "Neighborhoods",
+    nav_try: "Try Before You Buy",
     nav_why_pc: "Why Punta Cana?",
     nav_contact: "Contact",
     hero_title: "Live Where Every Day Feels Like Vacation",
@@ -85,6 +87,8 @@ const TRANSLATIONS = {
   es: {
     site_name: "PC Properties",
     nav_properties: "Propiedades",
+    nav_neighborhoods: "Barrios",
+    nav_try: "Prueba antes de comprar",
     nav_why_pc: "\u00bfPor qu\u00e9 Punta Cana?",
     nav_contact: "Contacto",
     hero_title: "Vive Donde Cada D\u00eda Se Siente Como Vacaciones",
@@ -169,6 +173,8 @@ const TRANSLATIONS = {
   fr: {
     site_name: "PC Properties",
     nav_properties: "Propri\u00e9t\u00e9s",
+    nav_neighborhoods: "Quartiers",
+    nav_try: "Essayez avant d'acheter",
     nav_why_pc: "Pourquoi Punta Cana?",
     nav_contact: "Nous joindre",
     hero_title: "Vivez L\u00e0 O\u00f9 Chaque Jour Ressemble \u00e0 des Vacances",
@@ -253,6 +259,8 @@ const TRANSLATIONS = {
   ru: {
     site_name: "PC Properties",
     nav_properties: "\u041d\u0435\u0434\u0432\u0438\u0436\u0438\u043c\u043e\u0441\u0442\u044c",
+    nav_neighborhoods: "\u0420\u0430\u0439\u043e\u043d\u044b",
+    nav_try: "\u041f\u043e\u043f\u0440\u043e\u0431\u0443\u0439\u0442\u0435 \u043f\u0435\u0440\u0435\u0434 \u043f\u043e\u043a\u0443\u043f\u043a\u043e\u0439",
     nav_why_pc: "\u041f\u043e\u0447\u0435\u043c\u0443 Punta Cana?",
     nav_contact: "\u041a\u043e\u043d\u0442\u0430\u043a\u0442\u044b",
     hero_title: "\u0416\u0438\u0432\u0438\u0442\u0435 \u0442\u0430\u043c, \u0433\u0434\u0435 \u043a\u0430\u0436\u0434\u044b\u0439 \u0434\u0435\u043d\u044c \u043a\u0430\u043a \u043e\u0442\u043f\u0443\u0441\u043a",
