@@ -1,12 +1,15 @@
-import { put, head, getDownloadUrl } from '@vercel/blob';
+import { put, list } from '@vercel/blob';
 
 const BLOB_KEY = 'analytics/stats.json';
 
 async function getStats() {
   try {
-    const blobUrl = `${process.env.BLOB_STORE_URL}/${BLOB_KEY}`;
-    const res = await fetch(blobUrl);
-    if (res.ok) return await res.json();
+    const { blobs } = await list({ prefix: BLOB_KEY });
+    if (blobs.length) {
+      const url = `${blobs[0].url}?t=${Date.now()}`;
+      const res = await fetch(url, { cache: 'no-store' });
+      if (res.ok) return await res.json();
+    }
   } catch {}
   return { clicks: {}, daily: {}, pages: {} };
 }
@@ -20,7 +23,12 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { category, label, page } = req.body;
+    // Parse body - sendBeacon may send as text/plain instead of application/json
+    let body = req.body;
+    if (typeof body === 'string') {
+      try { body = JSON.parse(body); } catch { return res.status(400).json({ error: 'Invalid JSON' }); }
+    }
+    const { category, label, page } = body;
     if (!category) return res.status(400).json({ error: 'Missing category' });
 
     const stats = await getStats();

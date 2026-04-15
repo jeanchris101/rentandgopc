@@ -5,3 +5,4 @@ Arboleda outside/
 automation/data/chrome-profile/
 
 .vercel
+.env*.local

@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       return res.status(200).json({ clicks: {}, daily: {}, pages: {}, totalClicks: 0 });
     }
 
-    const response = await fetch(blobs[0].url);
+    const response = await fetch(`${blobs[0].url}?t=${Date.now()}`, { cache: 'no-store' });
     const stats = await response.json();
     return res.status(200).json(stats);
   } catch (err) {
