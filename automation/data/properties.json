@@ -1,8 +1,8 @@
 {
   "_comment": "Single source of truth for the 5 active listings. Used by content_generator.py to write posts and by fb_autoposter.py to attach images and wa.me links. Keep prices in sync with the detail pages.",
   "site_base_url": "https://www.rentandgopc.com",
-  "whatsapp_number": "REPLACE_WITH_NUMBER",
-  "_whatsapp_note": "Digits only, with country code, no + and no spaces. Example for DR: 18095551234",
+  "whatsapp_number": "18094865386",
+  "_whatsapp_note": "Numero del owner (el mismo publicado en el sitio). Formato wa.me: digitos con codigo de pais, sin + ni espacios.",
   "properties": [
     {
       "slug": "cocotal-2bdr",
@@ -36,7 +36,9 @@
         "images/arboleda-a301/master-bedroom-closet.jpg",
         "images/arboleda-a301/balcony-pool.jpg",
         "images/arboleda-a301/pool-loungers.jpg"
-      ]
+      ],
+      "hoa_monthly_usd": null,
+      "_hoa_note": "Cuota de mantenimiento: desconocida - confirmar con Jean antes de responder"
     },
     {
       "slug": "paseo-cocotal",
@@ -49,9 +51,9 @@
       "bedrooms": 2,
       "bathrooms": 2,
       "size_m2": null,
-      "_size_note": "Not stated on paseo-cocotal.html — needs measuring, do not invent a number",
+      "_size_note": "m2 no publicados - confirmar con Jean, no inventar",
       "neighborhood": "Paseo de Cocotal, Cocotal Golf & Country Club, Bavaro",
-      "confotur": null,
+      "confotur": false,
       "furnished": true,
       "parking": 1,
       "audience": "buyer",
@@ -72,7 +74,9 @@
         "images/paseo-cocotal/master-bedroom-pool-view.jpg",
         "images/paseo-cocotal/balcony-pool.jpg",
         "images/paseo-cocotal/living-room-accent.jpg"
-      ]
+      ],
+      "hoa_monthly_usd": null,
+      "_hoa_note": "Cuota de mantenimiento: desconocida - confirmar con Jean antes de responder"
     },
     {
       "slug": "karen-los-corales",
@@ -86,7 +90,7 @@
       "bathrooms": 1,
       "size_m2": 78,
       "neighborhood": "Los Corales, Bavaro",
-      "confotur": null,
+      "confotur": false,
       "furnished": true,
       "parking": 1,
       "audience": "buyer",
@@ -107,7 +111,9 @@
         "images/karen-los-corales/bedroom-daylight.jpg",
         "images/karen-los-corales/gardens-pool.jpg",
         "images/karen-los-corales/gym.jpg"
-      ]
+      ],
+      "hoa_monthly_usd": null,
+      "_hoa_note": "Cuota de mantenimiento: desconocida - confirmar con Jean antes de responder"
     },
     {
       "slug": "land-autovia-este",
@@ -166,5 +172,7 @@
         "images/land-cepm-vistacana/road-2.jpg"
       ]
     }
-  ]
+  ],
+  "data_owner": "Jean",
+  "_data_owner_note": "Cuando un campo este en null, el guion responde 'te lo confirmo' y la pregunta se le hace a Jean. Nunca inventar el dato."
 }
