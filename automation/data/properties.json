@@ -1,0 +1,170 @@
+{
+  "_comment": "Single source of truth for the 5 active listings. Used by content_generator.py to write posts and by fb_autoposter.py to attach images and wa.me links. Keep prices in sync with the detail pages.",
+  "site_base_url": "https://www.rentandgopc.com",
+  "whatsapp_number": "REPLACE_WITH_NUMBER",
+  "_whatsapp_note": "Digits only, with country code, no + and no spaces. Example for DR: 18095551234",
+  "properties": [
+    {
+      "slug": "cocotal-2bdr",
+      "active": true,
+      "name": "2BR Apartment in Cocotal Golf — Arboleda A301",
+      "short_name": "Cocotal Golf 2BR",
+      "type": "condo",
+      "price_usd": 310000,
+      "price_display": "US$310,000",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "size_m2": 132,
+      "neighborhood": "Cocotal Golf & Country Club, Bavaro",
+      "confotur": true,
+      "furnished": null,
+      "parking": 2,
+      "audience": "buyer",
+      "highlights": [
+        "Direct golf course views from a large terrace",
+        "2 covered parking spots",
+        "Full Melia Hotel access: beach, restaurants, spa",
+        "132 m2 total, unusually spacious for a 2BR",
+        "CONFOTUR: 0% property tax for 15 years, 0% transfer tax, 0% capital gains",
+        "24/7 security in a gated golf community"
+      ],
+      "hero_image": "images/arboleda-a301/terrace-golf-view.jpg",
+      "post_images": [
+        "images/arboleda-a301/terrace-golf-view.jpg",
+        "images/arboleda-a301/living-room-wide.jpg",
+        "images/arboleda-a301/kitchen-wide.jpg",
+        "images/arboleda-a301/master-bedroom-closet.jpg",
+        "images/arboleda-a301/balcony-pool.jpg",
+        "images/arboleda-a301/pool-loungers.jpg"
+      ]
+    },
+    {
+      "slug": "paseo-cocotal",
+      "active": true,
+      "name": "Furnished 2BR in Paseo de Cocotal — B202",
+      "short_name": "Paseo de Cocotal 2BR",
+      "type": "condo",
+      "price_usd": 280000,
+      "price_display": "US$280,000",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "size_m2": null,
+      "_size_note": "Not stated on paseo-cocotal.html — needs measuring, do not invent a number",
+      "neighborhood": "Paseo de Cocotal, Cocotal Golf & Country Club, Bavaro",
+      "confotur": null,
+      "furnished": true,
+      "parking": 1,
+      "audience": "buyer",
+      "highlights": [
+        "Fully furnished and move-in ready",
+        "Both bedrooms ensuite",
+        "Open-concept living, dining and kitchen with granite counters",
+        "In-unit washer and dryer",
+        "Furnished terrace with pool views",
+        "Full Melia Hotel access: beach, restaurants, spa",
+        "5-minute drive to the beach"
+      ],
+      "hero_image": "images/paseo-cocotal/living-dining-kitchen.jpg",
+      "post_images": [
+        "images/paseo-cocotal/living-dining-kitchen.jpg",
+        "images/paseo-cocotal/terrace-seating.jpg",
+        "images/paseo-cocotal/kitchen-island.jpg",
+        "images/paseo-cocotal/master-bedroom-pool-view.jpg",
+        "images/paseo-cocotal/balcony-pool.jpg",
+        "images/paseo-cocotal/living-room-accent.jpg"
+      ]
+    },
+    {
+      "slug": "karen-los-corales",
+      "active": true,
+      "name": "Modern 1BR Apartment in Los Corales",
+      "short_name": "Los Corales 1BR",
+      "type": "condo",
+      "price_usd": 155000,
+      "price_display": "US$155,000",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "size_m2": 78,
+      "neighborhood": "Los Corales, Bavaro",
+      "confotur": null,
+      "furnished": true,
+      "parking": 1,
+      "audience": "buyer",
+      "highlights": [
+        "Fully furnished and move-in ready",
+        "5-minute walk to Bavaro Beach",
+        "Private ground-floor terrace with outdoor lounge",
+        "On-site gym, resort-style pool, covered BBQ area",
+        "In-unit washer and dryer, full kitchen appliances",
+        "25 minutes from PUJ airport",
+        "Lowest entry price of the portfolio"
+      ],
+      "hero_image": "images/karen-los-corales/pool-front.jpg",
+      "post_images": [
+        "images/karen-los-corales/pool-front.jpg",
+        "images/karen-los-corales/living-kitchen.jpg",
+        "images/karen-los-corales/terrace-furniture.jpg",
+        "images/karen-los-corales/bedroom-daylight.jpg",
+        "images/karen-los-corales/gardens-pool.jpg",
+        "images/karen-los-corales/gym.jpg"
+      ]
+    },
+    {
+      "slug": "land-autovia-este",
+      "active": true,
+      "name": "75,000 m2 Development Land — New Autovia del Este Frontage",
+      "short_name": "75,000 m2 Highway Frontage",
+      "type": "land",
+      "price_usd_per_m2": 45,
+      "price_display": "US$45 / m2",
+      "area_m2": 75000,
+      "total_price_usd": 3375000,
+      "segregable_m2": 48000,
+      "segregable_price_usd": 2160000,
+      "neighborhood": "Near the Circunvalacion-Autovia del Este connector, Punta Cana",
+      "audience": "developer",
+      "highlights": [
+        "Direct frontage on the new 4-lane highway under construction",
+        "75,000 m2 total, owner will segregate 48,000 m2 to suit the buyer",
+        "Rear farallon with panoramic views",
+        "Flexible use: residential, mixed-use or commercial",
+        "Adjacent residential project already in development",
+        "Surrounded by Larimar City and other active developments"
+      ],
+      "hero_image": "images/land-autovia-este/photo-01.jpg",
+      "post_images": [
+        "images/land-autovia-este/photo-01.jpg",
+        "images/land-autovia-este/photo-02.jpg",
+        "images/land-autovia-este/photo-03.jpg",
+        "images/land-autovia-este/photo-04.jpg",
+        "images/land-autovia-este/photo-05.jpg"
+      ]
+    },
+    {
+      "slug": "land-cepm-vistacana",
+      "active": true,
+      "name": "48,000 m2 Development Land — Between CEPM & Vista Cana",
+      "short_name": "48,000 m2 CEPM / Vista Cana",
+      "type": "land",
+      "price_usd_per_m2": 45,
+      "price_display": "US$45 / m2",
+      "area_m2": 48000,
+      "total_price_usd": 2160000,
+      "neighborhood": "Between the CEPM entrance and Vista Cana, Punta Cana",
+      "audience": "developer",
+      "highlights": [
+        "48,000 m2 in an active construction corridor",
+        "Between the CEPM access point and Vista Cana",
+        "Close to Cocotal Golf & Country Club",
+        "Surrounded by ongoing residential developments",
+        "Suitable for residential, mixed-use or investment projects"
+      ],
+      "hero_image": "images/land-cepm-vistacana/map.jpg",
+      "post_images": [
+        "images/land-cepm-vistacana/map.jpg",
+        "images/land-cepm-vistacana/road-1.jpg",
+        "images/land-cepm-vistacana/road-2.jpg"
+      ]
+    }
+  ]
+}

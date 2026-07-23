@@ -1,0 +1,501 @@
+{
+  "_comment": "Guiones de respuesta de WhatsApp por listing. Verificados contra properties.json. El sistema NUNCA envia solo: llena el mensaje y el dueno da enviar.",
+  "languages": [
+    "es",
+    "en"
+  ],
+  "playbooks": [
+    {
+      "slug": "cocotal-2bdr",
+      "ref_code": "A301",
+      "keywords": [
+        "Arboleda A301",
+        "A301",
+        "Arboleda",
+        "Cocotal",
+        "Cocotal Golf",
+        "Cocotal Golf & Country Club",
+        "Bavaro",
+        "Bávaro",
+        "Bavaro Punta Cana",
+        "US$310,000",
+        "310,000",
+        "$310k",
+        "310 mil",
+        "132 m2",
+        "132 metros cuadrados",
+        "132 sqm",
+        "132 sq meters",
+        "2 habitaciones 2 banos Cocotal",
+        "2 bedroom Cocotal",
+        "2BR Cocotal",
+        "vista al campo de golf",
+        "vista al golf",
+        "golf course view apartment",
+        "terraza con vista al golf",
+        "dos parqueos techados",
+        "2 covered parking",
+        "acceso al Melia",
+        "Melia hotel access",
+        "apartamento tercer piso Arboleda",
+        "third floor Arboleda",
+        "CONFOTUR Cocotal"
+      ],
+      "steps": [
+        {
+          "id": "step1_immediate",
+          "label_es": "Respuesta inmediata (menos de 5 min)",
+          "send_photos": true,
+          "es": "Hola, si, el A301 sigue disponible.\n\nEs en Arboleda, dentro de Cocotal Golf & Country Club, Bavaro. 2 habitaciones, 2 banos, 132 m2 y dos parqueos techados. Esta en un 3er piso, con terraza grande dando al campo de golf y a la piscina.\n\nPrecio US$310,000, y la unidad tiene CONFOTUR.\n\nTe mando las fotos?",
+          "en": "Hi, yes, A301 is still available.\n\nIt's in Arboleda, inside Cocotal Golf & Country Club in Bavaro. 2 bedrooms, 2 baths, 132 m2 (about 1,420 sq ft), and two covered parking spots. Third floor, with a large terrace facing the golf course and the pool.\n\nPrice is US$310,000, and this unit has CONFOTUR.\n\nWant me to send you the photos?"
+        },
+        {
+          "id": "step2_qualify",
+          "label_es": "Calificacion (inversion vs uso personal + fecha de viaje)",
+          "send_photos": false,
+          "es": "Para no hacerte perder tiempo y mandarte solo lo que te sirve: lo estas viendo mas como inversion para alquilar en Airbnb, o para uso personal tuyo? Y ya tienes idea de cuando vendrias a Punta Cana, o eso todavia esta en el aire?",
+          "en": "So I send you the right things and not a wall of stuff you don't need: are you looking at this mainly as a rental investment (Airbnb), or for your own personal use? And do you have any idea when you'd be coming down to Punta Cana, or is that still open?"
+        },
+        {
+          "id": "step3a_investment",
+          "label_es": "Rama A: es para inversion (Airbnb)",
+          "send_photos": false,
+          "es": "Perfecto, y te hablo claro: no te voy a tirar un porcentaje al aire. El rendimiento real depende de como se administre y de tus gastos.\n\nLo concreto del A301 es la parte de impuestos. Tiene CONFOTUR: 0% de transferencia (cerca de un 3% del precio que no pagas al cerrar), 0% de IPI por 15 anos, 0% de ganancia de capital y 0% sobre ingresos de alquiler.\n\nMete tus propios supuestos aqui y mira que te da: https://www.rentandgopc.com/roi-calculator.html\n\nSi quieres lo repasamos juntos linea por linea. Dime cuando te queda bien.",
+          "en": "Good, and I'll be straight with you: I'm not going to throw a percentage at you. The actual return depends on how it's managed and what your costs look like.\n\nWhat is concrete about A301 is the tax side. It has CONFOTUR: 0% transfer tax (roughly 3% of the price you simply don't pay at closing), 0% property tax for 15 years, 0% capital gains, and 0% tax on rental income.\n\nPlug your own assumptions in here and see how it looks: https://www.rentandgopc.com/roi-calculator.html\n\nHappy to go through it with you line by line. Just tell me when works."
+        },
+        {
+          "id": "step3b_personal",
+          "label_es": "Rama B: es para uso personal",
+          "send_photos": true,
+          "es": "Entonces lo que importa aqui es el dia a dia, no la hoja de calculo.\n\nCocotal es una comunidad cerrada de golf, con seguridad 24/7.\n\nEl A301 esta en un 3er piso, y la terraza da directo al campo de golf y a la piscina. 132 m2 para 2 habitaciones es bastante espacio, no te sientes apretado.\n\nY como parte de Cocotal tienes acceso completo al Hotel Melia: playa, restaurantes, spa.\n\nDe donde estarias viajando? Te digo como te queda la conexion a PUJ.",
+          "en": "Then what matters here is the day to day, not the spreadsheet.\n\nCocotal is a gated golf community with 24/7 security.\n\nA301 is on the third floor, and the terrace looks straight out at the golf course and the pool. 132 m2 for a 2-bedroom is a lot of room, you're not living on top of each other.\n\nAnd being in Cocotal gets you full access to the Melia Hotel: beach, restaurants, spa.\n\nWhere would you be flying in from? I'll tell you how the connection into PUJ looks."
+        },
+        {
+          "id": "step4_close",
+          "label_es": "Cierre: videollamada de 15 min o visita",
+          "send_photos": false,
+          "es": "Te propongo algo sencillo. Una videollamada de 15 minutos y te doy el recorrido en vivo: la terraza, la vista, las habitaciones, y me preguntas lo que quieras sin filtro.\n\nTengo manana a las 10:00 am o el jueves a las 6:00 pm, hora de Punta Cana. Cual te sirve mejor?\n\nY si ya tienes fecha de viaje, mejor todavia, te la enseno en persona. Yo vivo aqui.",
+          "en": "Let me suggest something simple. A 15-minute video call and I'll walk you through it live: the terrace, the view, the bedrooms, and you ask me whatever you want, no filter.\n\nI have tomorrow at 10:00 am or Thursday at 6:00 pm, Punta Cana time. Which one works better for you?\n\nAnd if you already have travel dates, even better, I'll show it to you in person. I live here."
+        },
+        {
+          "id": "followup_d2",
+          "label_es": "Seguimiento dia 2",
+          "send_photos": true,
+          "es": "Hola, por si se te quedo en el camino. El A301 en Cocotal sigue disponible: 132 m2, 2 habitaciones, terraza con vista al golf, US$310,000.\n\nSi quieres te mando mas fotos o te respondo cualquier duda suelta.",
+          "en": "Hi, just in case this got buried. A301 in Cocotal is still available: 132 m2, 2 bedrooms, terrace with golf course views, US$310,000.\n\nHappy to send more photos or answer any loose question you have."
+        },
+        {
+          "id": "followup_d5",
+          "label_es": "Seguimiento dia 5",
+          "send_photos": false,
+          "es": "Hola, sin presion. Si sigues mirando en Punta Cana, dime que es lo que mas te pesa (precio, zona, tamano) y te oriento, aunque al final no sea con este apartamento.",
+          "en": "Hi, no pressure at all. If you're still looking around Punta Cana, tell me what matters most to you (price, area, size) and I'll point you in the right direction, even if it ends up not being this one."
+        },
+        {
+          "id": "followup_d14",
+          "label_es": "Seguimiento dia 14 (salida digna)",
+          "send_photos": false,
+          "es": "Ultimo mensaje mio sobre el A301. Si en algun momento lo quieres retomar, escribeme y seguimos donde lo dejamos. Y si ya no te interesa, avisame y no te escribo mas, todo bien.",
+          "en": "Last note from me on A301. If you ever want to pick it back up, message me and we continue right where we left off. And if it's not for you anymore, just tell me and I'll stop reaching out, no hard feelings."
+        }
+      ]
+    },
+    {
+      "slug": "paseo-cocotal",
+      "ref_code": "PB202",
+      "keywords": [
+        "Paseo de Cocotal",
+        "Paseo Cocotal",
+        "B202",
+        "PB202",
+        "Cocotal Golf & Country Club",
+        "Cocotal Golf",
+        "Bavaro",
+        "Bávaro",
+        "US$280,000",
+        "280,000",
+        "280k",
+        "$280,000",
+        "2 habitaciones amueblado Cocotal",
+        "apartamento amueblado Bavaro",
+        "furnished 2BR Cocotal",
+        "furnished 2 bedroom Punta Cana",
+        "acceso al Melia",
+        "Melia hotel access condo",
+        "ambas habitaciones en suite",
+        "both bedrooms ensuite",
+        "5 minutos de la playa",
+        "5 minute drive to the beach",
+        "terraza con vista a la piscina",
+        "terrace with pool view",
+        "el de 280",
+        "the 280 one"
+      ],
+      "steps": [
+        {
+          "id": "step1_immediate",
+          "label_es": "1. Respuesta inmediata (menos de 5 min)",
+          "send_photos": false,
+          "es": "Hola, si, el B202 de Paseo de Cocotal sigue disponible.\n\nEs un 2 habitaciones con 2 banos, las dos habitaciones en suite, y se vende completamente amueblado, listo para mudarse. Precio US$280,000. Esta dentro de Cocotal Golf & Country Club, con acceso completo al hotel Melia y a 5 minutos en carro de la playa.\n\nTengo 16 fotos del apartamento. Te las mando?",
+          "en": "Hi, yes, B202 at Paseo de Cocotal is still available.\n\nIt's a 2 bed / 2 bath, both bedrooms ensuite, and it's sold fully furnished, move-in ready. Price is US$280,000. It sits inside Cocotal Golf & Country Club, with full Melia Hotel access and a 5-minute drive to the beach.\n\nI have 16 photos of the unit. Want me to send them over?"
+        },
+        {
+          "id": "step2_qualify",
+          "label_es": "2. Calificacion (uso + fecha de viaje)",
+          "send_photos": false,
+          "es": "Una pregunta rapida para no hacerte perder tiempo: lo estas viendo mas como inversion para ponerlo en Airbnb, o para uso personal tuyo y de tu familia? Y cuando andarias por Punta Cana?",
+          "en": "Quick question so I don't waste your time: are you looking at it as an investment to put on Airbnb, or for your own personal use? And when are you next going to be in Punta Cana?"
+        },
+        {
+          "id": "step3a_investment",
+          "label_es": "3a. Si responde INVERSION (mensaje 1: numeros de zona)",
+          "send_photos": false,
+          "es": "Perfecto, y te hablo claro: no te voy a tirar un porcentaje al aire. El rendimiento real depende de como se administre, la temporada y tus gastos.\n\nLo concreto del B202 es que se vende completamente amueblado, asi que esa parte del arranque ya esta resuelta.\n\nMete tus propios supuestos aqui y mira que te da: https://www.rentandgopc.com/roi-calculator.html\n\nSi quieres lo repasamos juntos linea por linea. Dime cuando te queda bien.",
+          "en": "Good, and I'll be straight with you: I'm not going to throw a percentage at you. The actual return depends on how it's managed, the season, and your own costs.\n\nWhat is concrete about B202 is that it's sold fully furnished, so that part of the setup is already handled.\n\nPlug your own assumptions in here and see how it looks: https://www.rentandgopc.com/roi-calculator.html\n\nHappy to go through it with you line by line. Just tell me when works."
+        },
+        {
+          "id": "step3a_investment_b",
+          "label_es": "3a-2. Inversion (mensaje 2: mobiliario, metros e invitacion)",
+          "send_photos": false,
+          "es": "Un punto real a favor del B202 es que ya viene amueblado y con lavadora y secadora adentro, asi que el mobiliario no lo tienes que comprar.\n\nDe los metros cuadrados exactos te confirmo la medida, no te la quiero dar de memoria.\n\nSi quieres comparar, tengo otra unidad en Cocotal, Arboleda A301, en US$310,000. Cuando quieras nos sentamos a ver los numeros de las dos con calma.",
+          "en": "One real advantage of B202 is that it's already furnished with washer and dryer in the unit, so the furniture spend is already done.\n\nOn the exact square meters I'll confirm the measurement, I don't want to give you a number from memory.\n\nIf you want something to compare it with, I also have another unit in Cocotal, Arboleda A301, at US$310,000. Whenever you're ready we can go through the numbers on both."
+        },
+        {
+          "id": "step3b_personal",
+          "label_es": "3b. Si responde USO PERSONAL (mensaje 1: comunidad y playa)",
+          "send_photos": true,
+          "es": "Buenisimo, para disfrutarlo tu mismo el B202 tiene mucho sentido.\n\nEstas dentro de Cocotal Golf & Country Club, comunidad cerrada con seguridad 24/7, y como propietario tienes acceso completo al hotel Melia: playa, restaurantes y spa. La playa te queda a 5 minutos en carro.",
+          "en": "Nice, for actually using it yourself B202 makes a lot of sense.\n\nYou're inside Cocotal Golf & Country Club, a gated community with 24/7 security, and as an owner you get full Melia Hotel access: beach, restaurants, spa. The beach is a 5-minute drive."
+        },
+        {
+          "id": "step3b_personal_b",
+          "label_es": "3b-2. Uso personal (mensaje 2: el interior + ciudad de origen)",
+          "send_photos": false,
+          "es": "El apartamento ya viene amueblado, con cocina de granito, lavadora y secadora adentro y aire acondicionado en todo. Literalmente llegas con maletas. Las dos habitaciones tienen su propio bano, y la principal sale al balcon con vista a la piscina. La terraza tambien viene amueblada y da a la piscina y los jardines.\n\nDime desde que ciudad viajarias y te confirmo si tienes vuelo directo a PUJ, y de paso el tiempo del aeropuerto al edificio.",
+          "en": "The apartment comes furnished, granite kitchen, washer and dryer in the unit, A/C throughout. You show up with suitcases and that's it. Both bedrooms have their own bathroom, and the master opens onto the balcony with a pool view. The terrace is furnished too and looks out over the pool and gardens.\n\nTell me which city you'd be flying from and I'll confirm whether you have a direct flight into PUJ, plus the drive time from the airport to the building."
+        },
+        {
+          "id": "step4_close",
+          "label_es": "4. Cierre a videollamada o visita",
+          "send_photos": false,
+          "es": "Te propongo algo sencillo: una videollamada de 15 minutos y te camino el apartamento en vivo, para que veas lo que las fotos no cuentan y me preguntes lo que quieras.\n\nTe sirve el jueves a las 10:00 am o el viernes a las 4:00 pm, hora de Punta Cana? Si prefieres verlo en persona, tambien te lo coordino para cuando estes por aca.",
+          "en": "Let's keep it simple: a 15-minute video call and I'll walk you through the apartment live, so you see what photos don't show and can ask me whatever you want.\n\nDoes Thursday at 10:00 am or Friday at 4:00 pm work for you, Punta Cana time? If you'd rather see it in person, I can set that up for whenever you're down here."
+        },
+        {
+          "id": "followup_d2",
+          "label_es": "Seguimiento dia 2",
+          "send_photos": true,
+          "es": "Hola, te dejo un par de fotos mas del B202 por si no las habias visto. Sigue disponible en US$280,000, amueblado. Cualquier pregunta me escribes.",
+          "en": "Hey, here are a couple more photos of B202 in case you hadn't seen these. Still available at US$280,000, fully furnished. Any questions, just message me."
+        },
+        {
+          "id": "followup_d5",
+          "label_es": "Seguimiento dia 5",
+          "send_photos": false,
+          "es": "Hola, sigues considerando el B202 de Paseo de Cocotal? Si tienes alguna duda puntual del apartamento o del proceso de compra, mandamela y te la respondo. Sin apuro.",
+          "en": "Hi, are you still considering B202 at Paseo de Cocotal? If there's anything specific you want to know about the unit or the buying process, send it over and I'll answer. No rush."
+        },
+        {
+          "id": "followup_d14",
+          "label_es": "Seguimiento dia 14 (salida digna)",
+          "send_photos": false,
+          "es": "Hola, este es mi ultimo mensaje sobre el B202. Si ya no te interesa, avisame y no te escribo mas, sin problema. Y si mas adelante retomas la idea, aqui estoy en Punta Cana.",
+          "en": "Hi, this is my last message about B202. If you're no longer interested, just let me know and I'll stop writing, no problem at all. And if you pick the idea back up later, I'm here in Punta Cana."
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "id": "step1_immediate",
+          "label_es": "Primer contacto (menos de 5 min)",
+          "send_photos": true,
+          "es": "Hola, si, sigue disponible.\n\nTe doy lo concreto: es 1 habitacion, 1 bano, 78 m2, en US$155,000. Viene amueblado completo, listo para entrar, y es planta baja con terraza privada que da a los jardines. La playa de Bavaro te queda a 5 minutos caminando y el aeropuerto a 25 minutos.\n\nTe dejo un par de fotos aqui. Si quieres te mando el set completo con la terraza, la piscina y el gimnasio.",
+          "en": "Hi, yes, it's still available.\n\nStraight to it: 1 bedroom, 1 bath, 78 m2 (about 840 sq ft), at US$155,000. It comes fully furnished and move-in ready, ground floor with its own private terrace facing the gardens. Bavaro Beach is a 5-minute walk and the airport is 25 minutes away.\n\nSending you a couple of photos here. I can send the full set with the terrace, the pool and the gym if you want."
+        },
+        {
+          "id": "step2_qualify",
+          "label_es": "Calificacion (uso + fecha de viaje)",
+          "send_photos": false,
+          "es": "Una pregunta para no llenarte de informacion que no te sirve: lo estas viendo para inversion, tipo Airbnb, o para uso personal? Y mas o menos cuando piensas venir a Punta Cana?",
+          "en": "One question so I don't bury you in info you don't need: are you looking at this as an investment (Airbnb) or for your own use? And roughly when are you planning to be in Punta Cana?"
+        },
+        {
+          "id": "step3a_investment",
+          "label_es": "Si responde INVERSION (1 de 2: zona)",
+          "send_photos": false,
+          "es": "Perfecto, entonces vamos directo a numeros.\n\nNo te voy a tirar porcentajes de ocupacion ni de rendimiento de este apartamento, porque dependen de tu tarifa por noche, de quien te lo administre y de tus gastos. Lo que si te puedo decir de la zona es que Los Corales es donde se queda el turista en Bavaro: sale caminando a la playa, a los restaurantes y al supermercado sin necesitar carro.",
+          "en": "Good, then let's go straight to numbers.\n\nI'm not going to quote you occupancy or yield percentages for this unit, because they depend on your nightly rate, on who manages it for you and on your expenses. What I can tell you about the area is that Los Corales is where the tourists actually stay in Bavaro: they walk to the beach, the restaurants and the supermarket without needing a car."
+        },
+        {
+          "id": "step3a_investment_calc",
+          "label_es": "Si responde INVERSION (2 de 2: calculadora)",
+          "send_photos": false,
+          "es": "Mete el precio real, US$155,000, en la calculadora del sitio y corre tus propios supuestos: https://www.rentandgopc.com/roi-calculator.html\n\nSi quieres damelo 15 minutos y revisamos tus numeros juntos, con tus supuestos, no con los mios.",
+          "en": "Put the real price, US$155,000, into the calculator on my site and run it with your own assumptions: https://www.rentandgopc.com/roi-calculator.html\n\nGive me 15 minutes and we can go through your numbers together, using yours and not mine."
+        },
+        {
+          "id": "step3b_personal",
+          "label_es": "Si responde USO PERSONAL (1 de 2: entorno)",
+          "send_photos": false,
+          "es": "Entonces lo que te sirve saber es como se vive ahi.\n\nLos Corales es de los pocos sitios de Bavaro donde no dependes del carro: sales del complejo y tienes restaurantes, colmados y supermercado caminando, y la playa a 5 minutos a pie. Tambien es zona de bares y vida nocturna a pie, asi que si te preocupa el ruido dimelo y te grabo un video de la terraza a distintas horas.",
+          "en": "Then what actually matters to you is what daily life looks like there.\n\nLos Corales is one of the few spots in Bavaro where you don't depend on a car: you walk out of the complex and you have restaurants, shops and a supermarket on foot, and the beach is a 5-minute walk. It's also a bar and nightlife area on foot, so if noise is a concern for you, tell me and I'll record you a video from the terrace at different hours."
+        },
+        {
+          "id": "step3b_personal_amenities",
+          "label_es": "Si responde USO PERSONAL (2 de 2: complejo y llegada)",
+          "send_photos": true,
+          "es": "Puertas adentro tienes piscina, gimnasio, area de BBQ techada, jardines y seguridad 24/7. El apartamento es planta baja con terraza privada, asi que sales directo al jardin desde la sala. Si el acceso sin escalones es importante para ti, te lo confirmo con foto de la entrada.\n\nY el aeropuerto de Punta Cana te queda a 25 minutos. Dime desde que ciudad viajas y te confirmo como te conviene mas llegar.\n\nTe mando fotos del complejo y de la calle de afuera para que veas el entorno real?",
+          "en": "Inside the complex you have a pool, a gym, a covered BBQ area, gardens and 24/7 security. The apartment is on the ground floor with its own private terrace, so you step straight out into the garden from the living room. If step-free access matters to you, I'll send you a photo of the entrance to confirm.\n\nAnd Punta Cana airport is 25 minutes away. Tell me what city you fly from and I'll check how it actually connects for you.\n\nWant me to send photos of the complex and of the street outside so you can see the real surroundings?"
+        },
+        {
+          "id": "step4_close",
+          "label_es": "Cierre: videollamada o visita",
+          "send_photos": false,
+          "es": "Te propongo algo facil. Videollamada de 15 minutos y te camino el apartamento en vivo: cuarto por cuarto, la terraza, la piscina y la calle de afuera, para que veas lo que las fotos no te dicen. Si ya vas a estar por aca, mejor lo vemos en persona.\n\nTe sirve manana a las 10 de la manana, o el jueves a las 6 de la tarde, hora de Punta Cana? Si ninguno te cuadra, dime tu horario y me acomodo yo.",
+          "en": "Let's make this easy. A 15-minute video call and I'll walk you through the place live: room by room, the terrace, the pool and the street outside, so you see what photos don't tell you. If you're going to be down here anyway, we do it in person instead.\n\nDoes tomorrow at 10am work, or Thursday at 6pm, Punta Cana time? If neither fits, tell me your window and I'll work around it."
+        },
+        {
+          "id": "followup_d2",
+          "label_es": "Seguimiento dia 2",
+          "send_photos": false,
+          "es": "Hola, te escribo por si esto se te quedo enterrado en el chat. El 1BR de Los Corales sigue disponible, en US$155,000 y amueblado.\n\nTe quedo alguna duda que pueda aclararte?",
+          "en": "Hey, just in case this got buried in your chats. The 1BR in Los Corales is still available, US$155,000 and furnished.\n\nAnything you were left wondering about that I can clear up?"
+        },
+        {
+          "id": "followup_d5",
+          "label_es": "Seguimiento dia 5",
+          "send_photos": true,
+          "es": "Sin presion, solo para que sepas que sigue disponible.\n\nSi te sirve te paso mas fotos y las ves con calma cuando tengas chance.",
+          "en": "No pressure, just letting you know it's still available.\n\nHappy to send you more photos so you can look at them whenever you get a minute."
+        },
+        {
+          "id": "followup_d14",
+          "label_es": "Seguimiento dia 14 (salida digna)",
+          "send_photos": false,
+          "es": "Ultimo mensaje mio por aqui.\n\nSi mas adelante te vuelve la idea, escribeme y seguimos donde lo dejamos. Y si ya no te interesa, avisame y no te escribo mas, sin ningun problema.",
+          "en": "Last message from me on this.\n\nIf it comes back around later, just write me and we pick up where we left off. And if you're not interested anymore, tell me and I'll stop writing, no problem at all."
+        }
+      ],
+      "slug": "karen-los-corales",
+      "ref_code": "KLC1",
+      "keywords": [
+        "Los Corales",
+        "1BR Los Corales",
+        "apartamento 1 habitacion Los Corales",
+        "Modern 1BR Apartment in Los Corales",
+        "Bavaro",
+        "Bávaro",
+        "US$155,000",
+        "155,000",
+        "155K",
+        "$155k apartamento Bavaro",
+        "78 m2",
+        "78 metros cuadrados",
+        "78 m² planta baja",
+        "amueblado planta baja con terraza privada",
+        "5 minutos caminando a la playa de Bavaro",
+        "5-minute walk to Bavaro Beach",
+        "25 minutos del aeropuerto PUJ",
+        "el mas barato de tu portafolio",
+        "lowest price apartment",
+        "gimnasio y area de BBQ techada",
+        "KLC1",
+        "karen-los-corales"
+      ]
+    },
+    {
+      "slug": "land-autovia-este",
+      "ref_code": "LAUT",
+      "keywords": [
+        "LAUT",
+        "75,000 m2",
+        "75000 m2",
+        "terreno 75 mil metros",
+        "Autovia del Este",
+        "Autovía del Este",
+        "Circunvalacion",
+        "Circunvalación",
+        "conector Circunvalacion Autovia del Este",
+        "farallon",
+        "farallón",
+        "Larimar City",
+        "peaje",
+        "US$45 por m2",
+        "US$45 / m2",
+        "45 dolares el metro",
+        "45 el metro cuadrado",
+        "$45 per m2",
+        "48,000 m2 segregable",
+        "48000 m2",
+        "segregar 48 mil metros",
+        "US$3,375,000",
+        "3375000",
+        "US$2,160,000",
+        "2160000",
+        "terreno de desarrollo Punta Cana",
+        "development land Punta Cana",
+        "frente a la nueva autopista",
+        "highway frontage land",
+        "new 4-lane highway",
+        "autopista de 4 carriles",
+        "terreno autopista Punta Cana"
+      ],
+      "steps": [
+        {
+          "id": "step1_immediate",
+          "label_es": "Respuesta inmediata",
+          "send_photos": true,
+          "es": "Si, el terreno esta disponible.\n\nSon 75,000 m2 con frente directo a la nueva autopista de 4 carriles que conecta la Circunvalacion de Punta Cana con la Autovia del Este, cerca del area del peaje.\n\nPrecio: US$45 el m2. Parcela completa = US$3,375,000.\n\nTe mando las fotos?",
+          "en": "Yes, the land is available.\n\n75,000 m2 with direct frontage on the new 4-lane highway that connects the Punta Cana Circunvalacion to the Autovia del Este, near the toll area.\n\nPrice is US$45 per m2. Full parcel comes to US$3,375,000.\n\nWant me to send you the photos?"
+        },
+        {
+          "id": "step2_qualify",
+          "label_es": "Calificar el proyecto",
+          "send_photos": false,
+          "es": "Lo que distingue esta parcela es el frente a la nueva via. La carretera esta en construccion ahora mismo y el terreno queda a pie de ella. Atras tiene un farallon con vista panoramica.\n\nPara orientarte bien, dos preguntas.\n\nQue tipo de proyecto tienes en mente? El uso ahi es flexible: residencial, mixto o comercial.\n\nY buscas los 75,000 m2 completos o una porcion? El dueno esta dispuesto a segregar 48,000 m2 segun lo que necesite el comprador. Esa porcion sale en US$2,160,000, al mismo precio de US$45 el m2.",
+          "en": "What makes this one different is the frontage. The road is under construction right now and the parcel sits directly on it. At the back there's a cliff (farallon) with panoramic views.\n\nTwo quick questions so I point you the right way.\n\nWhat kind of project do you have in mind? Use there is flexible: residential, mixed-use or commercial.\n\nAnd are you looking at the full 75,000 m2 or a portion? The owner is willing to segregate 48,000 m2 to suit the buyer. That portion works out to US$2,160,000 at the same US$45 per m2."
+        },
+        {
+          "id": "step3a_developer",
+          "label_es": "Ruta desarrollador",
+          "send_photos": false,
+          "es": "Perfecto, con un proyecto ya definido la conversacion es mas directa.\n\nEl uso es flexible: residencial, mixto o comercial. Y como el dueno segrega 48,000 m2 a la medida, la parcela se acomoda al plan y no al reves.\n\nEl entorno ya esta en movimiento. Hay un proyecto residencial adyacente desarrollandose en la misma zona del farallon, y alrededor esta Larimar City junto con otros desarrollos en curso.\n\nEl acceso es por la nueva via, que esta en construccion, pero se llega sin problema. El terreno es accesible para visita.\n\nCoordinamos una visita al terreno? Vivo aqui en Punta Cana y te acompano yo.",
+          "en": "Good, with a defined project this gets a lot more concrete.\n\nUse is flexible: residential, mixed-use or commercial. And since the owner will segregate 48,000 m2 to suit, the parcel adapts to your plan instead of the other way around.\n\nThe surroundings are already moving. There's a residential project going up right next to it on the same cliff zone, and Larimar City plus other active developments are in the area.\n\nAccess is off the new road, still under construction, but you can get in. The land is accessible for a site visit.\n\nWant me to set up a walk of the parcel? I'm based in Punta Cana, I'd take you myself."
+        },
+        {
+          "id": "step3b_investor",
+          "label_es": "Ruta inversionista",
+          "send_photos": true,
+          "es": "Entiendo, entonces lo que te interesa es el momento del corredor.\n\nTe doy lo verificable, no proyecciones. El nuevo conector Circunvalacion-Autovia del Este esta en construccion y este terreno tiene frente directo a el. Alrededor hay desarrollo activo: Larimar City y otros proyectos residenciales en curso, mas un proyecto vecino que ya arranco en la misma zona del farallon.\n\nNo te voy a dar un numero de plusvalia porque nadie lo sabe de verdad. Lo que si se ve con los ojos es la obra de la carretera y quien esta construyendo al lado.\n\nTe mando las fotos y la ubicacion para que lo revises en mapa.",
+          "en": "Understood, so what matters to you is timing on that corridor.\n\nHere's what's verifiable, not projections. The new Circunvalacion to Autovia del Este connector is under construction and this parcel has direct frontage on it. There's active development around it: Larimar City and other residential projects in progress, plus a neighboring project already underway on the same cliff zone.\n\nI'm not going to hand you an appreciation number, nobody really knows it. What you can see with your own eyes is the roadwork and who is building next door.\n\nLet me send you the photos and the location so you can look at it on a map."
+        },
+        {
+          "id": "step4_close",
+          "label_es": "Cierre a visita o llamada",
+          "send_photos": false,
+          "es": "Lo mejor es que lo veas en persona. Desde el terreno se ve la obra de la carretera, y eso pesa mas que cualquier foto.\n\nDos opciones: una visita al terreno cuando estes en Punta Cana, o me pasas tus numeros y el tamano que necesitas, incluida la segregacion de los 48,000 m2, se lo planteo al dueno directamente y te vuelvo con la respuesta.\n\nToda la parte legal la revisa tu abogado directamente con el dueno antes de cualquier compromiso. Yo no te la resumo por WhatsApp.\n\nQue dia te queda mejor?",
+          "en": "Best move is to see it in person. You can see the roadwork from the parcel itself, and that carries more weight than any photo.\n\nTwo options: a site visit when you're in Punta Cana, or you send me your numbers and the size you need, including the 48,000 m2 segregation, and I take it straight to the owner and come back to you with an answer.\n\nThe legal side gets reviewed directly by your attorney with the owner before anyone commits. I'm not the right person to summarize that over WhatsApp.\n\nWhat day works better for you?"
+        },
+        {
+          "id": "followup_d2",
+          "label_es": "Seguimiento dia 2",
+          "send_photos": false,
+          "es": "Hola, retomo lo del terreno de 75,000 m2 con frente a la nueva autopista.\n\nPudiste ver las fotos? Si te sirve, te paso la ubicacion exacta para que la mires en mapa antes de decidir si amerita una visita.\n\nY si ya tienes claro el tamano que necesitas, me dices y lo planteo con el dueno.",
+          "en": "Hi, following up on the 75,000 m2 parcel with frontage on the new highway.\n\nDid you get a chance to look at the photos? If it helps, I can send the exact location so you can check it on a map before deciding whether a site visit is worth it.\n\nAnd if you already know what size you need, tell me and I'll raise it with the owner."
+        },
+        {
+          "id": "followup_d5",
+          "label_es": "Seguimiento dia 5",
+          "send_photos": false,
+          "es": "Buenas. No te quiero perseguir, solo cerrar el tema por mi lado.\n\nSi el punto es el tamano, el dueno segrega 48,000 m2 y esa porcion queda en US$2,160,000, mismo precio de US$45 el m2.\n\nSi el punto es el momento, tambien esta bien. Te aviso si cambia algo con el precio o la disponibilidad y lo dejamos ahi.\n\nCual de las dos es?",
+          "en": "Hi. Not trying to chase you, just closing the loop on my end.\n\nIf size is the issue, the owner will segregate 48,000 m2 and that portion comes to US$2,160,000, same US$45 per m2.\n\nIf it's timing, that's fine too. I'll let you know if anything changes on price or availability and leave it there.\n\nWhich of the two is it?"
+        },
+        {
+          "id": "followup_d14",
+          "label_es": "Seguimiento dia 14",
+          "send_photos": false,
+          "es": "Hola, ultimo mensaje de mi parte sobre el terreno de la Autovia del Este.\n\nHasta hoy sigue disponible a US$45 el m2, y el dueno mantiene la opcion de segregar 48,000 m2. La carretera sigue en construccion.\n\nSi mas adelante te cuadra, o te aparece un socio para el proyecto, escribeme y retomamos donde lo dejamos. Guardo la informacion completa.",
+          "en": "Hi, last note from me on the Autovia del Este parcel.\n\nAs of today it's still available at US$45 per m2, and the owner still has the 48,000 m2 segregation on the table. The highway is still under construction.\n\nIf the timing works later, or a partner shows up for the project, message me and we pick up where we left off. I'll keep the full file on hand."
+        }
+      ]
+    },
+    {
+      "steps": [
+        {
+          "id": "step1_immediate",
+          "label_es": "Respuesta inmediata",
+          "send_photos": true,
+          "es": "Si, el terreno esta disponible.\n\nSon 48,000 m2 a US$45 el m2. US$2,160,000 en total.\n\nLo que diferencia esta parcela es donde esta parada: justo entre la entrada de CEPM y Vista Cana, a poca distancia de Cocotal Golf, en plena zona de construccion activa.\n\nTe mando el mapa y dos fotos desde la via para que lo ubiques. La ficha completa esta aqui: https://www.rentandgopc.com/land-cepm-vistacana.html",
+          "en": "Yes, the parcel is still available.\n\n48,000 m2 at US$45 per m2. US$2,160,000 total.\n\nWhat sets this one apart is where it sits: right between the CEPM entrance and Vista Cana, a short distance from Cocotal Golf, in the middle of an active construction zone.\n\nSending you the map plus two shots from the road so you can place it. Full details here: https://www.rentandgopc.com/land-cepm-vistacana.html"
+        },
+        {
+          "id": "step2_qualify",
+          "label_es": "Calificar el proyecto",
+          "send_photos": false,
+          "es": "Para orientarte bien, dos cosas.\n\nQue tipo de proyecto tienes en mente? Residencial, uso mixto, o algo distinto.\n\nDe entrada te la manejo como los 48,000 m2 completos, que es como esta publicada. Si necesitas menos area, dimelo y se lo pregunto al propietario, pero no te lo doy por hecho.\n\nCon eso te digo rapido si esta parcela te sirve o si mejor te muestro otra cosa.",
+          "en": "Two quick things so I point you the right way.\n\nWhat kind of project do you have in mind? Residential, mixed use, or something else.\n\nI'm handling it as the full 48,000 m2, which is how it's listed. If you need less area, tell me and I'll ask the property owner, but I'm not going to assume it's on the table.\n\nThat tells me fast whether this parcel fits or whether I should show you something different."
+        },
+        {
+          "id": "step3a_developer",
+          "label_es": "Desarrollador con proyecto",
+          "send_photos": true,
+          "es": "Perfecto, con un proyecto definido esta parcela se lee distinto.\n\nLos 48,000 m2 sirven para residencial, uso mixto o inversion, asi que tienes margen para acomodar el proyecto al terreno y no al reves.\n\nEl entorno ya esta trabajado: hay desarrollos residenciales en construccion alrededor, Vista Cana creciendo justo al lado, la entrada de CEPM como punto de acceso de referencia y Cocotal a poca distancia.\n\nEso en sitio se entiende en quince minutos y en el mapa no. Yo vivo aqui y te acompano a verlo. Cuando andas por Punta Cana?",
+          "en": "Good. With a defined project this parcel reads differently.\n\n48,000 m2 with flexible use, residential, mixed use or investment, so you can shape the project around the land instead of the other way around.\n\nThe area is already moving: residential projects under construction around it, Vista Cana expanding right beside it, the CEPM access point as the reference on one side, and Cocotal a short distance away.\n\nFifteen minutes on the ground explains that better than any map. I live here and I'll walk it with you. When are you next in Punta Cana?"
+        },
+        {
+          "id": "step3b_investor",
+          "label_es": "Inversionista / reserva de valor",
+          "send_photos": true,
+          "es": "Entendido. Si es mas tomar posicion que construir ya, entonces lo que pesa es la ubicacion.\n\nLa parcela esta en un corredor con obra activa: desarrollos residenciales en construccion alrededor, Vista Cana expandiendose justo al lado y Cocotal como referencia cercana. La entrada de CEPM queda del otro lado.\n\nNo te voy a dar un numero de plusvalia, seria inventartelo. Lo que si te doy es el contexto real de la zona, y si quieres correr numeros de rendimiento del mercado de Punta Cana por tu cuenta, la calculadora del sitio esta aqui: https://www.rentandgopc.com/roi-calculator.html\n\nQue horizonte manejas, corto plazo o sostenerlo varios anos?",
+          "en": "Understood. If this is about taking a position rather than building right away, then location is what carries it.\n\nThe parcel sits in a corridor with active work around it: residential projects under construction nearby, Vista Cana expanding right beside it, Cocotal as a close reference, and the CEPM entrance on the other side.\n\nI'm not going to hand you an appreciation number, that would just be me making it up. What I can give you is honest context on the zone, and if you want to run Punta Cana market return numbers yourself, the site calculator is here: https://www.rentandgopc.com/roi-calculator.html\n\nWhat's your horizon on this, short hold or several years?"
+        },
+        {
+          "id": "step4_close",
+          "label_es": "Cierre: visita o llamada",
+          "send_photos": false,
+          "es": "Te propongo esto: coordinamos una visita al terreno, o si prefieres hablar numeros primero, hablamos tu y yo y lo que haya que consultar con el propietario se lo consulto.\n\nEn sitio ves los accesos, como esta el terreno y la obra que hay alrededor, que es lo que el mapa no te dice.\n\nSobre el estatus documental del terreno no te quiero decir nada de memoria. Dime que necesita revisar tu abogado y se lo pido al propietario por escrito.\n\nVisita o llamada? Pasame tu disponibilidad de esta semana o la que viene.",
+          "en": "Here's what I'd suggest: we set up a site visit, or if you'd rather talk numbers first, a call with me, and anything that needs the property owner's sign-off I take to him.\n\nOn site you see the access, how the land sits, and the construction going on around it. That's what the map can't show you.\n\nOn the legal and paperwork side I'm not going to tell you anything from memory. Tell me what your attorney needs to see and I'll request it from the owner in writing.\n\nSite visit or call? Send me your availability this week or next."
+        },
+        {
+          "id": "followup_d2",
+          "label_es": "Seguimiento dia 2",
+          "send_photos": false,
+          "es": "Te escribo por el terreno de 48,000 m2 entre CEPM y Vista Cana.\n\nAlcanzaste a ver el mapa? Si ya tienes el proyecto definido, dime el tipo y el area que necesitas y avanzamos con algo concreto.\n\nY si por ahora solo lo tienes en radar, tambien esta bien. Te aviso si cambia algo en precio o disponibilidad.",
+          "en": "Following up on the 48,000 m2 parcel between CEPM and Vista Cana.\n\nDid you get a chance to look at the map? If your project is already defined, tell me the type and the area you need and we can move on something concrete.\n\nAnd if it's just on your radar for now, that's fine too. I'll let you know if anything changes on price or availability."
+        },
+        {
+          "id": "followup_d5",
+          "label_es": "Seguimiento dia 5",
+          "send_photos": true,
+          "es": "Te reenvio el mapa por si se perdio en el chat. El circulo amarillo es la parcela, el verde es la entrada de CEPM y el rojo es Cocotal.\n\nSigue igual: 48,000 m2, US$45 el m2, US$2,160,000.\n\nSi quieres verlo en persona, dime que semana andas por aqui y lo coordino.",
+          "en": "Resending the map in case it got buried in the chat. The yellow circle is the parcel, green is the CEPM entrance, red is Cocotal.\n\nNothing has changed: 48,000 m2, US$45 per m2, US$2,160,000.\n\nIf you want to see it in person, tell me what week you're around and I'll set it up."
+        },
+        {
+          "id": "followup_d14",
+          "label_es": "Seguimiento dia 14",
+          "send_photos": false,
+          "es": "Ultima nota por ahora sobre el terreno de CEPM / Vista Cana, no quiero estar encima.\n\nSi el proyecto se movio de fecha o de presupuesto, dimelo sin problema y lo guardo para cuando toque.\n\nY si lo que buscas es otro perfil de terreno o algo mas pequeno, dime el area y el rango y te aviso cuando entre algo que encaje. Aqui estoy.",
+          "en": "Last note on the CEPM / Vista Cana parcel for now, I don't want to crowd you.\n\nIf the project shifted on timing or budget, just say so and I'll park it until it's relevant again.\n\nAnd if what you're after is a different land profile or something smaller, tell me the area and the range and I'll flag it when something that fits comes in. I'm here."
+        }
+      ],
+      "slug": "land-cepm-vistacana",
+      "ref_code": "LCEP",
+      "keywords": [
+        "LCEP",
+        "48,000 m2",
+        "48000 m2",
+        "48,000 metros cuadrados",
+        "terreno 48 mil metros",
+        "CEPM",
+        "entrada de CEPM",
+        "entrada CEPM",
+        "Vista Cana",
+        "VistaCana",
+        "entre CEPM y Vista Cana",
+        "between CEPM and Vista Cana",
+        "Cocotal",
+        "Cocotal Golf & Country Club",
+        "US$45 / m2",
+        "US$45 por m2",
+        "45 dolares el metro",
+        "45 el metro cuadrado",
+        "US$2,160,000",
+        "2,160,000",
+        "US$2.16M",
+        "terreno de desarrollo",
+        "development land",
+        "solar de desarrollo",
+        "zona de construccion activa",
+        "zona de construcción activa",
+        "active construction zone",
+        "corredor de crecimiento",
+        "growth corridor",
+        "parcela de 48,000 m2",
+        "mapa circulo amarillo terreno",
+        "subestacion CEPM",
+        "subestación CEPM"
+      ]
+    }
+  ]
+}
