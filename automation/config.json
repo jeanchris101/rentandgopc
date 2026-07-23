@@ -105,7 +105,7 @@
   "facebook": {
     "page_id_env": "FB_PAGE_ID",
     "access_token_env": "FB_PAGE_ACCESS_TOKEN",
-    "api_version": "v21.0"
+    "api_version": "v25.0"
   },
   "vercel": {
     "deploy_hook_env": "VERCEL_DEPLOY_HOOK"

@@ -1,4 +1,4 @@
-name: Daily Content Generation & Posting
+name: Daily Content Posting
 
 on:
   schedule:
@@ -7,33 +7,36 @@ on:
   workflow_dispatch:
     inputs:
       skip_posting:
-        description: 'Generate content but skip Facebook posting'
+        description: 'Build the content queue but skip Facebook posting'
         type: boolean
         default: false
 
 permissions:
   contents: write
 
+# A scheduled run and a manual dispatch must never mutate the pipeline state
+# (post-log, queue, image rotation) in parallel.
+concurrency:
+  group: daily-content
+  cancel-in-progress: false
+
 jobs:
-  generate-and-post:
+  build-and-post:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: |
-          pip install -r automation/requirements.txt
+        run: pip install requests
 
-      - name: Run content generator
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: python automation/content_generator.py
+      - name: Build content queue
+        run: python automation/build_queue.py
 
       - name: Run Facebook auto-poster
         if: ${{ github.event.inputs.skip_posting != 'true' }}
@@ -42,10 +45,33 @@ jobs:
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
         run: python automation/fb_autoposter.py
 
-      - name: Commit generated content log
+      # Runs even if the poster aborted (throttle/policy): the queue statuses
+      # mutated before the abort must be persisted to avoid re-posting.
+      # Commit BEFORE pulling so a rebase/autostash conflict can never drop
+      # the state, and retry the pull+push to cover pushes landing in the
+      # window (losing this commit means re-posting to Facebook tomorrow).
+      - name: Persist pipeline state
+        if: ${{ !cancelled() }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add automation/data/content-log.json || true
-          git diff --cached --quiet || git commit -m "chore: daily content generation log"
-          git push || true
+          for f in automation/data/post-log.json automation/data/content-queue.json automation/data/image-rotation.json; do
+            if [ -f "$f" ]; then
+              git add "$f"
+            fi
+          done
+          if git diff --cached --quiet; then
+            echo "No state changes to persist."
+            exit 0
+          fi
+          git commit -m "chore(bot): estado $(date -u +%Y-%m-%d)"
+          for attempt in 1 2 3; do
+            if git pull --rebase --autostash && git push; then
+              exit 0
+            fi
+            echo "Push attempt $attempt failed; retrying in 10s..."
+            git rebase --abort 2>/dev/null || true
+            sleep 10
+          done
+          echo "Could not push pipeline state after 3 attempts." >&2
+          exit 1

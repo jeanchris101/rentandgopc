@@ -1,0 +1,51 @@
+{
+  "_comment": "Deterministic post templates for build_queue.py. Adapted from the styles in new-post-templates.js (resort, trybeforebuy, roi, lifestyle2, rental) with all hardcoded figures removed: every number must come from properties.json through placeholders. Allowed placeholders: {name} {price} {neighborhood} {highlight_1} {highlight_2} {wa_link}. The {wa_link} placeholder must be the last line of every template (the wa.me link travels inside the message, never in the 'link' field). Style order defines the date-based rotation. Optional 'types' restricts a style to those property types (e.g. daily_life makes no sense for development land); build_queue advances to the next style when the day's property type is not allowed.",
+  "styles": [
+    {
+      "id": "daily_life",
+      "source": "resort (new-post-templates.js)",
+      "types": ["condo"],
+      "templates": {
+        "en": "This is what daily life looks like at {name}:\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}. {price}.\n\nThis isn't a vacation. This is your everyday.\n\n#PuntaCana #RealEstate #Caribbean\n\nWhatsApp me to see it: {wa_link}",
+        "es": "Asi se ve el dia a dia en {name}:\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}. {price}.\n\nEsto no son unas vacaciones. Es tu dia a dia.\n\n#PuntaCana #BienesRaices #Caribe\n\nEscribeme por WhatsApp para verlo: {wa_link}",
+        "fr": "Voici a quoi ressemble le quotidien a {name}:\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}. {price}.\n\nC'est pas des vacances. C'est ta vie de tous les jours.\n\n#PuntaCana #Immobilier #Caraibes\n\nEcris-moi sur WhatsApp pour le voir: {wa_link}"
+      }
+    },
+    {
+      "id": "try_before_buy",
+      "source": "trybeforebuy (new-post-templates.js)",
+      "templates": {
+        "en": "Not sure about buying in Punta Cana? Come see it first.\n\nVisit {name} in person:\n- {highlight_1}\n- {highlight_2}\n\nWalk the area, ask every question, meet the attorney who handles closings. No pressure, no gimmicks.\n\n{neighborhood}. {price}.\n\n#PuntaCana #DominicanRepublic #RealEstate\n\nPlan your visit on WhatsApp: {wa_link}",
+        "es": "No estas seguro de comprar en Punta Cana? Ven a verlo primero.\n\nVisita {name} en persona:\n- {highlight_1}\n- {highlight_2}\n\nCamina la zona, pregunta todo lo que quieras, conoce al abogado que maneja los cierres. Sin presion.\n\n{neighborhood}. {price}.\n\n#PuntaCana #RepublicaDominicana #BienesRaices\n\nPlanifica tu visita por WhatsApp: {wa_link}",
+        "fr": "Pas certain d'acheter a Punta Cana? Viens voir avant.\n\nVisite {name} en personne:\n- {highlight_1}\n- {highlight_2}\n\nMarche le secteur, pose toutes tes questions, rencontre l'avocat qui gere les transactions. Zero pression.\n\n{neighborhood}. {price}.\n\n#PuntaCana #RepubliqueDominicaine #Immobilier\n\nOrganise ta visite sur WhatsApp: {wa_link}"
+      }
+    },
+    {
+      "id": "real_numbers",
+      "source": "roi (new-post-templates.js)",
+      "templates": {
+        "en": "Let's keep it simple. No hype, just the facts on {name}:\n\nPrice: {price}\nLocation: {neighborhood}\n- {highlight_1}\n- {highlight_2}\n\nWant me to run the numbers for YOUR scenario? Send me a message.\n\n#PuntaCana #Investment #RealEstate\n\nWhatsApp: {wa_link}",
+        "es": "Vamos al grano. Sin hype, solo los datos de {name}:\n\nPrecio: {price}\nUbicacion: {neighborhood}\n- {highlight_1}\n- {highlight_2}\n\nQuieres que haga los numeros para TU caso? Escribeme.\n\n#PuntaCana #Inversiones #BienesRaices\n\nWhatsApp: {wa_link}",
+        "fr": "Allons droit au but. Pas de hype, juste les faits sur {name}:\n\nPrix: {price}\nEmplacement: {neighborhood}\n- {highlight_1}\n- {highlight_2}\n\nTu veux que je fasse les chiffres pour TON scenario? Ecris-moi.\n\n#PuntaCana #Investissement #Immobilier\n\nWhatsApp: {wa_link}"
+      }
+    },
+    {
+      "id": "honest_answer",
+      "source": "lifestyle2 (new-post-templates.js)",
+      "templates": {
+        "en": "People ask me what's actually worth a look in Punta Cana right now.\n\nMy honest answer: {name}.\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}. {price}.\n\nReady to take a closer look? Message me.\n\n#PuntaCana #Caribbean #RealEstate\n\nWhatsApp: {wa_link}",
+        "es": "La gente me pregunta que vale la pena ver en Punta Cana ahora mismo.\n\nMi respuesta honesta: {name}.\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}. {price}.\n\nListo para verlo de cerca? Escribeme.\n\n#PuntaCana #Caribe #BienesRaices\n\nWhatsApp: {wa_link}",
+        "fr": "Le monde me demande ce qui vaut vraiment le detour a Punta Cana en ce moment.\n\nMa reponse honnete: {name}.\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}. {price}.\n\nPret a regarder ca de plus pres? Ecris-moi.\n\n#PuntaCana #Caraibes #Immobilier\n\nWhatsApp: {wa_link}"
+      }
+    },
+    {
+      "id": "works_for_you",
+      "source": "rental (new-post-templates.js)",
+      "templates": {
+        "en": "Looking for an asset in Punta Cana that works for you?\n\n{name} - {price}\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}.\n\nWant the full details and photos? One message away.\n\n#PuntaCana #Investment #DominicanRepublic\n\nWhatsApp: {wa_link}",
+        "es": "Buscas un activo en Punta Cana que trabaje para ti?\n\n{name} - {price}\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}.\n\nQuieres todos los detalles y las fotos? Estan a un mensaje.\n\n#PuntaCana #Inversiones #RepublicaDominicana\n\nWhatsApp: {wa_link}",
+        "fr": "Tu cherches un actif a Punta Cana qui travaille pour toi?\n\n{name} - {price}\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}.\n\nTu veux tous les details et les photos? Un message suffit.\n\n#PuntaCana #Investissement #RepubliqueDominicaine\n\nWhatsApp: {wa_link}"
+      }
+    }
+  ]
+}

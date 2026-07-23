@@ -12,3 +12,6 @@ automation/data/group-questions.json
 
 .vercel
 .env*.local
+
+# Python bytecode
+__pycache__/

@@ -46,7 +46,7 @@ if CONFIG_FILE.exists():
         _config = json.load(_f)
 
 _fb_config = _config.get("facebook", {})
-GRAPH_API_VERSION = _fb_config.get("api_version", "v21.0")
+GRAPH_API_VERSION = _fb_config.get("api_version", "v25.0")
 GRAPH_API_BASE = f"https://graph.facebook.com/{GRAPH_API_VERSION}"
 
 # Env var names from config (or defaults)
@@ -64,11 +64,20 @@ _content_config = _config.get("content", {})
 MAX_POSTS_PER_DAY = _content_config.get("max_posts_per_day", 3)
 MIN_INTERVAL_SECONDS = 300  # 5 minutes minimum between posts
 
+# After this many failed log entries for the same queue item, the item is
+# marked "failed" in the queue so it stops blocking the head of the queue.
+MAX_CONSECUTIVE_FAILURES = 3
+
 # Languages to post (from config or default)
 LANGUAGES = _content_config.get("languages", ["en", "es", "fr", "ru"])
 
-# Default link to append if post has none
-DEFAULT_SITE_LINK = "https://rentandgopc.com"
+# Graph API error codes (https://developers.facebook.com/docs/graph-api/guides/error-handling)
+THROTTLE_ERROR_CODES = {80001, 4, 17, 613}   # rate limit / too many calls
+POLICY_ERROR_CODE = 368                       # temporarily blocked for policy violation
+DUPLICATE_ERROR_CODE = 506                    # duplicate post
+
+# Max image size accepted before publishing (Graph rejects large photos)
+MAX_IMAGE_BYTES = 4_000_000
 
 # Logging
 logging.basicConfig(
@@ -145,12 +154,30 @@ def get_today_str() -> str:
     return get_now_et().strftime("%Y-%m-%d")
 
 
+def entry_date_et(entry: dict) -> str:
+    """Date (ET) of a log entry whose timestamp was written in UTC.
+
+    Log timestamps are stored with datetime.now(timezone.utc); comparing
+    their raw date part against the ET "today" makes a post published
+    20:00-00:00 ET count for the NEXT day and silently eats the next
+    morning's slot. Convert to ET before comparing.
+    """
+    raw = entry.get("date", "")
+    try:
+        dt = datetime.fromisoformat(raw)
+    except (TypeError, ValueError):
+        return str(raw)[:10]
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return (dt.astimezone(timezone.utc) + timedelta(hours=-4)).strftime("%Y-%m-%d")
+
+
 def posts_today(entries: list[dict]) -> int:
-    """Count posts made today."""
+    """Count posts made today (ET)."""
     today = get_today_str()
     return sum(
         1 for e in entries
-        if e.get("date", "").startswith(today) and e.get("status") == "posted"
+        if e.get("status") == "posted" and entry_date_et(e) == today
     )
 
 
@@ -218,6 +245,14 @@ def get_posted_ids(post_log: list[dict]) -> set[str]:
     }
 
 
+def count_failed(post_log: list[dict], queue_id: str) -> int:
+    """Number of failed log entries recorded for a queue id."""
+    return sum(
+        1 for e in post_log
+        if e.get("queue_id") == queue_id and e.get("status") == "failed"
+    )
+
+
 def get_next_post(queue: list[dict], post_log: list[dict], lang: str | None = None) -> dict | None:
     """
     Get the next unposted item from the queue.
@@ -272,11 +307,116 @@ def verify_token() -> bool:
         return False
 
 
+def _to_int(value) -> int | None:
+    """Coerce a value to int, returning None when not possible."""
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _parse_graph_error(resp: requests.Response) -> dict:
+    """
+    Extract the Graph API error object from a response body.
+
+    Returns {} when the body has no "error" key; otherwise a dict with
+    keys: code (int | None), subcode (int | None), message (str), type (str).
+    """
+    try:
+        error = resp.json().get("error", {})
+    except (ValueError, AttributeError):
+        return {}
+    if not error:
+        return {}
+    return {
+        "code": _to_int(error.get("code")),
+        "subcode": _to_int(error.get("error_subcode")),
+        "message": error.get("message", ""),
+        "type": error.get("type", ""),
+    }
+
+
+def _log_usage_header(resp: requests.Response) -> None:
+    """Log the X-Business-Use-Case-Usage header when Facebook returns it."""
+    usage = resp.headers.get("X-Business-Use-Case-Usage")
+    if usage:
+        log.info("X-Business-Use-Case-Usage: %s", usage)
+
+
+def _graph_error_result(graph_error: dict) -> dict:
+    """Convert a parsed Graph error into the {error: ...} result shape."""
+    return {
+        "error": graph_error["message"] or "Unknown Graph API error",
+        "error_code": graph_error["code"],
+        "error_subcode": graph_error["subcode"],
+    }
+
+
+def classify_graph_error(result: dict) -> str:
+    """
+    Classify a publish() result into an action for cmd_post.
+
+    Returns one of:
+      "ok"        — no error
+      "throttle"  — rate limited (codes 80001, 4, 17, 613): abort the run
+      "policy"    — policy violation (code 368): mark failed, abort the run
+      "duplicate" — duplicate post (code 506): mark skip, try next item
+      "gone"      — target object no longer exists: abort the run
+      "failed"    — any other error: mark failed, stop normally
+    """
+    if "error" not in result:
+        return "ok"
+    code = result.get("error_code")
+    subcode = result.get("error_subcode")
+    message = (result.get("error") or "").lower()
+    if code in THROTTLE_ERROR_CODES:
+        return "throttle"
+    if code == POLICY_ERROR_CODE:
+        return "policy"
+    if code == DUPLICATE_ERROR_CODE:
+        return "duplicate"
+    if (code == 100 and subcode == 33) or (code == 10 and "does not exist" in message):
+        return "gone"
+    return "failed"
+
+
+def assert_images_public(urls: list[str]) -> str | None:
+    """
+    Verify image URLs are publicly reachable before hitting the Graph API.
+
+    Sends a HEAD request to each URL and requires HTTP 200 with a numeric
+    Content-Length below MAX_IMAGE_BYTES. Returns None when every URL passes,
+    or a description of the first failure. The caller records the failure in
+    the post log (so a broken image leaves a trace and stops blocking the
+    queue after MAX_CONSECUTIVE_FAILURES) and exits 1, so a broken image
+    never reaches Facebook.
+    """
+    for url in urls:
+        try:
+            resp = requests.head(url, timeout=15, allow_redirects=True)
+        except requests.RequestException as e:
+            return f"Image URL check failed ({url}): {e}"
+        if resp.status_code != 200:
+            return f"Image URL not public (HTTP {resp.status_code}): {url}"
+        content_length = _to_int(resp.headers.get("Content-Length"))
+        if content_length is None or content_length >= MAX_IMAGE_BYTES:
+            return (
+                f"Image Content-Length missing or >= {MAX_IMAGE_BYTES} bytes "
+                f"(got {resp.headers.get('Content-Length')}): {url}"
+            )
+    log.info("Image check passed for %d URL(s).", len(urls))
+    return None
+
+
 def fb_post_text(message: str) -> dict:
     """POST /{page-id}/feed — text only."""
     url = f"{GRAPH_API_BASE}/{FB_PAGE_ID}/feed"
     payload = {"message": message, "access_token": FB_PAGE_ACCESS_TOKEN}
     resp = requests.post(url, data=payload, timeout=30)
+    _log_usage_header(resp)
+    graph_error = _parse_graph_error(resp)
+    if graph_error:
+        return _graph_error_result(graph_error)
     resp.raise_for_status()
     return resp.json()
 
@@ -286,6 +426,10 @@ def fb_post_photo(message: str, image_url: str) -> dict:
     url = f"{GRAPH_API_BASE}/{FB_PAGE_ID}/photos"
     payload = {"message": message, "url": image_url, "access_token": FB_PAGE_ACCESS_TOKEN}
     resp = requests.post(url, data=payload, timeout=60)
+    _log_usage_header(resp)
+    graph_error = _parse_graph_error(resp)
+    if graph_error:
+        return _graph_error_result(graph_error)
     resp.raise_for_status()
     return resp.json()
 
@@ -295,6 +439,10 @@ def fb_post_link(message: str, link: str) -> dict:
     url = f"{GRAPH_API_BASE}/{FB_PAGE_ID}/feed"
     payload = {"message": message, "link": link, "access_token": FB_PAGE_ACCESS_TOKEN}
     resp = requests.post(url, data=payload, timeout=30)
+    _log_usage_header(resp)
+    graph_error = _parse_graph_error(resp)
+    if graph_error:
+        return _graph_error_result(graph_error)
     resp.raise_for_status()
     return resp.json()
 
@@ -319,6 +467,9 @@ def publish(post_data: dict, dry_run: bool = False) -> dict:
 
     try:
         if image_url:
+            # The message already contains any link (wa.me etc.). The Graph
+            # photos endpoint drops a separate link param when an image is
+            # attached, so we intentionally never pass one here.
             log.info("Posting photo (%s)", post_data.get("language"))
             return fb_post_photo(message, image_url)
         elif link:
@@ -328,13 +479,10 @@ def publish(post_data: dict, dry_run: bool = False) -> dict:
             log.info("Posting text (%s)", post_data.get("language"))
             return fb_post_text(message)
     except requests.HTTPError as e:
-        error_msg = str(e)
-        try:
-            error_msg = e.response.json().get("error", {}).get("message", error_msg)
-        except (ValueError, AttributeError):
-            pass
-        log.error("FB API error: %s", error_msg)
-        return {"error": error_msg}
+        # Graph JSON errors are parsed in fb_post_*; this catches non-JSON
+        # HTTP failures (proxies, HTML error pages, etc.).
+        log.error("FB API HTTP error: %s", e)
+        return {"error": str(e)}
     except requests.RequestException as e:
         log.error("Request failed: %s", e)
         return {"error": str(e)}
@@ -359,6 +507,8 @@ def append_log(post_log: list, post_data: dict, result: dict, status: str) -> li
         "had_image": bool(post_data.get("image_url")),
         "had_link": bool(post_data.get("link")),
         "error": result.get("error"),
+        "error_code": result.get("error_code"),
+        "error_subcode": result.get("error_subcode"),
     })
     return post_log
 
@@ -380,8 +530,27 @@ def mark_queue_item(queue: list, source_id: str, status: str, **extra) -> list:
 
 def cmd_post(dry_run: bool = False, lang: str | None = None) -> None:
     """Post the next item from the queue."""
-    if not dry_run and not validate_credentials():
-        sys.exit(1)
+    if not dry_run:
+        if not validate_credentials():
+            sys.exit(1)
+        if not verify_token():
+            log.error("Access token verification failed. Aborting.")
+            sys.exit(2)
+
+        # Fail closed on a corrupt post log: falling back to an empty history
+        # would wipe the dedup / daily-limit protections and re-publish every
+        # historic item, one per run.
+        if LOG_FILE.exists():
+            try:
+                with open(LOG_FILE, "r", encoding="utf-8") as f:
+                    json.load(f)
+            except (json.JSONDecodeError, IOError):
+                log.error(
+                    "%s exists but cannot be parsed. Posting with an empty "
+                    "history would re-publish old items - fix or restore the "
+                    "file first. Aborting.", LOG_FILE,
+                )
+                sys.exit(1)
 
     queue = load_queue()
     post_log = load_post_log()
@@ -406,46 +575,124 @@ def cmd_post(dry_run: bool = False, lang: str | None = None) -> None:
                 log.warning("Too soon. Wait %d seconds.", int(MIN_INTERVAL_SECONDS - elapsed))
                 return
 
-    # Find next post
-    post_data = get_next_post(queue, post_log, lang=lang)
-    if not post_data:
-        log.info("No pending posts in queue%s.", f" for lang={lang}" if lang else "")
-        return
+    # Find and publish the next post. Duplicates (Graph code 506) are marked
+    # "skip" and we move on to the next candidate; throttle, policy and
+    # gone-object errors abort the entire run.
+    changed = False
 
-    log.info("Publishing: %s [%s / %s]",
-             post_data["id"], post_data.get("language"), post_data.get("category"))
+    while True:
+        post_data = get_next_post(queue, post_log, lang=lang)
+        if not post_data:
+            log.info("No pending posts in queue%s.", f" for lang={lang}" if lang else "")
+            break
 
-    result = publish(post_data, dry_run=dry_run)
+        log.info("Publishing: %s [%s / %s]",
+                 post_data["id"], post_data.get("language"), post_data.get("category"))
 
-    if dry_run:
-        log.info("[DRY RUN] Complete.")
-        return
+        source_id = post_data.get("source_id", post_data.get("id"))
 
-    # Log and update queue
-    source_id = post_data.get("source_id", post_data.get("id"))
-    if "error" in result:
-        post_log = append_log(post_log, post_data, result, "failed")
-        log.error("Failed: %s", result["error"])
-    else:
+        if not dry_run and post_data.get("image_url", "").strip():
+            image_error = assert_images_public([post_data["image_url"].strip()])
+            if image_error:
+                # Leave a trace in the post log so the failure is diagnosable
+                # and the item stops blocking the queue after repeated runs.
+                post_log = append_log(post_log, post_data, {"error": image_error}, "failed")
+                if count_failed(post_log, post_data["id"]) >= MAX_CONSECUTIVE_FAILURES:
+                    queue = mark_queue_item(queue, source_id, "failed")
+                    log.error("Item %s failed %d times - marked failed in the queue.",
+                              source_id, MAX_CONSECUTIVE_FAILURES)
+                save_queue(queue)
+                save_post_log(post_log)
+                log.error("%s - aborting run.", image_error)
+                sys.exit(1)
+
+        result = publish(post_data, dry_run=dry_run)
+
+        if dry_run:
+            log.info("[DRY RUN] Complete.")
+            return
+
+        action = classify_graph_error(result)
+
+        if action == "throttle":
+            post_log = append_log(post_log, post_data, result, "failed")
+            save_queue(queue)
+            save_post_log(post_log)
+            log.error("Graph API throttle (code %s): %s — aborting run.",
+                      result.get("error_code"), result.get("error"))
+            sys.exit(1)
+
+        if action == "policy":
+            queue = mark_queue_item(queue, source_id, "failed")
+            post_log = append_log(post_log, post_data, result, "failed")
+            save_queue(queue)
+            save_post_log(post_log)
+            log.critical("Policy violation (code 368): %s — item %s marked failed. Aborting run.",
+                         result.get("error"), source_id)
+            sys.exit(1)
+
+        if action == "gone":
+            post_log = append_log(post_log, post_data, result, "failed")
+            save_queue(queue)
+            save_post_log(post_log)
+            log.error("Target object no longer exists (code %s, subcode %s): %s — aborting run.",
+                      result.get("error_code"), result.get("error_subcode"), result.get("error"))
+            sys.exit(1)
+
+        if action == "duplicate":
+            queue = mark_queue_item(queue, source_id, "skip")
+            post_log = append_log(post_log, post_data, result, "skip")
+            changed = True
+            log.warning("Duplicate post (code 506): %s marked skip. Trying next item.", source_id)
+            continue
+
+        if action == "failed":
+            # Exit non-zero so the workflow run goes red: a silent break would
+            # leave the pipeline stuck (item still pending at the head of the
+            # queue) with weeks of green runs and zero posts. After
+            # MAX_CONSECUTIVE_FAILURES the item is marked failed so the next
+            # run moves on to the next item instead of retrying forever.
+            post_log = append_log(post_log, post_data, result, "failed")
+            if count_failed(post_log, post_data["id"]) >= MAX_CONSECUTIVE_FAILURES:
+                queue = mark_queue_item(queue, source_id, "failed")
+                log.error("Item %s failed %d times - marked failed in the queue.",
+                          source_id, MAX_CONSECUTIVE_FAILURES)
+            save_queue(queue)
+            save_post_log(post_log)
+            log.error("Failed: %s - aborting run.", result.get("error"))
+            sys.exit(1)
+
+        # Success
         fb_id = result.get("id") or result.get("post_id", "")
         post_log = append_log(post_log, post_data, result, "posted")
+        changed = True
         log.info("Success. FB Post ID: %s", fb_id)
 
-        # Check if all languages are posted for this source item
-        posted_ids = get_posted_ids(post_log)
-        all_langs_done = all(
-            f"{source_id}-{l}" in posted_ids or normalize_queue_item(
-                next((q for q in queue if q.get("id") == source_id), {}), l
-            ) is None
-            for l in LANGUAGES
-        )
-        if all_langs_done:
+        original = next((q for q in queue if q.get("id") == source_id), None)
+        if original is not None and "message" in original:
+            # Direct-format items carry a single language: one successful post
+            # completes them. (The multi-language check below would never
+            # match their ids and would leave them pending forever.)
             queue = mark_queue_item(queue, source_id, "posted",
-                                     posted_at=datetime.now(timezone.utc).isoformat())
+                                    posted_at=datetime.now(timezone.utc).isoformat())
+        else:
+            # Generator format: check if all languages are posted for this item
+            posted_ids = get_posted_ids(post_log)
+            all_langs_done = all(
+                f"{source_id}-{l}" in posted_ids or normalize_queue_item(
+                    original or {}, l
+                ) is None
+                for l in LANGUAGES
+            )
+            if all_langs_done:
+                queue = mark_queue_item(queue, source_id, "posted",
+                                        posted_at=datetime.now(timezone.utc).isoformat())
+        break
 
-    save_queue(queue)
-    save_post_log(post_log)
-    log.info("Queue and log saved.")
+    if changed:
+        save_queue(queue)
+        save_post_log(post_log)
+        log.info("Queue and log saved.")
 
 
 def cmd_status() -> None:
@@ -478,7 +725,8 @@ def cmd_status() -> None:
 
     # Languages posted today
     today = get_today_str()
-    today_langs = [e.get("language") for e in post_log if e.get("date", "").startswith(today) and e.get("status") == "posted"]
+    today_langs = [e.get("language") for e in post_log
+                   if e.get("status") == "posted" and entry_date_et(e) == today]
     if today_langs:
         print(f"  Languages:     {', '.join(today_langs)}")
 

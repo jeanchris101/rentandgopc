@@ -4,7 +4,8 @@
     "type": "social_post",
     "topic": "lifestyle",
     "generated_at": "2026-03-07T14:52:32.037384+00:00",
-    "status": "draft",
+    "status": "skip",
+    "skip_reason": "Stale March draft: figures ($315,000 / 144 sqm) contradict properties.json (US$310,000 / 132 m2). Superseded by build_queue.py.",
     "content": {
       "en": {
         "text": "This is what your morning looks like at Cocotal Golf:\n\n7:00 AM - Coffee on your terrace, golf course below\n8:30 AM - Walk to Melia Hotel for a swim\n10:00 AM - Beach day at Melia's private beach\n\nThis isn't a vacation. This is your daily life.\n\n2BR, 144 sqm. $315,000. DM me to see the property.",
@@ -49,7 +50,8 @@
     "type": "social_post",
     "topic": "roi",
     "generated_at": "2026-03-07T14:52:32.037395+00:00",
-    "status": "draft",
+    "status": "skip",
+    "skip_reason": "Stale March draft: hardcoded ROI claims ($180-250/night, 6.7-10% NET) are not sourced from properties.json. Superseded by build_queue.py.",
     "content": {
       "en": {
         "text": "Your tenants pay your mortgage while you sleep.\n\nPeak season: $180-250/night, 85%+ occupancy\nLow season: $120-150/night, 60% occupancy\n\nNet annual income: $21,000-$31,500\nThat's 6.7-10% NET on a $315K property.\n\nWant the full projection? DM me.",

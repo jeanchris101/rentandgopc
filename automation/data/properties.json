@@ -28,6 +28,22 @@
         "CONFOTUR: 0% property tax for 15 years, 0% transfer tax, 0% capital gains",
         "24/7 security in a gated golf community"
       ],
+      "highlights_es": [
+        "Vista directa al campo de golf desde una terraza amplia",
+        "2 parqueos techados",
+        "Acceso completo al Hotel Melia: playa, restaurantes, spa",
+        "132 m2 en total, inusualmente amplio para un 2 habitaciones",
+        "CONFOTUR: 0% impuesto a la propiedad por 15 anos, 0% impuesto de transferencia, 0% ganancias de capital",
+        "Seguridad 24/7 en una comunidad de golf cerrada"
+      ],
+      "highlights_fr": [
+        "Vue directe sur le parcours de golf depuis une grande terrasse",
+        "2 places de parking couvertes",
+        "Acces complet a l'hotel Melia: plage, restaurants, spa",
+        "132 m2 au total, exceptionnellement spacieux pour un 2 chambres",
+        "CONFOTUR: 0% de taxe fonciere pendant 15 ans, 0% de taxe de transfert, 0% sur les plus-values",
+        "Securite 24/7 dans une communaute de golf fermee"
+      ],
       "hero_image": "images/arboleda-a301/terrace-golf-view.jpg",
       "post_images": [
         "images/arboleda-a301/terrace-golf-view.jpg",
@@ -66,6 +82,24 @@
         "Full Melia Hotel access: beach, restaurants, spa",
         "5-minute drive to the beach"
       ],
+      "highlights_es": [
+        "Totalmente amueblado y listo para mudarse",
+        "Ambas habitaciones con bano privado",
+        "Sala, comedor y cocina de concepto abierto con topes de granito",
+        "Lavadora y secadora en la unidad",
+        "Terraza amueblada con vista a la piscina",
+        "Acceso completo al Hotel Melia: playa, restaurantes, spa",
+        "A 5 minutos en carro de la playa"
+      ],
+      "highlights_fr": [
+        "Entierement meuble et pret a habiter",
+        "Deux chambres avec salle de bain privee",
+        "Salon, salle a manger et cuisine a aire ouverte avec comptoirs en granit",
+        "Laveuse et secheuse dans l'unite",
+        "Terrasse meublee avec vue sur la piscine",
+        "Acces complet a l'hotel Melia: plage, restaurants, spa",
+        "A 5 minutes en voiture de la plage"
+      ],
       "hero_image": "images/paseo-cocotal/living-dining-kitchen.jpg",
       "post_images": [
         "images/paseo-cocotal/living-dining-kitchen.jpg",
@@ -103,6 +137,24 @@
         "25 minutes from PUJ airport",
         "Lowest entry price of the portfolio"
       ],
+      "highlights_es": [
+        "Totalmente amueblado y listo para mudarse",
+        "A 5 minutos a pie de Playa Bavaro",
+        "Terraza privada en primer nivel con sala exterior",
+        "Gimnasio, piscina estilo resort y area de BBQ techada",
+        "Lavadora y secadora en la unidad, cocina completamente equipada",
+        "A 25 minutos del aeropuerto PUJ",
+        "El precio de entrada mas bajo del portafolio"
+      ],
+      "highlights_fr": [
+        "Entierement meuble et pret a habiter",
+        "A 5 minutes a pied de la plage de Bavaro",
+        "Terrasse privee au rez-de-chaussee avec salon exterieur",
+        "Gym sur place, piscine style resort, espace BBQ couvert",
+        "Laveuse et secheuse dans l'unite, cuisine entierement equipee",
+        "A 25 minutes de l'aeroport PUJ",
+        "Le prix d'entree le plus bas du portefeuille"
+      ],
       "hero_image": "images/karen-los-corales/pool-front.jpg",
       "post_images": [
         "images/karen-los-corales/pool-front.jpg",
@@ -128,6 +180,8 @@
       "segregable_m2": 48000,
       "segregable_price_usd": 2160000,
       "neighborhood": "Near the Circunvalacion-Autovia del Este connector, Punta Cana",
+      "neighborhood_es": "Cerca del conector Circunvalacion-Autovia del Este, Punta Cana",
+      "neighborhood_fr": "Pres du connecteur Circunvalacion-Autovia del Este, Punta Cana",
       "audience": "developer",
       "highlights": [
         "Direct frontage on the new 4-lane highway under construction",
@@ -136,6 +190,22 @@
         "Flexible use: residential, mixed-use or commercial",
         "Adjacent residential project already in development",
         "Surrounded by Larimar City and other active developments"
+      ],
+      "highlights_es": [
+        "Frente directo a la nueva autopista de 4 carriles en construccion",
+        "75,000 m2 en total; el propietario segrega 48,000 m2 a la medida del comprador",
+        "Farallon posterior con vistas panoramicas",
+        "Uso flexible: residencial, mixto o comercial",
+        "Proyecto residencial adyacente ya en desarrollo",
+        "Rodeado de Larimar City y otros desarrollos activos"
+      ],
+      "highlights_fr": [
+        "Facade directe sur la nouvelle autoroute a 4 voies en construction",
+        "75,000 m2 au total; le proprietaire peut detacher 48,000 m2 selon les besoins de l'acheteur",
+        "Falaise a l'arriere avec vues panoramiques",
+        "Usage flexible: residentiel, mixte ou commercial",
+        "Projet residentiel adjacent deja en developpement",
+        "Entoure de Larimar City et d'autres projets actifs"
       ],
       "hero_image": "images/land-autovia-este/photo-01.jpg",
       "post_images": [
@@ -157,6 +227,8 @@
       "area_m2": 48000,
       "total_price_usd": 2160000,
       "neighborhood": "Between the CEPM entrance and Vista Cana, Punta Cana",
+      "neighborhood_es": "Entre la entrada de CEPM y Vista Cana, Punta Cana",
+      "neighborhood_fr": "Entre l'entree de CEPM et Vista Cana, Punta Cana",
       "audience": "developer",
       "highlights": [
         "48,000 m2 in an active construction corridor",
@@ -164,6 +236,20 @@
         "Close to Cocotal Golf & Country Club",
         "Surrounded by ongoing residential developments",
         "Suitable for residential, mixed-use or investment projects"
+      ],
+      "highlights_es": [
+        "48,000 m2 en un corredor de construccion activo",
+        "Entre la entrada de CEPM y Vista Cana",
+        "Cerca de Cocotal Golf & Country Club",
+        "Rodeado de desarrollos residenciales en marcha",
+        "Apto para proyectos residenciales, mixtos o de inversion"
+      ],
+      "highlights_fr": [
+        "48,000 m2 dans un corridor de construction actif",
+        "Entre l'entree de CEPM et Vista Cana",
+        "Proche de Cocotal Golf & Country Club",
+        "Entoure de developpements residentiels en cours",
+        "Adapte aux projets residentiels, mixtes ou d'investissement"
       ],
       "hero_image": "images/land-cepm-vistacana/map.jpg",
       "post_images": [
