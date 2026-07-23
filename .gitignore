@@ -4,5 +4,11 @@ Arboleda A301/
 Arboleda outside/
 automation/data/chrome-profile/
 
+# Facebook session cookies used by group_scraper.py — never commit, this repo is public
+automation/data/fb-cookies.json
+# Scraped third-party group posts
+automation/data/group-raw-posts.json
+automation/data/group-questions.json
+
 .vercel
 .env*.local

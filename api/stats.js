@@ -7,9 +7,16 @@ export default async function handler(req, res) {
 
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
-  // Simple password protection
+  // Simple password protection.
+  // Fail closed: if ADMIN_KEY is unset in the environment, deny everything
+  // rather than letting `undefined === undefined` wave every request through.
+  const expected = process.env.ADMIN_KEY;
+  if (!expected) {
+    console.error('ADMIN_KEY is not set — refusing to serve stats');
+    return res.status(503).json({ error: 'Not configured' });
+  }
   const pass = req.query.key;
-  if (pass !== process.env.ADMIN_KEY) {
+  if (pass !== expected) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
