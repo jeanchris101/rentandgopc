@@ -94,7 +94,8 @@
     "ai_model": "claude-haiku-4-5-20251001"
   },
   "content": {
-    "languages": ["en", "es", "fr"],
+    "languages": ["en", "es"],
+    "_languages_note": "fr desactivado 2026-07-23 por decision del owner: los playbooks de respuesta solo existen en es/en, no atraer leads que no podemos atender en su idioma. Las plantillas fr quedan en post-templates.json listas para reactivar.",
     "post_types": ["property_spotlight", "neighborhood_guide", "market_insight", "lifestyle", "testimonial", "roi_breakdown"],
     "max_posts_per_day": 1,
     "image_required": true,
