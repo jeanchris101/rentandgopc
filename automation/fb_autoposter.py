@@ -20,11 +20,12 @@ Usage:
 
 import json
 import os
+import re
 import sys
 import time
 import logging
 import argparse
-from datetime import datetime, timezone, timedelta
+from datetime import date, datetime, timezone, timedelta
 from pathlib import Path
 
 import requests
@@ -253,17 +254,48 @@ def count_failed(post_log: list[dict], queue_id: str) -> int:
     )
 
 
+# Direct items whose date is older than this many days are considered stale and
+# are never published: a property listing is evergreen, but posting "yesterday's"
+# generated item as if it were today's — which happens if the poster was blocked
+# (no token, throttle) for a stretch — floods the page with backdated posts the
+# moment it recovers. Stale items are skipped in-place, not published.
+STALE_POST_MAX_AGE_DAYS = 2
+
+_DATE_IN_ID = re.compile(r"-(\d{4})-(\d{2})-(\d{2})-")
+
+
+def _item_date(item: dict) -> "date | None":
+    """Extract the YYYY-MM-DD embedded in a direct item's id, if present."""
+    m = _DATE_IN_ID.search(item.get("id", ""))
+    if not m:
+        return None
+    try:
+        return datetime(int(m[1]), int(m[2]), int(m[3])).date()
+    except ValueError:
+        return None
+
+
 def get_next_post(queue: list[dict], post_log: list[dict], lang: str | None = None) -> dict | None:
     """
     Get the next unposted item from the queue.
     Handles both direct and content-generator formats.
+
+    Stale direct items (id date older than STALE_POST_MAX_AGE_DAYS) are skipped:
+    they are marked "skip" by cmd_post's stale sweep before this runs, but the
+    guard here is belt-and-suspenders in case that sweep is bypassed.
     """
     posted_ids = get_posted_ids(post_log)
     langs = [lang] if lang else LANGUAGES
+    today = get_now_et().date()
 
     for item in queue:
         # Skip items already fully posted or explicitly marked
         if item.get("status") in ("posted", "failed", "skip"):
+            continue
+
+        # Skip stale direct items (generated on a prior day and never posted).
+        d = _item_date(item) if "message" in item else None
+        if d is not None and (today - d).days > STALE_POST_MAX_AGE_DAYS:
             continue
 
         for l in langs:

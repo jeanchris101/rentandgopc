@@ -100,6 +100,7 @@
     "category": "property_spotlight",
     "property_slug": "paseo-cocotal",
     "ref": "RG-PB202-F5L6C",
-    "status": "pending"
+    "status": "skip",
+    "skip_reason": "Generado por el run del bot sin token (2026-07-24); descartado para no publicarlo con fecha vieja al encender."
   }
 ]

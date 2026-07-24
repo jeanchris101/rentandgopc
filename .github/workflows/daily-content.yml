@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       skip_posting:
-        description: 'Build the content queue but skip Facebook posting'
+        description: 'Preview mode: build the post in dry-run, do NOT publish or commit anything'
         type: boolean
         default: false
 
@@ -35,11 +35,35 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
+      # Gate the whole pipeline on Facebook credentials existing. Without a
+      # token the poster cannot publish, so generating a post would only pile
+      # up unpostable items in the queue (and fail the run, emailing the owner
+      # every day). No token => the job is a clean no-op.
+      - name: Check Facebook credentials
+        id: creds
+        env:
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+        run: |
+          if [ -z "$FB_PAGE_ID" ]; then
+            echo "has_creds=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Poster dormant::FB_PAGE_ID secret not set — skipping generation and posting. Nothing was queued."
+          else
+            echo "has_creds=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Preview mode (manual only): build today's post in dry-run and show it in
+      # the run log. Writes nothing, commits nothing — so preview never leaves a
+      # stale item behind to be posted later.
+      - name: Preview post (dry-run, no publish)
+        if: ${{ github.event.inputs.skip_posting == 'true' }}
+        run: python automation/build_queue.py --dry-run
+
       - name: Build content queue
+        if: ${{ steps.creds.outputs.has_creds == 'true' && github.event.inputs.skip_posting != 'true' }}
         run: python automation/build_queue.py
 
       - name: Run Facebook auto-poster
-        if: ${{ github.event.inputs.skip_posting != 'true' }}
+        if: ${{ steps.creds.outputs.has_creds == 'true' && github.event.inputs.skip_posting != 'true' }}
         env:
           FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
@@ -50,8 +74,9 @@ jobs:
       # Commit BEFORE pulling so a rebase/autostash conflict can never drop
       # the state, and retry the pull+push to cover pushes landing in the
       # window (losing this commit means re-posting to Facebook tomorrow).
+      # Only runs when we actually posted — never in dry-run/no-token paths.
       - name: Persist pipeline state
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.creds.outputs.has_creds == 'true' && github.event.inputs.skip_posting != 'true' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
