@@ -251,12 +251,11 @@
         "Entoure de developpements residentiels en cours",
         "Adapte aux projets residentiels, mixtes ou d'investissement"
       ],
-      "hero_image": "images/land-cepm-vistacana/map.jpg",
+      "hero_image": "images/land-cepm-vistacana/road-2.jpg",
       "post_images": [
-        "images/land-cepm-vistacana/map.jpg",
-        "images/land-cepm-vistacana/road-1.jpg",
         "images/land-cepm-vistacana/road-2.jpg"
-      ]
+      ],
+      "_images_note": "map.jpg (captura de Google Maps con marca de agua) y road-1.jpg (vertical, se recorta en el feed) quedan fuera de la rotacion del bot; siguen en el repo para la pagina del sitio. Agregar tomas de dron como las de land-autovia-este cuando Jean las tenga."
     }
   ],
   "data_owner": "Jean",
