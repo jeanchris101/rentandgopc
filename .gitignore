@@ -11,7 +11,14 @@ automation/data/group-raw-posts.json
 automation/data/group-questions.json
 
 .vercel
-.env*.local
+
+# Every env file. The previous pattern only caught .env*.local, so a plain
+# `.env` — e.g. infra/waha/.env holding the WAHA API key and webhook secret —
+# would have been committed to what is a PUBLIC repo.
+.env
+.env.*
+!.env.example
+!**/.env.example
 
 # Python bytecode
 __pycache__/

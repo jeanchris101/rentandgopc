@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>WhatsApp | Punta Cana Rent &amp; Go</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --primary: #1a3a2a;
+  --primary-soft: #2d5a3f;
+  --accent: #c8a45e;
+  --bg: #f5f5f0;
+  --card: #ffffff;
+  --text: #2c2c2c;
+  --text-light: #666;
+  --border: #e8e5df;
+  --green: #22c55e;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --purple: #8b5cf6;
+  --orange: #f97316;
+  --gray: #9ca3af;
+  --radius: 12px;
+}
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.5;
+}
+button, input, textarea, select { font-family: inherit; font-size: inherit; color: inherit; }
+button { cursor: pointer; }
+button[disabled] { cursor: not-allowed; opacity: 0.5; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+[hidden] { display: none !important; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- Login ---------- */
+.login-screen {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--primary); padding: 20px;
+}
+.login-box {
+  background: var(--card); padding: 40px; border-radius: 16px; width: 100%; max-width: 380px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center;
+}
+.login-box img { height: 60px; margin-bottom: 20px; }
+.login-box h2 { font-size: 1.2rem; margin-bottom: 6px; color: var(--primary); }
+.login-box p.sub { font-size: 0.85rem; color: var(--text-light); margin-bottom: 20px; }
+.login-box input {
+  width: 100%; padding: 12px 16px; border: 2px solid var(--border); border-radius: 10px;
+  margin-bottom: 12px; outline: none; transition: border-color 0.2s;
+}
+.login-box input:focus { border-color: var(--accent); }
+.login-box button {
+  width: 100%; padding: 13px; background: var(--primary); color: #fff; border: none;
+  border-radius: 10px; font-weight: 600; transition: background 0.2s;
+}
+.login-box button:hover { background: var(--primary-soft); }
+.login-error { color: var(--red); font-size: 0.85rem; margin-top: 10px; }
+
+/* ---------- Pairing ---------- */
+.pair-screen {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--bg); padding: 24px;
+}
+.pair-box {
+  background: var(--card); border-radius: 16px; padding: 32px; max-width: 520px; width: 100%;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08); text-align: center;
+}
+.pair-box h2 { color: var(--primary); font-size: 1.25rem; margin-bottom: 8px; }
+.pair-box .pair-sub { color: var(--text-light); font-size: 0.9rem; margin-bottom: 22px; }
+.qr-frame {
+  width: 264px; height: 264px; margin: 0 auto 22px; border: 2px solid var(--border);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  background: #fff; padding: 8px;
+}
+.qr-frame img { width: 100%; height: 100%; object-fit: contain; }
+.qr-waiting { color: var(--text-light); font-size: 0.88rem; padding: 20px; }
+.pair-steps { text-align: left; max-width: 380px; margin: 0 auto 20px; }
+.pair-steps li {
+  list-style: none; display: flex; gap: 12px; align-items: flex-start;
+  padding: 9px 0; font-size: 0.92rem; border-bottom: 1px solid var(--border);
+}
+.pair-steps li:last-child { border-bottom: none; }
+.pair-num {
+  flex: 0 0 24px; height: 24px; border-radius: 50%; background: var(--primary); color: #fff;
+  font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
+}
+.pair-note { font-size: 0.82rem; color: var(--text-light); }
+
+/* ---------- Banners ---------- */
+.banner {
+  padding: 12px 18px; font-size: 0.9rem; font-weight: 500;
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+}
+.banner-red { background: #fee2e2; color: #991b1b; border-bottom: 1px solid #fca5a5; }
+.banner-amber { background: #fef3c7; color: #92400e; border-bottom: 1px solid #fcd34d; }
+.banner button {
+  background: rgba(0,0,0,0.08); border: none; border-radius: 8px; padding: 6px 12px;
+  font-size: 0.82rem; font-weight: 600; color: inherit;
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  background: var(--primary); color: #fff; padding: 12px 18px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  position: sticky; top: 0; z-index: 40;
+}
+.topbar h1 { font-size: 1rem; font-weight: 600; white-space: nowrap; }
+.topbar-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.session-pill {
+  display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 20px;
+  font-size: 0.78rem; font-weight: 600; background: rgba(255,255,255,0.14); white-space: nowrap;
+}
+.session-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--gray); flex: 0 0 auto; }
+.session-dot.ok { background: var(--green); }
+.session-dot.bad { background: var(--red); }
+
+/* Switch */
+.switch-wrap { display: inline-flex; align-items: center; gap: 10px; }
+.switch-label { font-size: 0.82rem; font-weight: 600; white-space: nowrap; }
+.switch {
+  position: relative; width: 56px; height: 30px; border-radius: 15px; border: none;
+  background: rgba(255,255,255,0.25); transition: background 0.2s; flex: 0 0 auto; padding: 0;
+}
+.switch::after {
+  content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px;
+  border-radius: 50%; background: #fff; transition: transform 0.2s;
+}
+.switch[aria-checked="true"] { background: var(--green); }
+.switch[aria-checked="true"]::after { transform: translateX(26px); }
+.cap-meter { font-size: 0.78rem; opacity: 0.92; white-space: nowrap; }
+.cap-bar { width: 90px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.22); overflow: hidden; margin-top: 3px; }
+.cap-fill { height: 100%; background: var(--accent); transition: width 0.3s; }
+.cap-fill.full { background: var(--red); }
+.stop-btn {
+  background: var(--red); color: #fff; border: none; border-radius: 10px;
+  padding: 9px 18px; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.4px;
+  box-shadow: 0 2px 8px rgba(239,68,68,0.4);
+}
+.stop-btn:hover { background: #dc2626; }
+.stop-btn.resume { background: var(--card); color: var(--primary); box-shadow: none; }
+
+/* ---------- Stats strip ---------- */
+.stats-strip {
+  display: flex; gap: 20px; flex-wrap: wrap; padding: 10px 18px;
+  background: var(--card); border-bottom: 1px solid var(--border); font-size: 0.8rem;
+}
+.stat-item { display: flex; gap: 6px; align-items: baseline; }
+.stat-item b { font-size: 1rem; font-variant-numeric: tabular-nums; }
+.stat-item span { color: var(--text-light); }
+.quiet-note { margin-left: auto; color: var(--text-light); }
+
+/* ---------- Layout ---------- */
+.layout {
+  display: grid; grid-template-columns: 340px 1fr;
+  height: calc(100vh - 106px); min-height: 420px;
+}
+.list-pane {
+  background: var(--card); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; min-height: 0;
+}
+.search-wrap { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+.search-wrap input {
+  width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 9px;
+  font-size: 0.88rem; outline: none;
+}
+.search-wrap input:focus { border-color: var(--accent); }
+.thread-list { overflow-y: auto; flex: 1; min-height: 0; }
+
+.thread-row {
+  display: block; width: 100%; text-align: left; background: none; border: none;
+  border-bottom: 1px solid var(--border); border-left: 4px solid transparent;
+  padding: 12px 14px; transition: background 0.15s;
+}
+.thread-row:hover { background: rgba(200,164,94,0.06); }
+.thread-row.unanswered { border-left-color: var(--accent); background: rgba(200,164,94,0.05); }
+.thread-row.active { background: rgba(26,58,42,0.08); border-left-color: var(--primary); }
+.row-top { display: flex; align-items: baseline; gap: 8px; }
+.row-name { font-weight: 600; font-size: 0.9rem; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row-time { font-size: 0.72rem; color: var(--text-light); white-space: nowrap; }
+.row-preview {
+  font-size: 0.82rem; color: var(--text-light); margin: 3px 0 6px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.row-bottom { display: flex; align-items: center; gap: 8px; }
+.pill-prop {
+  font-size: 0.68rem; font-weight: 700; color: #fff; padding: 3px 9px; border-radius: 11px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 190px;
+}
+.pill-prop.none { background: var(--gray); font-weight: 600; }
+.unread-dot {
+  margin-left: auto; min-width: 20px; height: 20px; border-radius: 10px; background: var(--green);
+  color: #fff; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center;
+  justify-content: center; padding: 0 6px;
+}
+
+/* ---------- Thread pane ---------- */
+.thread-pane { display: flex; flex-direction: column; min-height: 0; background: var(--bg); }
+.pane-empty {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 40px 24px; color: var(--text-light);
+}
+.pane-empty h3 { color: var(--text); font-size: 1.02rem; margin-bottom: 8px; }
+.pane-empty p { font-size: 0.9rem; max-width: 380px; }
+.thread-body { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.thread-head {
+  background: var(--card); border-bottom: 1px solid var(--border); padding: 10px 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.btn-back {
+  display: none; background: none; border: 1px solid var(--border); border-radius: 8px;
+  padding: 6px 11px; font-size: 0.82rem; font-weight: 600;
+}
+.head-name { font-weight: 700; font-size: 0.98rem; }
+.head-phone { font-size: 0.78rem; color: var(--text-light); }
+.thread-scroll { flex: 1; overflow-y: auto; padding: 16px; min-height: 0; }
+
+/* Lead card */
+.lead-card {
+  background: var(--card); border: 1px solid var(--border); border-left: 5px solid var(--accent);
+  border-radius: var(--radius); padding: 14px 16px; margin-bottom: 14px;
+}
+.lead-card h3 {
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.6px;
+  color: var(--text-light); font-weight: 700; margin-bottom: 10px;
+}
+.lead-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px 18px; }
+.lead-field { min-width: 0; }
+.lead-key { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-light); font-weight: 600; }
+.lead-val { font-size: 0.88rem; font-weight: 600; word-break: break-word; }
+.lead-val.muted { color: var(--text-light); font-weight: 500; }
+.lead-step {
+  margin-top: 12px; padding-top: 11px; border-top: 1px solid var(--border);
+  font-size: 0.86rem;
+}
+.lead-step b { color: var(--primary); }
+.lead-edit { margin-top: 12px; padding-top: 11px; border-top: 1px solid var(--border); display: flex; gap: 12px; flex-wrap: wrap; }
+.lead-edit label { font-size: 0.72rem; color: var(--text-light); font-weight: 600; display: block; margin-bottom: 3px; }
+.lead-edit select { padding: 6px 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--card); font-size: 0.82rem; }
+
+.auto-flag {
+  margin-top: 12px; background: #fef3c7; border: 1px solid #fcd34d; color: #92400e;
+  border-radius: 9px; padding: 10px 12px; font-size: 0.86rem; font-weight: 600;
+}
+.auto-flag span { display: block; font-weight: 500; margin-top: 3px; font-size: 0.82rem; }
+.low-conf {
+  margin-top: 10px; background: #fff7ed; border: 1px solid #fdba74; color: #9a3412;
+  border-radius: 9px; padding: 9px 12px; font-size: 0.83rem;
+}
+
+/* Property picker */
+.prop-picker {
+  background: var(--card); border: 2px dashed var(--accent); border-radius: var(--radius);
+  padding: 14px 16px; margin-bottom: 14px;
+}
+.prop-picker h3 { font-size: 0.95rem; color: var(--primary); margin-bottom: 4px; }
+.prop-picker p { font-size: 0.85rem; color: var(--text-light); margin-bottom: 12px; }
+.prop-btns { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.prop-btn {
+  border: 2px solid var(--border); background: var(--card); border-radius: 10px;
+  padding: 14px 12px; text-align: left; min-height: 62px; transition: all 0.15s;
+}
+.prop-btn:hover { border-color: var(--accent); background: rgba(200,164,94,0.06); }
+.prop-btn b { display: block; font-size: 0.88rem; }
+.prop-btn small { color: var(--text-light); font-size: 0.78rem; }
+.prop-swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+
+/* Messages */
+.day-sep { text-align: center; margin: 16px 0 10px; }
+.day-sep span {
+  background: var(--border); color: var(--text-light); font-size: 0.72rem; font-weight: 600;
+  padding: 3px 12px; border-radius: 11px;
+}
+.msg { display: flex; margin-bottom: 8px; }
+.msg.out { justify-content: flex-end; }
+.bubble {
+  max-width: min(78%, 560px); background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px 12px 12px 3px; padding: 9px 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.msg.out .bubble { background: #dcf5e4; border-color: #bfe8cd; border-radius: 12px 12px 3px 12px; }
+.bubble-text { font-size: 0.9rem; white-space: pre-wrap; word-break: break-word; }
+.bubble-media { font-size: 0.88rem; font-style: italic; color: var(--text-light); }
+.bubble-meta { display: flex; align-items: center; gap: 8px; margin-top: 5px; }
+.bubble-time { font-size: 0.68rem; color: var(--text-light); margin-left: auto; }
+.intent-tag {
+  font-size: 0.64rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
+  background: rgba(26,58,42,0.09); color: var(--primary); padding: 2px 7px; border-radius: 8px;
+}
+
+/* ---------- Composer zone ---------- */
+.composer-zone { background: var(--card); border-top: 1px solid var(--border); padding: 10px 14px 12px; }
+.zone-label {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--text-light); font-weight: 700; margin-bottom: 6px;
+}
+.suggest-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+.suggest-btn {
+  flex: 0 0 auto; border: 1px solid var(--border); background: var(--bg); border-radius: 9px;
+  padding: 8px 12px; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 7px;
+  max-width: 260px; transition: all 0.15s;
+}
+.suggest-btn:hover { border-color: var(--accent); background: rgba(200,164,94,0.1); }
+.suggest-key {
+  background: var(--primary); color: #fff; border-radius: 5px; font-size: 0.66rem;
+  padding: 1px 5px; font-weight: 700; flex: 0 0 auto;
+}
+.suggest-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.suggest-photo { font-size: 0.66rem; color: var(--accent); font-weight: 700; flex: 0 0 auto; }
+.suggest-note { font-size: 0.83rem; color: var(--text-light); padding: 6px 0; }
+
+.bank { margin-top: 8px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.bank-head {
+  width: 100%; display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+  background: var(--bg); border: none; font-size: 0.82rem; font-weight: 600; text-align: left;
+}
+.bank-head .chev { margin-left: auto; color: var(--text-light); font-size: 0.75rem; }
+.bank-body { padding: 10px 12px; border-top: 1px solid var(--border); }
+.bank-langs { display: flex; gap: 6px; margin-bottom: 9px; }
+.bank-lang {
+  border: 1px solid var(--border); background: var(--card); border-radius: 7px;
+  padding: 4px 11px; font-size: 0.75rem; font-weight: 600;
+}
+.bank-lang.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.bank-search {
+  width: 100%; padding: 8px 11px; border: 1px solid var(--border); border-radius: 8px;
+  font-size: 0.85rem; outline: none; margin-bottom: 9px;
+}
+.bank-search:focus { border-color: var(--accent); }
+.confotur-veto {
+  background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; border-radius: 8px;
+  padding: 9px 12px; font-size: 0.82rem; font-weight: 600; margin-bottom: 9px;
+}
+.bank-list { max-height: 220px; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; }
+.bank-item {
+  border: 1px solid var(--border); background: var(--card); border-radius: 8px;
+  padding: 8px 11px; text-align: left; font-size: 0.83rem; display: flex; gap: 9px; align-items: center;
+}
+.bank-item:hover:not([disabled]) { border-color: var(--accent); background: rgba(200,164,94,0.07); }
+.bank-item[disabled] { background: #fafafa; text-decoration: line-through; }
+.bank-cat {
+  font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
+  color: var(--text-light); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px;
+  flex: 0 0 auto;
+}
+.bank-empty { font-size: 0.83rem; color: var(--text-light); padding: 10px 2px; }
+
+.step-chip {
+  display: flex; align-items: center; gap: 9px; margin-top: 9px; padding: 7px 11px;
+  background: rgba(26,58,42,0.07); border: 1px solid rgba(26,58,42,0.18); border-radius: 9px;
+  font-size: 0.8rem;
+}
+.step-chip b { color: var(--primary); }
+.step-chip button {
+  margin-left: auto; background: none; border: none; color: var(--text-light);
+  font-size: 0.9rem; font-weight: 700; padding: 0 4px;
+}
+.send-error {
+  margin-top: 9px; background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b;
+  border-radius: 9px; padding: 9px 12px; font-size: 0.84rem; display: flex; gap: 10px; align-items: center;
+}
+.send-error button {
+  margin-left: auto; background: #991b1b; color: #fff; border: none; border-radius: 7px;
+  padding: 5px 12px; font-size: 0.78rem; font-weight: 600;
+}
+.composer-row { display: flex; gap: 10px; align-items: flex-end; margin-top: 9px; }
+.composer-row textarea {
+  flex: 1; min-height: 62px; max-height: 200px; resize: vertical; padding: 10px 12px;
+  border: 1px solid var(--border); border-radius: 10px; font-size: 0.92rem; outline: none;
+  line-height: 1.45;
+}
+.composer-row textarea:focus { border-color: var(--accent); }
+.send-btn {
+  background: var(--primary); color: #fff; border: none; border-radius: 10px;
+  padding: 0 22px; height: 46px; font-weight: 700; font-size: 0.9rem; flex: 0 0 auto;
+}
+.send-btn:hover:not([disabled]) { background: var(--primary-soft); }
+.composer-hint { font-size: 0.72rem; color: var(--text-light); margin-top: 6px; }
+
+/* ---------- Help modal ---------- */
+.modal-back {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 90;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+.modal {
+  background: var(--card); border-radius: 14px; padding: 24px; max-width: 440px; width: 100%;
+  max-height: 84vh; overflow-y: auto;
+}
+.modal h2 { font-size: 1.05rem; color: var(--primary); margin-bottom: 14px; }
+.modal dl { display: grid; grid-template-columns: auto 1fr; gap: 9px 14px; align-items: center; }
+.modal dt { text-align: right; }
+.modal dd { font-size: 0.87rem; }
+kbd {
+  display: inline-block; background: var(--bg); border: 1px solid var(--border);
+  border-bottom-width: 2px; border-radius: 5px; padding: 2px 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.78rem; font-weight: 600;
+}
+.modal-close {
+  margin-top: 18px; width: 100%; padding: 10px; background: var(--primary); color: #fff;
+  border: none; border-radius: 9px; font-weight: 600;
+}
+.kbd-hint {
+  position: fixed; bottom: 8px; right: 12px; font-size: 0.68rem; color: var(--text-light);
+  opacity: 0.6; z-index: 30;
+}
+
+/* ---------- Toasts ---------- */
+.toasts {
+  position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 95;
+  display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none;
+}
+.toast {
+  padding: 10px 20px; border-radius: 9px; font-size: 0.85rem; font-weight: 600; color: #fff;
+  opacity: 0; transform: translateY(10px); transition: opacity 0.25s, transform 0.25s;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2); max-width: 90vw; text-align: center;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.ok { background: var(--primary); }
+.toast.warn { background: var(--red); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; height: auto; min-height: 0; }
+  .list-pane { border-right: none; height: calc(100vh - 150px); }
+  .thread-pane { display: none; height: calc(100vh - 106px); }
+  body.thread-open .list-pane { display: none; }
+  body.thread-open .thread-pane { display: flex; }
+  .btn-back { display: inline-flex; }
+  .kbd-hint { display: none; }
+  .topbar { padding: 10px 12px; gap: 10px; }
+  .topbar h1 { font-size: 0.92rem; }
+  .topbar-right { width: 100%; margin-left: 0; justify-content: space-between; }
+  .stats-strip { gap: 14px; padding: 9px 12px; font-size: 0.75rem; }
+  .quiet-note { margin-left: 0; width: 100%; }
+  .thread-scroll { padding: 12px; }
+  .composer-zone { padding: 9px 10px 10px; }
+  .bubble { max-width: 88%; }
+  .prop-btns { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .lead-grid { grid-template-columns: 1fr 1fr; }
+  .send-btn { padding: 0 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ 1. LOGIN ============ -->
+<div class="login-screen" id="screenLogin">
+  <div class="login-box">
+    <img src="images/logo.png" alt="Punta Cana Rent &amp; Go">
+    <h2>Panel de WhatsApp</h2>
+    <p class="sub">Entra con la contrase&ntilde;a del panel.</p>
+    <input type="password" id="loginPass" placeholder="Contrase&ntilde;a" autocomplete="current-password">
+    <button id="loginBtn" type="button">Entrar</button>
+    <div class="login-error" id="loginError" hidden></div>
+  </div>
+</div>
+
+<!-- ============ 2. PAIRING ============ -->
+<div class="pair-screen" id="screenPair" hidden>
+  <div class="pair-box">
+    <h2>Conecta tu WhatsApp</h2>
+    <p class="pair-sub">Escanea este c&oacute;digo con el tel&eacute;fono donde tienes el WhatsApp del negocio.</p>
+    <div class="qr-frame" id="qrFrame"></div>
+    <ol class="pair-steps">
+      <li><span class="pair-num">1</span><span>Abre WhatsApp en tu tel&eacute;fono.</span></li>
+      <li><span class="pair-num">2</span><span>Entra al men&uacute; y toca <b>Dispositivos vinculados</b>.</span></li>
+      <li><span class="pair-num">3</span><span>Toca <b>Vincular un dispositivo</b>.</span></li>
+      <li><span class="pair-num">4</span><span>Apunta la c&aacute;mara a este c&oacute;digo.</span></li>
+    </ol>
+    <p class="pair-note" id="pairNote">Esta pantalla se actualiza sola cada 5 segundos. En cuanto conecte, entra directo al panel.</p>
+  </div>
+</div>
+
+<!-- ============ 3. APP ============ -->
+<div id="app" hidden>
+
+  <header class="topbar">
+    <h1>WhatsApp &middot; Rent &amp; Go PC</h1>
+    <div class="topbar-group">
+      <span class="session-pill" id="sessionPill">
+        <span class="session-dot" id="sessionDot"></span><span id="sessionText">Comprobando</span>
+      </span>
+    </div>
+    <div class="topbar-right">
+      <div class="switch-wrap">
+        <span class="switch-label">Auto-respuesta</span>
+        <button class="switch" id="autoSwitch" role="switch" aria-checked="false" aria-label="Auto-respuesta"></button>
+        <span class="switch-label" id="autoState">OFF</span>
+      </div>
+      <div>
+        <div class="cap-meter" id="capText">&mdash;</div>
+        <div class="cap-bar"><div class="cap-fill" id="capFill" style="width:0%"></div></div>
+      </div>
+      <button class="stop-btn" id="stopBtn" type="button">PARAR TODO</button>
+    </div>
+  </header>
+
+  <div class="banner banner-red" id="globalBanner" hidden></div>
+
+  <div class="stats-strip" id="statsStrip">
+    <div class="stat-item"><b id="statTotal">0</b><span>conversaciones</span></div>
+    <div class="stat-item"><b id="statToday">0</b><span>leads nuevos hoy</span></div>
+    <div class="stat-item"><b id="statUnanswered">0</b><span>sin contestar</span></div>
+    <div class="stat-item"><b id="statAttr">&mdash;</b><span>atribuidas (7 d&iacute;as)</span></div>
+    <div class="quiet-note" id="quietNote"></div>
+  </div>
+
+  <main class="layout">
+    <section class="list-pane" aria-label="Conversaciones">
+      <div class="search-wrap">
+        <label class="sr-only" for="search">Buscar conversaci&oacute;n</label>
+        <input type="search" id="search" placeholder="Buscar por nombre, tel&eacute;fono o texto  ( / )" autocomplete="off">
+      </div>
+      <div class="thread-list" id="threadList"></div>
+    </section>
+
+    <section class="thread-pane" id="threadPane" aria-label="Conversaci&oacute;n">
+      <div class="pane-empty" id="paneEmpty">
+        <h3>Elige una conversaci&oacute;n</h3>
+        <p>Toca cualquier chat de la izquierda para ver el hist&oacute;rico, la ficha del lead y responder.</p>
+      </div>
+
+      <div class="thread-body" id="threadBody" hidden>
+        <header class="thread-head">
+          <button class="btn-back" id="backBtn" type="button">Volver</button>
+          <div>
+            <div class="head-name" id="headName"></div>
+            <div class="head-phone" id="headPhone"></div>
+          </div>
+        </header>
+
+        <div class="thread-scroll" id="threadScroll">
+          <div id="leadCardHost"></div>
+          <div id="propPickerHost"></div>
+          <div id="messagesHost"></div>
+        </div>
+
+        <footer class="composer-zone">
+          <div id="suggestHost"></div>
+
+          <div class="bank">
+            <button class="bank-head" id="bankToggle" type="button" aria-expanded="false">
+              Respuestas r&aacute;pidas del banco (22)
+              <span class="chev" id="bankChev">Abrir</span>
+            </button>
+            <div class="bank-body" id="bankBody" hidden>
+              <div class="bank-langs" id="bankLangs"></div>
+              <div id="confoturVetoHost"></div>
+              <label class="sr-only" for="bankSearch">Buscar respuesta del banco</label>
+              <input type="search" class="bank-search" id="bankSearch" placeholder="Buscar pregunta..." autocomplete="off">
+              <div class="bank-list" id="bankList"></div>
+            </div>
+          </div>
+
+          <div id="stepChipHost"></div>
+          <div id="sendErrorHost"></div>
+
+          <div class="composer-row">
+            <label class="sr-only" for="composer">Mensaje</label>
+            <textarea id="composer" placeholder="Escribe el mensaje. Nada se env&iacute;a solo: tienes que darle a Enviar."></textarea>
+            <button class="send-btn" id="sendBtn" type="button">Enviar</button>
+          </div>
+          <div class="composer-hint" id="composerHint"></div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <div class="kbd-hint">j/k mover &middot; 1-9 sugerencia &middot; / buscar &middot; ? atajos</div>
+</div>
+
+<!-- ============ Help modal ============ -->
+<div class="modal-back" id="helpModal" hidden role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+  <div class="modal">
+    <h2 id="helpTitle">Atajos de teclado</h2>
+    <dl>
+      <dt><kbd>j</kbd></dt><dd>Siguiente conversaci&oacute;n</dd>
+      <dt><kbd>k</kbd></dt><dd>Conversaci&oacute;n anterior</dd>
+      <dt><kbd>1</kbd> &hellip; <kbd>9</kbd></dt><dd>Mete la sugerencia N en el cuadro de texto (no la env&iacute;a)</dd>
+      <dt><kbd>Enter</kbd></dt><dd id="helpEnter">Env&iacute;a lo que est&aacute; escrito, estando dentro del cuadro de texto</dd>
+      <dt><kbd>Shift</kbd>+<kbd>Enter</kbd></dt><dd>Salto de l&iacute;nea dentro del mensaje</dd>
+      <dt><kbd>/</kbd></dt><dd>Ir al buscador de conversaciones</dd>
+      <dt><kbd>b</kbd></dt><dd>Abrir o cerrar el banco de respuestas</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Cerrar esto, o volver a la lista en el tel&eacute;fono</dd>
+      <dt><kbd>?</kbd></dt><dd>Mostrar esta ayuda</dd>
+    </dl>
+    <button class="modal-close" id="helpClose" type="button">Entendido</button>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script>
+'use strict';
+
+/* =========================================================================
+   DATOS ESTATICOS
+   Copiados de automation/data/properties.json, automation/data/playbooks.json,
+   automation/data/group-assist-config.json y del array RESPONSES de
+   response-bank.html. Esos archivos siguen siendo la fuente de verdad:
+   si cambia un precio o el CONFOTUR de una unidad, se actualiza alla y aqui.
+   ========================================================================= */
+
+const PROPS = {
+  'cocotal-2bdr': {
+    short: 'Cocotal Golf 2BR', price: 'US$310,000', ref: 'A301', confotur: true,
+    hood: 'Cocotal Golf & Country Club, Bavaro', color: '#2d5a3f'
+  },
+  'paseo-cocotal': {
+    short: 'Paseo de Cocotal 2BR', price: 'US$280,000', ref: 'PB202', confotur: false,
+    hood: 'Paseo de Cocotal, Bavaro', color: '#3b82f6'
+  },
+  'karen-los-corales': {
+    short: 'Los Corales 1BR', price: 'US$155,000', ref: 'KLC1', confotur: false,
+    hood: 'Los Corales, Bavaro', color: '#f97316'
+  },
+  'land-autovia-este': {
+    short: '75,000 m2 Autovia del Este', price: 'US$45 / m2', ref: 'LAUT', confotur: false,
+    hood: 'Conector Circunvalacion - Autovia del Este', color: '#8b5cf6'
+  },
+  'land-cepm-vistacana': {
+    short: '48,000 m2 CEPM / Vista Cana', price: 'US$45 / m2', ref: 'LCEP', confotur: false,
+    hood: 'Entre CEPM y Vista Cana', color: '#0891b2'
+  }
+};
+const PROP_ORDER = ['cocotal-2bdr', 'paseo-cocotal', 'karen-los-corales', 'land-autovia-este', 'land-cepm-vistacana'];
+
+const GROUPS = {
+  G01: 'Punta Cana Expats', G02: 'Dominican Expats Buy, Sell or Rent', G03: 'Punta Cana Travel',
+  G04: 'Gente que vive en Cocotal', G05: 'Quebecois a Punta Cana', G06: 'Canadians Living in the DR',
+  G07: 'Les Snowbirds Quebecois de la RD', G08: 'Expats living in The Dominican Republic',
+  G09: 'Punta Cana Airbnb', G10: 'Residents of Cocotal', G11: 'Expats Punta Cana / Bavaro',
+  G12: 'Los Buenos Vecinos de Cocotal', G13: 'Expats in Bavaro', G14: 'Residentes de Costa Bavaro',
+  G15: 'Real Estate Dominican Republic', G16: 'Quebecois en Republique Dominicaine',
+  G17: 'Residentes Bavaro - Punta Cana', G18: 'Canadien et Quebecois en Republique Dominicaine'
+};
+
+const STEP_LABELS = {
+  step1_immediate: 'Respuesta inmediata',
+  step2_qualify: 'Preguntas de calificacion',
+  step3a_investment: 'Angulo inversion',
+  step3a_investment_b: 'Angulo inversion (segunda parte)',
+  step3a_investment_calc: 'Inversion con numeros',
+  step3a_developer: 'Angulo desarrollador',
+  step3b_personal: 'Angulo uso personal',
+  step3b_personal_b: 'Uso personal (segunda parte)',
+  step3b_personal_amenities: 'Uso personal, amenidades',
+  step3b_investor: 'Angulo inversionista',
+  step4_close: 'Cierre, agendar visita',
+  followup_d2: 'Seguimiento dia 2',
+  followup_d5: 'Seguimiento dia 5',
+  followup_d14: 'Seguimiento dia 14'
+};
+
+/* Etapas: las mismas que valida POST /api/wa/lead (STAGES en api/_lib/wa-store.js).
+   Si se agrega una alla, se agrega aqui con su etiqueta. */
+const API_STAGES = ['new', 'awaiting_qualify', 'qualified', 'closing', 'cold'];
+const STAGE_LABELS = {
+  new: 'Nuevo',
+  awaiting_qualify: 'Esperando que conteste las preguntas',
+  qualified: 'Calificado',
+  closing: 'Cerrando',
+  cold: 'Frio, sin respuesta'
+};
+
+/* Idiomas que acepta POST /api/wa/lead (los que tienen guion en playbooks.json). */
+const LEAD_LANGUAGES = [['es', 'Espanol'], ['en', 'Ingles']];
+
+const INTENT_LABELS = {
+  price: 'Precio', pricing: 'Precio', availability: 'Disponibilidad', photos: 'Pide fotos',
+  visit: 'Quiere visitar', viewing: 'Quiere visitar', financing: 'Financiamiento',
+  mortgage: 'Financiamiento', confotur: 'CONFOTUR', taxes: 'Impuestos', location: 'Ubicacion',
+  greeting: 'Saludo', hoa: 'Mantenimiento', legal: 'Legal', rental: 'Alquiler / ROI',
+  roi: 'Alquiler / ROI', size: 'Metros', negotiation: 'Negociacion', offer: 'Oferta',
+  furniture: 'Amueblado', parking: 'Parqueo', land: 'Terreno', other: 'Otro',
+  unknown: 'Sin clasificar', spam: 'Posible spam'
+};
+
+const LANGS = [
+  { code: 'es', label: 'ES' }, { code: 'en', label: 'EN' },
+  { code: 'fr', label: 'FR' }, { code: 'ru', label: 'RU' }
+];
+
+const BANK_CAT_LABELS = {
+  confotur: 'CONFOTUR', buying: 'Compra', investment: 'Inversion',
+  areas: 'Zonas', living: 'Vivir aqui', objections: 'Objeciones'
+};
+
+/* Frases que sustituyen el telefono del dueno (809-486-5386): el dueno se lo
+   estaria mandando a si mismo. */
+const HERE_PHRASE = {
+  es: 'por aqui mismo', en: 'right here', fr: 'ici meme', ru: 'pryamo zdes'
+};
+const THIS_NUMBER = {
+  es: 'este numero', en: 'this number', fr: 'ce numero', ru: 'etot nomer'
+};
+
+/* Las 22 preguntas del banco (response-bank.html), 4 idiomas. */
+const BANK = [
+  {
+    category: 'confotur',
+    q: { en: "What is CONFOTUR?", es: "Que es CONFOTUR?", fr: "C'est quoi le CONFOTUR?", ru: "Chto takoe CONFOTUR?" },
+    a: {
+      en: "CONFOTUR is a Dominican tax incentive law (Law 158-01) that exempts qualifying tourism properties from taxes for 15 years. That means 0% transfer tax at closing, 0% annual property tax, 0% capital gains, and 0% on rental income. On a $300K property, you're saving roughly $9,000 just on the transfer tax alone. It's one of the biggest reasons foreign investors choose DR over other Caribbean markets. Happy to share more details, I'm based here in Punta Cana.",
+      es: "CONFOTUR es la Ley 158-01 de incentivo turistico de RD. Exonera propiedades turisticas calificadas por 15 anos: 0% impuesto de transferencia, 0% impuesto a la propiedad (IPI), 0% ganancia de capital, y 0% impuesto sobre ingresos de alquiler. En una propiedad de US$300K, te ahorras unos $9,000 solo en transferencia. Es una de las razones principales por las que los inversionistas eligen RD sobre otros mercados del Caribe. Si quieres mas detalles, escribeme al WhatsApp: 809-486-5386.",
+      fr: "Le CONFOTUR c'est la loi 158-01 en Republique dominicaine, elle exempte les proprietes touristiques de taxes pendant 15 ans. Ca veut dire 0% taxe de transfert a la cloture, 0% impot foncier annuel, 0% gain en capital, et 0% sur les revenus locatifs. Sur un condo de 300K$, tu sauves environ 9 000$ juste sur le transfert. C'est LA raison principale pour laquelle les investisseurs choisissent la RD. Ecris-moi si tu veux que je t'explique comment ca s'applique a ton cas.",
+      ru: "CONFOTUR, eto dominikanskij zakon 158-01 o nalogovyh lgotah dlya turisticheskoj nedvizhimosti. On osvobozhdaet ot nalogov na 15 let: 0% nalog na peredachu, 0% ezhegodnyj nalog na nedvizhimost, 0% nalog na prirost kapitala, 0% nalog na arendnyj dohod. Na ob'ekte za $300K vy ekonomite okolo $9,000 tolko na naloge na peredachu. S radostyu rasskazhu podrobnee, ya zhivu zdes v Punta Cana."
+    }
+  },
+  {
+    category: 'confotur',
+    q: { en: "Is CONFOTUR worth it?", es: "Vale la pena CONFOTUR?", fr: "Ca vaut la peine le CONFOTUR?", ru: "CONFOTUR togo stoit?" },
+    a: {
+      en: "Absolutely. On a $300K property, CONFOTUR saves you roughly $9,000 on transfer tax alone (3%), plus zero property tax for 15 years, that's thousands more saved over time. And if you sell at a profit or rent it out, those gains are tax-free too. The only catch is the property must be in a qualifying tourism project and registered with the CTC. Not every listing has it, so always verify. DM me if you want specifics for your situation.",
+      es: "Sin duda. En una propiedad de US$300K, CONFOTUR te ahorra unos $9,000 solo en impuesto de transferencia (3%), mas cero impuesto a la propiedad por 15 anos, son miles mas ahorrados a largo plazo. Y si vendes con ganancia o alquilas, esos ingresos estan exentos tambien. Lo unico es que la propiedad tiene que estar en un proyecto turistico calificado y registrado con el CTC. No todos los listados lo tienen, asi que siempre verifica. Escribeme si quieres que te mande un desglose.",
+      fr: "Absolument. Sur un condo de 300K$, le CONFOTUR te sauve environ 9 000$ juste en taxe de transfert (3%), plus zero impot foncier pendant 15 ans, ca fait des milliers de plus en economies. Et si tu revends avec profit ou tu loues, ces revenus sont aussi exemptes. Le seul detail: le projet doit etre enregistre au CTC. Pas tous les condos l'ont, faut toujours verifier. DM-moi si tu veux un calcul pour ton budget.",
+      ru: "Odnoznachno da. Na ob'ekte za $300K CONFOTUR ekonomit okolo $9,000 tolko na naloge na peredachu (3%), plyus nol nalog na nedvizhimost 15 let. Esli prodate s pribylyu ili sdadite v arendu, eti dohody tozhe bez naloga. Edinstvennyj nyuans: proekt dolzhen byt zaregistrirovan v CTC. Ne vse ob'ekty imeyut CONFOTUR, vsegda proveryajte. Napishite mne, esli hotite podrobnee, WhatsApp: 809-486-5386."
+    }
+  },
+  {
+    category: 'confotur',
+    q: { en: "What taxes do foreigners pay in DR?", es: "Que impuestos pagan los extranjeros en RD?", fr: "Quels impots les etrangers paient en RD?", ru: "Kakie nalogi platyat inostrantsy v DR?" },
+    a: {
+      en: "Without CONFOTUR: transfer tax is 3% of assessed value at closing, annual property tax (IPI) is 1% on properties over ~RD$8.1M, capital gains tax is 27%, and rental income is taxed at 27%. WITH CONFOTUR, all of that goes to zero for 15 years. Foreigners have the exact same property rights as Dominicans, no restrictions. Closing costs total roughly 3-5% depending on your lawyer and notary fees. I can send you a quick breakdown if you're interested.",
+      es: "Sin CONFOTUR: impuesto de transferencia es 3% del valor catastral, impuesto a la propiedad (IPI) es 1% sobre propiedades arriba de ~RD$8.1M, ganancia de capital es 27%, e ingresos de alquiler pagan 27%. CON CONFOTUR, todo eso baja a cero por 15 anos. Los extranjeros tienen los mismos derechos de propiedad que los dominicanos, sin restricciones. Los costos de cierre totalizan entre 3-5% dependiendo del abogado y notario. Puedo mandarte un desglose rapido si te interesa.",
+      fr: "Sans CONFOTUR: taxe de transfert de 3%, impot foncier (IPI) de 1% sur les proprietes au-dessus de ~8.1M RD$, gain en capital 27%, revenus locatifs 27%. AVEC CONFOTUR, tout ca tombe a zero pendant 15 ans. Les etrangers ont exactement les memes droits de propriete que les Dominicains, aucune restriction. Les frais de cloture totalisent environ 3-5% selon l'avocat et le notaire. Ecris-moi si tu veux un calcul precis pour ton budget.",
+      ru: "Bez CONFOTUR: nalog na peredachu 3%, ezhegodnyj nalog na nedvizhimost (IPI) 1% (na ob'ekty dorozhe ~8.1M RD$), nalog na prirost kapitala 27%, nalog na arendnyj dohod 27%. S CONFOTUR vse eto, nol na 15 let. Inostrantsy imeyut tochno takie zhe prava na nedvizhimost kak i dominikatsy, bez ogranichenij. Raskhody na zakrytie sdelki, okolo 3-5%. Mogu otpravit podrobnyj raschet, esli interesno."
+    }
+  },
+  {
+    category: 'confotur',
+    q: { en: "How long does CONFOTUR last?", es: "Cuanto dura el CONFOTUR?", fr: "Ca dure combien le CONFOTUR?", ru: "Skolko dlitsya CONFOTUR?" },
+    a: {
+      en: "CONFOTUR exemptions last 15 years from the date the project was registered, not from when you buy. So always ask how many years are left on a specific property. Some newer projects still have the full 15 years; some older ones might have 8-10 left. The exemption transfers with the property if you sell. It covers transfer tax, property tax, capital gains, and rental income tax. Happy to check on any specific project for you, I'm based here in Punta Cana.",
+      es: "Las exenciones de CONFOTUR duran 15 anos desde que el proyecto fue registrado, no desde que compras. Asi que siempre pregunta cuantos anos le quedan a un proyecto especifico. Algunos proyectos nuevos tienen los 15 anos completos; otros mas viejos quizas tienen 8-10. La exencion se transfiere con la propiedad si vendes. Cubre transferencia, IPI, ganancia de capital e impuesto sobre alquiler. Con gusto te verifico cualquier proyecto, WhatsApp: 809-486-5386.",
+      fr: "Les exemptions CONFOTUR durent 15 ans a partir de la date d'enregistrement du PROJET, pas de ton achat. Demande toujours combien d'annees il reste sur un projet specifique. Certains projets recents ont encore les 15 ans au complet; d'autres plus vieux en ont 8-10. L'exemption se transfere avec la propriete si tu revends. Ca couvre transfert, impot foncier, gain en capital et revenu locatif. Je peux verifier n'importe quel projet pour toi si tu veux.",
+      ru: "Lgoty CONFOTUR dejstvuyut 15 let s momenta registratsii PROEKTA, a ne s momenta vashej pokupki. Vsegda sprashivajte, skolko let ostalos u konkretnogo proekta. U nekotoryh novyh, polnye 15 let, u staryh mozhet byt 8-10. Lgota peredaetsya vmeste s nedvizhimostyu pri prodazhe. Pokryvaet nalog na peredachu, nedvizhimost, prirost kapitala i arendnyj dohod. Mogu proverit lyuboj proekt, napishite mne."
+    }
+  },
+  {
+    category: 'buying',
+    q: { en: "Can foreigners buy property in DR?", es: "Pueden los extranjeros comprar propiedades en RD?", fr: "Les etrangers peuvent acheter en RD?", ru: "Mogut li inostrantsy kupit nedvizhimost v DR?" },
+    a: {
+      en: "Yes, foreigners have the exact same property rights as Dominican citizens. No special permits, no residency required, no restrictions on ownership. You can buy, sell, rent, and inherit property freely. The Dominican Republic is one of the most foreigner-friendly countries in the Caribbean for real estate. You just need a valid passport and a good lawyer to handle the title search and closing. Happy to share more, I'm based here in Punta Cana.",
+      es: "Si, los extranjeros tienen exactamente los mismos derechos de propiedad que los dominicanos. No necesitas permisos especiales, ni residencia, ni hay restricciones. Puedes comprar, vender, alquilar y heredar libremente. RD es uno de los paises mas amigables del Caribe para inversion inmobiliaria extranjera. Solo necesitas pasaporte vigente y un buen abogado para el deslinde y cierre. Escribeme si quieres que te recomiende uno.",
+      fr: "Oui, les etrangers ont exactement les memes droits de propriete que les Dominicains. Pas de permis special, pas besoin de residence, aucune restriction. Tu peux acheter, vendre, louer et leguer librement. La RD est un des pays les plus ouverts des Caraibes pour l'immobilier etranger. T'as juste besoin d'un passeport valide et d'un bon avocat pour la verification du titre et la cloture. Ecris-moi si tu veux que je te recommande quelqu'un.",
+      ru: "Da, inostrantsy imeyut tochno takie zhe prava na nedvizhimost, kak i grazhdane Dominikanskoj Respubliki. Ne nuzhny spetsialnye razresheniya, vid na zhitelstvo ili drugoj status. Mozhno pokupat, prodavat, sdavat v arendu i nasledovat svobodno. DR, odna iz samyh otkrytyh stran Karibov dlya inostrannyh investorov. Nuzhny tolko dejstvuyushchij pasport i horoshij advokat. S radostyu rasskazhu podrobnee, ya zdes v Punta Cana."
+    }
+  },
+  {
+    category: 'buying',
+    q: { en: "What are closing costs in DR?", es: "Cuales son los costos de cierre en RD?", fr: "C'est quoi les frais de cloture en RD?", ru: "Kakie raskhody na zakrytie sdelki v DR?" },
+    a: {
+      en: "Typically 3-5% of the purchase price. That includes: transfer tax (3%, waived with CONFOTUR), legal fees (1-1.5%), notary, and registration. Some developers also charge a small admin fee. With CONFOTUR, your closing costs drop significantly since the 3% transfer tax is eliminated. Always budget for lawyer's fees regardless, a good attorney is non-negotiable. I can send you a quick breakdown if you're interested.",
+      es: "Normalmente entre 3-5% del precio de compra. Incluye: impuesto de transferencia (3%, exento con CONFOTUR), honorarios legales (1-1.5%), notario y registro. Algunos desarrolladores cobran una tarifa administrativa. Con CONFOTUR, los costos bajan bastante porque se elimina el 3% de transferencia. Siempre presupuesta los honorarios del abogado, un buen abogado no es opcional. Puedo mandarte un desglose detallado si quieres.",
+      fr: "Generalement 3-5% du prix d'achat. Ca inclut: taxe de transfert (3%, annulee avec CONFOTUR), frais juridiques (1-1.5%), notaire et enregistrement. Certains developpeurs chargent des frais admin aussi. Avec le CONFOTUR, tes couts baissent pas mal parce que le 3% de transfert est elimine. Prevois toujours les frais d'avocat, un bon avocat c'est non negociable. DM-moi si tu veux un calcul precis.",
+      ru: "Obychno 3-5% ot tseny pokupki. Vklyuchaet: nalog na peredachu (3%, otmenyaetsya pri CONFOTUR), yuridicheskie uslugi (1-1.5%), notarius i registratsiya. Nekotorye zastrojshchiki berut administrativnyj sbor. S CONFOTUR rashody sushchestvenno snighayutsya, tak kak 3% nalog ubiraaetsya. Vsegda zakladyvajte byudzhet na advokata, eto obyazatelno. Mogu otpravit podrobnyj raschet, WhatsApp: 809-486-5386."
+    }
+  },
+  {
+    category: 'buying',
+    q: { en: "Do I need a lawyer to buy in DR?", es: "Necesito abogado para comprar en RD?", fr: "J'ai besoin d'un avocat pour acheter en RD?", ru: "Nuzhen li advokat dlya pokupki v DR?" },
+    a: {
+      en: "100% yes. A real estate attorney is essential in DR. They handle the title search (deslinde) to make sure the property has a clean title, verify the developer's permits, review the promise of sale contract, and manage the closing at the Registro de Titulos. Fees are usually 1-1.5% of the purchase price. Never skip this step, even if the developer says everything is fine. I can recommend a couple of trusted attorneys here if you need. DM me if you want specifics for your situation.",
+      es: "100% si. Un abogado inmobiliario es esencial en RD. Se encarga del deslinde para verificar que el titulo este limpio, revisa los permisos del desarrollador, evalua el contrato de promesa de venta y maneja el cierre en el Registro de Titulos. Los honorarios son usualmente 1-1.5% del precio. Nunca te saltes este paso, aunque el desarrollador diga que todo esta bien. Puedo recomendarte un par de abogados de confianza aqui si necesitas.",
+      fr: "A 100%. Un avocat en immobilier c'est essentiel en RD. Il fait la verification du titre (deslinde), verifie les permis du developpeur, revise le contrat de promesse de vente, et gere la cloture au Registro de Titulos. Les frais c'est habituellement 1-1.5% du prix d'achat. Saute jamais cette etape, meme si le developpeur te dit que tout est beau. Je peux te recommander des avocats de confiance ici si t'en as besoin.",
+      ru: "Odnoznachno da. Advokat po nedvizhimosti neobhodim v DR. On proveryaet chistotu titulov (deslinde), razresheniya zastrojshchika, dogovor kupli-prodazhi i vedet zakrytie sdelki v Registro de Titulos. Stoimost obychno 1-1.5% ot tseny. Nikogda ne propuskajte etot shag, dazhe esli zastrojshchik govorit, chto vse v poryadke. Mogu porekomendiavat nadozhnyh advokatov zdes. Napishite mne."
+    }
+  },
+  {
+    category: 'buying',
+    q: { en: "How does the buying process work?", es: "Como funciona el proceso de compra?", fr: "Comment ca marche le processus d'achat?", ru: "Kak prohodit protsess pokupki?" },
+    a: {
+      en: "Here's the typical flow: 1) Find the property and negotiate the price, 2) Sign a promise of sale (contrato de promesa) with a 10% deposit, 3) Your lawyer does the title search and due diligence (2-4 weeks), 4) Sign the final contract and pay remaining balance (or per the payment plan), 5) Close at the Registro de Titulos, title transfers to your name. The whole process takes 30-90 days depending on whether it's a resale or new construction. For pre-construction, you typically pay over 12-24 months. Happy to walk you through it step by step, I'm based here in Punta Cana.",
+      es: "El flujo tipico es: 1) Encuentras la propiedad y negocias el precio, 2) Firmas promesa de venta con 10% de inicial, 3) Tu abogado hace el deslinde y due diligence (2-4 semanas), 4) Firmas contrato final y pagas el balance, 5) Cierre en el Registro de Titulos, el titulo pasa a tu nombre. Todo el proceso toma 30-90 dias dependiendo si es reventa o construccion nueva. En pre-construccion, generalmente pagas en 12-24 meses. Puedo explicarte paso a paso, WhatsApp: 809-486-5386.",
+      fr: "Voici comment ca marche: 1) Tu trouves la propriete et tu negocies le prix, 2) Tu signes une promesse de vente avec 10% de depot, 3) Ton avocat fait la verification du titre (2-4 semaines), 4) Tu signes le contrat final et tu payes le solde, 5) Cloture au Registro de Titulos, le titre est a ton nom. Le processus prend 30-90 jours selon si c'est une revente ou du neuf. Pour le pre-construction, tu payes generalement sur 12-24 mois. Je peux t'accompagner etape par etape si tu veux.",
+      ru: "Tipichnyj protsess: 1) Nahodite ob'ekt i dogovarivayetes o tsene, 2) Podpisyvaete predvaritelnyj dogovor s zalogom 10%, 3) Advokat proveryaet tituly i dokumenty (2-4 nedeli), 4) Podpisyvaete finalnyj dogovor i oplachivaete ostatok, 5) Zakrytie v Registro de Titulos, titul pereoformlyaetsya na vas. Ves protsess zanimaet 30-90 dnej. Dlya novostroek obychno rassrochka na 12-24 mesyatsa. S radostyu provedu vas cherez kazhdyj shag, napishite mne."
+    }
+  },
+  {
+    category: 'investment',
+    q: { en: "Is Punta Cana a good investment?", es: "Es buena inversion Punta Cana?", fr: "C'est un bon investissement Punta Cana?", ru: "Punta Cana, horoshaya investitsiya?" },
+    a: {
+      en: "It's one of the strongest real estate markets in the Caribbean right now. Property values have been on a steady upward trend, and Airbnb yields typically run 6-12% depending on zone, management, and season. Add CONFOTUR tax benefits (zero taxes for 15 years) and you've got a compelling case. Punta Cana airport (PUJ) is the busiest in the Caribbean with direct flights from 90+ cities. Tourism is booming, 11.6M visitors in 2025. Not every property is a winner though, location and management matter a lot. DM me if you want specifics for your situation.",
+      es: "Es uno de los mercados inmobiliarios mas fuertes del Caribe ahora mismo. Las propiedades han mantenido una tendencia de apreciacion sostenida, y los rendimientos en Airbnb van de 6-12% segun zona, manejo y temporada. Sumale los beneficios CONFOTUR (cero impuestos por 15 anos) y tienes un caso muy solido. El aeropuerto de Punta Cana (PUJ) es el mas activo del Caribe con vuelos directos de 90+ ciudades. El turismo esta en auge, 11.6M visitantes en 2025. Eso si, no toda propiedad es ganadora; la ubicacion y el manejo importan mucho. Escribeme si quieres analizar numeros.",
+      fr: "C'est un des marches immobiliers les plus solides des Caraibes en ce moment. Les proprietes suivent une tendance a la hausse depuis des annees, et les rendements Airbnb tournent autour de 6-12% selon la zone, la gestion et la saison. Ajoute les avantages CONFOTUR (zero impot 15 ans) et t'as un dossier pas mal convaincant. L'aeroport de Punta Cana (PUJ) est le plus achalande des Caraibes avec des vols directs de 90+ villes, incluant Montreal. Par contre, pas toute propriete est gagnante; l'emplacement et la gestion comptent beaucoup. Ecris-moi si tu veux qu'on regarde les chiffres ensemble.",
+      ru: "Eto odin iz samyh silnyh rynkov nedvizhimosti na Karibah sejchas. Nedvizhimost stabilno rosla v tsene v poslednie gody, a dohod ot Airbnb obychno sostavlyaet 6-12% v zavisimosti ot rajona, upravleniya i sezona. Dobavte lgoty CONFOTUR (nol nalogov 15 let), i poluchitsya ochen ubeditelno. Aeroport Punta Cana (PUJ), samyj zagruzhennyj na Karibah, pryamye rejsy iz 90+ gorodov. No ne vsyakaya nedvizhimost, udalchnaya; vazhny lokatsiya i upravlenie. Napishite, esli hotite razobrat tsifry, WhatsApp: 809-486-5386."
+    }
+  },
+  {
+    category: 'investment',
+    q: { en: "What's the rental income like?", es: "Como es el ingreso por alquiler?", fr: "Ca rapporte combien en location?", ru: "Kakoj arendnyj dohod?" },
+    a: {
+      en: "It depends on location and property type, but a well-located 2BR condo in areas like Cocotal, Cap Cana, or Bavaro can gross around $1,900-2,200/month on Airbnb in high season (Dec-April, ~$105/night at 60-69% occupancy) and $300-1,100 in low season. Yields typically run 6-12% depending on zone, management, and season. Long-term rentals are lower but more stable, typically a 5-8% yield for a furnished 2BR. Run your own numbers at https://www.rentandgopc.com/roi-calculator.html. Key is having a solid property management company. I can share real numbers from properties I know here if that helps.",
+      es: "Depende de la ubicacion y tipo de propiedad, pero un apartamento 2BR bien ubicado en Cocotal, Cap Cana o Bavaro puede generar en bruto unos $1,900-2,200/mes en Airbnb en temporada alta (dic-abr, ~$105/noche con 60-69% de ocupacion) y $300-1,100 en temporada baja. El rendimiento va tipicamente de 6-12% segun zona, manejo y temporada. Alquiler a largo plazo es mas bajo pero estable, tipicamente 5-8% de rendimiento amueblado. Corre tus numeros en https://www.rentandgopc.com/roi-calculator.html. La clave es tener buena administradora. Puedo compartirte numeros reales de propiedades que conozco aqui.",
+      fr: "Ca depend de l'emplacement et du type de propriete, mais un condo 2 chambres bien situe a Cocotal, Cap Cana ou Bavaro peut rapporter en brut environ 1 900-2 200$/mois sur Airbnb en haute saison (dec-avril, ~105$/nuit a 60-69% d'occupation) et 300-1 100$ en basse saison. Le rendement tourne typiquement entre 6-12% selon la zone, la gestion et la saison. La location long terme c'est plus bas mais plus stable, typiquement 5-8% de rendement meuble. Tu peux faire tes calculs sur https://www.rentandgopc.com/roi-calculator.html. La cle c'est d'avoir une bonne compagnie de gestion. Je peux te partager des vrais chiffres si ca t'interesse.",
+      ru: "Zavisit ot lokatsii i tipa nedvizhimosti, no horosho raspolozhennaya 2BR kvartira v Cocotal, Cap Cana ili Bavaro mozhet prinosit brutto okolo $1,900-2,200/mes na Airbnb v vysokij sezon (dek-apr, ~$105/noch pri 60-69% zagruzki) i $300-1,100 v nizkij. Dohodnost obychno 6-12% v zavisimosti ot rajona, upravleniya i sezona. Dolgosrochnaya arenda nizhe, no stabilnee, obychno 5-8% dohodnosti s mebelyu. Poschitajte svoi tsifry: https://www.rentandgopc.com/roi-calculator.html. Klyuch, nadozhnaya upravlyayushchaya kompaniya. Mogu podelitsya realnymi tsiframi."
+    }
+  },
+  {
+    category: 'investment',
+    q: { en: "Airbnb in Punta Cana, worth it?", es: "Airbnb en Punta Cana, vale la pena?", fr: "Airbnb a Punta Cana, ca vaut la peine?", ru: "Airbnb v Punta Cana, stoit li?" },
+    a: {
+      en: "Short answer: yes, if you pick the right location and have good management. Punta Cana got 11.6M visitors in 2025 and occupancy averages around 51%, with peaks of 60-69% in high season for well-listed properties. A 2BR in Cocotal or Cap Cana can perform well, run your own scenario at https://www.rentandgopc.com/roi-calculator.html. The key factors: proximity to the beach, resort amenities, quality photos, and responsive management. Avoid over-saturated complexes where 200 units compete for the same guests. CONFOTUR means your rental income is tax-free for 15 years too. Happy to share more, I'm based here in Punta Cana.",
+      es: "Respuesta corta: si, si eliges bien la ubicacion y tienes buena administracion. Punta Cana recibio 11.6M visitantes en 2025 y la ocupacion promedia ~51%, con picos de 60-69% en temporada alta para propiedades bien listadas. Un 2BR en Cocotal o Cap Cana puede rendir bien; corre tus numeros en https://www.rentandgopc.com/roi-calculator.html. Lo clave: cercania a la playa, amenidades tipo resort, buenas fotos y administracion responsiva. Evita complejos sobresaturados donde 200 unidades compiten por los mismos huespedes. Con CONFOTUR tu ingreso de alquiler es libre de impuestos 15 anos. Escribeme si quieres mas detalles.",
+      fr: "Reponse courte: oui, si tu choisis le bon emplacement et t'as une bonne gestion. Punta Cana a recu 11.6M visiteurs en 2025 et l'occupation moyenne tourne autour de 51%, avec des pics de 60-69% en haute saison pour les proprietes bien listees. Un condo 2 chambres a Cocotal ou Cap Cana peut bien performer; fais tes calculs sur https://www.rentandgopc.com/roi-calculator.html. Les facteurs cles: proximite de la plage, amenites resort, belles photos et gestion reactive. Evite les complexes satures ou 200 unites competent pour les memes guests. Avec CONFOTUR, tes revenus locatifs sont libres d'impot 15 ans. DM-moi si tu veux qu'on en jase.",
+      ru: "Korotkij otvet: da, esli pravilno vybrat lokatsiyu i imet horoshee upravlenie. Punta Cana prinyala 11.6M turistov v 2025 godu, zagruzhennost v srednem ~51%, s pikami 60-69% v vysokij sezon. 2BR v Cocotal ili Cap Cana mozhet horosho rabotat, poschitajte svoi tsifry: https://www.rentandgopc.com/roi-calculator.html. Klyuchevye faktory: blizost k plyazhu, kurortnyj uroven, kachestvennye foto i operativnoe upravlenie. Izbigate perepolnennye kompleksy, gde 200 kvartir boryutsya za gostej. S CONFOTUR arendnyj dohod bez naloga 15 let. Napishite, esli hotite podrobnee, WhatsApp: 809-486-5386."
+    }
+  },
+  {
+    category: 'areas',
+    q: { en: "Best area to buy in Punta Cana?", es: "Mejor zona para comprar en Punta Cana?", fr: "Meilleur coin pour acheter a Punta Cana?", ru: "Luchshij rajon dlya pokupki v Punta Cana?" },
+    a: {
+      en: "It really depends on your goals. For rental income: Bavaro/El Cortecito (walkable to the beach, tons of tourists). For long-term value and lifestyle: Cocotal Golf (gated, quiet, Melia Hotel access). For luxury and highest appreciation: Cap Cana (marina, Juanillo Beach). Downtown Punta Cana Village is growing fast too, more urban feel. Each area has a different price point and buyer profile. Tell me what matters most to you and I'll point you in the right direction. DM me if you want specifics for your situation.",
+      es: "Depende mucho de tus objetivos. Para renta: Bavaro/El Cortecito (caminando a la playa, muchos turistas). Para valor a largo plazo y lifestyle: Cocotal Golf (cerrado, tranquilo, acceso al Melia). Para lujo y mayor apreciacion: Cap Cana (marina, Playa Juanillo). Downtown Punta Cana Village tambien esta creciendo rapido, ambiente mas urbano. Cada zona tiene diferente punto de precio y perfil de comprador. Dime que es lo mas importante para ti y te oriento. Escribeme al WhatsApp: 809-486-5386.",
+      fr: "Ca depend vraiment de tes objectifs. Pour les revenus locatifs: Bavaro/El Cortecito (a distance de marche de la plage, plein de touristes). Pour la valeur long terme et le lifestyle: Cocotal Golf (ferme, tranquille, acces Melia). Pour le luxe et la plus grande appreciation: Cap Cana (marina, Plage Juanillo). Downtown Punta Cana Village grandit vite aussi, feeling plus urbain. Chaque coin a un prix et un profil d'acheteur different. Dis-moi ce qui compte le plus pour toi et je te pointe dans la bonne direction.",
+      ru: "Zavisit ot vashih tselej. Dlya arendy: Bavaro/El Cortecito (peshkom do plyazha, mnogo turistov). Dlya dolgosrochnoj stoimosti i obraza zhizni: Cocotal Golf (zakrytyj kompleks, tihij, dostup k Melia). Dlya lyuksa i maksimalnoj dohodnosti: Cap Cana (marina, plyazh Juanillo). Downtown Punta Cana Village tozhe bystro rastet, bolee gorodskaya atmosfera. U kazhdogo rajona svoya tsena i profil pokupatelya. Skazhite, chto vam vazhno, i ya podskanzhu. Napishite mne."
+    }
+  },
+  {
+    category: 'areas',
+    q: { en: "Cocotal vs Cap Cana vs Bavaro?", es: "Cocotal vs Cap Cana vs Bavaro?", fr: "Cocotal vs Cap Cana vs Bavaro?", ru: "Cocotal vs Cap Cana vs Bavaro?" },
+    a: {
+      en: "Quick comparison: COCOTAL, mid-range ($180-350K), golf course community, quiet, Melia Hotel access, great for families and retirees. CAP CANA, luxury ($350K-2M+), marina, Juanillo Beach (arguably DR's best), highest appreciation, attracts high-net-worth buyers. BAVARO, widest price range ($100-400K), closest to the tourist strip, highest rental demand but also most competition on Airbnb. All three areas have CONFOTUR-eligible projects. Your choice depends on budget, lifestyle preference, and investment strategy. Happy to share more, I'm based here in Punta Cana.",
+      es: "Comparacion rapida: COCOTAL, rango medio ($180-350K), comunidad de golf, tranquilo, acceso al Melia, ideal para familias y retirados. CAP CANA, lujo ($350K-2M+), marina, Playa Juanillo (la mejor de RD), mayor apreciacion, atrae compradores de alto poder. BAVARO, rango mas amplio ($100-400K), mas cerca de la zona turistica, mayor demanda de alquiler pero tambien mas competencia en Airbnb. Las tres zonas tienen proyectos con CONFOTUR. Tu eleccion depende de presupuesto, estilo de vida y estrategia de inversion. Escribeme si quieres que profundicemos.",
+      fr: "Comparaison rapide: COCOTAL, gamme moyenne (180-350K$), communaute de golf, tranquille, acces Melia, ideal pour familles et retraites. CAP CANA, luxe (350K-2M$+), marina, Plage Juanillo (probablement la plus belle en RD), meilleure appreciation, attire les acheteurs fortunes. BAVARO, gamme la plus large (100-400K$), plus proche de la zone touristique, plus de demande locative mais aussi plus de competition Airbnb. Les trois zones ont des projets CONFOTUR. Ton choix depend de ton budget, lifestyle et strategie d'investissement. Ecris-moi si tu veux qu'on compare pour ton cas.",
+      ru: "Bystroe sravnenie: COCOTAL, srednij segment ($180-350K), golfovoe soobshchestvo, spokoino, dostup k Melia, otlichno dlya semej i pensionerov. CAP CANA, lyuks ($350K-2M+), marina, plyazh Juanillo (luchshij v DR), maksimalnaya dohodnost, privlekaet sostoyatilnyh pokupatelej. BAVARO, samyj shirokit diapazon ($100-400K), blizhe vsego k turisticheskoj zone, samyj vysokij spros na arendu, no i bolshe konkurentsii na Airbnb. Vo vseh tryoh rajonah est proekty s CONFOTUR. Vybor zavisit ot byudzheta i strategii. Napishite mne, WhatsApp: 809-486-5386."
+    }
+  },
+  {
+    category: 'areas',
+    q: { en: "What about Cocotal Golf?", es: "Que tal Cocotal Golf?", fr: "Ca ressemble a quoi Cocotal Golf?", ru: "Chto mozhno skazat pro Cocotal Golf?" },
+    a: {
+      en: "Cocotal is one of the most established communities in Punta Cana, gated, 18-hole golf course, and full access to Melia Hotel (beach, pool, restaurants, spa). It's popular with families, retirees, and investors who want a quieter lifestyle without being isolated. Prices range from $180K for a 1BR to $350K+ for larger units. Rental demand is solid, guests love the resort feel. CONFOTUR-eligible projects available. It's where I'd point most buyers looking for the best balance of lifestyle and investment. I can send you current listings if you're curious.",
+      es: "Cocotal es una de las comunidades mas establecidas de Punta Cana, cerrada, campo de golf de 18 hoyos, y acceso completo al Hotel Melia (playa, piscina, restaurantes, spa). Es popular con familias, retirados e inversionistas que quieren un estilo de vida mas tranquilo sin estar aislados. Precios van desde $180K por un 1BR hasta $350K+ para unidades mas grandes. La demanda de alquiler es solida, a los huespedes les encanta el ambiente resort. Proyectos con CONFOTUR disponibles. Es donde yo orientaria a la mayoria de compradores buscando balance entre lifestyle e inversion. Puedo mandarte listados actuales si te interesa.",
+      fr: "Cocotal c'est une des communautes les plus etablies a Punta Cana, fermee, parcours de golf 18 trous, et acces complet a l'Hotel Melia (plage, piscine, restos, spa). C'est populaire avec les familles, retraites et investisseurs qui veulent un lifestyle tranquille sans etre isoles. Les prix vont de 180K$ pour un 1 chambre a 350K$+ pour les plus grands. La demande locative est solide, les guests adorent le feeling resort. Des projets CONFOTUR sont disponibles. C'est la que je pointerais la plupart des acheteurs qui cherchent le meilleur equilibre lifestyle/investissement. Je peux t'envoyer les listings actuels si ca te tente.",
+      ru: "Cocotal, odno iz samyh izvestnyh soobshchestv v Punta Cana: zakrytyj kompleks, pole dlya golfa na 18 lunok, polnyj dostup k otelyu Melia (plyazh, bassejn, restorany, spa). Populyaren sredi semej, pensionerov i investorov, kotorym nuzhen spokojnyj obraz zhizni bez izolyatsii. Tseny ot $180K za 1BR do $350K+ za bolshie kvartiry. Spros na arendu stabilnyj, gostyam nravitsya atmosfera kurorta. Dostupny proekty s CONFOTUR. Eto to, chto ya by porekomendioval bolshinstvu pokupatelej. Mogu otpravit aktualnye predlozheniya."
+    }
+  },
+  {
+    category: 'living',
+    q: { en: "Is Punta Cana safe?", es: "Es seguro Punta Cana?", fr: "C'est securitaire Punta Cana?", ru: "Bezopasno li v Punta Cana?" },
+    a: {
+      en: "Yes, Punta Cana is one of the safest areas in the Dominican Republic. The tourism infrastructure means there's serious investment in security. Gated communities like Cocotal, Cap Cana, and most newer developments have 24/7 security, controlled access, and surveillance. Common sense applies like anywhere: don't flash jewelry, lock your car, be aware at night in unfamiliar areas. But the expat community here is thriving and growing, thousands of Americans, Canadians, Europeans, and Russians live here full-time. I've lived here for years and feel very safe. Happy to share more, I'm based here in Punta Cana.",
+      es: "Si, Punta Cana es una de las zonas mas seguras de Republica Dominicana. La infraestructura turistica implica una inversion seria en seguridad. Comunidades cerradas como Cocotal, Cap Cana y la mayoria de desarrollos nuevos tienen seguridad 24/7, acceso controlado y vigilancia. Aplica sentido comun como en cualquier lugar: no exhibas joyas, cierra el carro, ten cuidado de noche en zonas desconocidas. Pero la comunidad de expatriados esta creciendo fuerte, miles de americanos, canadienses, europeos y rusos viven aqui permanentemente. Llevo anos aqui y me siento muy seguro.",
+      fr: "Oui, Punta Cana est un des endroits les plus securitaires en Republique dominicaine. L'infrastructure touristique signifie un investissement serieux en securite. Les communautes fermees comme Cocotal, Cap Cana et la plupart des nouveaux developpements ont securite 24/7, acces controle et surveillance. Le gros bon sens s'applique comme partout: affiche pas tes bijoux, barre ton char, fais attention le soir dans les coins que tu connais pas. Mais la communaute d'expats ici est florissante, des milliers d'Americains, Canadiens, Europeens et Russes vivent ici a temps plein. J'habite ici depuis des annees et je me sens tres en securite.",
+      ru: "Da, Punta Cana odin iz samyh bezopasnyh rajonov Dominikanskoj Respubliki. Turisticheskaya infrastruktura oznachaet serieznye investitsii v bezopasnost. Zakrytye kompleksy kak Cocotal, Cap Cana i bolshinstvo novyh proektov imeyut ohranu 24/7, kontroliruyemyj dostup i videonablyudenie. Zdravyj smysl nuzhen kak vezde: ne demonstrirujte dragozennosti, zapirajte mashinu, budyte vnimatelny nochyu. No soobshchestvo ekspatov zdes protsvetaet, tysyachi amerikantsev, kanadtsev, yevropejtsev i rossiyan zhivut postoyanno. Ya zhivu zdes neskolko let i chuvstvuyu sebya v bezopasnosti."
+    }
+  },
+  {
+    category: 'living',
+    q: { en: "Cost of living in Punta Cana?", es: "Costo de vida en Punta Cana?", fr: "Ca coute combien vivre a Punta Cana?", ru: "Skolko stoit zhizn v Punta Cana?" },
+    a: {
+      en: "A couple can live comfortably on $2,000-3,000/month. That covers rent ($800-1,500 for a nice 2BR), groceries ($400-600), utilities ($150-250 with AC), car/transport ($200-400), and eating out. If you own your place and it's paid off, $1,500-2,000/month is very doable. Healthcare is affordable, a doctor's visit is $30-50, good private insurance runs $80-150/month. Eating out at local spots is $5-15/meal. Obviously you can spend more at tourist restaurants. It's significantly cheaper than the US, Canada, or Europe while maintaining a high quality of life. DM me if you want specifics for your situation.",
+      es: "Una pareja puede vivir comodo con $2,000-3,000/mes. Eso cubre renta ($800-1,500 por un buen 2BR), supermercado ($400-600), servicios ($150-250 con AC), transporte ($200-400) y salir a comer. Si tu propiedad esta paga, $1,500-2,000/mes es muy alcanzable. La salud es accesible, consulta medica $30-50, seguro privado bueno $80-150/mes. Comer en locales es $5-15/comida. Obviamente puedes gastar mas en restaurantes turisticos. Es significativamente mas barato que EEUU, Canada o Europa manteniendo buena calidad de vida. Escribeme si quieres un desglose mas detallado.",
+      fr: "Un couple peut vivre confortablement avec 2 000-3 000$/mois. Ca couvre le loyer (800-1 500$ pour un beau 2 chambres), epicerie (400-600$), services publics (150-250$ avec AC), transport (200-400$) et les restos. Si ta propriete est payee, 1 500-2 000$/mois c'est tres faisable. Les soins de sante sont abordables, une visite chez le medecin c'est 30-50$, une bonne assurance privee 80-150$/mois. Manger dans les spots locaux c'est 5-15$/repas. C'est pas mal moins cher que Montreal tout en gardant une belle qualite de vie. Ecris-moi si tu veux un breakdown plus detaille.",
+      ru: "Para mozhet komfortno zhit na $2,000-3,000/mes. Eto pokryvaet arendu ($800-1,500 za horoshie 2BR), produkty ($400-600), kommunalnye ($150-250 s konditsionrom), transport ($200-400) i pitanie vne doma. Esli zhile oplacheno, $1,500-2,000/mes, vpolne realno. Meditsina dostupna, priem vracha $30-50, horosshaya chastnaya strahovka $80-150/mes. Eda v mestnyh zavedeniyah $5-15/priem. Znachitelno deshevle SSHA, Kanady ili Evropy pri vysokom kachestve zhizni. Napishite, esli hotite podrobnyj raschet, WhatsApp: 809-486-5386."
+    }
+  },
+  {
+    category: 'living',
+    q: { en: "Healthcare in DR?", es: "Salud en Republica Dominicana?", fr: "Les soins de sante en RD?", ru: "Meditsina v DR?" },
+    a: {
+      en: "Healthcare in Punta Cana has improved a lot. There are several good private hospitals, Hospiten Bavaro and Centro Medico Punta Cana are the main ones, with English-speaking doctors and modern equipment. A general doctor visit is $30-50, a specialist $50-80. Private health insurance runs $80-150/month for comprehensive coverage. For serious or complex procedures, Santo Domingo has world-class hospitals (CEDIMAT, HOMS). Many expats also keep a US/Canadian plan for major emergencies. Dental work is excellent and about 50-70% cheaper than the US. I can send you a quick breakdown if you're interested.",
+      es: "La salud en Punta Cana ha mejorado mucho. Hay varios buenos hospitales privados, Hospiten Bavaro y Centro Medico Punta Cana son los principales, con doctores bilingues y equipos modernos. Una consulta general cuesta $30-50, un especialista $50-80. Seguro de salud privado cuesta $80-150/mes para cobertura completa. Para procedimientos serios, Santo Domingo tiene hospitales de clase mundial (CEDIMAT, HOMS). Muchos expats tambien mantienen un plan de EEUU/Canada para emergencias mayores. Trabajo dental es excelente y 50-70% mas barato que en EEUU. Puedo darte mas informacion si necesitas.",
+      fr: "Les soins de sante a Punta Cana se sont beaucoup ameliores. Il y a plusieurs bons hopitaux prives, Hospiten Bavaro et Centro Medico Punta Cana sont les principaux, avec des medecins bilingues et de l'equipement moderne. Une visite generale coute 30-50$, un specialiste 50-80$. L'assurance sante privee c'est 80-150$/mois pour une couverture complete. Pour les procedures serieuses, Santo Domingo a des hopitaux de classe mondiale (CEDIMAT, HOMS). Le dentaire est excellent et 50-70% moins cher qu'au Canada. Ecris-moi si tu veux plus de details.",
+      ru: "Meditsina v Punta Cana zamtno uluchshilas. Est neskolko horoshih chastnyh bolnits, Hospiten Bavaro i Centro Medico Punta Cana osnovnye, s angloyazychnymi vrachami i sovremennym oborudovaniem. Priem terapevta, $30-50, spetsialist, $50-80. Chastnaya strahovka, $80-150/mes za polnoe pokrytie. Dlya slozhnyh protsedur v Santo Domingo est kliniki mirovogo urovnya (CEDIMAT, HOMS). Mnogie ekspaty sohrannyayut amerikanskuyu/kanadskuyu strahovku dlya ekstrenyh sluchaev. Stomatologiya otlichnaya i na 50-70% deshevle chem v SSHA. Mogu rasskazat podrobnee."
+    }
+  },
+  {
+    category: 'living',
+    q: { en: "How do I get residency in DR?", es: "Como obtener residencia en RD?", fr: "Comment obtenir la residence en RD?", ru: "Kak poluchit vid na zhitelstvo v DR?" },
+    a: {
+      en: "There are several paths. The most common for property owners is the investor residency, if you buy property worth $200K+, you qualify for an expedited process. Retirees with $1,500+/month income can apply for the pensionado visa. There's also the rentista visa for those with passive income of $2,000+/month. The process takes 3-6 months and costs around $1,000-2,000 in fees. You don't NEED residency to own property, but it simplifies banking, driving, and daily life. After 2 years of residency, you can apply for permanent status. Happy to connect you with an immigration lawyer here, I'm based in Punta Cana.",
+      es: "Hay varias rutas. La mas comun para duenos de propiedades es la residencia de inversionista, si compras propiedad de $200K+, calificas para un proceso acelerado. Retirados con $1,500+/mes de ingreso pueden aplicar para la visa de pensionado. Tambien existe la visa de rentista para ingresos pasivos de $2,000+/mes. El proceso toma 3-6 meses y cuesta unos $1,000-2,000 en tarifas. NO necesitas residencia para tener propiedad, pero simplifica la banca, conducir y la vida diaria. Despues de 2 anos de residencia puedes aplicar para permanente. Puedo conectarte con un abogado de inmigracion aqui si quieres, WhatsApp: 809-486-5386.",
+      fr: "Il y a plusieurs chemins. Le plus commun pour les proprietaires c'est la residence investisseur, si t'achetes une propriete de 200K$+, tu qualifies pour un processus accelere. Les retraites avec 1 500$+/mois de revenu peuvent appliquer pour le visa pensionado. Il y a aussi le visa rentista pour les revenus passifs de 2 000$+/mois. Le processus prend 3-6 mois et coute environ 1 000-2 000$ en frais. T'as PAS BESOIN de residence pour posseder une propriete, mais ca simplifie la banque, le permis et la vie quotidienne. Apres 2 ans tu peux demander le statut permanent. Je peux te connecter avec un avocat en immigration ici si tu veux.",
+      ru: "Est neskolko putej. Samyj populyarnyj dlya vladeltsev nedvizhimosti, investorskoe rezidentstvo: pokupka ot $200K daet pravo na uskorennyj protsess. Pensionery s dohodom $1,500+/mes mogut podat na vizu pensionado. Est takzhe visa rentista dlya passivnogo dohoda $2,000+/mes. Protsess zanimaet 3-6 mesyatsev i stoit okolo $1,000-2,000. Rezidentstvo NE nuzhno dlya vladenia nedvizhimostyu, no uproshchaet bankovskie dela, vozhdenoe i povsednevnuyu zhizn. Cherez 2 goda mozhno podat na PMZh. Mogu svyazat s immigratsionnym advokatom zdes."
+    }
+  },
+  {
+    category: 'objections',
+    q: { en: "Is it risky to buy property in DR?", es: "Es riesgoso comprar propiedad en RD?", fr: "C'est risque d'acheter en RD?", ru: "Riskovanno li pokupat nedvizhimost v DR?" },
+    a: {
+      en: "Like any real estate market, there are risks, but they're manageable with proper due diligence. The main risks are: buying from an unregistered developer, properties without clean titles, and projects that never get completed. That's why a good lawyer is non-negotiable. Stick to established developers with a track record, verified CONFOTUR registration, and properties with a Certificado de Titulo. The Dominican real estate market has matured significantly, foreign ownership is protected by law and property rights are strong. Thousands of foreigners own here successfully. DM me if you want specifics for your situation.",
+      es: "Como cualquier mercado inmobiliario, hay riesgos, pero son manejables con buena debida diligencia. Los principales riesgos son: comprar de un desarrollador no registrado, propiedades sin titulo limpio, y proyectos que nunca se terminan. Por eso un buen abogado no es opcional. Quuedate con desarrolladores establecidos con historial, registro CONFOTUR verificado, y propiedades con Certificado de Titulo. El mercado dominicano ha madurado significativamente, la propiedad extranjera esta protegida por ley. Miles de extranjeros son duenos exitosos aqui. Escribeme si quieres mas detalles.",
+      fr: "Comme tout marche immobilier, il y a des risques, mais ils sont gerables avec une bonne diligence raisonnable. Les principaux risques: acheter d'un developpeur pas enregistre, des proprietes sans titre propre, et des projets qui se completent jamais. C'est pour ca qu'un bon avocat c'est non negociable. Reste avec des developpeurs etablis qui ont un historique, un enregistrement CONFOTUR verifie, et un Certificado de Titulo. Le marche dominicain a beaucoup muri, la propriete etrangere est protegee par la loi. Des milliers d'etrangers sont proprietaires ici avec succes. Ecris-moi si tu veux en jaser plus.",
+      ru: "Kak i na lyubom rynke nedvizhimosti, riski est, no oni upravlyaemy pri pravilnoj proverke. Glavnye riski: pokupka u nezaregistrirovannogo zastrojshchika, nedvizhimost bez chistogo titulov, i proekty kotorye nikogda ne zakonchatsya. Poetomu horoshij advokat obyzatelen. Dyrzhites izvestnyh zastrojshchikov s istoriej, proverennoj registratsiej CONFOTUR i Certificado de Titulo. Dominikanskij rynok seryezno sozrel, prava inostrannyh vladeltsev zashchishcheny zakonom. Tysyachi inostrantsev uspeshno vladeyut zdes. Napishite mne, WhatsApp: 809-486-5386."
+    }
+  },
+  {
+    category: 'objections',
+    q: { en: "What about hurricanes?", es: "Que hay de los huracanes?", fr: "Pis les ouragans?", ru: "A kak zhe uragany?" },
+    a: {
+      en: "Valid concern, but Punta Cana is actually on the southeastern tip of the island, which is one of the more protected positions. The last major hurricane to directly hit was 2017 (Maria passed nearby). Modern construction here is built to hurricane codes, concrete block, impact windows, reinforced roofing. Insurance is affordable and widely available (around 0.3-0.5% of property value annually). For context, Miami has a similar hurricane risk profile. Most damage in DR historically hits the north coast and Samana, not the east. It's something to be aware of, not afraid of. I can send you more details on construction standards and insurance if you want.",
+      es: "Preocupacion valida, pero Punta Cana esta en la punta sureste de la isla, que es una de las posiciones mas protegidas. El ultimo huracan mayor que pego directo fue en 2017 (Maria paso cerca). La construccion moderna aqui se hace con codigos anti-huracanes, bloques de concreto, ventanas de impacto, techos reforzados. El seguro es accesible y comun (alrededor de 0.3-0.5% del valor anual). Para contexto, Miami tiene un perfil de riesgo similar. Historicamente el dano mayor en RD pega en la costa norte y Samana, no el este. Es algo para estar consciente, no para temer. Puedo darte mas detalles si te interesa.",
+      fr: "C'est une bonne question, mais Punta Cana est sur la pointe sud-est de l'ile, qui est une des positions les plus protegees. Le dernier ouragan majeur a frapper directement c'etait en 2017 (Maria est passe proche). La construction moderne ici est faite selon les codes anti-ouragans, blocs de beton, fenetres anti-impact, toitures renforcees. L'assurance est abordable (environ 0.3-0.5% de la valeur par annee). Pour mettre ca en contexte, Miami a un profil de risque similaire. La plupart des degats en RD frappent historiquement la cote nord et Samana, pas l'est. C'est quelque chose a connaitre, pas a craindre. Ecris-moi si tu veux plus d'infos.",
+      ru: "Spravedlivyj vopros, no Punta Cana nahoditsya na yugo-vostochnom konchike ostrova, chto yavlyaetsya odnoj iz naibolee zashchishchennyh pozitsij. Poslednij krupnyj uragan, udarivshij napryamuyu, 2017 (Maria proshel ryadom). Sovremennoe stroitelstvo zdes sootvetstvuet uragannym normam, betonnye bloki, udarnye okna, usilennaya krovlya. Strahovka dostupna (okolo 0.3-0.5% stoimosti v god). Dlya sravneniya, u Majami analogichnyj profil riska. Bolshinstvo razrushenij v DR istoricheski prihoditsya na severnoe poberezhye i Samana, ne na vostok. Eto to, o chyom stoit znat, no ne boyatsya."
+    }
+  },
+  {
+    category: 'objections',
+    q: { en: "Can I manage my property from abroad?", es: "Puedo manejar mi propiedad desde el extranjero?", fr: "Je peux gerer ma propriete a distance?", ru: "Mozhno li upravlyat nedvizhimostyu iz-za rubezha?" },
+    a: {
+      en: "Absolutely, most foreign owners here do exactly that. Property management companies handle everything: guest check-in/checkout, cleaning, maintenance, Airbnb listing optimization, and emergency repairs. Fees are typically 20-25% of rental income for short-term, or a flat monthly fee for long-term rentals. Good management is often what decides where you land within the typical 6-12% range, depending on zone and season. You can monitor everything remotely via apps and monthly reports. I can recommend a couple of solid management companies here depending on your property location. Happy to share more, I'm based here in Punta Cana.",
+      es: "Absolutamente, la mayoria de los duenos extranjeros aqui hacen exactamente eso. Las administradoras de propiedades manejan todo: check-in/checkout de huespedes, limpieza, mantenimiento, optimizacion de Airbnb y reparaciones de emergencia. Las tarifas son tipicamente 20-25% del ingreso por renta corta, o una tarifa mensual fija para alquiler largo. Una buena administracion suele definir en que punto del rango tipico de 6-12% terminas, segun zona y temporada. Puedes monitorear todo remotamente con apps y reportes mensuales. Puedo recomendarte un par de buenas administradoras dependiendo de la ubicacion. Escribeme al WhatsApp: 809-486-5386.",
+      fr: "Absolument, la plupart des proprietaires etrangers ici font exactement ca. Les compagnies de gestion s'occupent de tout: check-in/checkout des guests, menage, entretien, optimisation du listing Airbnb et reparations d'urgence. Les frais c'est typiquement 20-25% des revenus locatifs pour le court terme, ou un montant mensuel fixe pour le long terme. Une bonne gestion fait souvent la difference dans le rendement, qui varie typiquement de 6-12% selon la zone et la saison. Tu peux tout surveiller a distance avec des apps et des rapports mensuels. Je peux te recommander des compagnies solides ici selon l'emplacement de ta propriete. DM-moi si tu veux en discuter.",
+      ru: "Konechno, bolshinstvo inostrannyh vladeltsev zdes imenno tak i delayut. Upravlyayushchie kompanii berut na sebya vsyo: zaselenie/vyselenie gostej, uborka, obsluzhivanie, optimizatsiya Airbnb i avarijniy remont. Stoimost obychno 20-25% ot arendnogo dohoda dlya kratkosrochnoj arendy ili fiksirovanaya summa dlya dolgosrochnoj. Kachestvennoe upravlenie chasto opredelyaet, gde vy okazhetes v tipichnom diapazone 6-12% dohodnosti, v zavisimosti ot rajona i sezona. Vy mozhete kontrolirovat vsyo udalyonno cherez prilozheniya i ezhemesyachnye otchyoty. Mogu porekomendiavat nadozhnyh upravlyayushchih zdes. Napishite mne."
+    }
+  },
+  {
+    category: 'objections',
+    q: { en: "What if the developer doesn't finish the project?", es: "Que pasa si el desarrollador no termina?", fr: "Si le developpeur finit pas le projet?", ru: "A esli zastrojshchik ne zakonchit proekt?" },
+    a: {
+      en: "This is a real risk in DR, especially with unknown or new developers. Here's how to protect yourself: 1) Only buy from developers with at least 2-3 completed projects you can visit, 2) Verify CONFOTUR registration with the CTC directly, 3) Use a lawyer who specializes in real estate, they'll structure the payment schedule so you're not overexposed, 4) Check if the project has a fideicomiso (trust), this protects your money in escrow. Established developers like the ones I work with have solid track records. Never send money without legal review. I can point you to vetted developers if you want, DM me.",
+      es: "Este es un riesgo real en RD, especialmente con desarrolladores desconocidos o nuevos. Como protegerte: 1) Solo compra de desarrolladores con al menos 2-3 proyectos terminados que puedas visitar, 2) Verifica el registro CONFOTUR directamente con el CTC, 3) Usa un abogado especializado en inmobiliario, estructurara el calendario de pagos para que no estes sobreexpuesto, 4) Verifica si el proyecto tiene fideicomiso, protege tu dinero en deposito. Desarrolladores establecidos como con los que trabajo tienen historial solido. Nunca envies dinero sin revision legal. Puedo conectarte con desarrolladores verificados si quieres.",
+      fr: "C'est un vrai risque en RD, surtout avec des developpeurs inconnus ou nouveaux. Comment te proteger: 1) Achete seulement de developpeurs avec au moins 2-3 projets completes que tu peux visiter, 2) Verifie l'enregistrement CONFOTUR directement avec le CTC, 3) Utilise un avocat specialise en immobilier, il va structurer le calendrier de paiements pour te proteger, 4) Verifie si le projet a un fideicomiso (fiducie), ca protege ton argent. Les developpeurs etablis avec qui je travaille ont un solide historique. Envoie jamais d'argent sans revision legale. Je peux te pointer vers des developpeurs verifies si tu veux.",
+      ru: "Eto realnyj risk v DR, osobenno s neizvestnymi ili novymi zastrojshchikami. Kak sebya zashchitit: 1) Pokupajte tolko u zastrojshchikov s minimum 2-3 zavershonnymi proektami, kotorye mozhno posetit, 2) Proverte registratsiyu CONFOTUR napryamuyu v CTC, 3) Ispolzujte advokata po nedvizhimosti, on sostavit grafik platezhej tak, chtoby vy ne riskovali, 4) Proverte nalichie fideikomiso (trast), eto zashchishchaet vashi dengi. Izvestnye zastrojshchiki, s kotorymi ya rabotayu, imeyut nadozhnuyu reputatsiyu. Nikogda ne otpravlyajte dengi bez yuridicheskoji proverki. Mogu svyazat s proverennymi zastrojshchikami, napishite mne."
+    }
+  }
+];
+/* =========================================================================
+   HELPERS DE DOM
+   Regla dura de este archivo: NADA que venga del servidor o de un lead se
+   inserta con innerHTML. Todo pasa por textContent (el helper el()) o por
+   setAttribute con valores validados. Un lead puede mandar <script> en el
+   cuerpo de un mensaje y aqui se ve como texto, no se ejecuta.
+   ========================================================================= */
+
+function el(tag, cls, text) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text !== undefined && text !== null) n.textContent = String(text);
+  return n;
+}
+function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+function $(id) { return document.getElementById(id); }
+
+/* Solo dejamos pasar imagenes por http(s), data:image o ruta relativa.
+   Bloquea javascript: y demas esquemas si el backend devolviera algo raro. */
+function safeImageUrl(url) {
+  if (typeof url !== 'string' || !url) return null;
+  const u = url.trim();
+  if (/^data:image\/(png|jpe?g|gif|webp|svg\+xml);/i.test(u)) return u;
+  if (/^https?:\/\//i.test(u)) return u;
+  if (/^\/[^/]/.test(u) || /^[\w.-]+\/[\w./-]*$/.test(u)) return u;
+  return null;
+}
+
+/* ---------- Formato ---------- */
+function tsOf(v) {
+  if (v === undefined || v === null || v === '') return null;
+  const n = typeof v === 'number' ? (v < 1e12 ? v * 1000 : v) : Date.parse(v);
+  return Number.isFinite(n) ? n : null;
+}
+function timeAgo(v) {
+  const t = tsOf(v);
+  if (t === null) return '';
+  const mins = Math.floor((Date.now() - t) / 60000);
+  if (mins < 1) return 'ahora';
+  if (mins < 60) return 'hace ' + mins + ' min';
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return 'hace ' + hrs + (hrs === 1 ? ' hora' : ' horas');
+  const days = Math.floor(hrs / 24);
+  if (days < 30) return 'hace ' + days + (days === 1 ? ' dia' : ' dias');
+  const months = Math.floor(days / 30);
+  return 'hace ' + months + (months === 1 ? ' mes' : ' meses');
+}
+function sinceLabel(v) {
+  const t = tsOf(v);
+  if (t === null) return '';
+  const days = Math.floor((Date.now() - t) / 86400000);
+  if (days <= 0) return 'hoy';
+  if (days === 1) return 'hace 1 dia';
+  return 'hace ' + days + ' dias';
+}
+function clockOf(v) {
+  const t = tsOf(v);
+  if (t === null) return '';
+  return new Date(t).toLocaleTimeString('es-DO', { hour: '2-digit', minute: '2-digit' });
+}
+function dayKeyOf(v) {
+  const t = tsOf(v);
+  if (t === null) return '';
+  return new Date(t).toDateString();
+}
+function dayLabelOf(v) {
+  const t = tsOf(v);
+  if (t === null) return '';
+  const d = new Date(t);
+  const today = new Date();
+  const yest = new Date(Date.now() - 86400000);
+  if (d.toDateString() === today.toDateString()) return 'Hoy';
+  if (d.toDateString() === yest.toDateString()) return 'Ayer';
+  return d.toLocaleDateString('es-DO', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+/* ---------- Traduccion de codigos ---------- */
+function sourceLabel(src) {
+  if (!src) return 'Sin registrar';
+  const raw = String(src).trim();
+  let code = raw.toUpperCase();
+  if (!/^(F|P|W|G\d{1,3})$/.test(code)) {
+    const m = code.match(/(?:^|[-_.\s])(G\d{2,3}|F|P|W)(?:[-_.\s]|$)/);
+    code = m ? m[1] : '';
+  }
+  if (code === 'F') return 'Pagina de Facebook';
+  if (code === 'P') return 'Anuncio pagado';
+  if (code === 'W') return 'Sitio web';
+  if (/^G\d{1,3}$/.test(code)) {
+    const key = 'G' + code.slice(1).padStart(2, '0');
+    return GROUPS[key] ? 'Grupo de Facebook: ' + GROUPS[key] : 'Grupo de Facebook ' + key;
+  }
+  return raw;
+}
+function stageLabel(stage) {
+  if (!stage) return 'Sin etapa';
+  const k = String(stage).toLowerCase();
+  return STAGE_LABELS[k] || String(stage);
+}
+function stepLabel(stepId) {
+  if (!stepId) return null;
+  return STEP_LABELS[stepId] || String(stepId);
+}
+function intentLabel(intent) {
+  if (!intent) return null;
+  const k = String(intent).toLowerCase();
+  return INTENT_LABELS[k] || String(intent);
+}
+function langOf(lead) {
+  const l = lead && lead.language ? String(lead.language).toLowerCase().slice(0, 2) : '';
+  return ['es', 'en', 'fr', 'ru'].indexOf(l) >= 0 ? l : 'es';
+}
+function propOf(slug) { return (slug && PROPS[slug]) ? PROPS[slug] : null; }
+
+/* ---------- Quitar el telefono del dueno de las respuestas del banco ----------
+   Varias respuestas traen 809-486-5386 incrustado. Si el dueno se lo manda a
+   un lead por WhatsApp, le estaria dando su propio numero por el mismo canal.
+   Lo sustituimos antes de que el texto llegue al compositor. */
+const PHONE_RE = /\+?1?[\s\-.()]*809[\s\-.()]*486[\s\-.()]*5386/g;
+function scrubOwnPhone(text, lang) {
+  if (!text) return '';
+  const here = HERE_PHRASE[lang] || HERE_PHRASE.es;
+  const num = THIS_NUMBER[lang] || THIS_NUMBER.es;
+  let out = String(text);
+  out = out.replace(/\b(?:al|por|via|au|on|na|my)\s+whats?app\s*:?\s*\+?1?[\s\-.()]*809[\s\-.()]*486[\s\-.()]*5386/gi, here);
+  out = out.replace(/[,;]?\s*whats?app\s*:?\s*\+?1?[\s\-.()]*809[\s\-.()]*486[\s\-.()]*5386/gi, ' ' + here);
+  out = out.replace(PHONE_RE, num);
+  out = out.replace(/[ \t]{2,}/g, ' ').replace(/\s+([.,;:!?])/g, '$1');
+  return out.trim();
+}
+
+/* =========================================================================
+   ESTADO
+   ========================================================================= */
+const state = {
+  threads: [],
+  stats: {},
+  config: {},
+  session: { status: null, qrUrl: null },
+  activeChatId: null,
+  thread: null,
+  suggestions: [],
+  needsProperty: false,
+  filter: '',
+  drafts: Object.create(null),
+  pendingStep: null,
+  bankOpen: false,
+  bankLang: null,
+  bankFilter: '',
+  sending: false,
+  loadingThread: false,
+  screen: 'login'
+};
+const isTouch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+
+/* =========================================================================
+   CAPA DE API
+   ========================================================================= */
+class ApiError extends Error {
+  constructor(message, status) { super(message); this.status = status; }
+}
+async function api(path, options) {
+  const opts = Object.assign({ credentials: 'same-origin', headers: {} }, options || {});
+  if (opts.body !== undefined && typeof opts.body !== 'string') {
+    opts.headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(opts.body);
+    opts.method = opts.method || 'POST';
+  }
+  let res;
+  try {
+    res = await fetch(path, opts);
+  } catch (e) {
+    throw new ApiError('No hay conexion con el servidor.', 0);
+  }
+  if (res.status === 401 || res.status === 403) {
+    throw new ApiError('La sesion del panel se vencio.', res.status);
+  }
+  let data = null;
+  try { data = await res.json(); } catch (e) { data = null; }
+  if (!res.ok) {
+    const msg = (data && (data.error || data.message)) || ('El servidor respondio ' + res.status + '.');
+    throw new ApiError(String(msg), res.status);
+  }
+  return data || {};
+}
+
+/* =========================================================================
+   TOASTS
+   ========================================================================= */
+function toast(msg, kind) {
+  const host = $('toasts');
+  const t = el('div', 'toast ' + (kind === 'warn' ? 'warn' : 'ok'), msg);
+  host.appendChild(t);
+  requestAnimationFrame(() => t.classList.add('show'));
+  setTimeout(() => {
+    t.classList.remove('show');
+    setTimeout(() => { if (t.parentNode) t.parentNode.removeChild(t); }, 300);
+  }, 2600);
+}
+
+/* =========================================================================
+   PANTALLAS
+   ========================================================================= */
+function showScreen(name) {
+  state.screen = name;
+  $('screenLogin').hidden = name !== 'login';
+  $('screenPair').hidden = name !== 'pair';
+  $('app').hidden = name !== 'app';
+  if (name !== 'app') document.body.classList.remove('thread-open');
+}
+
+/* ---------- Login ---------- */
+async function doLogin() {
+  const pass = $('loginPass').value;
+  const errBox = $('loginError');
+  errBox.hidden = true;
+  if (!pass) { errBox.textContent = 'Escribe la contrasena.'; errBox.hidden = false; return; }
+  $('loginBtn').disabled = true;
+  try {
+    await api('/api/wa/login', { method: 'POST', body: { password: pass } });
+    $('loginPass').value = '';
+    await bootAfterLogin();
+  } catch (e) {
+    errBox.textContent = (e.status === 401 || e.status === 403)
+      ? 'Contrasena incorrecta.'
+      : e.message;
+    errBox.hidden = false;
+  } finally {
+    $('loginBtn').disabled = false;
+  }
+}
+
+async function bootAfterLogin() {
+  const ok = await refreshThreads(true);
+  if (ok) startPolling();
+}
+
+/* ---------- Emparejamiento ---------- */
+function renderPairing(session) {
+  const frame = $('qrFrame');
+  clear(frame);
+  const url = safeImageUrl(session && session.qrUrl);
+  if (url) {
+    const img = document.createElement('img');
+    img.alt = 'Codigo QR para vincular WhatsApp';
+    img.setAttribute('src', url);
+    frame.appendChild(img);
+    $('pairNote').textContent = 'Esta pantalla se actualiza sola cada 5 segundos. En cuanto conecte, entra directo al panel.';
+  } else {
+    frame.appendChild(el('div', 'qr-waiting', 'Preparando el codigo. Espera unos segundos.'));
+    $('pairNote').textContent = 'El servidor todavia no genero el codigo. Se sigue intentando cada 5 segundos.';
+  }
+}
+
+async function pollSession() {
+  try {
+    const s = await api('/api/wa/session');
+    applySession(s);
+  } catch (e) {
+    if (e.status === 401 || e.status === 403) { showScreen('login'); return; }
+    $('pairNote').textContent = 'No se pudo hablar con el servidor: ' + e.message + ' Reintentando.';
+  }
+}
+
+/* El aviso de arriba depende del estado de la sesion Y del kill switch, asi
+   que lo pintan tanto applySession() como applyConfig(). */
+function renderGlobalBanner() {
+  const banner = $('globalBanner');
+  const status = String((state.session && state.session.status) || '').toUpperCase();
+  clear(banner);
+  if (status === 'UNREACHABLE') {
+    banner.className = 'banner banner-red';
+    banner.appendChild(el('strong', null, 'El servidor de WhatsApp esta caido.'));
+    banner.appendChild(el('span', null, 'Puedes leer lo que ya se descargo, pero los mensajes que envies ahora van a fallar. Revisa el servidor o avisa a quien lo administra.'));
+    banner.hidden = false;
+  } else if (state.config && state.config.killSwitch) {
+    banner.className = 'banner banner-amber';
+    banner.appendChild(el('strong', null, 'Parada de emergencia activa.'));
+    banner.appendChild(el('span', null, 'El sistema no esta respondiendo solo a nadie. Todo lo que salga tiene que enviarlo tu a mano.'));
+    banner.hidden = false;
+  } else {
+    banner.hidden = true;
+  }
+}
+
+function applySession(session) {
+  if (!session) return;
+  state.session = session;
+  const status = String(session.status || '').toUpperCase();
+  const dot = $('sessionDot');
+  const txt = $('sessionText');
+  if (status === 'WORKING') {
+    dot.className = 'session-dot ok';
+    txt.textContent = 'WhatsApp conectado';
+  } else if (status === 'UNREACHABLE') {
+    dot.className = 'session-dot bad';
+    txt.textContent = 'Servidor caido';
+  } else {
+    dot.className = 'session-dot bad';
+    txt.textContent = 'Sin conectar (' + (session.status || 'desconocido') + ')';
+  }
+
+  renderGlobalBanner();
+
+  /* WORKING y UNREACHABLE se quedan en el inbox. Cualquier otro estado
+     (SCAN_QR_CODE, STARTING, STOPPED, FAILED) manda a emparejar. */
+  if (status === 'WORKING' || status === 'UNREACHABLE') {
+    if (state.screen !== 'app') showScreen('app');
+  } else {
+    showScreen('pair');
+    renderPairing(session);
+  }
+}
+
+/* =========================================================================
+   BARRA DE AJUSTES
+   ========================================================================= */
+function applyConfig(cfg) {
+  if (!cfg) return;
+  state.config = cfg;
+  const on = cfg.autoReplyEnabled === true && cfg.killSwitch !== true;
+  const sw = $('autoSwitch');
+  sw.setAttribute('aria-checked', on ? 'true' : 'false');
+  $('autoState').textContent = on ? 'ON' : 'OFF';
+
+  const stop = $('stopBtn');
+  if (cfg.killSwitch === true) {
+    stop.textContent = 'REANUDAR';
+    stop.className = 'stop-btn resume';
+  } else {
+    stop.textContent = 'PARAR TODO';
+    stop.className = 'stop-btn';
+  }
+  $('quietNote').textContent = quietHoursLabel(cfg.quietHours);
+  renderCapMeter();
+  renderGlobalBanner();
+}
+
+/* quietHours es la ventana en la que SI se contesta solo, hora dominicana:
+   [start, end). Por defecto 8 a 21. */
+function quietHoursLabel(q) {
+  if (!q) return 'Contesta automatico a cualquier hora.';
+  if (typeof q === 'string') return 'Horario: ' + q + '.';
+  if (Array.isArray(q) && q.length === 2) return 'Contesta automatico de ' + q[0] + ' a ' + q[1] + '.';
+  if (typeof q === 'object') {
+    const s = q.start !== undefined ? q.start : q.from;
+    const e = q.end !== undefined ? q.end : q.to;
+    if (s === undefined || e === undefined) return 'Contesta automatico a cualquier hora.';
+    const fmt = (v) => (typeof v === 'number' ? String(v).padStart(2, '0') + ':00' : String(v));
+    return 'Contesta automatico solo entre ' + fmt(s) + ' y ' + fmt(e) + ', hora de aqui.';
+  }
+  return '';
+}
+
+function renderCapMeter() {
+  const cfg = state.config || {};
+  const st = state.stats || {};
+  const cap = Number(cfg.dailyCap) || 0;
+  const text = $('capText');
+  const fill = $('capFill');
+  /* El conteo exacto del dia lo lleva el webhook. Si /threads lo publica como
+     autoRepliesToday se pinta la barra; si no, se muestra el tope a secas en
+     vez de inventar un numero. */
+  const used = st.autoRepliesToday !== undefined && st.autoRepliesToday !== null
+    ? Number(st.autoRepliesToday) : null;
+
+  if (!cap) {
+    text.textContent = used === null ? 'Sin tope diario' : used + ' auto-respuestas hoy';
+    fill.style.width = '0%';
+    fill.className = 'cap-fill';
+    return;
+  }
+  if (used === null) {
+    text.textContent = 'Tope: ' + cap + ' auto-respuestas al dia';
+    fill.style.width = '0%';
+    fill.className = 'cap-fill';
+    return;
+  }
+  text.textContent = used + ' de ' + cap + ' auto-respuestas hoy';
+  const pct = Math.max(0, Math.min(100, Math.round((used / cap) * 100)));
+  fill.style.width = pct + '%';
+  fill.className = used >= cap ? 'cap-fill full' : 'cap-fill';
+  if (used >= cap) text.textContent += ' (tope alcanzado)';
+}
+
+async function saveConfig(patch, okMsg) {
+  const prev = Object.assign({}, state.config);
+  applyConfig(Object.assign({}, state.config, patch));
+  try {
+    const cfg = await api('/api/wa/config', { method: 'POST', body: patch });
+    applyConfig(cfg && Object.keys(cfg).length ? cfg : Object.assign({}, prev, patch));
+    if (okMsg) toast(okMsg);
+  } catch (e) {
+    applyConfig(prev);
+    toast('No se pudo guardar el ajuste: ' + e.message, 'warn');
+  }
+}
+
+/* =========================================================================
+   LISTA DE CONVERSACIONES
+   ========================================================================= */
+function isUnanswered(t) {
+  return Number(t.unread || 0) > 0;
+}
+function visibleThreads() {
+  const q = state.filter.trim().toLowerCase();
+  let list = state.threads.slice();
+  if (q) {
+    list = list.filter(t => {
+      const hay = [t.name, t.phone, t.lastMessage, t.chatId,
+        t.lead && t.lead.ref, t.lead && t.lead.propertySlug]
+        .filter(Boolean).join(' ').toLowerCase();
+      return hay.indexOf(q) >= 0;
+    });
+  }
+  list.sort((a, b) => {
+    const ua = isUnanswered(a) ? 1 : 0;
+    const ub = isUnanswered(b) ? 1 : 0;
+    if (ua !== ub) return ub - ua;
+    return (tsOf(b.lastTs) || 0) - (tsOf(a.lastTs) || 0);
+  });
+  return list;
+}
+
+function renderThreadList() {
+  const host = $('threadList');
+  const list = visibleThreads();
+  clear(host);
+
+  if (!list.length) {
+    const empty = el('div', 'pane-empty');
+    if (state.filter.trim()) {
+      empty.appendChild(el('h3', null, 'Nada con esa busqueda'));
+      empty.appendChild(el('p', null, 'Prueba con otro nombre, otro numero o borra el texto del buscador.'));
+    } else {
+      empty.appendChild(el('h3', null, 'Todavia no hay conversaciones'));
+      empty.appendChild(el('p', null, 'Cuando alguien te escriba por WhatsApp, aparece aqui.'));
+    }
+    host.appendChild(empty);
+    return;
+  }
+
+  list.forEach(t => {
+    const row = el('button', 'thread-row');
+    row.type = 'button';
+    if (isUnanswered(t)) row.classList.add('unanswered');
+    if (t.chatId === state.activeChatId) row.classList.add('active');
+    row.dataset.chatId = t.chatId;
+
+    const top = el('div', 'row-top');
+    top.appendChild(el('span', 'row-name', t.name || t.phone || t.chatId || 'Sin nombre'));
+    top.appendChild(el('span', 'row-time', timeAgo(t.lastTs)));
+    row.appendChild(top);
+
+    row.appendChild(el('div', 'row-preview', t.lastMessage || 'Sin mensajes todavia'));
+
+    const bottom = el('div', 'row-bottom');
+    const slug = t.lead && t.lead.propertySlug;
+    const prop = propOf(slug);
+    if (prop) {
+      const pill = el('span', 'pill-prop', prop.short);
+      pill.style.background = prop.color;
+      bottom.appendChild(pill);
+    } else {
+      bottom.appendChild(el('span', 'pill-prop none', 'sin identificar'));
+    }
+    if (Number(t.unread || 0) > 0) {
+      bottom.appendChild(el('span', 'unread-dot', String(t.unread)));
+    }
+    row.appendChild(bottom);
+
+    row.addEventListener('click', () => openThread(t.chatId));
+    host.appendChild(row);
+  });
+}
+
+function renderStats() {
+  const s = state.stats || {};
+  $('statTotal').textContent = Number(s.total || 0);
+  $('statToday').textContent = Number(s.today || 0);
+  $('statUnanswered').textContent = Number(s.unanswered || 0);
+  let attr = s.attributionRate7d;
+  if (attr === undefined || attr === null || isNaN(Number(attr))) {
+    $('statAttr').textContent = '--';
+  } else {
+    /* La API manda un entero 0-100. Si algun dia mandara fraccion, se escala. */
+    attr = Number(attr);
+    if (attr > 0 && attr < 1) attr = attr * 100;
+    $('statAttr').textContent = Math.round(attr) + '%';
+  }
+}
+
+async function refreshThreads(isFirst) {
+  try {
+    const data = await api('/api/wa/threads');
+    state.threads = Array.isArray(data.threads) ? data.threads : [];
+    state.stats = data.stats || {};
+    if (data.config) applyConfig(data.config);
+    renderStats();
+    renderCapMeter();
+    applySession(data.session || state.session);
+    if (state.screen === 'app') renderThreadList();
+    return true;
+  } catch (e) {
+    if (e.status === 401 || e.status === 403) {
+      stopPolling();
+      showScreen('login');
+      if (!isFirst) {
+        $('loginError').textContent = 'La sesion se vencio. Entra otra vez.';
+        $('loginError').hidden = false;
+      }
+      return false;
+    }
+    if (isFirst) throw e;
+    toast('No se pudo actualizar la lista: ' + e.message, 'warn');
+    return true;
+  }
+}
+
+/* =========================================================================
+   CONVERSACION ABIERTA
+   ========================================================================= */
+async function openThread(chatId, silent) {
+  if (!chatId) return;
+  if (state.activeChatId !== chatId) {
+    saveDraft();
+    state.activeChatId = chatId;
+    state.pendingStep = null;
+    state.bankFilter = '';
+    state.bankLang = null;
+  }
+  document.body.classList.add('thread-open');
+  $('paneEmpty').hidden = true;
+  $('threadBody').hidden = false;
+  renderThreadList();
+  await loadThread(silent);
+}
+
+async function loadThread(silent) {
+  const chatId = state.activeChatId;
+  if (!chatId) return;
+  if (state.loadingThread) return;
+  state.loadingThread = true;
+  try {
+    const data = await api('/api/wa/thread?chatId=' + encodeURIComponent(chatId));
+    if (state.activeChatId !== chatId) return;
+    state.thread = data;
+    state.suggestions = Array.isArray(data.suggestions) ? data.suggestions : [];
+    state.needsProperty = data.needsProperty === true;
+    renderThread();
+  } catch (e) {
+    if (e.status === 401 || e.status === 403) { stopPolling(); showScreen('login'); return; }
+    if (!silent) toast('No se pudo abrir la conversacion: ' + e.message, 'warn');
+  } finally {
+    state.loadingThread = false;
+  }
+}
+
+function renderThread() {
+  const t = state.thread;
+  if (!t) return;
+  $('headName').textContent = t.name || t.phone || t.chatId || 'Sin nombre';
+  $('headPhone').textContent = t.phone || '';
+
+  renderLeadCard(t);
+  renderPropPicker(t);
+  renderMessages(t);
+  renderSuggestions();
+  renderBank();
+  renderStepChip();
+  restoreDraft();
+  updateComposerHint();
+}
+
+/* ---------- Ficha del lead ---------- */
+function renderLeadCard(t) {
+  const host = $('leadCardHost');
+  clear(host);
+  const lead = t.lead || {};
+  const prop = propOf(lead.propertySlug);
+
+  const card = el('div', 'lead-card');
+  if (prop) card.style.borderLeftColor = prop.color;
+  card.appendChild(el('h3', null, 'Ficha del lead'));
+
+  const grid = el('div', 'lead-grid');
+  function field(key, value, muted) {
+    const f = el('div', 'lead-field');
+    f.appendChild(el('div', 'lead-key', key));
+    f.appendChild(el('div', 'lead-val' + (muted ? ' muted' : ''), value));
+    grid.appendChild(f);
+  }
+  field('Propiedad', prop ? prop.short : 'Sin identificar', !prop);
+  field('Precio', prop ? prop.price : 'Se sabe al asignar la propiedad', !prop);
+  field('Referencia', lead.ref || (prop ? prop.ref : '') || 'Sin referencia', !lead.ref && !prop);
+  field('De donde vino', sourceLabel(lead.source), !lead.source);
+  field('Idioma', ({ es: 'Espanol', en: 'Ingles', fr: 'Frances', ru: 'Ruso' })[langOf(lead)] || 'Espanol');
+  field('Etapa', stageLabel(lead.stage), !lead.stage);
+  card.appendChild(grid);
+
+  /* Ultimo paso enviado */
+  const lastOut = (t.messages || []).filter(m => m && m.fromMe).slice(-1)[0];
+  const stepRow = el('div', 'lead-step');
+  if (lead.lastStepSent) {
+    stepRow.appendChild(document.createTextNode('Ultimo paso enviado: '));
+    stepRow.appendChild(el('b', null, stepLabel(lead.lastStepSent)));
+    const when = lead.lastStepSentAt || (lastOut && lastOut.ts);
+    if (when) stepRow.appendChild(document.createTextNode(', ' + sinceLabel(when) + '.'));
+    else stepRow.appendChild(document.createTextNode('.'));
+  } else {
+    stepRow.appendChild(document.createTextNode('Todavia no se le ha enviado ningun paso del guion.'));
+  }
+  card.appendChild(stepRow);
+
+  /* Aviso de auto-respuesta: el dueno tiene que verlo ANTES de escribir */
+  if (lead.autoRepliedAt) {
+    const flag = el('div', 'auto-flag', 'El sistema ya le respondio solo a este lead, ' + sinceLabel(lead.autoRepliedAt) + '.');
+    flag.appendChild(el('span', null, 'Lee lo que salio antes de escribir, para no repetirle lo mismo ni contradecirlo.'));
+    card.appendChild(flag);
+  }
+
+  /* Confianza baja o asignacion manual */
+  const conf = Number(lead.confidence);
+  if (lead.manualOverride === true) {
+    card.appendChild(el('div', 'low-conf', 'Esta propiedad se la asignaste tu a mano, no la adivino el sistema.'));
+  } else if (!isNaN(conf) && conf > 0 && conf < 0.6 && prop) {
+    card.appendChild(el('div', 'low-conf',
+      'La atribucion es de baja confianza (' + Math.round(conf * 100) + '%). Confirmale al lead de cual propiedad esta hablando antes de mandarle precios.'));
+  }
+
+  /* Correccion rapida de idioma y etapa */
+  const editRow = el('div', 'lead-edit');
+  const langWrap = el('div');
+  langWrap.appendChild(el('label', null, 'Idioma del lead'));
+  const langSel = el('select');
+  /* Solo es/en: son los unicos idiomas con guion en playbooks.json y los
+     unicos que acepta POST /api/wa/lead. Para responderle en frances o ruso
+     estan las pestanas del banco de abajo. */
+  LEAD_LANGUAGES.forEach(([v, l]) => {
+    const o = el('option', null, l); o.value = v;
+    if (v === langOf(lead)) o.selected = true;
+    langSel.appendChild(o);
+  });
+  langSel.addEventListener('change', () => updateLead({ language: langSel.value }, 'Idioma actualizado.'));
+  langWrap.appendChild(langSel);
+  editRow.appendChild(langWrap);
+
+  const stageWrap = el('div');
+  stageWrap.appendChild(el('label', null, 'Etapa'));
+  const stageSel = el('select');
+  const stages = API_STAGES.slice();
+  const current = lead.stage ? String(lead.stage).toLowerCase() : '';
+  if (current && stages.indexOf(current) < 0) stages.unshift(current);
+  const blank = el('option', null, 'Sin cambiar'); blank.value = '';
+  stageSel.appendChild(blank);
+  stages.forEach(s => {
+    const o = el('option', null, stageLabel(s)); o.value = s;
+    if (s === current) o.selected = true;
+    stageSel.appendChild(o);
+  });
+  stageSel.addEventListener('change', () => {
+    if (stageSel.value) updateLead({ stage: stageSel.value }, 'Etapa actualizada.');
+  });
+  stageWrap.appendChild(stageSel);
+  editRow.appendChild(stageWrap);
+  card.appendChild(editRow);
+
+  host.appendChild(card);
+}
+
+async function updateLead(patch, okMsg) {
+  if (!state.activeChatId) return;
+  try {
+    await api('/api/wa/lead', { method: 'POST', body: Object.assign({ chatId: state.activeChatId }, patch) });
+    if (okMsg) toast(okMsg);
+    await loadThread(true);
+    await refreshThreads();
+  } catch (e) {
+    if (e.status === 401 || e.status === 403) { stopPolling(); showScreen('login'); return; }
+    toast('No se pudo guardar: ' + e.message, 'warn');
+  }
+}
+
+/* ---------- Selector de propiedad ---------- */
+function renderPropPicker(t) {
+  const host = $('propPickerHost');
+  clear(host);
+  if (!state.needsProperty) return;
+
+  const box = el('div', 'prop-picker');
+  box.appendChild(el('h3', null, 'Falta saber de cual propiedad pregunta'));
+  box.appendChild(el('p', null, 'Sin propiedad asignada no hay guion ni precios. Toca la que corresponda y aparecen los pasos.'));
+  const btns = el('div', 'prop-btns');
+  PROP_ORDER.forEach(slug => {
+    const p = PROPS[slug];
+    const b = el('button', 'prop-btn');
+    b.type = 'button';
+    const name = el('b');
+    const dot = el('span', 'prop-swatch');
+    dot.style.background = p.color;
+    name.appendChild(dot);
+    name.appendChild(document.createTextNode(p.short));
+    b.appendChild(name);
+    b.appendChild(el('small', null, p.price + '  -  ' + p.ref));
+    b.addEventListener('click', () => {
+      b.disabled = true;
+      updateLead({ propertySlug: slug }, 'Propiedad asignada: ' + p.short);
+    });
+    btns.appendChild(b);
+  });
+  box.appendChild(btns);
+  host.appendChild(box);
+}
+
+/* ---------- Historial de mensajes ---------- */
+const MEDIA_TEXT = {
+  audio: 'Nota de voz, escuchala en tu telefono.',
+  ptt: 'Nota de voz, escuchala en tu telefono.',
+  voice: 'Nota de voz, escuchala en tu telefono.',
+  image: 'Foto, abrela en tu telefono.',
+  video: 'Video, abrelo en tu telefono.',
+  document: 'Documento, abrelo en tu telefono.',
+  sticker: 'Sticker.',
+  location: 'Ubicacion compartida, abrela en tu telefono.',
+  contact: 'Contacto compartido, abrelo en tu telefono.',
+  vcard: 'Contacto compartido, abrelo en tu telefono.'
+};
+
+function renderMessages(t) {
+  const host = $('messagesHost');
+  clear(host);
+  const msgs = Array.isArray(t.messages) ? t.messages : [];
+
+  if (!msgs.length) {
+    const empty = el('div', 'pane-empty');
+    empty.appendChild(el('h3', null, 'Sin mensajes en este chat'));
+    empty.appendChild(el('p', null, 'Todavia no hay nada escrito de ninguna de las dos partes.'));
+    host.appendChild(empty);
+    return;
+  }
+
+  let lastDay = '';
+  msgs.forEach(m => {
+    if (!m) return;
+    const day = dayKeyOf(m.ts);
+    if (day && day !== lastDay) {
+      lastDay = day;
+      const sep = el('div', 'day-sep');
+      sep.appendChild(el('span', null, dayLabelOf(m.ts)));
+      host.appendChild(sep);
+    }
+
+    const row = el('div', 'msg ' + (m.fromMe ? 'out' : 'in'));
+    const bubble = el('div', 'bubble');
+
+    const type = m.type ? String(m.type).toLowerCase() : 'chat';
+    const mediaNote = MEDIA_TEXT[type];
+    if (mediaNote) {
+      /* El panel no reproduce media a proposito. */
+      bubble.appendChild(el('div', 'bubble-media', mediaNote));
+      if (m.body) bubble.appendChild(el('div', 'bubble-text', m.body));
+    } else {
+      bubble.appendChild(el('div', 'bubble-text', m.body || ''));
+      if (m.hasMedia) bubble.appendChild(el('div', 'bubble-media', 'Trae un archivo adjunto, abrelo en tu telefono.'));
+    }
+
+    const meta = el('div', 'bubble-meta');
+    if (!m.fromMe) {
+      const lab = intentLabel(m.intent);
+      if (lab) meta.appendChild(el('span', 'intent-tag', lab));
+    }
+    meta.appendChild(el('span', 'bubble-time', clockOf(m.ts)));
+    bubble.appendChild(meta);
+
+    row.appendChild(bubble);
+    host.appendChild(row);
+  });
+
+  const scroller = $('threadScroll');
+  requestAnimationFrame(() => { scroller.scrollTop = scroller.scrollHeight; });
+}
+
+/* =========================================================================
+   COMPOSITOR, SUGERENCIAS Y BANCO
+
+   REGLA DE SEGURIDAD: ni las sugerencias del guion ni las respuestas del
+   banco envian nada. Lo unico que hacen es escribir en el textarea. El unico
+   camino que llama a POST /api/wa/send es sendMessage(), y solo se llega ahi
+   por el boton Enviar o por Enter estando dentro del textarea en escritorio.
+   ========================================================================= */
+
+function fillComposer(text, step) {
+  const box = $('composer');
+  box.value = text || '';
+  state.pendingStep = step || null;
+  saveDraft();
+  renderStepChip();
+  updateComposerHint();
+  box.focus();
+  box.setSelectionRange(box.value.length, box.value.length);
+}
+
+function saveDraft() {
+  if (!state.activeChatId) return;
+  state.drafts[state.activeChatId] = { text: $('composer').value, step: state.pendingStep };
+}
+function restoreDraft() {
+  const d = state.drafts[state.activeChatId];
+  $('composer').value = d ? d.text : '';
+  state.pendingStep = d ? d.step : null;
+  renderStepChip();
+}
+
+/* ---------- Sugerencias del playbook ---------- */
+function renderSuggestions() {
+  const host = $('suggestHost');
+  clear(host);
+
+  if (state.needsProperty) {
+    host.appendChild(el('div', 'zone-label', 'Pasos del guion'));
+    host.appendChild(el('div', 'suggest-note',
+      'Asigna la propiedad arriba y aqui salen los pasos del guion listos para meter en el mensaje.'));
+    return;
+  }
+  if (!state.suggestions.length) {
+    host.appendChild(el('div', 'zone-label', 'Pasos del guion'));
+    host.appendChild(el('div', 'suggest-note',
+      'No hay pasos sugeridos para este punto de la conversacion. Escribe tu el mensaje o usa el banco de abajo.'));
+    return;
+  }
+
+  host.appendChild(el('div', 'zone-label', 'Pasos del guion, llenan el mensaje pero no lo envian'));
+  const strip = el('div', 'suggest-strip');
+  state.suggestions.slice(0, 9).forEach((s, i) => {
+    const b = el('button', 'suggest-btn');
+    b.type = 'button';
+    b.title = 'Mete este texto en el cuadro de abajo. No lo envia.';
+    b.appendChild(el('span', 'suggest-key', String(i + 1)));
+    b.appendChild(el('span', 'suggest-label', s.label || stepLabel(s.stepId) || ('Paso ' + (i + 1))));
+    if (s.sendPhotos) b.appendChild(el('span', 'suggest-photo', 'con fotos'));
+    b.addEventListener('click', () => insertSuggestion(i));
+    strip.appendChild(b);
+  });
+  host.appendChild(strip);
+}
+
+function insertSuggestion(i) {
+  const s = state.suggestions[i];
+  if (!s) return;
+  fillComposer(s.text || '', {
+    stepId: s.stepId,
+    label: s.label || stepLabel(s.stepId) || 'Paso del guion',
+    sendPhotos: s.sendPhotos === true
+  });
+  toast('Paso puesto en el mensaje. Revisalo y dale a Enviar.');
+}
+
+/* ---------- Chip del paso pendiente ---------- */
+function renderStepChip() {
+  const host = $('stepChipHost');
+  clear(host);
+  const step = state.pendingStep;
+  if (!step) return;
+  const chip = el('div', 'step-chip');
+  chip.appendChild(document.createTextNode('Se registra como: '));
+  chip.appendChild(el('b', null, step.label));
+  if (step.sendPhotos) chip.appendChild(document.createTextNode(' (el sistema adjunta las fotos)'));
+  const x = el('button', null, 'X');
+  x.type = 'button';
+  x.title = 'Enviar sin marcarlo como este paso';
+  x.setAttribute('aria-label', 'Quitar el paso del guion de este envio');
+  x.addEventListener('click', () => { state.pendingStep = null; saveDraft(); renderStepChip(); });
+  chip.appendChild(x);
+  host.appendChild(chip);
+}
+
+/* ---------- Banco de respuestas ---------- */
+function currentBankLang() {
+  if (state.bankLang) return state.bankLang;
+  return langOf((state.thread && state.thread.lead) || {});
+}
+function confoturAllowed() {
+  const slug = state.thread && state.thread.lead && state.thread.lead.propertySlug;
+  const p = propOf(slug);
+  return !!(p && p.confotur === true);
+}
+
+function renderBank() {
+  const lang = currentBankLang();
+  if ($('bankSearch').value !== state.bankFilter) $('bankSearch').value = state.bankFilter;
+
+  const langHost = $('bankLangs');
+  clear(langHost);
+  LANGS.forEach(l => {
+    const b = el('button', 'bank-lang' + (l.code === lang ? ' active' : ''), l.label);
+    b.type = 'button';
+    b.addEventListener('click', () => { state.bankLang = l.code; renderBank(); });
+    langHost.appendChild(b);
+  });
+
+  const vetoHost = $('confoturVetoHost');
+  clear(vetoHost);
+  const allowed = confoturAllowed();
+  if (!allowed) {
+    const slug = state.thread && state.thread.lead && state.thread.lead.propertySlug;
+    const p = propOf(slug);
+    const msg = p
+      ? 'Esta propiedad NO tiene CONFOTUR confirmado (' + p.short + '). Las respuestas de CONFOTUR estan bloqueadas.'
+      : 'Sin propiedad asignada no se puede confirmar CONFOTUR. Las respuestas de CONFOTUR estan bloqueadas.';
+    vetoHost.appendChild(el('div', 'confotur-veto', msg));
+  }
+
+  const list = $('bankList');
+  clear(list);
+  const q = state.bankFilter.trim().toLowerCase();
+  let shown = 0;
+  BANK.forEach((item, idx) => {
+    const question = item.q[lang] || item.q.es;
+    const answer = item.a[lang] || item.a.es;
+    if (q && (question + ' ' + answer).toLowerCase().indexOf(q) < 0) return;
+    shown++;
+    const blocked = item.category === 'confotur' && !allowed;
+    const b = el('button', 'bank-item');
+    b.type = 'button';
+    b.appendChild(el('span', 'bank-cat', BANK_CAT_LABELS[item.category] || item.category));
+    b.appendChild(el('span', null, question));
+    if (blocked) {
+      b.disabled = true;
+      b.title = 'Bloqueada: esta propiedad no tiene CONFOTUR confirmado.';
+    } else {
+      b.title = 'Mete esta respuesta en el cuadro de abajo. No la envia.';
+      b.addEventListener('click', () => {
+        fillComposer(scrubOwnPhone(answer, lang), null);
+        toast('Respuesta puesta en el mensaje. Revisala y dale a Enviar.');
+      });
+    }
+    list.appendChild(b);
+  });
+  if (!shown) {
+    list.appendChild(el('div', 'bank-empty',
+      q ? 'Ninguna de las 22 respuestas coincide con eso.' : 'El banco esta vacio.'));
+  }
+}
+
+function toggleBank(force) {
+  state.bankOpen = force !== undefined ? force : !state.bankOpen;
+  $('bankBody').hidden = !state.bankOpen;
+  $('bankToggle').setAttribute('aria-expanded', state.bankOpen ? 'true' : 'false');
+  $('bankChev').textContent = state.bankOpen ? 'Cerrar' : 'Abrir';
+  if (state.bankOpen) { renderBank(); $('bankSearch').focus(); }
+}
+
+/* =========================================================================
+   ENVIO
+   ========================================================================= */
+function updateComposerHint() {
+  $('composerHint').textContent = isTouch
+    ? 'Nada sale solo. El mensaje se manda cuando tocas Enviar.'
+    : 'Nada sale solo. Enter envia, Shift+Enter hace salto de linea.';
+}
+
+function renderSendError(msg) {
+  const host = $('sendErrorHost');
+  clear(host);
+  if (!msg) return;
+  const box = el('div', 'send-error');
+  box.appendChild(el('span', null, msg));
+  const retry = el('button', null, 'Reintentar');
+  retry.type = 'button';
+  retry.addEventListener('click', () => sendMessage());
+  box.appendChild(retry);
+  host.appendChild(box);
+}
+
+async function sendMessage() {
+  if (state.sending) return;
+  const box = $('composer');
+  const text = box.value.trim();
+  if (!state.activeChatId) { toast('Abre una conversacion primero.', 'warn'); return; }
+  if (!text) { toast('El mensaje esta vacio.', 'warn'); box.focus(); return; }
+
+  state.sending = true;
+  $('sendBtn').disabled = true;
+  $('sendBtn').textContent = 'Enviando';
+  renderSendError(null);
+
+  const payload = { chatId: state.activeChatId, text: text };
+  if (state.pendingStep && state.pendingStep.stepId) payload.stepId = state.pendingStep.stepId;
+
+  try {
+    await api('/api/wa/send', { method: 'POST', body: payload });
+    /* Solo se limpia el cuadro cuando el envio salio bien. */
+    box.value = '';
+    state.pendingStep = null;
+    saveDraft();
+    renderStepChip();
+    toast('Mensaje enviado.');
+    await loadThread(true);
+    await refreshThreads();
+  } catch (e) {
+    if (e.status === 401 || e.status === 403) {
+      stopPolling();
+      showScreen('login');
+      $('loginError').textContent = 'La sesion se vencio. Entra otra vez, el mensaje sigue escrito.';
+      $('loginError').hidden = false;
+      return;
+    }
+    /* El texto NO se borra: el dueno reintenta sin volver a escribirlo. */
+    renderSendError('No se pudo enviar: ' + e.message + ' El texto sigue abajo.');
+  } finally {
+    state.sending = false;
+    $('sendBtn').disabled = false;
+    $('sendBtn').textContent = 'Enviar';
+  }
+}
+
+/* =========================================================================
+   ATAJOS DE TECLADO
+   ========================================================================= */
+function isTyping(target) {
+  if (!target) return false;
+  const tag = target.tagName;
+  return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable;
+}
+
+function moveSelection(delta) {
+  const list = visibleThreads();
+  if (!list.length) return;
+  let idx = list.findIndex(t => t.chatId === state.activeChatId);
+  if (idx < 0) idx = delta > 0 ? -1 : 0;
+  const next = Math.max(0, Math.min(list.length - 1, idx + delta));
+  const target = list[next];
+  if (!target) return;
+  openThread(target.chatId);
+  requestAnimationFrame(() => {
+    const row = $('threadList').querySelector('[data-chat-id="' + CSS.escape(target.chatId) + '"]');
+    if (row) row.scrollIntoView({ block: 'nearest' });
+  });
+}
+
+function toggleHelp(force) {
+  const m = $('helpModal');
+  const show = force !== undefined ? force : m.hidden;
+  m.hidden = !show;
+  if (show) $('helpClose').focus();
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+  if (e.key === 'Escape') {
+    if (!$('helpModal').hidden) { toggleHelp(false); return; }
+    if (isTyping(e.target)) { e.target.blur(); return; }
+    if (document.body.classList.contains('thread-open')) {
+      document.body.classList.remove('thread-open');
+    }
+    return;
+  }
+
+  /* Enter dentro del cuadro de texto: en escritorio envia, en telefono
+     hace salto de linea (ahi el envio siempre es el boton). */
+  if (e.key === 'Enter' && e.target === $('composer')) {
+    if (!e.shiftKey && !isTouch) { e.preventDefault(); sendMessage(); }
+    return;
+  }
+  if (isTyping(e.target)) return;
+  if (state.screen !== 'app') return;
+
+  const k = e.key;
+  if (k === 'j') { e.preventDefault(); moveSelection(1); return; }
+  if (k === 'k') { e.preventDefault(); moveSelection(-1); return; }
+  if (k === '/') { e.preventDefault(); $('search').focus(); $('search').select(); return; }
+  if (k === '?') { e.preventDefault(); toggleHelp(); return; }
+  if (k === 'b') { e.preventDefault(); toggleBank(); return; }
+  if (k === 'Enter') { e.preventDefault(); if (state.activeChatId) $('composer').focus(); return; }
+  if (k >= '1' && k <= '9') {
+    if (!state.activeChatId) return;
+    e.preventDefault();
+    insertSuggestion(parseInt(k, 10) - 1);
+  }
+});
+
+/* =========================================================================
+   POLLING (5s, en pausa si la pestana esta oculta)
+   ========================================================================= */
+let pollTimer = null;
+async function pollTick() {
+  if (document.hidden) return;
+  if (state.screen === 'pair') { await pollSession(); return; }
+  if (state.screen !== 'app') return;
+  await refreshThreads();
+  if (state.activeChatId && !state.sending) await loadThread(true);
+}
+function startPolling() {
+  stopPolling();
+  pollTimer = setInterval(pollTick, 5000);
+}
+function stopPolling() {
+  if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+}
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && state.screen !== 'login') pollTick();
+});
+
+/* =========================================================================
+   CABLEADO
+   ========================================================================= */
+$('loginBtn').addEventListener('click', doLogin);
+$('loginPass').addEventListener('keydown', (e) => { if (e.key === 'Enter') doLogin(); });
+
+$('search').addEventListener('input', () => { state.filter = $('search').value; renderThreadList(); });
+$('backBtn').addEventListener('click', () => { document.body.classList.remove('thread-open'); });
+
+$('composer').addEventListener('input', () => {
+  if (!$('composer').value.trim()) state.pendingStep = null;
+  saveDraft();
+  renderStepChip();
+});
+$('sendBtn').addEventListener('click', sendMessage);
+
+$('bankToggle').addEventListener('click', () => toggleBank());
+$('bankSearch').addEventListener('input', () => { state.bankFilter = $('bankSearch').value; renderBank(); });
+
+$('autoSwitch').addEventListener('click', () => {
+  const cfg = state.config || {};
+  if (cfg.killSwitch === true) {
+    toast('Primero quita la parada de emergencia.', 'warn');
+    return;
+  }
+  const next = !(cfg.autoReplyEnabled === true);
+  saveConfig({ autoReplyEnabled: next }, next ? 'Auto-respuesta encendida.' : 'Auto-respuesta apagada.');
+});
+
+$('stopBtn').addEventListener('click', () => {
+  const cfg = state.config || {};
+  if (cfg.killSwitch === true) {
+    /* Reanudar si pide confirmacion; parar es inmediato. */
+    if (!window.confirm('Vas a reanudar las respuestas automaticas. Confirmas?')) return;
+    saveConfig({ killSwitch: false }, 'Sistema reanudado.');
+  } else {
+    saveConfig({ killSwitch: true, autoReplyEnabled: false }, 'Parada de emergencia activada.');
+  }
+});
+
+$('helpClose').addEventListener('click', () => toggleHelp(false));
+$('helpModal').addEventListener('click', (e) => { if (e.target === $('helpModal')) toggleHelp(false); });
+
+/* =========================================================================
+   ARRANQUE
+   Si la cookie sigue viva se entra directo; si no, a la pantalla de login.
+   ========================================================================= */
+(async function init() {
+  updateComposerHint();
+  if (isTouch) $('helpEnter').textContent = 'En el telefono hace salto de linea. El mensaje se manda con el boton Enviar.';
+  showScreen('login');
+  try {
+    const ok = await refreshThreads(true);
+    if (ok) startPolling();
+  } catch (e) {
+    showScreen('login');
+    if (e.status !== 401 && e.status !== 403 && e.status !== 0) {
+      $('loginError').textContent = e.message;
+      $('loginError').hidden = false;
+    }
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+# =============================================================================
+#  WAHA - WhatsApp HTTP API  |  Panel de WhatsApp de Rent & Go Punta Cana
+# =============================================================================
+#
+#  QUE ES ESTO
+#  Este archivo levanta UN solo servicio: WAHA, que es el puente entre WhatsApp
+#  y el panel del sitio web. El sitio (Vercel) le habla a WAHA por HTTP para
+#  enviar mensajes, y WAHA le avisa al sitio por webhook cuando llega un mensaje.
+#
+#  DONDE SE USA
+#   - En la computadora del dueno, para probar:  docker compose up -d
+#   - En Railway (produccion) NO se usa este archivo tal cual: Railway despliega
+#     la imagen directamente. Pero este archivo es la fuente de verdad de QUE
+#     variables y QUE volumen hay que configurar alla. Ver README-es.md.
+#
+#  REGLA DE ORO: aqui NO se escribe ningun secreto. Todo sale del archivo .env
+#  (copia de .env.example). El .env NUNCA se sube a GitHub.
+# =============================================================================
+
+services:
+  waha:
+    # -------------------------------------------------------------------------
+    # IMAGEN
+    # -------------------------------------------------------------------------
+    # Desde la version 2026.6.1 ya no existe "WAHA Plus" de pago: todo lo que
+    # antes era Plus (multimedia, sesiones ilimitadas, seguridad, storages)
+    # esta en WAHA Core, gratis y open source. Se usa la imagen publica normal.
+    # Docs: https://waha.devlike.pro/docs/how-to/waha-plus/
+    #
+    # El tag ":noweb" es la variante SIN navegador (motor NOWEB). Pesa menos,
+    # arranca mas rapido y consume ~200 MB de RAM en vez de ~400 MB de la
+    # variante con Chromium. Ver la nota "POR QUE NOWEB" mas abajo.
+    # Docs de imagenes: https://waha.devlike.pro/docs/how-to/install/
+    #
+    # RECOMENDADO: fijar una version exacta para que una actualizacion
+    # sorpresa no rompa el panel. El esquema de tags es AAAA.M.PARCHE, por
+    # ejemplo:  devlikeapro/waha:noweb-2026.7.1
+    # Revisa los tags disponibles en https://hub.docker.com/r/devlikeapro/waha/tags
+    image: devlikeapro/waha:noweb
+
+    container_name: waha
+
+    # -------------------------------------------------------------------------
+    # REINICIO AUTOMATICO
+    # -------------------------------------------------------------------------
+    # Si el contenedor se cae (error, falta de memoria, reinicio del servidor),
+    # Docker lo vuelve a levantar solo. "unless-stopped" = se reinicia siempre,
+    # EXCEPTO si tu lo apagaste a mano con "docker compose stop".
+    # Eso ultimo es importante: es el kill switch. Si tu lo apagas, se queda
+    # apagado hasta que tu lo prendas.
+    restart: unless-stopped
+
+    # -------------------------------------------------------------------------
+    # PUERTO
+    # -------------------------------------------------------------------------
+    # WAHA escucha en el 3000 adentro del contenedor.
+    # Lo publicamos SOLO en 127.0.0.1 (la propia maquina), no en toda la red.
+    # Asi, corriendo local, nadie de afuera puede tocar la API.
+    # En Railway esto no aplica: alla se genera un dominio publico HTTPS.
+    ports:
+      - "127.0.0.1:${WAHA_LOCAL_PORT:-3000}:3000"
+
+    # -------------------------------------------------------------------------
+    # VOLUMEN PERSISTENTE  <-- EL BLOQUE MAS IMPORTANTE DE TODO EL ARCHIVO
+    # -------------------------------------------------------------------------
+    # WAHA guarda las credenciales de la sesion de WhatsApp en /app/.sessions
+    # Docs: https://waha.devlike.pro/docs/how-to/storages/
+    #
+    # SIN ESTE VOLUMEN, cada vez que el contenedor se reinicie (y se reinicia
+    # solo, por actualizaciones o fallos) se pierde la sesion y hay que volver
+    # a escanear el codigo QR con el telefono. Con el volumen, la sesion
+    # sobrevive reinicios y no se toca el telefono nunca mas.
+    #
+    # En Railway: crea un Volume y montalo exactamente en /app/.sessions
+    volumes:
+      - waha-sessions:/app/.sessions
+
+    # -------------------------------------------------------------------------
+    # VARIABLES DE ENTORNO
+    # -------------------------------------------------------------------------
+    # Ninguna tiene el valor real escrito aqui: todas se leen del archivo .env.
+    # La sintaxis ${VARIABLE} significa "toma el valor del .env".
+    environment:
+      # --- Red / servidor -----------------------------------------------------
+      # 0.0.0.0 = escucha en todas las interfaces del contenedor. Obligatorio,
+      # porque el valor por defecto es "localhost" y entonces el proxy de
+      # Railway no podria llegarle.
+      WHATSAPP_API_HOSTNAME: "0.0.0.0"
+      WHATSAPP_API_PORT: "3000"
+      # URL publica del servicio. Sirve para armar los enlaces de las imagenes
+      # y audios que recibes. En Railway se pone el dominio que te dan.
+      WAHA_PUBLIC_URL: "${WAHA_PUBLIC_URL}"
+      # Zona horaria: para que las horas de los logs y el horario de atencion
+      # del panel cuadren con Republica Dominicana.
+      TZ: "${TZ:-America/Santo_Domingo}"
+
+      # --- Seguridad de la API ------------------------------------------------
+      # Clave que protege TODA la API. El sitio en Vercel la manda en cada
+      # llamada dentro del header "X-Api-Key". Si alguien no la tiene, no puede
+      # mandar mensajes desde tu numero.
+      # Acepta texto plano, o el formato "sha512:<hash>" si prefieres no
+      # guardar la clave en claro en el servidor.
+      # Docs: https://waha.devlike.pro/docs/how-to/security/
+      WAHA_API_KEY: "${WAHA_API_KEY}"
+      # Deja /health y /ping sin clave, para que el healthcheck de aqui abajo
+      # y el de Railway puedan preguntar "estas vivo?" sin autenticarse.
+      WAHA_API_KEY_EXCLUDE_PATH: "health,ping"
+
+      # --- Panel de control y documentacion -----------------------------------
+      # El dashboard web de WAHA es donde escaneas el QR la primera vez.
+      # Va protegido con usuario y clave propios.
+      WAHA_DASHBOARD_ENABLED: "true"
+      WAHA_DASHBOARD_USERNAME: "${WAHA_DASHBOARD_USERNAME}"
+      WAHA_DASHBOARD_PASSWORD: "${WAHA_DASHBOARD_PASSWORD}"
+      # Swagger es la documentacion tecnica interactiva de la API.
+      # No hace falta para operar. Se deja apagada para reducir superficie.
+      WHATSAPP_SWAGGER_ENABLED: "false"
+
+      # --- Motor (engine) -----------------------------------------------------
+      # POR QUE NOWEB:
+      # WAHA tiene 3 motores (WEBJS, NOWEB, GOWS).
+      #  * WEBJS abre un Chromium de verdad. Las docs lo describen como
+      #    "Stable, reliable, and predictable", pero para 1 sesion consume
+      #    0.3 CPU / 400 MB frente a 0.1 CPU / 200 MB de NOWEB, y en un
+      #    contenedor chiquito de Railway el pico de memoria de Chromium es
+      #    justamente lo que provoca que el servicio se reinicie... y un
+      #    reinicio feo es lo que te obliga a re-escanear el QR.
+      #  * GOWS es el motor nuevo en Golang, descrito en las docs como
+      #    "a future replacement for NOWEB engine": mas nuevo, menos rodado.
+      #  * NOWEB es el motor sin navegador maduro: mismo consumo bajo que GOWS,
+      #    pero con mucho mas kilometraje.
+      # Conclusion: NOWEB da el mejor balance estabilidad/recursos para
+      # UNA sola sesion de bajo volumen. Si algun dia la sesion se cae seguido,
+      # cambiar este valor a WEBJS y la imagen a devlikeapro/waha:latest.
+      # Docs: https://waha.devlike.pro/docs/how-to/engines/
+      #       https://waha.devlike.pro/docs/overview/faq/  (tabla de recursos)
+      WHATSAPP_DEFAULT_ENGINE: "NOWEB"
+
+      # --- Sesion -------------------------------------------------------------
+      # Nombre de la sesion. Tiene que ser EXACTAMENTE el mismo valor que la
+      # variable WAHA_SESSION que pones en Vercel.
+      WHATSAPP_START_SESSION: "${WAHA_SESSION}"
+      # Si el contenedor se reinicia, vuelve a levantar la sesion solo.
+      WHATSAPP_RESTART_ALL_SESSIONS: "True"
+      # Segundos de espera antes de arrancar la sesion al encender. Le da
+      # tiempo al contenedor de terminar de montar el volumen.
+      WAHA_AUTO_START_DELAY_SECONDS: "${WAHA_AUTO_START_DELAY_SECONDS:-5}"
+
+      # --- Webhook (asi te avisa cuando llega un mensaje) ---------------------
+      # A donde WAHA hace POST cada vez que entra un mensaje.
+      # Para produccion: https://www.rentandgopc.com/api/wa/webhook
+      WHATSAPP_HOOK_URL: "${WHATSAPP_HOOK_URL}"
+      # Solo el evento "message" (mensajes entrantes de otros).
+      # Si mas adelante quieres que el panel sepa cuando la sesion se cae,
+      # cambia a "message,session.status".
+      # Lista completa: https://waha.devlike.pro/docs/how-to/events/
+      WHATSAPP_HOOK_EVENTS: "${WHATSAPP_HOOK_EVENTS:-message}"
+      # Secreto compartido. WAHA firma el cuerpo del POST con HMAC-SHA512 y
+      # manda la firma en el header "X-Webhook-Hmac". El sitio verifica esa
+      # firma antes de creerle al mensaje. Tiene que ser EXACTAMENTE el mismo
+      # valor que WAHA_WEBHOOK_SECRET en Vercel.
+      WHATSAPP_HOOK_HMAC_KEY: "${WHATSAPP_HOOK_HMAC_KEY}"
+      # Si el sitio esta caido un momento, WAHA reintenta en vez de perder
+      # el mensaje: 3 intentos, esperando cada vez mas (exponencial).
+      WHATSAPP_HOOK_RETRIES_POLICY: "exponential"
+      WHATSAPP_HOOK_RETRIES_ATTEMPTS: "3"
+      WHATSAPP_HOOK_RETRIES_DELAY_SECONDS: "2"
+
+      # --- Archivos multimedia ------------------------------------------------
+      # Carpeta temporal de fotos/audios. NO va en el volumen a proposito:
+      # el panel descarga el archivo enseguida y despues no hace falta.
+      WHATSAPP_FILES_FOLDER: "/app/.media"
+      # Segundos que se guarda cada archivo antes de borrarse (180 = 3 min).
+      # Poner 0 = no borrar nunca (ojo: llena el disco).
+      WHATSAPP_FILES_LIFETIME: "${WHATSAPP_FILES_LIFETIME:-180}"
+
+      # --- Logs ---------------------------------------------------------------
+      # "info" es el nivel normal. Si algo falla y hay que investigar, se
+      # cambia a "debug" un rato y despues se devuelve a "info".
+      WAHA_LOG_LEVEL: "${WAHA_LOG_LEVEL:-info}"
+      WAHA_LOG_FORMAT: "JSON"
+      # Imprime el codigo QR en los logs. Util como plan B si el dashboard
+      # web no carga y hay que vincular el telefono de emergencia.
+      WAHA_PRINT_QR: "${WAHA_PRINT_QR:-True}"
+
+    # -------------------------------------------------------------------------
+    # HEALTHCHECK
+    # -------------------------------------------------------------------------
+    # Cada 30 segundos le pregunta a WAHA "estas bien?" en /health.
+    # Si contesta mal 3 veces seguidas, el contenedor se marca "unhealthy" y,
+    # junto con "restart: unless-stopped", se reinicia solo.
+    # start_period le da 60s de gracia al arrancar para que no se reinicie
+    # en un loop mientras todavia esta cargando.
+    # Docs: https://waha.devlike.pro/docs/how-to/observability/
+    healthcheck:
+      test:
+        - "CMD"
+        - "node"
+        - "-e"
+        - "fetch('http://127.0.0.1:3000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+    # -------------------------------------------------------------------------
+    # LIMITE DE LOGS
+    # -------------------------------------------------------------------------
+    # Sin esto, los logs crecen para siempre y con el tiempo llenan el disco.
+    # Guarda maximo 3 archivos de 10 MB (30 MB en total) y va botando lo viejo.
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# -----------------------------------------------------------------------------
+# DEFINICION DEL VOLUMEN
+# -----------------------------------------------------------------------------
+# Docker crea y administra esta carpeta fuera del contenedor. Sobrevive a
+# "docker compose down", a reinicios y a actualizaciones de la imagen.
+#
+# CUIDADO: "docker compose down -v" (con la -v) SI borra el volumen, y con el
+# la sesion de WhatsApp. Nunca uses la -v a menos que quieras empezar de cero
+# y volver a escanear el QR.
+volumes:
+  waha-sessions:
+    driver: local
