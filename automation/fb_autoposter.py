@@ -363,11 +363,39 @@ def verify_token() -> bool:
     if resp.status_code != 200:
         err = _parse_graph_error(resp)
         log.error(
-            "Token cannot reach Page %s — %s. Check that FB_PAGE_ID is the Page ID "
-            "(not the app or system-user ID) and that the Page is assigned to this "
-            "system user with the 'Create content' task.",
+            "Token cannot reach Page %s — %s",
             FB_PAGE_ID, err.get("message") or resp.text,
         )
+        # Which of the two causes is it? Listing the Pages this token *can*
+        # reach separates "wrong FB_PAGE_ID" from "Page never assigned". Page
+        # IDs are public information, so printing them here is safe.
+        try:
+            acc = requests.get(
+                f"{GRAPH_API_BASE}/me/accounts",
+                params={"fields": "id,name", "access_token": FB_PAGE_ACCESS_TOKEN},
+                timeout=10,
+            )
+            if acc.status_code == 200:
+                pages = acc.json().get("data", [])
+                if pages:
+                    log.error("This token CAN reach these Pages — use one of these IDs as FB_PAGE_ID:")
+                    for p in pages:
+                        log.error("    %s  ->  %s", p.get("id"), p.get("name"))
+                else:
+                    log.error(
+                        "This token can reach NO Pages at all. In Business settings -> "
+                        "Users -> System users -> rentandgo-bot -> Add assets -> Pages, "
+                        "assign the Page and enable the 'Manage Page' / 'Create content' task."
+                    )
+            else:
+                log.error(
+                    "Could not list Pages either (%s). The token is likely missing the "
+                    "pages_show_list permission — regenerate it with pages_show_list, "
+                    "pages_read_engagement and pages_manage_posts checked.",
+                    _parse_graph_error(acc).get("message") or acc.text,
+                )
+        except requests.RequestException as e:
+            log.error("Page listing request failed: %s", e)
         return False
 
     page = resp.json()
