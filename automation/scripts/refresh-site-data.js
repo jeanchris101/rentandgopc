@@ -90,9 +90,14 @@ function updateROICalculator(stats) {
       /(id="nightlyNum"[^>]*value=")(\d+)(")/g,
       `$1${adr}$3`
     );
+    // Replacer FUNCTION, not a string: the string form built "$1$105$2", and
+    // replace() reads "$105" as a backreference — it tries group 10, falls back
+    // to group 1, and leaves a stray "05". That is what produced the literal
+    // 'id="nightlyDisplay">id="nightlyDisplay">05<' on the live calculator.
+    // A function receives the groups as arguments, so no $ is ever parsed.
     html = html.replace(
       /(id="nightlyDisplay">)\$[\d]+(<)/,
-      `$1$${adr}$2`
+      (_match, open, close) => `${open}$${adr}${close}`
     );
   }
 
