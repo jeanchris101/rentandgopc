@@ -50,11 +50,14 @@ _fb_config = _config.get("facebook", {})
 GRAPH_API_VERSION = _fb_config.get("api_version", "v25.0")
 GRAPH_API_BASE = f"https://graph.facebook.com/{GRAPH_API_VERSION}"
 
-# Env var names from config (or defaults)
-FB_PAGE_ID = os.environ.get(_fb_config.get("page_id_env", "FB_PAGE_ID"), "")
+# Env var names from config (or defaults).
+# .strip() because a secret pasted with a trailing newline is invisible in the
+# CI log (the value is masked) and produces a "does not exist" Graph error that
+# looks like a permissions problem.
+FB_PAGE_ID = os.environ.get(_fb_config.get("page_id_env", "FB_PAGE_ID"), "").strip()
 FB_PAGE_ACCESS_TOKEN = os.environ.get(
     _fb_config.get("access_token_env", "FB_PAGE_ACCESS_TOKEN"), ""
-)
+).strip()
 
 # Schedule config
 _schedule = _config.get("schedule", {})
@@ -365,6 +368,16 @@ def verify_token() -> bool:
         log.error(
             "Token cannot reach Page %s — %s",
             FB_PAGE_ID, err.get("message") or resp.text,
+        )
+        # The value itself is masked in CI logs, so describe its SHAPE instead:
+        # a trailing newline or a pasted label is invisible otherwise, and both
+        # produce this same "does not exist" error.
+        raw = os.environ.get("FB_PAGE_ID", "")
+        log.error(
+            "FB_PAGE_ID shape: length=%d, digits_only=%s, has_whitespace=%s, "
+            "leading_or_trailing_space=%s",
+            len(raw), raw.strip().isdigit(), any(c.isspace() for c in raw),
+            raw != raw.strip(),
         )
         # Which of the two causes is it? Listing the Pages this token *can*
         # reach separates "wrong FB_PAGE_ID" from "Page never assigned". Page
