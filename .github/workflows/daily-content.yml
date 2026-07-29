@@ -10,6 +10,10 @@ on:
         description: 'Preview mode: build the post in dry-run, do NOT publish or commit anything'
         type: boolean
         default: false
+      verify_only:
+        description: 'Only check that the Facebook token works. Publishes nothing.'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -51,19 +55,28 @@ jobs:
             echo "has_creds=true" >> "$GITHUB_OUTPUT"
           fi
 
+      # Token check (manual only): asks Meta who this token belongs to. Use it
+      # after rotating the token, before trusting the next scheduled run.
+      - name: Verify Facebook token only
+        if: ${{ github.event.inputs.verify_only == 'true' }}
+        env:
+          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+        run: python automation/fb_autoposter.py --verify
+
       # Preview mode (manual only): build today's post in dry-run and show it in
       # the run log. Writes nothing, commits nothing — so preview never leaves a
       # stale item behind to be posted later.
       - name: Preview post (dry-run, no publish)
-        if: ${{ github.event.inputs.skip_posting == 'true' }}
+        if: ${{ github.event.inputs.skip_posting == 'true' && github.event.inputs.verify_only != 'true' }}
         run: python automation/build_queue.py --dry-run
 
       - name: Build content queue
-        if: ${{ steps.creds.outputs.has_creds == 'true' && github.event.inputs.skip_posting != 'true' }}
+        if: ${{ steps.creds.outputs.has_creds == 'true' && github.event.inputs.skip_posting != 'true' && github.event.inputs.verify_only != 'true' }}
         run: python automation/build_queue.py
 
       - name: Run Facebook auto-poster
-        if: ${{ steps.creds.outputs.has_creds == 'true' && github.event.inputs.skip_posting != 'true' }}
+        if: ${{ steps.creds.outputs.has_creds == 'true' && github.event.inputs.skip_posting != 'true' && github.event.inputs.verify_only != 'true' }}
         env:
           FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
@@ -76,7 +89,7 @@ jobs:
       # window (losing this commit means re-posting to Facebook tomorrow).
       # Only runs when we actually posted — never in dry-run/no-token paths.
       - name: Persist pipeline state
-        if: ${{ !cancelled() && steps.creds.outputs.has_creds == 'true' && github.event.inputs.skip_posting != 'true' }}
+        if: ${{ !cancelled() && steps.creds.outputs.has_creds == 'true' && github.event.inputs.skip_posting != 'true' && github.event.inputs.verify_only != 'true' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
