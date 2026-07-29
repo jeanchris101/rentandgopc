@@ -11,20 +11,9 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.rentandgopc.com/guide-download.html">
 
-    <!-- Meta Pixel -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'YOUR_PIXEL_ID_HERE');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"/></noscript>
+    <!-- Meta Pixel: ID lives in pixel.js (single constant at the top of that file).
+         While it is still the placeholder, nothing is loaded and no events fire. -->
+    <script src="pixel.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -590,7 +579,7 @@
         <div class="container">
             <div class="form-wrapper" id="form-wrapper">
                 <h3 data-i18n="guide_form_title">Get Your Free Copy</h3>
-                <form id="guide-form" action="https://formspree.io/f/xplaceholder" method="POST">
+                <form id="guide-form" action="/api/lead/capture" method="POST">
                     <div class="form-group">
                         <label for="first-name" data-i18n="guide_label_name">First Name</label>
                         <input type="text" id="first-name" name="first_name" required placeholder="John">
@@ -617,6 +606,12 @@
                     </div>
                     <button type="submit" class="btn-submit" data-i18n="guide_submit">Get My Free Guide</button>
                 </form>
+                <!-- Shown only when POST /api/lead/capture actually fails. Never shown on success. -->
+                <div id="form-error" role="alert" style="display:none; margin-top:16px; padding:14px 16px; background:#fdecea; border:1.5px solid #f5c6cb; border-left:4px solid #c0392b; border-radius:8px; color:#7a231b; font-size:0.9rem; line-height:1.6;">
+                    <strong data-i18n="guide_error_title">We could not send your request.</strong><br>
+                    <span data-i18n="guide_error_text">Nothing was submitted. Please try again, or message me on WhatsApp and I will send you the guide directly.</span><br>
+                    <a href="https://wa.me/18094865386?text=Hola!%20Intente%20descargar%20la%20guia%20de%20compra%20y%20el%20formulario%20fallo.%20Me%20la%20puede%20enviar%3F%20(Ref%3A%20RG-GEN-W10)" target="_blank" rel="noopener" data-prop="GEN" style="display:inline-block; margin-top:10px; color:#1a3a2a; font-weight:600;" data-i18n="guide_error_wa">Send it to me on WhatsApp</a>
+                </div>
                 <p class="form-note" data-i18n="guide_no_spam">No spam, ever. Just valuable real estate insights.</p>
             </div>
 
@@ -624,7 +619,7 @@
             <div class="form-wrapper thank-you" id="thank-you">
                 <h3 data-i18n="guide_thanks_title">Thank You!</h3>
                 <p data-i18n="guide_thanks_text">Check your email for the guide. In the meantime, message me directly:</p>
-                <a href="https://wa.me/18094865386?text=Hi!%20I%20just%20downloaded%20the%20Punta%20Cana%20property%20guide" class="btn-whatsapp" target="_blank">
+                <a href="https://wa.me/18094865386?text=Hi!%20I%20just%20downloaded%20the%20Punta%20Cana%20property%20guide%20%28Ref%3A%20RG-GEN-W20%29" class="btn-whatsapp" target="_blank" data-prop="GEN">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                     <span data-i18n="guide_thanks_wa">Chat on WhatsApp</span>
                 </a>
@@ -662,7 +657,7 @@
     <section class="bottom-cta">
         <div class="container">
             <h2 data-i18n="guide_cta_title">Have questions right now?</h2>
-            <a href="https://wa.me/18094865386?text=Hi!%20I%20have%20questions%20about%20buying%20property%20in%20Punta%20Cana" class="btn-whatsapp" target="_blank">
+            <a href="https://wa.me/18094865386?text=Hi!%20I%20have%20questions%20about%20buying%20property%20in%20Punta%20Cana%20%28Ref%3A%20RG-GEN-W21%29" class="btn-whatsapp" target="_blank" data-prop="GEN">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 <span data-i18n="whatsapp_btn">WhatsApp</span>
             </a>
@@ -708,7 +703,10 @@
             guide_proof_languages: "Languages available",
             guide_trust_author: "Written by a Punta Cana-based real estate specialist",
             guide_trust_updated: "Updated for 2026 market conditions",
-            guide_cta_title: "Have questions right now?"
+            guide_cta_title: "Have questions right now?",
+            guide_error_title: "We could not send your request.",
+            guide_error_text: "Nothing was submitted. Please try again, or message me on WhatsApp and I will send you the guide directly.",
+            guide_error_wa: "Send it to me on WhatsApp"
         },
         es: {
             guide_badge: "Descarga Gratuita",
@@ -737,7 +735,10 @@
             guide_proof_languages: "Idiomas disponibles",
             guide_trust_author: "Escrita por un especialista inmobiliario en Punta Cana",
             guide_trust_updated: "Actualizada para las condiciones del mercado 2026",
-            guide_cta_title: "\u00bfTienes preguntas ahora mismo?"
+            guide_cta_title: "\u00bfTienes preguntas ahora mismo?",
+            guide_error_title: "No pudimos enviar tu solicitud.",
+            guide_error_text: "No se envi\u00f3 nada. Vuelve a intentarlo, o escr\u00edbeme por WhatsApp y te mando la gu\u00eda directamente.",
+            guide_error_wa: "Env\u00edamela por WhatsApp"
         },
         fr: {
             guide_badge: "T\u00e9l\u00e9chargement Gratuit",
@@ -766,7 +767,10 @@
             guide_proof_languages: "Langues disponibles",
             guide_trust_author: "\u00c9crit par un sp\u00e9cialiste immobilier bas\u00e9 \u00e0 Punta Cana",
             guide_trust_updated: "Mis \u00e0 jour pour les conditions du march\u00e9 2026",
-            guide_cta_title: "Tu as des questions maintenant\u00a0?"
+            guide_cta_title: "Tu as des questions maintenant\u00a0?",
+            guide_error_title: "Nous n'avons pas pu envoyer ta demande.",
+            guide_error_text: "Rien n'a \u00e9t\u00e9 envoy\u00e9. R\u00e9essaie, ou \u00e9cris-moi sur WhatsApp et je t'envoie le guide directement.",
+            guide_error_wa: "Envoie-le-moi sur WhatsApp"
         },
         ru: {
             guide_badge: "\u0411\u0435\u0441\u043f\u043b\u0430\u0442\u043d\u043e",
@@ -795,7 +799,10 @@
             guide_proof_languages: "\u0414\u043e\u0441\u0442\u0443\u043f\u043d\u044b\u0445 \u044f\u0437\u044b\u043a\u043e\u0432",
             guide_trust_author: "\u041d\u0430\u043f\u0438\u0441\u0430\u043d \u0441\u043f\u0435\u0446\u0438\u0430\u043b\u0438\u0441\u0442\u043e\u043c \u043f\u043e \u043d\u0435\u0434\u0432\u0438\u0436\u0438\u043c\u043e\u0441\u0442\u0438 \u0438\u0437 \u041f\u0443\u043d\u0442\u0430-\u041a\u0430\u043d\u044b",
             guide_trust_updated: "\u041e\u0431\u043d\u043e\u0432\u043b\u0451\u043d \u0434\u043b\u044f \u0440\u044b\u043d\u043e\u0447\u043d\u044b\u0445 \u0443\u0441\u043b\u043e\u0432\u0438\u0439 2026 \u0433\u043e\u0434\u0430",
-            guide_cta_title: "\u0415\u0441\u0442\u044c \u0432\u043e\u043f\u0440\u043e\u0441\u044b \u043f\u0440\u044f\u043c\u043e \u0441\u0435\u0439\u0447\u0430\u0441?"
+            guide_cta_title: "\u0415\u0441\u0442\u044c \u0432\u043e\u043f\u0440\u043e\u0441\u044b \u043f\u0440\u044f\u043c\u043e \u0441\u0435\u0439\u0447\u0430\u0441?",
+            guide_error_title: "\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u043e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c \u0437\u0430\u044f\u0432\u043a\u0443.",
+            guide_error_text: "\u041d\u0438\u0447\u0435\u0433\u043e \u043d\u0435 \u0431\u044b\u043b\u043e \u043e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u043e. \u041f\u043e\u043f\u0440\u043e\u0431\u0443\u0439\u0442\u0435 \u0435\u0449\u0451 \u0440\u0430\u0437 \u0438\u043b\u0438 \u043d\u0430\u043f\u0438\u0448\u0438\u0442\u0435 \u043c\u043d\u0435 \u0432 WhatsApp \u2014 \u044f \u043f\u0440\u0438\u0448\u043b\u044e \u0433\u0438\u0434 \u043d\u0430\u043f\u0440\u044f\u043c\u0443\u044e.",
+            guide_error_wa: "\u041f\u0440\u0438\u0448\u043b\u0438\u0442\u0435 \u043c\u043d\u0435 \u0435\u0433\u043e \u0432 WhatsApp"
         }
     };
 
@@ -825,28 +832,60 @@
     }
     syncFormLanguage();
 
-    // Form submission with thank-you swap
+    // Form submission -> POST /api/lead/capture
+    // Contract: { source, name, email, phone, propertySlug, ref, page, meta }
+    // Response:  { ok: true, id }  |  { error }
+    // The thank-you screen is only shown when the API confirms ok:true. On any
+    // failure the visitor is told the truth and offered the WhatsApp fallback.
     const guideForm = document.getElementById('guide-form');
     if (guideForm) {
         guideForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const formData = new FormData(guideForm);
+
+            const submitBtn = guideForm.querySelector('button[type="submit"]');
+            const errorBox = document.getElementById('form-error');
+            errorBox.style.display = 'none';
+            if (submitBtn) submitBtn.disabled = true;
+
+            const payload = {
+                source: 'guide-download',
+                name: guideForm.elements['first_name'].value.trim(),
+                email: guideForm.elements['email'].value.trim(),
+                // The visitor's WhatsApp number used to be collected and dropped on the
+                // floor. It is now sent through as `phone`.
+                phone: guideForm.elements['whatsapp'].value.trim(),
+                propertySlug: 'GEN',
+                ref: 'RG-GEN-W8',
+                page: window.location.pathname,
+                meta: {
+                    preferred_language: guideForm.elements['preferred_language'].value
+                }
+            };
 
             fetch(guideForm.action, {
                 method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(payload)
             }).then(function(response) {
-                if (response.ok) {
+                return response.json().catch(function() { return {}; });
+            }).then(function(data) {
+                if (data && data.ok) {
                     showThankYou();
                 } else {
-                    // Still show thank you on error (Formspree placeholder will fail)
-                    showThankYou();
+                    showFormError();
                 }
             }).catch(function() {
-                showThankYou();
+                showFormError();
             });
         });
+    }
+
+    function showFormError() {
+        const submitBtn = document.querySelector('#guide-form button[type="submit"]');
+        if (submitBtn) submitBtn.disabled = false;
+        const errorBox = document.getElementById('form-error');
+        errorBox.style.display = 'block';
+        errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     function showThankYou() {

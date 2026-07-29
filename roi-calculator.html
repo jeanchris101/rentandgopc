@@ -4,20 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROI & Rental Income Calculator | Rent & Go PC</title>
-    <!-- Meta Pixel -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'YOUR_PIXEL_ID_HERE');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"/></noscript>
+    <!-- Meta Pixel: ID lives in pixel.js (single constant at the top of that file).
+         While it is still the placeholder, nothing is loaded and no events fire. -->
+    <script src="pixel.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -895,9 +884,15 @@
                         <input type="email" id="lead-email" placeholder="Email" required style="flex:1.5; min-width:180px; padding:10px 14px; border:1.5px solid var(--border); border-radius:8px; font-family:inherit; font-size:0.9rem;">
                         <button type="submit" style="padding:10px 20px; background:var(--primary); color:white; border:none; border-radius:8px; font-weight:600; font-size:0.9rem; cursor:pointer; white-space:nowrap;">Send My Report</button>
                     </form>
+                    <!-- Shown only when POST /api/lead/capture actually fails. Never shown on success. -->
+                    <div id="lead-error" role="alert" style="display:none; margin-top:12px; padding:12px 14px; background:#fdecea; border:1.5px solid #f5c6cb; border-left:4px solid #c0392b; border-radius:8px; color:#7a231b; font-size:0.85rem; line-height:1.55;">
+                        <strong>We could not send your request.</strong><br>
+                        Nothing was submitted. Please try again, or message me on WhatsApp and I'll send the report directly.<br>
+                        <a href="https://wa.me/18094865386?text=Hola!%20Use%20la%20calculadora%20de%20ROI%20y%20el%20formulario%20fallo.%20Me%20puede%20enviar%20el%20reporte%3F%20(Ref%3A%20RG-GEN-W11)" target="_blank" rel="noopener" data-prop="GEN" style="display:inline-block; margin-top:8px; color:#1a3a2a; font-weight:600;">Send it to me on WhatsApp</a>
+                    </div>
                     <div id="lead-success" style="display:none; text-align:center; padding:12px 0;">
                         <p style="color:var(--green); font-weight:600; font-size:0.95rem;">Sent! Check your inbox. Or message me directly:</p>
-                        <a href="https://wa.me/18094865386?text=Hi!%20I%20just%20used%20the%20ROI%20calculator%20and%20want%20to%20learn%20more" target="_blank" style="display:inline-block; margin-top:8px; padding:8px 20px; background:#25D366; color:white; border-radius:8px; text-decoration:none; font-weight:600; font-size:0.85rem;">Chat on WhatsApp</a>
+                        <a href="https://wa.me/18094865386?text=Hi!%20I%20just%20used%20the%20ROI%20calculator%20and%20want%20to%20learn%20more%20%28Ref%3A%20RG-GEN-W31%29" target="_blank" style="display:inline-block; margin-top:8px; padding:8px 20px; background:#25D366; color:white; border-radius:8px; text-decoration:none; font-weight:600; font-size:0.85rem;" data-prop="GEN">Chat on WhatsApp</a>
                     </div>
                 </div>
 
@@ -1008,7 +1003,8 @@
     <section class="cta-section">
         <h2>Want personalized numbers for a specific property?</h2>
         <p>I can run the real numbers on any listing and help you find the best investment for your goals.</p>
-        <a href="https://wa.me/18094865386" target="_blank" rel="noopener" class="btn-whatsapp">
+        <!-- Lead ref RG-GEN-W7 (full ref map: index.html, footer contact link) -->
+        <a href="https://wa.me/18094865386?text=Hola!%20Use%20la%20calculadora%20de%20ROI%20y%20quisiera%20mas%20informacion%20sobre%20propiedades%20en%20Punta%20Cana.%20(Ref%3A%20RG-GEN-W7)" target="_blank" rel="noopener" class="btn-whatsapp" data-prop="GEN">
             <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Message me on WhatsApp
         </a>
@@ -1180,27 +1176,69 @@
             }, 2000);
         }
 
+        // POST /api/lead/capture
+        // Contract: { source, name, email, phone, propertySlug, ref, page, meta }
+        // Response:  { ok: true, id }  |  { error }
+        // Success is only shown when the API confirms ok:true.
         function submitRoiLead(e) {
             e.preventDefault();
-            var name = document.getElementById('lead-name').value;
-            var email = document.getElementById('lead-email').value;
-            // Send to Formspree (replace with real endpoint)
-            fetch('https://formspree.io/f/xplaceholder', {
+
+            var form = document.getElementById('roi-lead-form');
+            var submitBtn = form.querySelector('button[type="submit"]');
+            document.getElementById('lead-error').style.display = 'none';
+            if (submitBtn) submitBtn.disabled = true;
+
+            var payload = {
+                source: 'roi-calculator',
+                name: document.getElementById('lead-name').value.trim(),
+                email: document.getElementById('lead-email').value.trim(),
+                phone: '',
+                propertySlug: 'GEN',
+                ref: 'RG-GEN-W9',
+                page: window.location.pathname,
+                meta: {
+                    price: getVal('price'),
+                    downpayment_pct: getVal('downpayment'),
+                    nightly_rate: getVal('nightly'),
+                    occupancy_pct: getVal('occupancy'),
+                    hoa_monthly: getVal('hoa'),
+                    management_pct: getVal('management'),
+                    utilities_monthly: getVal('utilities'),
+                    roi: document.getElementById('roiResult').textContent,
+                    monthly_net: document.getElementById('monthlyResult').textContent,
+                    annual_net: document.getElementById('netResult').textContent
+                }
+            };
+
+            fetch('/api/lead/capture', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    source: 'ROI Calculator',
-                    roi_data: document.getElementById('shareBtn') ? document.querySelector('.result-value').textContent : ''
-                })
-            }).catch(function() {});
-            // Always show success (even if formspree placeholder fails)
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(function(response) {
+                return response.json().catch(function() { return {}; });
+            }).then(function(data) {
+                if (data && data.ok) {
+                    showRoiLeadSuccess();
+                } else {
+                    showRoiLeadError(submitBtn);
+                }
+            }).catch(function() {
+                showRoiLeadError(submitBtn);
+            });
+        }
+
+        function showRoiLeadSuccess() {
             document.getElementById('roi-lead-form').style.display = 'none';
+            document.getElementById('lead-error').style.display = 'none';
             document.getElementById('lead-success').style.display = 'block';
             if (typeof fbq === 'function') {
                 fbq('track', 'Lead', { content_name: 'ROI Calculator Report' });
             }
+        }
+
+        function showRoiLeadError(submitBtn) {
+            if (submitBtn) submitBtn.disabled = false;
+            document.getElementById('lead-error').style.display = 'block';
         }
 
         // Initial calculation
