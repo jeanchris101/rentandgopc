@@ -973,8 +973,11 @@ def main():
     elif args.status:
         cmd_status()
     elif args.verify:
-        if validate_credentials():
-            verify_token()
+        # Exit non-zero on failure: without this the CI step goes green on a
+        # broken token, which is the exact silent success we are trying to
+        # avoid by having a verify mode at all.
+        if not validate_credentials() or not verify_token():
+            sys.exit(1)
     elif args.schedule:
         cmd_schedule()
     else:
