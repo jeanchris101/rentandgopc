@@ -323,20 +323,57 @@ def validate_credentials() -> bool:
 
 
 def verify_token() -> bool:
-    """Verify the page access token is valid."""
-    url = f"{GRAPH_API_BASE}/me"
-    params = {"access_token": FB_PAGE_ACCESS_TOKEN}
+    """Check the token is live AND that it can actually reach FB_PAGE_ID.
+
+    /me alone is not enough: a system user token answers it with the system
+    user's own name, so it looks healthy even when FB_PAGE_ID is the wrong
+    number or the Page was never assigned to that user. Both of those fail only
+    at publish time, which for a cron job means a silent gap. So we also read
+    the Page itself and report its real name back.
+    """
     try:
-        resp = requests.get(url, params=params, timeout=10)
-        if resp.status_code == 200:
-            data = resp.json()
-            log.info("Token valid. Page: %s (ID: %s)", data.get("name"), data.get("id"))
-            return True
-        log.error("Token verification failed: %s", resp.text)
-        return False
+        resp = requests.get(
+            f"{GRAPH_API_BASE}/me",
+            params={"access_token": FB_PAGE_ACCESS_TOKEN},
+            timeout=10,
+        )
+        if resp.status_code != 200:
+            log.error("Token verification failed: %s", resp.text)
+            return False
+        me = resp.json()
+        log.info("Token identity: %s (ID: %s)", me.get("name"), me.get("id"))
     except requests.RequestException as e:
         log.error("Token verification request failed: %s", e)
         return False
+
+    if not FB_PAGE_ID:
+        log.error("FB_PAGE_ID is not set — cannot confirm Page access")
+        return False
+
+    try:
+        resp = requests.get(
+            f"{GRAPH_API_BASE}/{FB_PAGE_ID}",
+            params={"fields": "id,name,category", "access_token": FB_PAGE_ACCESS_TOKEN},
+            timeout=10,
+        )
+    except requests.RequestException as e:
+        log.error("Page check request failed: %s", e)
+        return False
+
+    if resp.status_code != 200:
+        err = _parse_graph_error(resp)
+        log.error(
+            "Token cannot reach Page %s — %s. Check that FB_PAGE_ID is the Page ID "
+            "(not the app or system-user ID) and that the Page is assigned to this "
+            "system user with the 'Create content' task.",
+            FB_PAGE_ID, err.get("message") or resp.text,
+        )
+        return False
+
+    page = resp.json()
+    log.info("Page reachable: %s (ID: %s, %s)",
+             page.get("name"), page.get("id"), page.get("category"))
+    return True
 
 
 def _to_int(value) -> int | None:
