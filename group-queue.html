@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Cola de Grupos | Punta Cana Rent &amp; Go</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --primary: #1a3a2a;
+  --primary-soft: #2d5a3f;
+  --accent: #c8a45e;
+  --accent-soft: #d4b36a;
+  --bg: #f5f5f0;
+  --card: #ffffff;
+  --text: #2c2c2c;
+  --text-light: #666;
+  --border: #e8e5df;
+  --green: #22c55e;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --amber: #f59e0b;
+  --gray: #9ca3af;
+  --radius: 12px;
+}
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.5;
+  padding-bottom: 60px;
+}
+button, input, textarea, select { font-family: inherit; font-size: inherit; color: inherit; }
+button { cursor: pointer; }
+button[disabled] { cursor: not-allowed; opacity: 0.5; }
+a { color: var(--primary-soft); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+[hidden] { display: none !important; }
+
+/* ---------- Login ---------- */
+.login-screen {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--primary); padding: 20px;
+}
+.login-box {
+  background: var(--card); padding: 36px 32px; border-radius: 16px; width: 100%; max-width: 380px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center;
+}
+.login-box img { height: 56px; margin-bottom: 18px; }
+.login-box h2 { font-size: 1.2rem; margin-bottom: 6px; color: var(--primary); }
+.login-box p.sub { font-size: 0.85rem; color: var(--text-light); margin-bottom: 20px; }
+.login-box input {
+  width: 100%; padding: 12px 16px; border: 2px solid var(--border); border-radius: 10px;
+  margin-bottom: 12px; outline: none; transition: border-color 0.2s;
+}
+.login-box input:focus { border-color: var(--accent); }
+.login-box button {
+  width: 100%; padding: 13px; background: var(--primary); color: #fff; border: none;
+  border-radius: 10px; font-weight: 600; transition: background 0.2s;
+}
+.login-box button:hover { background: var(--primary-soft); }
+.login-error { color: var(--red); font-size: 0.85rem; margin-top: 10px; }
+
+/* ---------- Top bar ---------- */
+.topbar {
+  background: var(--primary); color: #fff; padding: 12px 18px;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  position: sticky; top: 0; z-index: 40;
+}
+.topbar h1 { font-size: 1rem; font-weight: 600; white-space: nowrap; }
+.topbar .date { font-size: 0.8rem; opacity: 0.72; white-space: nowrap; }
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 20px;
+  font-size: 0.76rem; font-weight: 600; background: rgba(255,255,255,0.14); white-space: nowrap;
+}
+.chip b { background: var(--accent); color: #14261c; border-radius: 10px; padding: 0 7px; }
+.chip.gold { background: rgba(200,164,94,0.28); }
+.icon-btn {
+  background: rgba(255,255,255,0.14); border: none; color: #fff; border-radius: 8px;
+  padding: 7px 12px; font-size: 0.78rem; font-weight: 600;
+}
+.icon-btn:hover { background: rgba(255,255,255,0.24); }
+
+/* ---------- Layout ---------- */
+.wrap { max-width: 780px; margin: 0 auto; padding: 16px 14px 40px; }
+.section-title {
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.9px; color: var(--text-light);
+  font-weight: 700; margin: 26px 0 10px;
+}
+.section-title:first-child { margin-top: 0; }
+
+/* ---------- Rules strip ---------- */
+.rules {
+  background: #fffdf6; border: 1px solid #ecdfba; border-left: 4px solid var(--accent);
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 18px; font-size: 0.84rem;
+}
+.rules h3 { font-size: 0.8rem; color: var(--primary); margin-bottom: 6px; }
+.rules ol { margin: 0 0 0 18px; color: var(--text-light); }
+.rules li { margin: 3px 0; }
+.rules li b { color: var(--text); }
+
+/* ---------- Assignment card ---------- */
+.card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  margin-bottom: 18px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.card.focused { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,164,94,0.22); }
+.card.done { opacity: 0.62; }
+.card-head { padding: 14px 16px; border-bottom: 1px solid var(--border); background: #fbfaf7; }
+.card-badges { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 7px; }
+.badge {
+  padding: 3px 9px; border-radius: 12px; font-size: 0.68rem; font-weight: 700;
+  line-height: 1.5; white-space: nowrap;
+}
+.badge-code { background: var(--primary); color: #fff; }
+.badge-lang { color: #fff; text-transform: uppercase; }
+.badge-lang.en { background: var(--blue); }
+.badge-lang.es { background: var(--primary-soft); }
+.badge-lang.fr { background: #8b5cf6; }
+.badge-ref { background: rgba(200,164,94,0.2); color: #7a5f1e; border: 1px solid rgba(200,164,94,0.5); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.badge-done { background: rgba(34,197,94,0.15); color: #15803d; }
+.card-group { font-size: 1.02rem; font-weight: 700; color: var(--primary); line-height: 1.35; }
+.card-prop { font-size: 0.84rem; color: var(--text-light); margin-top: 3px; }
+
+/* ---------- Steps ---------- */
+.step { padding: 14px 16px; border-bottom: 1px dashed var(--border); }
+.step:last-child { border-bottom: none; }
+.step-head { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.step-num {
+  flex: 0 0 24px; height: 24px; border-radius: 50%; background: var(--primary); color: #fff;
+  font-size: 0.74rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
+}
+.step-label { font-size: 0.9rem; font-weight: 600; padding-top: 2px; }
+.step-note { font-size: 0.79rem; color: var(--text-light); font-weight: 400; display: block; margin-top: 2px; }
+.step-body { padding-left: 34px; }
+
+.text-block {
+  background: #fafaf7; border: 1px solid var(--border); border-radius: 9px; padding: 12px 13px;
+  font-size: 0.88rem; line-height: 1.6; white-space: pre-wrap; word-break: break-word;
+  max-height: 340px; overflow-y: auto; margin-bottom: 10px;
+  -webkit-user-select: text; user-select: text;
+}
+.text-block.link {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.76rem;
+  background: #f3f7f4; border-color: #d8e6dd;
+}
+.text-block.picked { outline: 2px solid var(--accent); }
+
+.thumb-row { display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+.thumb {
+  width: 132px; height: 99px; border-radius: 9px; border: 1px solid var(--border);
+  object-fit: cover; background: #eee; display: block; flex-shrink: 0;
+}
+.thumb-fallback {
+  width: 132px; height: 99px; border-radius: 9px; border: 1px dashed var(--border);
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  font-size: 0.7rem; color: var(--text-light); padding: 6px; flex-shrink: 0;
+}
+.thumb-meta { font-size: 0.78rem; color: var(--text-light); flex: 1 1 160px; min-width: 150px; }
+.thumb-meta code { font-size: 0.74rem; word-break: break-all; }
+
+/* ---------- Buttons ---------- */
+.btn-row { display: flex; gap: 9px; flex-wrap: wrap; }
+.btn {
+  min-height: 44px; padding: 11px 17px; border-radius: 9px; border: none; font-size: 0.85rem;
+  font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  transition: background 0.15s, border-color 0.15s; line-height: 1.2; text-decoration: none;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-soft); }
+.btn-gold { background: var(--accent); color: #14261c; flex: 1 1 190px; }
+.btn-gold:hover { background: var(--accent-soft); }
+.btn-gold.copied { background: var(--green); color: #fff; }
+.btn-done { background: var(--green); color: #fff; flex: 1 1 170px; }
+.btn-done:hover { background: #16a34a; }
+.btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-light); }
+.btn-ghost:hover { border-color: var(--text-light); color: var(--text); }
+.btn-skip { background: transparent; border: 1px solid rgba(239,68,68,0.35); color: var(--red); }
+.btn-skip:hover { background: rgba(239,68,68,0.07); }
+
+/* ---------- Empty / info panels ---------- */
+.panel {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px 18px;
+}
+.empty { text-align: center; padding: 30px 20px; }
+.empty h2 { font-size: 1.06rem; color: var(--primary); margin-bottom: 9px; }
+.empty p { font-size: 0.9rem; color: var(--text-light); max-width: 520px; margin: 0 auto 14px; }
+.empty .free-list { text-align: left; max-width: 420px; margin: 0 auto; }
+
+/* ---------- Group / history rows ---------- */
+.row {
+  display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap;
+  padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem;
+}
+.row:last-child { border-bottom: none; }
+.row-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 700;
+  color: var(--primary); flex: 0 0 34px;
+}
+.row-name { flex: 1 1 190px; min-width: 150px; font-weight: 500; }
+.row-sub { flex: 1 1 200px; color: var(--text-light); font-size: 0.79rem; }
+.row-tag {
+  margin-left: auto; font-size: 0.72rem; font-weight: 700; padding: 3px 9px; border-radius: 11px;
+  white-space: nowrap;
+}
+.tag-free { background: rgba(34,197,94,0.14); color: #15803d; }
+.tag-cool { background: rgba(245,158,11,0.16); color: #92400e; }
+.tag-skip { background: rgba(156,163,175,0.2); color: #4b5563; }
+.tag-today { background: rgba(59,130,246,0.14); color: #1d4ed8; }
+
+/* ---------- Toast ---------- */
+.toasts {
+  position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 99;
+  display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none;
+  width: calc(100% - 24px); max-width: 460px;
+}
+.toast {
+  padding: 11px 18px; border-radius: 9px; font-size: 0.84rem; font-weight: 600; color: #fff;
+  opacity: 0; transform: translateY(10px); transition: all 0.25s; text-align: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.ok { background: var(--green); }
+.toast.info { background: var(--primary-soft); }
+.toast.warn { background: var(--red); }
+
+/* ---------- Help modal ---------- */
+.modal {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 90;
+  display: flex; align-items: center; justify-content: center; padding: 18px;
+}
+.modal-box {
+  background: var(--card); border-radius: 14px; padding: 24px 22px; max-width: 520px; width: 100%;
+  max-height: 84vh; overflow-y: auto;
+}
+.modal-box h2 { font-size: 1.05rem; color: var(--primary); margin-bottom: 12px; }
+.modal-box h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.7px; color: var(--text-light); margin: 16px 0 7px; }
+.modal-box ol, .modal-box ul { margin-left: 18px; font-size: 0.87rem; }
+.modal-box li { margin: 5px 0; }
+.modal-box kbd {
+  background: #eee; border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 5px;
+  padding: 1px 6px; font-family: ui-monospace, Menlo, monospace; font-size: 0.78rem;
+}
+
+.kbd-hint {
+  position: fixed; bottom: 8px; right: 12px; font-size: 0.68rem; color: var(--text-light);
+  opacity: 0.55; display: none; background: var(--bg); padding: 2px 6px; border-radius: 5px;
+}
+.footer { text-align: center; font-size: 0.74rem; color: var(--text-light); padding: 8px 16px 0; }
+
+@media (min-width: 780px) { .kbd-hint { display: block; } }
+
+@media (max-width: 620px) {
+  .topbar { padding: 10px 12px; gap: 8px; }
+  .topbar h1 { font-size: 0.92rem; }
+  .topbar .date { display: none; }
+  .wrap { padding: 12px 10px 32px; }
+  .step { padding: 12px 12px; }
+  .step-body { padding-left: 0; }
+  .card-head { padding: 12px 12px; }
+  .btn-gold, .btn-done { flex: 1 1 100%; }
+  .thumb, .thumb-fallback { width: 100%; height: 190px; }
+  .text-block { font-size: 0.85rem; max-height: 260px; }
+  .row-tag { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ 0. CARGANDO ============
+     Mientras se comprueba la cookie no se sabe si toca login o panel. Sin esto
+     la pantalla queda en blanco, o peor: sale el login y desaparece solo. -->
+<div class="login-screen" id="screenLoading">
+  <div class="login-box">
+    <img src="images/logo.png" alt="Punta Cana Rent &amp; Go">
+    <h2>Cola de Grupos</h2>
+    <p class="sub">Cargando el plan de hoy&hellip;</p>
+  </div>
+</div>
+
+<!-- ============ 1. LOGIN ============ -->
+<div class="login-screen" id="screenLogin" hidden>
+  <div class="login-box">
+    <img src="images/logo.png" alt="Punta Cana Rent &amp; Go">
+    <h2>Cola de Grupos</h2>
+    <p class="sub">La misma contrase&ntilde;a del panel de WhatsApp.</p>
+    <input type="password" id="loginPass" placeholder="Contrase&ntilde;a" autocomplete="current-password">
+    <button id="loginBtn" type="button">Entrar</button>
+    <div class="login-error" id="loginError" hidden></div>
+  </div>
+</div>
+
+<!-- ============ 2. APP ============ -->
+<div id="app" hidden>
+  <header class="topbar">
+    <h1>Cola de Grupos</h1>
+    <span class="date" id="topDate"></span>
+    <div class="topbar-right">
+      <span class="chip gold" id="chipToday">Hoy <b>0/3</b></span>
+      <span class="chip" id="chipFree">Libres <b>0</b></span>
+      <button class="icon-btn" id="helpBtn" type="button">Ayuda</button>
+      <button class="icon-btn" id="reloadBtn" type="button">Actualizar</button>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="rules">
+      <h3>Las reglas que este panel respeta por ti</h3>
+      <ol>
+        <li><b>1 post por grupo cada 7 d&iacute;as.</b> No se relaja nunca.</li>
+        <li><b>M&aacute;ximo 3 grupos al d&iacute;a</b>, con propiedad distinta en cada uno.</li>
+        <li><b>El link va en el primer comentario</b>, jam&aacute;s en el post: los admins borran los posts con links.</li>
+      </ol>
+    </div>
+
+    <div id="queue"></div>
+    <div id="groupsPanel"></div>
+    <div id="historyPanel"></div>
+    <div class="footer">Meta cerr&oacute; la API de grupos en abril 2024. Este panel arma el trabajo; publicar lo haces t&uacute;.</div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+<div class="kbd-hint" id="kbdHint">o=abrir &middot; c=post &middot; x=comentario &middot; d=publicado &middot; s=saltar &middot; j/k=navegar</div>
+
+<!-- ============ 3. AYUDA ============ -->
+<div class="modal" id="helpModal" hidden>
+  <div class="modal-box">
+    <h2>C&oacute;mo se usa</h2>
+    <ol>
+      <li><b>Abre el grupo</b> con el bot&oacute;n de la tarjeta (se abre en otra pesta&ntilde;a).</li>
+      <li><b>Baja la foto</b> o arr&aacute;strala al cuadro de publicaci&oacute;n de Facebook.</li>
+      <li><b>Copia el post</b> y publ&iacute;calo junto con la foto. El texto no lleva ning&uacute;n link a prop&oacute;sito.</li>
+      <li><b>Copia el comentario</b> y p&eacute;galo como <b>primer comentario</b> de tu propio post. Ah&iacute; va el link de WhatsApp.</li>
+      <li><b>Marca &laquo;Ya lo publiqu&eacute;&raquo;</b>. Eso arranca el cooldown de 7 d&iacute;as del grupo y deja registrado el ref.</li>
+    </ol>
+
+    <h3>Por qu&eacute; el ref importa</h3>
+    <p style="font-size:0.87rem;color:#666">Cada asignaci&oacute;n lleva un ref como <code>RG-A301-G04</code>: propiedad A301, grupo G04. Cuando un lead escribe por WhatsApp, el ref viaja en el mensaje. A los 30 d&iacute;as sabes qu&eacute; grupos te dan compradores de verdad y en cu&aacute;les est&aacute;s perdiendo el tiempo.</p>
+
+    <h3>Saltar vs publicar</h3>
+    <p style="font-size:0.87rem;color:#666"><b>Saltar este</b> quita el grupo de la lista de hoy pero <b>no</b> gasta su semana: ma&ntilde;ana vuelve a estar disponible. <b>Ya lo publiqu&eacute;</b> s&iacute; arranca los 7 d&iacute;as.</p>
+
+    <h3>Atajos de teclado</h3>
+    <ul>
+      <li><kbd>j</kbd> / <kbd>k</kbd> moverse entre tarjetas</li>
+      <li><kbd>o</kbd> abrir el grupo &middot; <kbd>c</kbd> copiar el post &middot; <kbd>x</kbd> copiar el comentario</li>
+      <li><kbd>d</kbd> ya lo publiqu&eacute; &middot; <kbd>s</kbd> saltar este</li>
+      <li><kbd>?</kbd> esta ayuda &middot; <kbd>Esc</kbd> cerrar</li>
+    </ul>
+    <div class="btn-row" style="margin-top:18px">
+      <button class="btn btn-primary" id="helpClose" type="button" style="flex:1">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   HELPERS DE DOM
+   Regla dura de este archivo: NADA se inserta con innerHTML. Todo pasa por
+   textContent (el helper el()) o por setAttribute con valores validados. El
+   texto lo generan nuestras propias plantillas, pero la regla se mantiene: el
+   dia que un nombre de grupo lo escriba otra persona, aqui se ve como texto.
+   ========================================================================= */
+function el(tag, cls, text) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text !== undefined && text !== null) n.textContent = String(text);
+  return n;
+}
+function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+function $(id) { return document.getElementById(id); }
+
+/* Solo http(s) o ruta relativa. Bloquea javascript: y demas si el backend
+   devolviera algo raro. Mismo criterio que whatsapp.html. */
+function safeUrl(url) {
+  if (typeof url !== 'string' || !url) return null;
+  const u = url.trim();
+  if (/^https?:\/\//i.test(u)) return u;
+  if (/^\/[^/]/.test(u) || /^[\w.-]+\/[\w./-]*$/.test(u)) return u;
+  return null;
+}
+
+const LANG_NAME = { en: 'Ingles', es: 'Espanol', fr: 'Frances' };
+const isTouch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+
+/* =========================================================================
+   ESTADO
+   ========================================================================= */
+const state = { plan: null, focused: -1, busy: false, screen: 'loading' };
+
+/* =========================================================================
+   CAPA DE API
+   ========================================================================= */
+class ApiError extends Error {
+  constructor(message, status) { super(message); this.status = status; }
+}
+async function api(path, options) {
+  const opts = Object.assign({ credentials: 'same-origin', headers: {} }, options || {});
+  if (opts.body !== undefined && typeof opts.body !== 'string') {
+    opts.headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(opts.body);
+    opts.method = opts.method || 'POST';
+  }
+  let res;
+  try {
+    res = await fetch(path, opts);
+  } catch (e) {
+    throw new ApiError('No hay conexion con el servidor.', 0);
+  }
+  if (res.status === 401 || res.status === 403) {
+    throw new ApiError('La sesion del panel se vencio.', res.status);
+  }
+  let data = null;
+  try { data = await res.json(); } catch (e) { data = null; }
+  if (!res.ok) {
+    const msg = (data && (data.error || data.message)) || ('El servidor respondio ' + res.status + '.');
+    throw new ApiError(String(msg), res.status);
+  }
+  return data || {};
+}
+
+/* =========================================================================
+   TOASTS
+   ========================================================================= */
+function toast(msg, kind) {
+  const host = $('toasts');
+  const t = el('div', 'toast ' + (kind || 'ok'), msg);
+  host.appendChild(t);
+  requestAnimationFrame(() => t.classList.add('show'));
+  setTimeout(() => {
+    t.classList.remove('show');
+    setTimeout(() => { if (t.parentNode) t.parentNode.removeChild(t); }, 260);
+  }, 2800);
+}
+
+/* =========================================================================
+   PORTAPAPELES
+   navigator.clipboard falla en http, en algunos WebView y si el gesto no
+   cuenta como interaccion. En ese caso no dejamos al dueno sin salida: le
+   seleccionamos el bloque entero para que copie a mano.
+   ========================================================================= */
+function selectBlock(block) {
+  if (!block) return false;
+  try {
+    const range = document.createRange();
+    range.selectNodeContents(block);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    block.classList.add('picked');
+    setTimeout(() => block.classList.remove('picked'), 4000);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+async function copyText(text, btn, block, label) {
+  const original = btn ? btn.textContent : '';
+  try {
+    if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('sin clipboard');
+    await navigator.clipboard.writeText(String(text));
+    if (btn) {
+      btn.classList.add('copied');
+      btn.textContent = 'Copiado';
+      setTimeout(() => { btn.classList.remove('copied'); btn.textContent = original; }, 2000);
+    }
+    toast(label + ' copiado', 'ok');
+    return true;
+  } catch (e) {
+    if (selectBlock(block)) {
+      toast(isTouch
+        ? 'El navegador bloqueo el copiado. Te lo deje seleccionado: manten pulsado y toca Copiar.'
+        : 'El navegador bloqueo el copiado. Te lo deje seleccionado: pulsa Ctrl+C.', 'warn');
+    } else {
+      toast('No pude copiar ni seleccionar el texto. Copialo a mano.', 'warn');
+    }
+    return false;
+  }
+}
+
+/* =========================================================================
+   FORMATO
+   ========================================================================= */
+function dayLabel(iso) {
+  if (typeof iso !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return String(iso || '');
+  const [y, m, d] = iso.split('-').map(Number);
+  const names = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+  return `${d} ${names[m - 1]} ${y}`;
+}
+function plural(n, one, many) { return n === 1 ? one : many; }
+/* "Falta 1 dia" / "Faltan 3 dias": el verbo tambien concuerda, no solo el nombre. */
+function daysLeft(n) { return n === 1 ? 'Falta 1 dia' : `Faltan ${n} dias`; }
+
+/* =========================================================================
+   TARJETA DE ASIGNACION
+   El orden de los pasos ES el flujo: abrir -> foto -> copiar post -> publicar
+   -> copiar comentario -> comentar -> marcar.
+   ========================================================================= */
+function stepNode(num, label, note) {
+  const step = el('div', 'step');
+  const head = el('div', 'step-head');
+  head.appendChild(el('div', 'step-num', num));
+  const wrap = el('div', 'step-label', label);
+  if (note) wrap.appendChild(el('span', 'step-note', note));
+  head.appendChild(wrap);
+  step.appendChild(head);
+  const body = el('div', 'step-body');
+  step.appendChild(body);
+  return { step, body };
+}
+
+function renderCard(a, idx) {
+  const card = el('div', 'card' + (a.alreadyPosted ? ' done' : ''));
+  card.id = 'card-' + idx;
+  card.dataset.idx = String(idx);
+
+  /* ---- Cabecera: paso 1 empieza aqui ---- */
+  const head = el('div', 'card-head');
+  const badges = el('div', 'card-badges');
+  badges.appendChild(el('span', 'badge badge-code', a.groupCode));
+  badges.appendChild(el('span', 'badge badge-lang ' + a.lang, LANG_NAME[a.lang] || a.lang));
+  badges.appendChild(el('span', 'badge badge-ref', a.ref));
+  if (a.alreadyPosted) badges.appendChild(el('span', 'badge badge-done', 'Ya publicado'));
+  head.appendChild(badges);
+  head.appendChild(el('div', 'card-group', a.groupName));
+  head.appendChild(el('div', 'card-prop',
+    `${a.propertyShortName || a.propertyName} - ${a.priceDisplay}`));
+  card.appendChild(head);
+
+  /* ---- 1. Abrir el grupo ---- */
+  const s1 = stepNode('1', 'Abre el grupo en Facebook',
+    'Se abre en otra pestana. Deja este panel abierto al lado.');
+  const groupUrl = safeUrl(a.groupUrl);
+  if (groupUrl) {
+    const link = el('a', 'btn btn-primary', 'Abrir ' + a.groupCode + ' en Facebook');
+    link.setAttribute('href', groupUrl);
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer');
+    link.dataset.role = 'open';
+    const row = el('div', 'btn-row');
+    row.appendChild(link);
+    s1.body.appendChild(row);
+  } else {
+    s1.body.appendChild(el('div', 'thumb-meta', 'Este grupo no tiene URL en group-assist-config.json.'));
+  }
+  card.appendChild(s1.step);
+
+  /* ---- 2. La foto ---- */
+  const s2 = stepNode('2', 'Prepara la foto',
+    isTouch ? 'Abrela, mantenla pulsada y guardala en el telefono.'
+            : 'Abrela y arrastrala al cuadro de publicacion, o guardala.');
+  const row2 = el('div', 'thumb-row');
+  const imgUrl = safeUrl(a.imageUrl);
+  if (imgUrl) {
+    const img = document.createElement('img');
+    img.className = 'thumb';
+    img.alt = 'Foto de ' + (a.propertyShortName || a.propertyName);
+    img.loading = 'lazy';
+    img.setAttribute('src', imgUrl);
+    // Si la foto no carga (ruta movida, sin conexion) se dice, no se deja el icono roto.
+    img.addEventListener('error', () => {
+      const fb = el('div', 'thumb-fallback', 'No pude cargar la foto. Busca ' + (a.imageFilename || '') + ' en el sitio.');
+      if (img.parentNode) img.parentNode.replaceChild(fb, img);
+    });
+    row2.appendChild(img);
+  } else {
+    row2.appendChild(el('div', 'thumb-fallback', 'Esta propiedad no tiene foto en post_images.'));
+  }
+  const meta = el('div', 'thumb-meta');
+  if (a.imageFilename) {
+    meta.appendChild(el('div', null, a.imageFilename));
+  }
+  if (imgUrl) {
+    const openImg = el('a', 'btn btn-ghost', 'Abrir foto completa');
+    openImg.setAttribute('href', imgUrl);
+    openImg.setAttribute('target', '_blank');
+    openImg.setAttribute('rel', 'noopener noreferrer');
+    openImg.style.marginTop = '8px';
+    meta.appendChild(openImg);
+  }
+  row2.appendChild(meta);
+  s2.body.appendChild(row2);
+  card.appendChild(s2.step);
+
+  /* ---- 3. El POST (sin links) ---- */
+  const s3 = stepNode('3', 'Copia el post y publicalo con la foto',
+    'No lleva ningun link a proposito: Facebook entierra los posts de grupo con links externos.');
+  const postBlock = el('div', 'text-block', a.postText);
+  postBlock.id = 'post-' + idx;
+  s3.body.appendChild(postBlock);
+  const row3 = el('div', 'btn-row');
+  const copyPost = el('button', 'btn btn-gold', 'Copiar post');
+  copyPost.type = 'button';
+  copyPost.dataset.role = 'copy-post';
+  copyPost.addEventListener('click', () => copyText(a.postText, copyPost, postBlock, 'Post'));
+  row3.appendChild(copyPost);
+  s3.body.appendChild(row3);
+  card.appendChild(s3.step);
+
+  /* ---- 4. El COMENTARIO (aqui si va el link) ---- */
+  const s4 = stepNode('4', 'Copia el comentario y pegalo de PRIMER comentario',
+    'En tu propio post, en cuanto se publique. Aqui va el link de WhatsApp con el ref del grupo.');
+  const cmtBlock = el('div', 'text-block link', a.commentText);
+  cmtBlock.id = 'cmt-' + idx;
+  s4.body.appendChild(cmtBlock);
+  const row4 = el('div', 'btn-row');
+  const copyCmt = el('button', 'btn btn-gold', 'Copiar comentario');
+  copyCmt.type = 'button';
+  copyCmt.dataset.role = 'copy-comment';
+  copyCmt.addEventListener('click', () => copyText(a.commentText, copyCmt, cmtBlock, 'Comentario'));
+  row4.appendChild(copyCmt);
+  s4.body.appendChild(row4);
+  card.appendChild(s4.step);
+
+  /* ---- 5. Marcar ---- */
+  const s5 = stepNode('5', a.alreadyPosted ? 'Marcado como publicado' : 'Marcalo aqui cuando termines',
+    a.alreadyPosted
+      ? 'Este grupo queda en cooldown 7 dias. El ref ya esta en el historial.'
+      : '"Ya lo publique" arranca los 7 dias del grupo. "Saltar este" no gasta la semana.');
+  if (!a.alreadyPosted) {
+    const row5 = el('div', 'btn-row');
+    const done = el('button', 'btn btn-done', 'Ya lo publique');
+    done.type = 'button';
+    done.dataset.role = 'done';
+    done.addEventListener('click', () => mark(a, false, done));
+    const skip = el('button', 'btn btn-skip', 'Saltar este');
+    skip.type = 'button';
+    skip.dataset.role = 'skip';
+    skip.addEventListener('click', () => mark(a, true, skip));
+    row5.appendChild(done);
+    row5.appendChild(skip);
+    s5.body.appendChild(row5);
+  } else {
+    const g = (state.plan.groups || []).find((x) => x.code === a.groupCode);
+    if (g && g.freeOn) {
+      s5.body.appendChild(el('div', 'thumb-meta', 'Vuelve a estar disponible el ' + dayLabel(g.freeOn) + '.'));
+    }
+  }
+  card.appendChild(s5.step);
+
+  return card;
+}
+
+/* =========================================================================
+   ESTADO VACIO
+   Honesto: si todos estan en cooldown se dice, con las fechas en que se
+   liberan. No se inventa trabajo ni se relaja la regla de los 7 dias.
+   ========================================================================= */
+function renderEmpty(host) {
+  const plan = state.plan;
+  const panel = el('div', 'panel empty');
+  const posted = plan.stats.postedToday || 0;
+
+  panel.appendChild(el('h2', null, posted > 0
+    ? 'Listo por hoy'
+    : 'Hoy no toca publicar en grupos'));
+  panel.appendChild(el('p', null, plan.reason || 'No hay asignaciones para hoy.'));
+
+  const cooling = (plan.groups || [])
+    .filter((g) => g.cooldown)
+    .sort((a, b) => String(a.freeOn).localeCompare(String(b.freeOn)))
+    .slice(0, 6);
+
+  if (cooling.length) {
+    const list = el('div', 'free-list');
+    list.appendChild(el('div', 'section-title', 'Los proximos en liberarse'));
+    for (const g of cooling) {
+      const row = el('div', 'row');
+      row.appendChild(el('span', 'row-code', g.code));
+      row.appendChild(el('span', 'row-name', g.name));
+      row.appendChild(el('span', 'row-tag tag-cool',
+        dayLabel(g.freeOn) + ' (' + g.daysUntilFree + ' ' + plural(g.daysUntilFree, 'dia', 'dias') + ')'));
+      list.appendChild(row);
+    }
+    panel.appendChild(list);
+  }
+
+  if (posted === 0) {
+    panel.appendChild(el('p', null,
+      'Mientras tanto, lo que si funciona: contestar preguntas y comentar en esos mismos grupos. ' +
+      'El doc de estrategia lo pide, 3-5 aportes de valor por cada post de listado.'));
+  }
+  host.appendChild(panel);
+}
+
+/* =========================================================================
+   PANELES DE GRUPOS E HISTORIAL
+   ========================================================================= */
+function renderGroups() {
+  const host = $('groupsPanel');
+  clear(host);
+  const plan = state.plan;
+  if (!plan || !Array.isArray(plan.groups) || !plan.groups.length) return;
+
+  host.appendChild(el('div', 'section-title',
+    `Los ${plan.groups.length} grupos - ${plan.stats.groupsFree} libres, ${plan.stats.groupsInCooldown} en cooldown`));
+
+  const panel = el('div', 'panel');
+  const sorted = plan.groups.slice().sort((a, b) => {
+    // Primero los libres (los que llevan mas tiempo sin nada), despues los que
+    // estan en cooldown ordenados por cuando se liberan.
+    if (a.cooldown !== b.cooldown) return a.cooldown ? 1 : -1;
+    if (a.cooldown) return String(a.freeOn).localeCompare(String(b.freeOn));
+    return String(a.lastPostedDate || '').localeCompare(String(b.lastPostedDate || ''));
+  });
+
+  for (const g of sorted) {
+    const row = el('div', 'row');
+    row.appendChild(el('span', 'row-code', g.code));
+    const name = el('span', 'row-name', g.name);
+    name.appendChild(el('span', 'step-note', (LANG_NAME[g.lang] || g.lang)));
+    row.appendChild(name);
+    row.appendChild(el('span', 'row-sub', g.lastPostedDate
+      ? `Ultimo: ${g.lastPropertyName || g.lastPropertySlug} - ${dayLabel(g.lastPostedDate)}`
+      : 'Nunca ha recibido un post de listado'));
+
+    if (g.postedToday) {
+      row.appendChild(el('span', 'row-tag tag-today', 'Publicado hoy'));
+    } else if (g.skippedToday) {
+      row.appendChild(el('span', 'row-tag tag-skip', 'Saltado hoy'));
+    } else if (g.cooldown) {
+      row.appendChild(el('span', 'row-tag tag-cool',
+        `${daysLeft(g.daysUntilFree)} - libre el ${dayLabel(g.freeOn)}`));
+    } else {
+      row.appendChild(el('span', 'row-tag tag-free', 'Libre'));
+    }
+    panel.appendChild(row);
+  }
+  host.appendChild(panel);
+}
+
+function renderHistory() {
+  const host = $('historyPanel');
+  clear(host);
+  const plan = state.plan;
+  const entries = Array.isArray(plan && plan.history) ? plan.history : [];
+
+  host.appendChild(el('div', 'section-title',
+    entries.length
+      ? `Historial - ${plan.stats.totalPosts} ${plural(plan.stats.totalPosts, 'post publicado', 'posts publicados')} en total`
+      : 'Historial'));
+
+  const panel = el('div', 'panel');
+  if (!entries.length) {
+    panel.appendChild(el('p', 'thumb-meta',
+      'Todavia no hay nada. En cuanto marques el primer post aparece aqui, con su ref, ' +
+      'y empieza a contar el cooldown de ese grupo.'));
+    host.appendChild(panel);
+    return;
+  }
+
+  for (const e of entries) {
+    const row = el('div', 'row');
+    row.appendChild(el('span', 'row-code', e.groupCode));
+    row.appendChild(el('span', 'row-name', e.groupName));
+    row.appendChild(el('span', 'row-sub', `${e.propertyName} - ${dayLabel(e.date)} - ${e.ref}`));
+    row.appendChild(el('span', 'row-tag ' + (e.skipped ? 'tag-skip' : 'tag-free'),
+      e.skipped ? 'Saltado' : 'Publicado'));
+    panel.appendChild(row);
+  }
+  host.appendChild(panel);
+}
+
+/* =========================================================================
+   RENDER PRINCIPAL
+   ========================================================================= */
+function render() {
+  const plan = state.plan;
+  if (!plan) return;
+
+  $('topDate').textContent = dayLabel(plan.date);
+  const stats = plan.stats || {};
+  clear($('chipToday'));
+  $('chipToday').appendChild(document.createTextNode('Hoy '));
+  $('chipToday').appendChild(el('b', null, `${stats.postedToday || 0}/${stats.dailyMax || 3}`));
+  clear($('chipFree'));
+  $('chipFree').appendChild(document.createTextNode('Libres '));
+  $('chipFree').appendChild(el('b', null, String(stats.groupsFree || 0)));
+
+  const host = $('queue');
+  clear(host);
+
+  const assignments = Array.isArray(plan.assignments) ? plan.assignments : [];
+  const pending = assignments.filter((a) => !a.alreadyPosted);
+
+  if (!assignments.length) {
+    renderEmpty(host);
+  } else {
+    host.appendChild(el('div', 'section-title', pending.length
+      ? `${pending.length} ${plural(pending.length, 'grupo', 'grupos')} para hoy`
+      : 'Lo de hoy, ya publicado'));
+    if (!pending.length && plan.reason) {
+      const note = el('div', 'panel');
+      note.style.marginBottom = '18px';
+      note.appendChild(el('p', 'thumb-meta', plan.reason));
+      host.appendChild(note);
+    }
+    assignments.forEach((a, i) => host.appendChild(renderCard(a, i)));
+  }
+
+  renderGroups();
+  renderHistory();
+
+  // El foco se mantiene si sigue existiendo la tarjeta.
+  if (state.focused >= 0) {
+    const card = $('card-' + state.focused);
+    if (card) card.classList.add('focused');
+    else state.focused = -1;
+  }
+}
+
+/* =========================================================================
+   ACCIONES
+   ========================================================================= */
+/**
+ * `firstLoad` distingue "todavia no habia entrado" de "se me cayo la sesion":
+ * en el primer caso el login sale limpio, en el segundo con el aviso. Sin esa
+ * distincion, abrir el panel recien llegado te acusa de una sesion vencida que
+ * nunca existio.
+ */
+async function loadPlan(firstLoad) {
+  try {
+    state.plan = await api('/api/groups/plan');
+    showScreen('app');
+    render();
+    return true;
+  } catch (e) {
+    if (e.status === 401 || e.status === 403) {
+      showScreen('login');
+      if (!firstLoad) showLoginError('La sesion se vencio. Entra otra vez.');
+      return false;
+    }
+    if (state.plan) {
+      toast('No pude actualizar: ' + e.message, 'warn');
+    } else {
+      showScreen('login');
+      showLoginError(e.message);
+    }
+    return false;
+  }
+}
+
+function showLoginError(msg) {
+  $('loginError').textContent = msg;
+  $('loginError').hidden = false;
+}
+
+async function mark(a, skipped, btn) {
+  if (state.busy) return;
+  state.busy = true;
+  const row = btn ? btn.parentNode : null;
+  if (row) row.querySelectorAll('button').forEach((b) => { b.disabled = true; });
+
+  try {
+    const res = await api('/api/groups/mark', {
+      method: 'POST',
+      body: { groupCode: a.groupCode, propertySlug: a.propertySlug, ref: a.ref, skipped: !!skipped },
+    });
+    if (skipped) {
+      toast('Saltado. El grupo no gasta su semana.', 'info');
+    } else if (res.duplicate) {
+      toast('Ya estaba registrado. No se duplico.', 'info');
+    } else {
+      toast('Registrado. ' + a.groupCode + ' vuelve el ' + dayLabel(res.cooldownUntil) + '.', 'ok');
+    }
+    state.focused = -1;
+    await loadPlan(false);
+  } catch (e) {
+    if (e.status === 401 || e.status === 403) {
+      showScreen('login');
+      showLoginError('La sesion se vencio. Entra otra vez y vuelve a marcarlo.');
+    } else {
+      toast('No se pudo registrar: ' + e.message, 'warn');
+      if (row) row.querySelectorAll('button').forEach((b) => { b.disabled = false; });
+    }
+  } finally {
+    state.busy = false;
+  }
+}
+
+/* =========================================================================
+   PANTALLAS Y LOGIN
+   ========================================================================= */
+function showScreen(name) {
+  state.screen = name;
+  $('screenLoading').hidden = name !== 'loading';
+  $('screenLogin').hidden = name !== 'login';
+  $('app').hidden = name !== 'app';
+  // Los atajos solo existen dentro del panel: anunciarlos en el login confunde.
+  $('kbdHint').hidden = name !== 'app' || isTouch;
+}
+
+async function doLogin() {
+  const pass = $('loginPass').value;
+  $('loginError').hidden = true;
+  if (!pass) { showLoginError('Escribe la contrasena.'); return; }
+  $('loginBtn').disabled = true;
+  try {
+    await api('/api/wa/login', { method: 'POST', body: { password: pass } });
+    $('loginPass').value = '';
+    await loadPlan(false);
+  } catch (e) {
+    showLoginError((e.status === 401 || e.status === 403) ? 'Contrasena incorrecta.' : e.message);
+  } finally {
+    $('loginBtn').disabled = false;
+  }
+}
+
+/* =========================================================================
+   TECLADO
+   Los mismos atajos que group-assist.html (c copiar, o abrir, s saltar,
+   d hecho, j/k navegar) mas x para el comentario, que ahi no existia.
+   ========================================================================= */
+function focusableCards() {
+  return Array.from(document.querySelectorAll('#queue .card'));
+}
+
+function setFocus(next) {
+  const cards = focusableCards();
+  if (!cards.length) return;
+  state.focused = Math.max(0, Math.min(next, cards.length - 1));
+  cards.forEach((c) => c.classList.remove('focused'));
+  const card = cards[state.focused];
+  card.classList.add('focused');
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function clickIn(role) {
+  const cards = focusableCards();
+  const card = cards[state.focused];
+  if (!card) return;
+  const target = card.querySelector('[data-role="' + role + '"]');
+  if (target) target.click();
+}
+
+document.addEventListener('keydown', (e) => {
+  const tag = e.target && e.target.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) return;
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+  if (e.key === 'Escape') { toggleHelp(false); return; }
+  if (e.key === '?') { e.preventDefault(); toggleHelp(true); return; }
+  if (state.screen !== 'app' || !$('helpModal').hidden) return;
+
+  const key = e.key.toLowerCase();
+  if (key === 'j') { e.preventDefault(); setFocus(state.focused + 1); return; }
+  if (key === 'k') { e.preventDefault(); setFocus(state.focused < 0 ? 0 : state.focused - 1); return; }
+  if (state.focused < 0) return;
+
+  if (key === 'o') { e.preventDefault(); clickIn('open'); }
+  else if (key === 'c') { e.preventDefault(); clickIn('copy-post'); }
+  else if (key === 'x') { e.preventDefault(); clickIn('copy-comment'); }
+  else if (key === 'd') { e.preventDefault(); clickIn('done'); }
+  else if (key === 's') { e.preventDefault(); clickIn('skip'); }
+});
+
+/* =========================================================================
+   AYUDA
+   ========================================================================= */
+function toggleHelp(open) { $('helpModal').hidden = !open; }
+
+/* =========================================================================
+   ARRANQUE
+   Si la cookie del panel sigue viva se entra directo; si no, al login.
+   ========================================================================= */
+$('loginBtn').addEventListener('click', doLogin);
+$('loginPass').addEventListener('keydown', (e) => { if (e.key === 'Enter') doLogin(); });
+$('reloadBtn').addEventListener('click', () => loadPlan(true));
+$('helpBtn').addEventListener('click', () => toggleHelp(true));
+$('helpClose').addEventListener('click', () => toggleHelp(false));
+$('helpModal').addEventListener('click', (e) => { if (e.target === $('helpModal')) toggleHelp(false); });
+
+(async function init() {
+  $('kbdHint').hidden = true;
+  await loadPlan(true);
+})();
+</script>
+</body>
+</html>
