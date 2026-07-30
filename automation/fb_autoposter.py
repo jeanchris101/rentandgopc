@@ -414,6 +414,46 @@ def verify_token() -> bool:
     page = resp.json()
     log.info("Page reachable: %s (ID: %s, %s)",
              page.get("name"), page.get("id"), page.get("category"))
+
+    # Reaching the Page and being allowed to post on it are different grants.
+    # A token with only pages_show_list + pages_read_engagement passes every
+    # check above and then fails at publish time with Graph #200, whose message
+    # blames the long-dead publish_actions and sends you looking in the wrong
+    # place. So confirm the publishing permission explicitly.
+    try:
+        resp = requests.get(
+            f"{GRAPH_API_BASE}/me/permissions",
+            params={"access_token": FB_PAGE_ACCESS_TOKEN},
+            timeout=10,
+        )
+    except requests.RequestException as e:
+        log.warning("Could not read granted permissions: %s", e)
+        return True
+
+    if resp.status_code != 200:
+        log.warning("Could not read granted permissions: %s", resp.text)
+        return True
+
+    granted = {
+        p.get("permission")
+        for p in resp.json().get("data", [])
+        if p.get("status") == "granted"
+    }
+    log.info("Granted permissions: %s", ", ".join(sorted(granted)) or "(none)")
+
+    missing = {"pages_manage_posts", "pages_read_engagement", "pages_show_list"} - granted
+    if missing:
+        log.error(
+            "Token cannot publish — missing: %s. Regenerate it in Business "
+            "settings -> Users -> System users -> Generate new token, with those "
+            "boxes checked. Meta reports the failure as '(#200) publish_actions "
+            "deprecated', which is misleading: the real cause is the missing "
+            "permission above.",
+            ", ".join(sorted(missing)),
+        )
+        return False
+
+    log.info("Token can publish to the Page.")
     return True
 
 
