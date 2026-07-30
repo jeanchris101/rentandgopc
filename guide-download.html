@@ -11,11 +11,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.rentandgopc.com/guide-download.html">
 
-    <!-- Meta Pixel: ID lives in pixel.js (single constant at the top of that file).
-         While it is still the placeholder, nothing is loaded and no events fire. -->
-    <script src="pixel.js"></script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
@@ -893,10 +889,6 @@
         var ty = document.getElementById('thank-you');
         ty.classList.add('visible');
         ty.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // Meta Pixel: Lead event on guide download
-        if (typeof fbq === 'function') {
-            fbq('track', 'Lead', { content_name: 'Punta Cana Property Guide' });
-        }
     }
     </script>
 <script src="analytics.js" defer></script>

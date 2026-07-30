@@ -27,8 +27,6 @@
     // Configuration
     // -------------------------------------------------------------------------
 
-    var META_PIXEL_ID = 'YOUR_PIXEL_ID_HERE';
-
     var NAV_LINKS = [
         { href: 'index.html',            anchor: '#properties', i18nKey: 'nav_properties', label: 'Properties' },
         { href: 'index.html',            anchor: '#rentals',    i18nKey: null,              label: 'Rentals' },
@@ -185,37 +183,6 @@
     // Meta Pixel Injection
     // -------------------------------------------------------------------------
 
-    function injectMetaPixel() {
-        // Skip if pixel already loaded (e.g. page has its own pixel code)
-        if (window.fbq) return;
-
-        // Inline pixel script
-        !function (f, b, e, v, n, t, s) {
-            if (f.fbq) return; n = f.fbq = function () {
-                n.callMethod ?
-                    n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-            };
-            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-            n.queue = []; t = b.createElement(e); t.async = !0;
-            t.src = v; s = b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t, s);
-        }(window, document, 'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-
-        fbq('init', META_PIXEL_ID);
-        fbq('track', 'PageView');
-
-        // Add noscript fallback
-        var noscript = document.createElement('noscript');
-        var img = document.createElement('img');
-        img.height = 1;
-        img.width = 1;
-        img.style.display = 'none';
-        img.src = 'https://www.facebook.com/tr?id=' + META_PIXEL_ID + '&ev=PageView&noscript=1';
-        noscript.appendChild(img);
-        document.body.appendChild(noscript);
-    }
-
     // -------------------------------------------------------------------------
     // Public API (exposed on window.SiteComponents)
     // -------------------------------------------------------------------------
@@ -237,23 +204,14 @@
             }
         },
 
-        /** Inject Meta Pixel if not already present */
-        renderPixel: function () {
-            injectMetaPixel();
-        },
-
         /** Convenience: render everything */
         init: function () {
             this.renderHeader();
             this.renderFooter();
-            this.renderPixel();
         },
 
         /** Expose nav links data for external use */
-        navLinks: NAV_LINKS,
-
-        /** Expose pixel ID for external use */
-        pixelId: META_PIXEL_ID
+        navLinks: NAV_LINKS
     };
 
     // -------------------------------------------------------------------------
