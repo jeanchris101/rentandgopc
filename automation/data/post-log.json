@@ -1,0 +1,19 @@
+{
+  "entries": [
+    {
+      "date": "2026-07-30T15:10:18.071675+00:00",
+      "status": "failed",
+      "queue_id": "post-2026-07-30-karen-los-corales-es",
+      "source_id": "post-2026-07-30-karen-los-corales-es",
+      "language": "es",
+      "category": "property_spotlight",
+      "fb_post_id": null,
+      "message_preview": "Vamos al grano. Sin hype, solo los datos de Modern 1BR Apartment in Los Corales:\n\nPrecio: US$155,000\nUbicacion: Los Cora",
+      "had_image": true,
+      "had_link": false,
+      "error": "(#200) The permission(s) publish_actions are not available. It has been deprecated. If you want to provide a way for your app users to share content to Facebook, we encourage you to use our Sharing products instead.",
+      "error_code": 200,
+      "error_subcode": null
+    }
+  ]
+}

@@ -102,5 +102,16 @@
     "ref": "RG-PB202-F5L6C",
     "status": "skip",
     "skip_reason": "Generado por el run del bot sin token (2026-07-24); descartado para no publicarlo con fecha vieja al encender."
+  },
+  {
+    "id": "post-2026-07-30-karen-los-corales-es",
+    "message": "Vamos al grano. Sin hype, solo los datos de Modern 1BR Apartment in Los Corales:\n\nPrecio: US$155,000\nUbicacion: Los Corales, Bavaro\n- Lavadora y secadora en la unidad, cocina completamente equipada\n- A 25 minutos del aeropuerto PUJ\n\nQuieres que haga los numeros para TU caso? Escribeme.\n\n#PuntaCana #Inversiones #BienesRaices\n\nWhatsApp: https://wa.me/18094865386?text=Hola%21%20Me%20interesa%20Los%20Corales%201BR%20%28US%24155%2C000%29.%20%28Ref%3A%20RG-KLC1-F5L6I%29",
+    "image_url": "https://www.rentandgopc.com/images/karen-los-corales/pool-front.jpg",
+    "link": "",
+    "language": "es",
+    "category": "property_spotlight",
+    "property_slug": "karen-los-corales",
+    "ref": "RG-KLC1-F5L6I",
+    "status": "pending"
   }
 ]
