@@ -453,7 +453,17 @@ def verify_token() -> bool:
         )
         return False
 
-    log.info("Token can publish to the Page.")
+    # Exercise the Page-token exchange here, where it is safe. Publishing is
+    # the only place it matters and the only place it would surface — as a #200
+    # that blames a deprecated permission. Better to find out during --verify.
+    token = publish_token()
+    if not token:
+        log.error("Could not obtain a token to publish with.")
+        return False
+    if token != FB_PAGE_ACCESS_TOKEN:
+        log.info("Page token obtained. Ready to publish.")
+    else:
+        log.info("Publishing with the configured token (it is already a Page token).")
     return True
 
 
