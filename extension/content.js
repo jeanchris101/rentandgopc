@@ -24,6 +24,11 @@
  *     registro para el cooldown, no un disparador.
  * Si alguna vez alguien viene a "automatizar el ultimo clic": ese es
  * exactamente el clic que no se automatiza.
+ *
+ * MODO CAMPANA: el panel te dice la HORA asignada a este grupo y si es el turno
+ * de ahora o si te adelantaste. Es informativo y nunca bloqueante — los botones
+ * funcionan igual a cualquier hora, porque el dueno del negocio decide cuando
+ * publica. Y sigue sin haber temporizadores: la hora se PINTA, no se espera.
  * =====================================================================
  */
 (function () {
@@ -47,6 +52,8 @@
     groupKey: null,
     group: null,
     assignment: null,
+    slot: null, // el slot de campana de ESTE grupo, si tiene uno
+    nextSlot: null, // el slot que toca ahora en la campana del dia
     ui: { collapsed: false, dismissedDate: null },
     note: null, // { text, kind }
     busy: false,
@@ -121,6 +128,16 @@
   function findAssignment(plan, code) {
     if (!plan || !Array.isArray(plan.assignments)) return null;
     return plan.assignments.find((a) => a.groupCode === code) || null;
+  }
+
+  function findSlot(plan, code) {
+    if (!plan || !Array.isArray(plan.slots)) return null;
+    return plan.slots.find((s) => s.groupCode === code) || null;
+  }
+
+  function findNextSlot(plan) {
+    if (!plan || !Array.isArray(plan.slots)) return null;
+    return plan.slots.find((s) => s.isNext) || null;
   }
 
   /* ================================================================== *
@@ -505,6 +522,42 @@
     return head;
   }
 
+  /**
+   * La linea de la campana: que hora tiene ESTE grupo y si es el turno de ahora.
+   * Informativa, nunca bloqueante: los botones de abajo funcionan igual. El dueno
+   * decide cuando publica; el panel solo evita que se le olvide el orden.
+   */
+  function buildSlotLine(body) {
+    const s = state.slot;
+    const next = state.nextSlot;
+    if (!s) return;
+
+    if (s.isNext) {
+      const line = el('p', 'rgpc-note rgpc-note-action',
+        'Slot ' + s.slot + ' de la campana, ' + s.slotTime + '. ' +
+        (s.isPast ? 'Su hora ya paso: es el que toca, y vas tarde.' : 'Es el que toca ahora.'));
+      line.setAttribute('role', 'status');
+      body.appendChild(line);
+      return;
+    }
+
+    if (s.status === 'posted' || s.status === 'skipped') return; // buildDone/buildNothing ya lo dicen
+
+    // Se adelanto (o se retraso) respecto al orden de la campana. Se dice y punto.
+    const bits = ['Este grupo era el slot de las ' + s.slotTime + '.'];
+    if (next) {
+      bits.push(
+        next.slotHour < s.slotHour
+          ? 'El que toca es el de las ' + next.slotTime + ' (' + next.groupCode + ' — ' + next.groupName + '): te adelantaste.'
+          : 'El que toca ahora es el de las ' + next.slotTime + ' (' + next.groupCode + ' — ' + next.groupName + ').'
+      );
+    } else if (s.isPast) {
+      bits.push('Su hora ya paso.');
+    }
+    bits.push('Puedes publicarlo igual: esto es un recordatorio, no un candado.');
+    body.appendChild(el('p', 'rgpc-warn', bits.join(' ')));
+  }
+
   function buildBody() {
     const body = el('div', 'rgpc-body');
 
@@ -513,6 +566,8 @@
     }
 
     const a = state.assignment;
+    if (a && !a.alreadyPosted) buildSlotLine(body);
+
     if (a && !a.alreadyPosted) buildWork(body, a);
     else if (a && a.alreadyPosted) buildDone(body, a);
     else if (state.group.cooldown) buildCooldown(body);
@@ -577,7 +632,17 @@
   /* ---------------- estado 2: ya publicaste hoy ---------------- */
 
   function buildDone(body, a) {
-    body.appendChild(el('p', 'rgpc-ok', 'Ya publicaste aqui hoy: ' + (a.propertyShortName || a.propertyName) + '.'));
+    const s = state.slot;
+    body.appendChild(
+      el('p', 'rgpc-ok', 'Ya publicaste aqui hoy: ' + (a.propertyShortName || a.propertyName) +
+        (s ? ' (slot de las ' + s.slotTime + ').' : '.'))
+    );
+    if (state.nextSlot) {
+      body.appendChild(
+        el('p', 'rgpc-hint', 'El siguiente de la campana es a las ' + state.nextSlot.slotTime +
+          ': ' + state.nextSlot.groupCode + ' — ' + state.nextSlot.groupName + '.')
+      );
+    }
     body.appendChild(
       el(
         'p',
@@ -625,31 +690,62 @@
   /* ---------------- estado 4: libre pero sin asignacion ---------------- */
 
   function buildNothing(body) {
+    const s = state.slot;
     body.appendChild(el('p', 'rgpc-warn', 'Hoy no le toca a este grupo.'));
     if (state.group.skippedToday) {
-      body.appendChild(el('p', 'rgpc-hint', 'Lo saltaste hoy. Manana vuelve a la cola.'));
+      body.appendChild(el('p', 'rgpc-hint',
+        (s ? 'Era el slot de las ' + s.slotTime + ' y lo saltaste. ' : 'Lo saltaste hoy. ') +
+        'Manana vuelve a la cola: saltar no gasta su semana.'));
     } else if (state.plan.reason) {
       body.appendChild(el('p', 'rgpc-hint', state.plan.reason));
     }
     todayList(body);
   }
 
-  /** Los grupos que si tocan hoy, con enlace para abrirlos. */
+  /**
+   * Los grupos que si tocan hoy, con enlace para abrirlos. En modo campana va con
+   * la hora de cada slot y marcado el que toca ahora, que es lo que hace que el
+   * dueno pueda saltar de un grupo al siguiente sin abrir el panel del sitio.
+   */
   function todayList(body) {
-    const pending = (state.plan.assignments || []).filter((a) => !a.alreadyPosted);
-    if (!pending.length) return;
-    body.appendChild(el('p', 'rgpc-hint', 'Hoy toca:'));
+    const slots = Array.isArray(state.plan.slots) ? state.plan.slots : null;
+    const rows = slots
+      ? slots
+          .filter((s) => s.status === 'pending' || s.status === 'missed')
+          .map((s) => ({
+            time: s.slotTime,
+            code: s.groupCode,
+            name: s.groupName,
+            url: s.groupUrl,
+            tail: s.isNext ? (s.isPast ? 'TOCA YA' : 'TOCA AHORA') : null,
+          }))
+      : (state.plan.assignments || [])
+          .filter((a) => !a.alreadyPosted)
+          .map((a) => ({
+            time: null,
+            code: a.groupCode,
+            name: a.groupName,
+            url: a.groupUrl,
+            tail: a.propertyShortName || a.propertyName,
+          }));
+
+    if (!rows.length) return;
+    const camp = state.plan.campaign || null;
+    body.appendChild(el('p', 'rgpc-hint', slots && camp
+      ? 'Hoy toca ' + (camp.propertyShortName || camp.propertyName || 'la campana') + ' en:'
+      : 'Hoy toca:'));
+
     const ul = el('ul', 'rgpc-list');
-    for (const a of pending) {
+    for (const r of rows) {
       const li = el('li', null);
-      const link = el('a', 'rgpc-a', a.groupCode + ' · ' + a.groupName);
-      if (typeof a.groupUrl === 'string' && a.groupUrl.startsWith('https://www.facebook.com/groups/')) {
-        link.href = a.groupUrl;
+      const link = el('a', 'rgpc-a', (r.time ? r.time + ' · ' : '') + r.code + ' · ' + r.name);
+      if (typeof r.url === 'string' && r.url.startsWith('https://www.facebook.com/groups/')) {
+        link.href = r.url;
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
       }
       li.appendChild(link);
-      li.appendChild(el('span', 'rgpc-dim', ' — ' + (a.propertyShortName || a.propertyName)));
+      if (r.tail) li.appendChild(el('span', 'rgpc-dim', ' — ' + r.tail));
       ul.appendChild(li);
     }
     body.appendChild(ul);
@@ -725,6 +821,10 @@
         groupCode: a.groupCode,
         propertySlug: a.propertySlug,
         ref: a.ref,
+        // Que quede grabada la foto de este slot, no la que el servidor
+        // recalcularia: en campana los 5 slots comparten propiedad.
+        imagePath: a.imagePath || '',
+        imageUrl: a.imageUrl || '',
         skipped: Boolean(skipped),
       });
       if (!res || !res.ok) {
@@ -753,12 +853,18 @@
       state.plan = null;
       state.group = null;
       state.assignment = null;
+      state.slot = null;
+      state.nextSlot = null;
       return;
     }
     state.plan = res.plan;
     state.stale = Boolean(res.stale);
     state.group = findGroup(res.plan, state.groupKey);
     state.assignment = state.group ? findAssignment(res.plan, state.group.code) : null;
+    // isNext/isPast los re-sella background.js con el reloj de ahora al servir el
+    // plan, cacheado o no, asi que aqui no hace falta ningun temporizador.
+    state.slot = state.group ? findSlot(res.plan, state.group.code) : null;
+    state.nextSlot = findNextSlot(res.plan);
   }
 
   async function refresh(force) {

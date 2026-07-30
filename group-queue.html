@@ -100,13 +100,85 @@ a { color: var(--primary-soft); }
 .rules li { margin: 3px 0; }
 .rules li b { color: var(--text); }
 
+/* ---------- Campaign header (modo campana) ---------- */
+.camp {
+  background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--accent);
+  border-radius: var(--radius); padding: 15px 16px; margin-bottom: 18px;
+}
+.camp-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.camp-prop { font-size: 1.06rem; font-weight: 700; color: var(--primary); }
+.camp-price { font-size: 0.92rem; font-weight: 700; color: #7a5f1e; }
+.camp-sub { font-size: 0.8rem; color: var(--text-light); margin-top: 4px; }
+.camp-note {
+  background: #fffdf6; border: 1px solid #ecdfba; border-radius: 9px; padding: 10px 12px;
+  font-size: 0.83rem; color: #6b551d; margin-top: 11px;
+}
+.camp-note.warn { background: #fff5f2; border-color: #f3c7c0; color: #7a2e1e; }
+.camp-note.plain { background: #f7f8f7; border-color: var(--border); color: var(--text-light); }
+
+/* ---------- Timeline de los slots ---------- */
+.tl { margin-top: 12px; }
+.tl-row {
+  display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  padding: 9px 10px; border: 1px solid transparent; border-radius: 9px; font-size: 0.85rem;
+}
+.tl-row + .tl-row { margin-top: 4px; }
+.tl-row.alt { background: #fbfaf7; }
+.tl-row.now {
+  border-color: var(--accent); background: #fffaf0; box-shadow: 0 0 0 2px rgba(200,164,94,0.2);
+}
+.tl-row.faded { opacity: 0.62; }
+.tl-time {
+  flex: 0 0 52px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700; color: var(--primary);
+}
+.tl-code {
+  flex: 0 0 32px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700; color: var(--text-light); font-size: 0.78rem;
+}
+.tl-name { flex: 1 1 170px; min-width: 130px; font-weight: 500; }
+.tl-meta { flex: 0 1 auto; font-size: 0.74rem; color: var(--text-light); }
+.tag-now { background: var(--accent); color: #14261c; }
+.tag-miss { background: rgba(239,68,68,0.12); color: #b91c1c; }
+
+/* ---------- Panel de ajustes ---------- */
+.set-toggle {
+  width: 100%; display: flex; align-items: center; gap: 10px; justify-content: space-between;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 12px 16px; font-size: 0.88rem; font-weight: 600; color: var(--primary);
+  margin-bottom: 14px; text-align: left;
+}
+.set-toggle:hover { border-color: var(--accent); }
+.set-toggle .set-sum { font-weight: 400; font-size: 0.78rem; color: var(--text-light); }
+.set-body {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px; margin: -6px 0 18px;
+}
+.set-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 13px; }
+.set-field label {
+  display: block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.6px; color: var(--text-light); margin-bottom: 4px;
+}
+.set-field input[type="number"], .set-field select {
+  width: 100%; min-height: 42px; padding: 9px 10px; border: 1px solid var(--border);
+  border-radius: 8px; background: #fff; outline: none;
+}
+.set-field input:focus, .set-field select:focus { border-color: var(--accent); }
+.set-field .hint { font-size: 0.71rem; color: var(--text-light); margin-top: 4px; line-height: 1.4; }
+.set-check { display: flex; align-items: flex-start; gap: 9px; font-size: 0.85rem; margin: 14px 0 4px; }
+.set-check input { width: 18px; height: 18px; margin-top: 2px; flex: 0 0 auto; }
+.set-err { color: var(--red); font-size: 0.82rem; margin-top: 11px; line-height: 1.45; }
+
 /* ---------- Assignment card ---------- */
 .card {
   background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
   margin-bottom: 18px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 .card.focused { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,164,94,0.22); }
+.card.now { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,164,94,0.28); }
 .card.done { opacity: 0.62; }
+.badge-slot { background: #14261c; color: var(--accent-soft); font-family: ui-monospace, Menlo, monospace; }
+.badge-now { background: var(--accent); color: #14261c; }
 .card-head { padding: 14px 16px; border-bottom: 1px solid var(--border); background: #fbfaf7; }
 .card-badges { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 7px; }
 .badge {
@@ -310,11 +382,13 @@ a { color: var(--primary-soft); }
       <h3>Las reglas que este panel respeta por ti</h3>
       <ol>
         <li><b>1 post por grupo cada 7 d&iacute;as.</b> No se relaja nunca.</li>
-        <li><b>M&aacute;ximo 3 grupos al d&iacute;a</b>, con propiedad distinta en cada uno.</li>
+        <li id="ruleTwo"></li>
         <li><b>El link va en el primer comentario</b>, jam&aacute;s en el post: los admins borran los posts con links.</li>
       </ol>
     </div>
 
+    <div id="campaignPanel"></div>
+    <div id="settingsPanel"></div>
     <div id="queue"></div>
     <div id="groupsPanel"></div>
     <div id="historyPanel"></div>
@@ -336,6 +410,17 @@ a { color: var(--primary-soft); }
       <li><b>Copia el comentario</b> y p&eacute;galo como <b>primer comentario</b> de tu propio post. Ah&iacute; va el link de WhatsApp.</li>
       <li><b>Marca &laquo;Ya lo publiqu&eacute;&raquo;</b>. Eso arranca el cooldown de 7 d&iacute;as del grupo y deja registrado el ref.</li>
     </ol>
+
+    <h3>Modo campa&ntilde;a</h3>
+    <p style="font-size:0.87rem;color:#666">Un d&iacute;a = <b>una propiedad</b> = varios grupos, a horas espaciadas.
+    Cada slot lleva <b>estilo de copy distinto</b> y <b>foto distinta</b>, adem&aacute;s del idioma de su grupo:
+    esa variaci&oacute;n es lo que evita que 5 posts de la misma propiedad se lean como contenido duplicado.
+    Por eso el tama&ntilde;o real de la campa&ntilde;a nunca pasa del n&uacute;mero de fotos de la propiedad ni del
+    n&uacute;mero de estilos que sirven para su tipo. Antes de repetir una foto, la campa&ntilde;a se hace m&aacute;s
+    corta y te dice por qu&eacute;.</p>
+    <p style="font-size:0.87rem;color:#666">Las horas son un <b>recordatorio en pantalla</b>. No hay temporizadores,
+    ni alarmas, ni nada que publique solo: el slot marcado como &laquo;Toca ahora&raquo; es el siguiente que te
+    conviene hacer, y lo haces t&uacute;.</p>
 
     <h3>Por qu&eacute; el ref importa</h3>
     <p style="font-size:0.87rem;color:#666">Cada asignaci&oacute;n lleva un ref como <code>RG-A301-G04</code>: propiedad A301, grupo G04. Cuando un lead escribe por WhatsApp, el ref viaja en el mensaje. A los 30 d&iacute;as sabes qu&eacute; grupos te dan compradores de verdad y en cu&aacute;les est&aacute;s perdiendo el tiempo.</p>
@@ -386,10 +471,37 @@ function safeUrl(url) {
 const LANG_NAME = { en: 'Ingles', es: 'Espanol', fr: 'Frances' };
 const isTouch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
 
+/* Estados de un slot de campana. `missed` = su hora entera paso sin publicar. */
+const SLOT_STATUS = {
+  posted: { label: 'Publicado', cls: 'tag-free' },
+  skipped: { label: 'Saltado', cls: 'tag-skip' },
+  missed: { label: 'Paso sin publicar', cls: 'tag-miss' },
+  pending: { label: 'Pendiente', cls: 'tag-today' },
+};
+
+const MODE_NAME = { campaign: 'Campana', spread: 'Una por grupo' };
+
+function clockLabel(hour) {
+  const h = Math.max(0, Math.min(23, Math.trunc(Number(hour) || 0)));
+  return (h < 10 ? '0' : '') + h + ':00';
+}
+
 /* =========================================================================
    ESTADO
+   `meta` es la respuesta de GET /api/groups/settings: limites, propiedades
+   activas y defaults. Se pide una sola vez, cuando se abre el panel de ajustes.
    ========================================================================= */
-const state = { plan: null, focused: -1, busy: false, screen: 'loading' };
+const state = {
+  plan: null,
+  focused: -1,
+  busy: false,
+  screen: 'loading',
+  settingsOpen: false,
+  meta: null,
+  metaError: null,
+  savingSettings: false,
+  settingsError: null,
+};
 
 /* =========================================================================
    CAPA DE API
@@ -514,21 +626,36 @@ function stepNode(num, label, note) {
 }
 
 function renderCard(a, idx) {
-  const card = el('div', 'card' + (a.alreadyPosted ? ' done' : ''));
+  const isNow = Boolean(a.isNext) && !a.alreadyPosted;
+  const card = el('div', 'card' + (a.alreadyPosted ? ' done' : '') + (isNow ? ' now' : ''));
   card.id = 'card-' + idx;
   card.dataset.idx = String(idx);
 
   /* ---- Cabecera: paso 1 empieza aqui ---- */
   const head = el('div', 'card-head');
   const badges = el('div', 'card-badges');
+  // En modo campana cada tarjeta lleva su hora sugerida. Es un recordatorio en
+  // pantalla, no un temporizador: nadie la dispara.
+  if (a.slotTime) badges.appendChild(el('span', 'badge badge-slot', a.slotTime));
   badges.appendChild(el('span', 'badge badge-code', a.groupCode));
   badges.appendChild(el('span', 'badge badge-lang ' + a.lang, LANG_NAME[a.lang] || a.lang));
   badges.appendChild(el('span', 'badge badge-ref', a.ref));
   if (a.alreadyPosted) badges.appendChild(el('span', 'badge badge-done', 'Ya publicado'));
+  else if (isNow) badges.appendChild(el('span', 'badge badge-now', a.isPast ? 'Toca ya' : 'Toca ahora'));
   head.appendChild(badges);
   head.appendChild(el('div', 'card-group', a.groupName));
   head.appendChild(el('div', 'card-prop',
     `${a.propertyShortName || a.propertyName} - ${a.priceDisplay}`));
+  if (a.slotTime) {
+    const bits = [`Slot ${a.slot} de la campana, ${a.slotTime}`];
+    if (a.styleId) bits.push('estilo ' + a.styleId);
+    if (!a.alreadyPosted && a.isPast && !a.isNext) bits.push('su hora ya paso');
+    head.appendChild(el('div', 'card-prop', bits.join(' - ')));
+  }
+  if (a.postedPropertyName) {
+    head.appendChild(el('div', 'card-prop',
+      'Ojo: hoy ya publicaste ' + a.postedPropertyName + ' en este grupo. Dos posts el mismo dia en el mismo grupo es justo lo que los admins borran.'));
+  }
   card.appendChild(head);
 
   /* ---- 1. Abrir el grupo ---- */
@@ -688,6 +815,233 @@ function renderEmpty(host) {
 }
 
 /* =========================================================================
+   CABECERA DE CAMPANA + LINEA DE TIEMPO
+   Un dia = una propiedad = N grupos a horas espaciadas. Aqui se ve de un
+   vistazo cual toca AHORA, que ya salio y que se paso sin publicar.
+   ========================================================================= */
+function renderCampaign() {
+  const host = $('campaignPanel');
+  clear(host);
+  const plan = state.plan;
+  if (!plan) return;
+
+  if (plan.mode !== 'campaign') {
+    host.appendChild(el('div', 'camp-note plain',
+      'Modo actual: una propiedad DISTINTA en cada grupo (spread), maximo ' +
+      (plan.stats && plan.stats.dailyMax ? plan.stats.dailyMax : 3) +
+      ' al dia. Si quieres una sola propiedad en varios grupos con texto y foto distintos, ' +
+      'cambia el modo en Ajustes de la cola.'));
+    return;
+  }
+
+  const c = plan.campaign || {};
+  host.appendChild(el('div', 'section-title', 'La campana de hoy'));
+  const box = el('div', 'camp');
+
+  const head = el('div', 'camp-head');
+  head.appendChild(el('span', 'camp-prop', c.propertyShortName || c.propertyName || 'Sin propiedad'));
+  if (c.priceDisplay) head.appendChild(el('span', 'camp-price', c.priceDisplay));
+  box.appendChild(head);
+
+  const bits = [`${c.size} de ${c.requested} ${plural(c.requested, 'grupo', 'grupos')}`];
+  if (c.size > 1) bits.push(`cada ${c.intervalHours} h desde las ${clockLabel(c.startHour)}`);
+  else if (c.size === 1) bits.push(`a las ${clockLabel(c.startHour)}`);
+  if (c.spansDays > 1) bits.push(`dia ${c.dayNumber} de ${c.spansDays}`);
+  if (c.nowTime) bits.push(`ahora son las ${c.nowTime}`);
+  box.appendChild(el('div', 'camp-sub', bits.join(' · ')));
+
+  // Lo primero que el dueno tiene que leer: cual toca ahora.
+  const slots = Array.isArray(plan.slots) ? plan.slots : [];
+  const next = slots.find((s) => s.isNext) || null;
+  if (next) {
+    box.appendChild(el('div', 'camp-note', next.isPast
+      ? `Vas tarde: el slot de las ${next.slotTime} (${next.groupCode} - ${next.groupName}) sigue sin publicar. Es el que toca.`
+      : `Toca el slot de las ${next.slotTime}: ${next.groupCode} - ${next.groupName}.`));
+  }
+
+  // Por que la campana es mas corta de lo pedido. Es accionable, va destacado.
+  if (c.cappedMessage) box.appendChild(el('div', 'camp-note', c.cappedMessage));
+  if (c.note) box.appendChild(el('div', 'camp-note warn', c.note));
+  if (plan.settingsWarning) box.appendChild(el('div', 'camp-note warn', plan.settingsWarning));
+
+  if (slots.length) {
+    const tl = el('div', 'tl');
+    slots.forEach((s, i) => {
+      const dim = s.status === 'posted' || s.status === 'skipped';
+      const row = el('div', 'tl-row' + (i % 2 ? ' alt' : '') + (s.isNext ? ' now' : '') + (dim ? ' faded' : ''));
+      row.appendChild(el('span', 'tl-time', s.slotTime));
+      row.appendChild(el('span', 'tl-code', s.groupCode));
+      row.appendChild(el('span', 'tl-name', s.groupName));
+      const meta = [LANG_NAME[s.lang] || s.lang];
+      if (s.styleId) meta.push(s.styleId);
+      if (s.imageFilename) meta.push(s.imageFilename);
+      row.appendChild(el('span', 'tl-meta', meta.join(' · ')));
+      const tag = s.isNext
+        ? { label: s.isPast ? 'Toca ya (atrasado)' : 'Toca ahora', cls: 'tag-now' }
+        : SLOT_STATUS[s.status] || SLOT_STATUS.pending;
+      row.appendChild(el('span', 'row-tag ' + tag.cls, tag.label));
+      tl.appendChild(row);
+    });
+    box.appendChild(tl);
+  }
+
+  host.appendChild(box);
+}
+
+/* =========================================================================
+   PANEL DE AJUSTES (colapsable)
+   Escribe en /api/groups/settings. Guardar solo cambia numeros: nada de esto
+   publica, programa ni dispara nada.
+   ========================================================================= */
+function settingsSummary(s) {
+  const bits = [MODE_NAME[s.mode] || s.mode];
+  if (s.mode === 'campaign') {
+    bits.push(`${s.groupsPerDay} ${plural(s.groupsPerDay, 'grupo', 'grupos')}/dia`);
+    bits.push(`cada ${s.intervalHours} h desde las ${clockLabel(s.startHour)}`);
+    bits.push(s.autoRotateProperty ? 'propiedad rotando' : 'propiedad fija');
+    if (s.campaignSpansDays > 1) bits.push(`${s.campaignSpansDays} dias por propiedad`);
+  }
+  return bits.join(' · ');
+}
+
+function setField(labelText, control, hintText) {
+  const wrap = el('div', 'set-field');
+  const label = el('label', null, labelText);
+  label.setAttribute('for', control.id);
+  wrap.appendChild(label);
+  wrap.appendChild(control);
+  if (hintText) wrap.appendChild(el('div', 'hint', hintText));
+  return wrap;
+}
+
+function numberInput(id, value, range) {
+  const input = document.createElement('input');
+  input.type = 'number';
+  input.id = id;
+  input.value = String(value);
+  input.min = String(range.min);
+  input.max = String(range.max);
+  input.step = '1';
+  return input;
+}
+
+function selectInput(id, options, value) {
+  const sel = document.createElement('select');
+  sel.id = id;
+  for (const opt of options) {
+    const o = document.createElement('option');
+    o.value = opt.value;
+    o.textContent = opt.label;
+    sel.appendChild(o);
+  }
+  // Explicito y no via option.selected: si `value` no esta entre las opciones
+  // (propiedad que se desactivo) el navegador deja el primero, que es lo que
+  // queremos, en vez de un select sin valor.
+  if (options.some((o) => o.value === value)) sel.value = value;
+  return sel;
+}
+
+function renderSettings() {
+  const host = $('settingsPanel');
+  clear(host);
+  const plan = state.plan;
+  if (!plan || !plan.settings) return;
+  const s = plan.settings;
+
+  const toggle = el('button', 'set-toggle');
+  toggle.type = 'button';
+  toggle.setAttribute('aria-expanded', state.settingsOpen ? 'true' : 'false');
+  toggle.appendChild(el('span', null, (state.settingsOpen ? '−' : '+') + ' Ajustes de la cola'));
+  toggle.appendChild(el('span', 'set-sum', settingsSummary(s)));
+  toggle.addEventListener('click', toggleSettings);
+  host.appendChild(toggle);
+  if (!state.settingsOpen) return;
+
+  const body = el('div', 'set-body');
+  if (state.metaError) {
+    body.appendChild(el('p', 'set-err', state.metaError));
+    host.appendChild(body);
+    return;
+  }
+  if (!state.meta) {
+    body.appendChild(el('p', 'thumb-meta', 'Cargando ajustes…'));
+    host.appendChild(body);
+    return;
+  }
+
+  const limits = state.meta.limits || {};
+  const props = Array.isArray(state.meta.properties) ? state.meta.properties : [];
+  const lim = (key, min, max) => limits[key] || { min, max };
+
+  const modeSel = selectInput('setMode', [
+    { value: 'campaign', label: 'Campana: una propiedad en varios grupos' },
+    { value: 'spread', label: 'Spread: una propiedad distinta por grupo' },
+  ], s.mode);
+  const perDay = numberInput('setPerDay', s.groupsPerDay, lim('groupsPerDay', 1, 8));
+  const interval = numberInput('setInterval', s.intervalHours, lim('intervalHours', 1, 6));
+  const start = numberInput('setStart', s.startHour, lim('startHour', 6, 20));
+  const spans = numberInput('setSpans', s.campaignSpansDays, lim('campaignSpansDays', 1, 7));
+
+  const grid = el('div', 'set-grid');
+  grid.appendChild(setField('Modo', modeSel,
+    'En campana cambia el texto, la foto y el idioma en cada grupo. Nunca se repite estilo ni foto el mismo dia.'));
+  grid.appendChild(setField('Grupos por dia', perDay,
+    `Entre ${lim('groupsPerDay', 1, 8).min} y ${lim('groupsPerDay', 1, 8).max}. Mas de ` +
+    `${state.meta.crowdedFrom || 6} y te aviso del riesgo, pero no te lo bloqueo.`));
+  grid.appendChild(setField('Horas entre posts', interval,
+    `Entre ${lim('intervalHours', 1, 6).min} y ${lim('intervalHours', 1, 6).max} h.`));
+  grid.appendChild(setField('Hora de inicio', start,
+    `Hora de Santo Domingo, entre las ${clockLabel(lim('startHour', 6, 20).min)} y las ${clockLabel(lim('startHour', 6, 20).max)}.`));
+  grid.appendChild(setField('Dias por campana', spans,
+    '1 = una propiedad cada dia. Mas de 1 = la misma propiedad sigue en los dias siguientes hasta cubrir sus dias.'));
+  body.appendChild(grid);
+
+  const auto = document.createElement('input');
+  auto.type = 'checkbox';
+  auto.id = 'setAuto';
+  auto.checked = Boolean(s.autoRotateProperty);
+  const autoRow = el('label', 'set-check');
+  autoRow.setAttribute('for', 'setAuto');
+  autoRow.appendChild(auto);
+  autoRow.appendChild(el('span', null,
+    'Rotar la propiedad automaticamente (la que lleva mas tiempo sin salir en campana).'));
+  body.appendChild(autoRow);
+
+  const propSel = selectInput('setProp',
+    props.map((p) => ({
+      value: p.slug,
+      label: `${p.shortName} - ${p.photoCount} ${plural(p.photoCount, 'foto', 'fotos')}`,
+    })),
+    s.activePropertySlug || (props[0] ? props[0].slug : ''));
+  propSel.disabled = auto.checked;
+  const propField = setField('Propiedad fija', propSel,
+    'Solo cuenta si apagas la rotacion. El numero de fotos es el tope de la campana de esa propiedad.');
+  body.appendChild(propField);
+  auto.addEventListener('change', () => { propSel.disabled = auto.checked; });
+
+  if (state.settingsError) body.appendChild(el('p', 'set-err', state.settingsError));
+
+  const row = el('div', 'btn-row');
+  row.style.marginTop = '14px';
+  const save = el('button', 'btn btn-primary', 'Guardar ajustes');
+  save.type = 'button';
+  save.disabled = state.savingSettings;
+  const cancel = el('button', 'btn btn-ghost', 'Cerrar');
+  cancel.type = 'button';
+  cancel.addEventListener('click', toggleSettings);
+  save.addEventListener('click', () => saveSettings({
+    mode: modeSel, perDay, interval, start, spans, auto, prop: propSel,
+  }, save));
+  row.appendChild(save);
+  row.appendChild(cancel);
+  body.appendChild(row);
+  body.appendChild(el('p', 'thumb-meta',
+    'Guardar solo cambia numeros. Este panel no publica: sigue siendo copiar, pegar y apretar Publicar tu.'));
+
+  host.appendChild(body);
+}
+
+/* =========================================================================
    PANELES DE GRUPOS E HISTORIAL
    ========================================================================= */
 function renderGroups() {
@@ -781,6 +1135,22 @@ function render() {
   $('chipFree').appendChild(document.createTextNode('Libres '));
   $('chipFree').appendChild(el('b', null, String(stats.groupsFree || 0)));
 
+  // La regla 2 cambia con el modo: en campana es UNA propiedad en varios grupos,
+  // en spread es una distinta por grupo. Decir la que no aplica confunde.
+  const ruleTwo = $('ruleTwo');
+  clear(ruleTwo);
+  if (plan.mode === 'campaign') {
+    ruleTwo.appendChild(el('b', null, `Una sola propiedad al dia en hasta ${stats.dailyMax || 5} grupos`));
+    ruleTwo.appendChild(document.createTextNode(
+      ', a horas espaciadas y con texto, estilo y foto distintos en cada uno.'));
+  } else {
+    ruleTwo.appendChild(el('b', null, `Maximo ${stats.dailyMax || 3} grupos al dia`));
+    ruleTwo.appendChild(document.createTextNode(', con propiedad distinta en cada uno.'));
+  }
+
+  renderCampaign();
+  renderSettings();
+
   const host = $('queue');
   clear(host);
 
@@ -791,7 +1161,9 @@ function render() {
     renderEmpty(host);
   } else {
     host.appendChild(el('div', 'section-title', pending.length
-      ? `${pending.length} ${plural(pending.length, 'grupo', 'grupos')} para hoy`
+      ? (plan.mode === 'campaign'
+          ? `${pending.length} ${plural(pending.length, 'slot', 'slots')} por publicar`
+          : `${pending.length} ${plural(pending.length, 'grupo', 'grupos')} para hoy`)
       : 'Lo de hoy, ya publicado'));
     if (!pending.length && plan.reason) {
       const note = el('div', 'panel');
@@ -849,6 +1221,73 @@ function showLoginError(msg) {
   $('loginError').hidden = false;
 }
 
+/**
+ * Abre/cierra el panel de ajustes. Los limites y la lista de propiedades se
+ * piden UNA vez, la primera que se abre: el plan ya trae `settings`, asi que el
+ * resumen del boton no necesita esta llamada.
+ */
+async function toggleSettings() {
+  state.settingsOpen = !state.settingsOpen;
+  state.settingsError = null;
+  render();
+  if (!state.settingsOpen || state.meta || state.metaError) return;
+  try {
+    state.meta = await api('/api/groups/settings');
+    state.metaError = null;
+  } catch (e) {
+    if (e.status === 401 || e.status === 403) {
+      showScreen('login');
+      showLoginError('La sesion se vencio. Entra otra vez.');
+      return;
+    }
+    state.metaError = 'No pude cargar los ajustes: ' + e.message;
+  }
+  render();
+}
+
+async function saveSettings(inputs, btn) {
+  if (state.savingSettings) return;
+  state.savingSettings = true;
+  state.settingsError = null;
+  btn.disabled = true;
+  const original = btn.textContent;
+  btn.textContent = 'Guardando…';
+
+  try {
+    const res = await api('/api/groups/settings', {
+      method: 'POST',
+      body: {
+        mode: inputs.mode.value,
+        groupsPerDay: Number(inputs.perDay.value),
+        intervalHours: Number(inputs.interval.value),
+        startHour: Number(inputs.start.value),
+        campaignSpansDays: Number(inputs.spans.value),
+        autoRotateProperty: inputs.auto.checked,
+        // Con la rotacion encendida el slug no se manda: no lo borramos por si
+        // el dueno vuelve a apagarla.
+        activePropertySlug: inputs.auto.checked ? undefined : (inputs.prop.value || null),
+      },
+    });
+    state.meta = res;
+    toast('Ajustes guardados.', 'ok');
+    state.focused = -1;
+    // El plan se recalcula con los ajustes nuevos: la campana de hoy cambia aqui.
+    await loadPlan(false);
+  } catch (e) {
+    if (e.status === 401 || e.status === 403) {
+      showScreen('login');
+      showLoginError('La sesion se vencio. Entra otra vez y vuelve a guardar.');
+    } else {
+      state.settingsError = e.message;
+      toast('No se pudo guardar: ' + e.message, 'warn');
+      render();
+    }
+  } finally {
+    state.savingSettings = false;
+    if (btn.parentNode) { btn.disabled = false; btn.textContent = original; }
+  }
+}
+
 async function mark(a, skipped, btn) {
   if (state.busy) return;
   state.busy = true;
@@ -858,7 +1297,15 @@ async function mark(a, skipped, btn) {
   try {
     const res = await api('/api/groups/mark', {
       method: 'POST',
-      body: { groupCode: a.groupCode, propertySlug: a.propertySlug, ref: a.ref, skipped: !!skipped },
+      body: {
+        groupCode: a.groupCode,
+        propertySlug: a.propertySlug,
+        ref: a.ref,
+        // La foto de ESTE slot. Sin esto el servidor recalcula y en modo
+        // campana acierta solo en el primer slot del dia.
+        image: a.imagePath || a.imageUrl || null,
+        skipped: !!skipped,
+      },
     });
     if (skipped) {
       toast('Saltado. El grupo no gasta su semana.', 'info');
@@ -939,7 +1386,8 @@ function clickIn(role) {
 
 document.addEventListener('keydown', (e) => {
   const tag = e.target && e.target.tagName;
-  if (tag === 'INPUT' || tag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) return;
+  // SELECT tambien: el panel de ajustes tiene dos, y ahi "s" no puede ser saltar.
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (e.target && e.target.isContentEditable)) return;
   if (e.ctrlKey || e.metaKey || e.altKey) return;
 
   if (e.key === 'Escape') { toggleHelp(false); return; }

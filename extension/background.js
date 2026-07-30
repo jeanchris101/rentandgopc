@@ -13,9 +13,15 @@
  * de MV3 se apaga solo cada rato). Si la red falla, sirve la copia vieja marcada
  * como `stale` para que el panel siga funcionando en vez de romper la pagina.
  *
- * Aqui no hay temporizadores, ni alarmas, ni nada que publique: los unicos
- * efectos son leer /api/groups/plan, escribir /api/groups/mark cuando el dueno
- * dice "ya lo publique", y bajar una foto.
+ * Aqui no hay temporizadores, ni alarmas, ni notificaciones, ni nada que
+ * publique: los unicos efectos son leer /api/groups/plan, escribir
+ * /api/groups/mark cuando el dueno dice "ya lo publique", y bajar una foto.
+ *
+ * El modo campana no cambia nada de eso. Las horas de los slots son texto que se
+ * PINTA; no hay chrome.alarms, no se pide el permiso "notifications", y nadie
+ * despierta al worker cuando llega la hora de un slot. Lo unico que se hace con
+ * la hora es recalcular "cual toca ahora" al servir el plan (restampNow), porque
+ * un plan cacheado 5 minutos podria estar senalando el slot anterior.
  */
 
 const DEFAULT_BASE_URL = 'https://www.rentandgopc.com';
@@ -47,11 +53,13 @@ async function getConfig() {
   };
 }
 
+const TZ = 'America/Santo_Domingo';
+
 /** YYYY-MM-DD en hora dominicana, igual que todayInTz() del servidor. */
 function todayInDR() {
   try {
     return new Intl.DateTimeFormat('en-CA', {
-      timeZone: 'America/Santo_Domingo',
+      timeZone: TZ,
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
@@ -59,6 +67,89 @@ function todayInDR() {
   } catch (e) {
     return new Date().toISOString().slice(0, 10);
   }
+}
+
+/** Minutos del dia en hora dominicana, igual que minutesNowInTz() del servidor. */
+function minutesNowInDR() {
+  try {
+    const parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: TZ,
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23',
+    })
+      .format(new Date())
+      .split(':')
+      .map(Number);
+    const h = Number.isFinite(parts[0]) ? parts[0] % 24 : 0;
+    const m = Number.isFinite(parts[1]) ? parts[1] : 0;
+    return h * 60 + m;
+  } catch (e) {
+    // RD no tiene horario de verano: UTC-4 fijo es exacto como respaldo.
+    const d = new Date(Date.now() - 4 * 3600 * 1000);
+    return d.getUTCHours() * 60 + d.getUTCMinutes();
+  }
+}
+
+function twoDigits(n) {
+  return (n < 10 ? '0' : '') + n;
+}
+
+/* ------------------------------------------------------------------ *
+ * "Cual toca ahora" en el reloj de AHORA
+ *
+ * El servidor calcula isDue/isPast/isNext cuando arma el plan, pero el plan se
+ * cachea 5 minutos y aqui se sirve hasta viejo (`stale`) si la red falla. Un
+ * plan de hace media hora senalando el slot de las 11:00 cuando ya son las 13:00
+ * seria mentira, asi que se re-sella con el reloj local.
+ *
+ * Esto NO dispara nada: recalcula tres booleanos justo antes de devolver el
+ * plan a quien lo pidio. Sin alarmas, sin timers, sin notificaciones.
+ * ------------------------------------------------------------------ */
+function restampNow(plan) {
+  if (!plan || typeof plan !== 'object' || !Array.isArray(plan.slots)) return plan;
+
+  const nowMinutes = minutesNowInDR();
+  const slots = plan.slots.map((s) => {
+    const hour = Number(s && s.slotHour);
+    if (!Number.isFinite(hour)) return s;
+    const isPast = nowMinutes >= (hour + 1) * 60;
+    const done = s.status === 'posted' || s.status === 'skipped';
+    return {
+      ...s,
+      isDue: nowMinutes >= hour * 60,
+      isPast,
+      isNext: false,
+      status: done ? s.status : isPast ? 'missed' : 'pending',
+    };
+  });
+
+  const pending = slots.filter((s) => s.status === 'pending' || s.status === 'missed');
+  const next = pending.find((s) => !s.isPast) || pending[0] || null;
+  if (next) next.isNext = true;
+
+  const nowTime = twoDigits(Math.floor(nowMinutes / 60)) + ':' + twoDigits(nowMinutes % 60);
+  const campaign = plan.campaign
+    ? {
+        ...plan.campaign,
+        nowTime,
+        nextSlotTime: next ? next.slotTime : null,
+        nextGroupCode: next ? next.groupCode : null,
+        pending: pending.length,
+      }
+    : plan.campaign;
+
+  // `assignments` lleva el texto del post: se le pega la misma marca de tiempo
+  // para que la tarjeta del content script y la del popup digan lo mismo.
+  const byCode = new Map(slots.map((s) => [s.groupCode, s]));
+  const assignments = Array.isArray(plan.assignments)
+    ? plan.assignments.map((a) => {
+        const s = byCode.get(a.groupCode);
+        return s ? { ...a, isDue: s.isDue, isPast: s.isPast, isNext: s.isNext } : a;
+      })
+    : plan.assignments;
+
+  return { ...plan, slots, campaign, assignments };
 }
 
 /* ------------------------------------------------------------------ *
@@ -153,18 +244,26 @@ async function getPlan(params) {
   const cache = await readCache();
 
   if (cache && !force && Date.now() - cache.fetchedAt < FRESH_MS) {
-    return { ok: true, plan: cache.plan, fetchedAt: cache.fetchedAt, stale: false };
+    return { ok: true, plan: restampNow(cache.plan), fetchedAt: cache.fetchedAt, stale: false };
   }
 
   const res = await apiFetch('/api/groups/plan');
   if (res.ok) {
     const fetchedAt = Date.now();
+    // Se guarda el plan TAL CUAL llego; el re-sellado es solo de salida.
     await chrome.storage.local.set({ [CACHE_KEY]: { plan: res.data, fetchedAt } });
-    return { ok: true, plan: res.data, fetchedAt, stale: false };
+    return { ok: true, plan: restampNow(res.data), fetchedAt, stale: false };
   }
 
   if (cache) {
-    return { ok: true, plan: cache.plan, fetchedAt: cache.fetchedAt, stale: true, error: res.error, code: res.code };
+    return {
+      ok: true,
+      plan: restampNow(cache.plan),
+      fetchedAt: cache.fetchedAt,
+      stale: true,
+      error: res.error,
+      code: res.code,
+    };
   }
   return { ok: false, error: res.error, code: res.code };
 }
@@ -174,6 +273,9 @@ async function markPosted(params) {
     groupCode: String((params && params.groupCode) || ''),
     propertySlug: String((params && params.propertySlug) || ''),
     ref: String((params && params.ref) || ''),
+    // La foto de ESTE slot: el servidor no puede recalcularla bien cuando la
+    // campana pone la misma propiedad en varios grupos el mismo dia.
+    image: String((params && (params.imagePath || params.imageUrl)) || '') || undefined,
     skipped: (params && params.skipped) === true,
   };
   if (!body.groupCode || !body.propertySlug) {

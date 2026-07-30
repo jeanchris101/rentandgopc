@@ -102,10 +102,30 @@ export default async function handler(req, res) {
     const id = entryId(date, groupCode, propertySlug);
     const now = new Date().toISOString();
 
-    // La foto: la misma que eligio el plan. Se recalcula sobre el historial de
-    // ANTES de agregar esta entrada, que es exactamente lo que vio plan.js.
+    // La foto que REALMENTE salio.
+    //
+    // Recalcularla aca solo acierta en el primer slot del dia: en modo campana
+    // los 5 slots comparten propiedad y cada uno lleva una foto distinta, pero
+    // la recalculada siempre es la cabeza del LRU. Guardar la equivocada hace
+    // que la campana de manana crea que esa foto ya descanso y repita otra
+    // antes de tiempo — y la variedad de fotos es justo lo que evita que 5
+    // posts de la misma propiedad se lean como contenido duplicado.
+    //
+    // Por eso el cliente manda `image` (el plan se lo dio) y se acepta solo si
+    // es una de las post_images de esa propiedad. Si no viene, se recalcula
+    // como antes: el panel viejo sigue funcionando.
     const existing = entries.find((e) => e.id === id) || null;
+    const claimed =
+      typeof body.image === 'string' && body.image.trim() ? body.image.trim() : null;
+    const allowed = Array.isArray(prop.post_images) ? prop.post_images : [];
+    const claimedOk = claimed
+      ? allowed.find((c) => c === claimed || claimed.endsWith(c)) || null
+      : null;
+    if (claimed && !claimedOk) {
+      console.warn('[groups/mark] image "%s" no pertenece a %s; la recalculo', claimed, propertySlug);
+    }
     const image =
+      claimedOk ||
       existing?.image ||
       selectImage(prop, imageLastUsedFrom(entries.filter((e) => e.id !== id)), date) ||
       null;
