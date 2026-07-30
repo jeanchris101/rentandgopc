@@ -31,7 +31,7 @@
  */
 import { put, list } from '@vercel/blob';
 
-import { requireAuth } from '../_lib/auth.js';
+import { requirePanelOrExtensionAuth } from '../_lib/auth.js';
 import groupsFile from '../../automation/data/group-assist-config.json' with { type: 'json' };
 import propertiesFile from '../../automation/data/properties.json' with { type: 'json' };
 import templatesFile from '../../automation/data/post-templates.json' with { type: 'json' };
@@ -736,7 +736,9 @@ function buildReason({ dateStr, pending, done, groups, candidates, slotsLeft, sk
  * ------------------------------------------------------------------ */
 
 export default async function handler(req, res) {
-  if (!requireAuth(req, res)) return;
+  // Dos puertas: la cookie del panel (group-queue.html) y el Bearer de la
+  // extension de Chrome, que no puede mandar la cookie por ser SameSite=Strict.
+  if (!requirePanelOrExtensionAuth(req, res)) return;
 
   // vercel.json le pone `public, max-age=3600` a TODO. Sin esto el plan quedaria
   // cacheado una hora (y potencialmente compartido).

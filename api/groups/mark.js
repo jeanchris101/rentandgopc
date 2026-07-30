@@ -19,7 +19,7 @@
  * El store (blob, normalizacion, seleccion de imagen) vive en ./plan.js, mismo
  * patron que api/lead/list.js importando de api/lead/capture.js.
  */
-import { requireAuth } from '../_lib/auth.js';
+import { requirePanelOrExtensionAuth } from '../_lib/auth.js';
 import {
   GROUPS,
   GROUP_COOLDOWN_DAYS,
@@ -55,7 +55,8 @@ function parseBody(req) {
 }
 
 export default async function handler(req, res) {
-  if (!requireAuth(req, res)) return;
+  // Igual que plan.js: cookie del panel o Bearer de la extension de Chrome.
+  if (!requirePanelOrExtensionAuth(req, res)) return;
 
   // vercel.json le pone `public, max-age=3600` a todo.
   res.setHeader('Cache-Control', 'no-store, private');

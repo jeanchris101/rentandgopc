@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Rent & Go PC — Asistente de grupos",
+  "version": "1.0.0",
+  "description": "Te dice que toca publicar en cada grupo de Facebook y te llena el compositor. El boton Publicar lo aprietas tu.",
+  "permissions": ["storage", "downloads"],
+  "host_permissions": [
+    "https://www.facebook.com/groups/*",
+    "https://www.rentandgopc.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Rent & Go PC — Asistente de grupos"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.facebook.com/groups/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

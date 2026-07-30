@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Rent &amp; Go PC — Asistente de grupos</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="rgpc-popup">
+    <header class="rgpc-pop-head">
+      <div>
+        <p class="rgpc-pop-title">Rent &amp; Go PC</p>
+        <p class="rgpc-pop-sub">Asistente de grupos — Publicar lo aprietas tu</p>
+      </div>
+    </header>
+
+    <main class="rgpc-pop-main">
+      <section class="rgpc-card">
+        <h2>Conexion</h2>
+        <div class="rgpc-status">
+          <span class="rgpc-dot" id="dot"></span>
+          <span id="statusText">Revisando...</span>
+        </div>
+        <div class="rgpc-row">
+          <button type="button" class="rgpc-ghost" id="refresh">Probar conexion</button>
+        </div>
+      </section>
+
+      <section class="rgpc-card">
+        <h2>Hoy</h2>
+        <ul class="rgpc-plan" id="planList"></ul>
+        <p class="rgpc-note" id="planNote"></p>
+      </section>
+
+      <section class="rgpc-card">
+        <h2>Ajustes</h2>
+        <label for="baseUrl">URL del sitio</label>
+        <input type="text" id="baseUrl" spellcheck="false" autocomplete="off" placeholder="https://www.rentandgopc.com" />
+        <label for="token">Token de la extension</label>
+        <input type="password" id="token" spellcheck="false" autocomplete="off" placeholder="pegalo aqui" />
+        <div class="rgpc-inline">
+          <input type="checkbox" id="showToken" />
+          <label for="showToken">Ver el token</label>
+        </div>
+        <div class="rgpc-row">
+          <button type="button" class="rgpc-primary" id="save">Guardar</button>
+        </div>
+        <p class="rgpc-msg" id="msg" hidden></p>
+        <p class="rgpc-note">
+          El token es el valor de EXTENSION_TOKEN en Vercel. Se guarda solo en este navegador.
+        </p>
+      </section>
+    </main>
+
+    <footer class="rgpc-foot">
+      <a id="queueLink" href="https://www.rentandgopc.com/group-queue.html" target="_blank" rel="noopener noreferrer"
+        >Abrir la cola completa</a
+      >
+      <span id="version"></span>
+    </footer>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

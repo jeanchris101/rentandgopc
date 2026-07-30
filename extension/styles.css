@@ -1,0 +1,568 @@
+/* =====================================================================
+   styles.css — dos cosas en un archivo:
+     1. El panel que se inyecta DENTRO de facebook.com  (#rgpc-panel)
+     2. El popup de la extension                        (body.rgpc-popup)
+
+   Todo va con prefijo. Este archivo entra en la pagina de Facebook, asi que
+   una sola regla suelta a `div`, `button` o `:root` le rompe la interfaz al
+   dueno. No hay selectores de elemento sueltos aqui, y las variables de color
+   se declaran en el panel, no en :root, porque Facebook tambien usa
+   --primary / --accent para lo suyo.
+
+   Paleta del proyecto: verde #1a3a2a, dorado #c8a45e.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------- *
+ * Reset local. Especificidad (1,0,1): le gana a las clases de
+ * Facebook (0,1,0) y a sus resets de elemento (0,0,1), sin usar
+ * !important en ningun lado.
+ * ---------------------------------------------------------------- */
+#rgpc-panel,
+#rgpc-panel * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: 1.45;
+  letter-spacing: normal;
+  text-transform: none;
+  text-align: left;
+  text-shadow: none;
+  text-decoration: none;
+  list-style: none;
+  box-shadow: none;
+  outline: none;
+  float: none;
+  transform: none;
+  animation: none;
+  min-width: 0;
+  max-width: none;
+  direction: ltr;
+}
+
+#rgpc-panel {
+  --rgpc-primary: #1a3a2a;
+  --rgpc-primary-soft: #2d5a3f;
+  --rgpc-accent: #c8a45e;
+  --rgpc-ink: #22312a;
+  --rgpc-dim: #5a6b60;
+
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2147483000;
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  max-height: 78vh;
+  overflow: hidden;
+  border: 1px solid #ded7c4;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(12, 26, 18, 0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color: var(--rgpc-ink);
+}
+
+#rgpc-panel.rgpc-collapsed {
+  width: auto;
+  max-width: 260px;
+}
+
+#rgpc-panel :focus-visible {
+  outline: 2px solid var(--rgpc-accent);
+  outline-offset: 1px;
+}
+
+/* ------------------------------ cabecera ------------------------------ */
+#rgpc-panel .rgpc-head {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 9px;
+  background: var(--rgpc-primary);
+  color: #ffffff;
+}
+
+#rgpc-panel .rgpc-code {
+  flex: 0 0 auto;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--rgpc-accent);
+  color: #14261c;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+#rgpc-panel .rgpc-name {
+  flex: 1 1 auto;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#rgpc-panel .rgpc-icon {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+#rgpc-panel .rgpc-icon:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* -------------------------------- cuerpo ------------------------------ */
+#rgpc-panel .rgpc-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+#rgpc-panel .rgpc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+}
+
+#rgpc-panel .rgpc-prop {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--rgpc-primary);
+}
+
+#rgpc-panel .rgpc-price {
+  font-size: 12px;
+  font-weight: 700;
+  color: #7a6320;
+}
+
+#rgpc-panel .rgpc-lang {
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #eef1ec;
+  color: var(--rgpc-dim);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+#rgpc-panel .rgpc-pre {
+  max-height: 152px;
+  overflow-y: auto;
+  padding: 8px;
+  border: 1px solid #e7e0cd;
+  border-left: 3px solid var(--rgpc-accent);
+  border-radius: 6px;
+  background: #f8f6ef;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+#rgpc-panel .rgpc-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+#rgpc-panel .rgpc-row-end {
+  margin-top: 2px;
+  padding-top: 8px;
+  border-top: 1px solid #eceae2;
+}
+
+/* ------------------------------- botones ------------------------------ */
+#rgpc-panel .rgpc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 11px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#rgpc-panel .rgpc-btn:hover {
+  filter: brightness(0.94);
+}
+
+#rgpc-panel .rgpc-primary {
+  flex: 1 1 auto;
+  background: var(--rgpc-primary);
+  color: #ffffff;
+}
+
+#rgpc-panel .rgpc-gold {
+  flex: 1 1 auto;
+  background: var(--rgpc-accent);
+  color: #14261c;
+}
+
+#rgpc-panel .rgpc-done {
+  flex: 1 1 auto;
+  background: var(--rgpc-primary-soft);
+  color: #ffffff;
+}
+
+#rgpc-panel .rgpc-ghost {
+  border: 1px solid #d8ddd6;
+  background: #eef1ec;
+  color: var(--rgpc-primary);
+}
+
+#rgpc-panel .rgpc-link {
+  padding: 7px 4px;
+  color: var(--rgpc-dim);
+  font-weight: 500;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* -------------------------------- textos ------------------------------ */
+#rgpc-panel .rgpc-hint {
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--rgpc-dim);
+}
+
+#rgpc-panel .rgpc-ref {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #8a7434;
+}
+
+#rgpc-panel .rgpc-ok {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rgpc-primary-soft);
+}
+
+#rgpc-panel .rgpc-warn {
+  padding: 7px 8px;
+  border: 1px solid #ecd9a8;
+  border-radius: 6px;
+  background: #fdf7e6;
+  font-size: 12px;
+  color: #6b551d;
+}
+
+#rgpc-panel .rgpc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-left: 2px;
+}
+
+#rgpc-panel .rgpc-a {
+  color: var(--rgpc-primary-soft);
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#rgpc-panel .rgpc-dim {
+  color: var(--rgpc-dim);
+  font-size: 11.5px;
+}
+
+#rgpc-panel .rgpc-note {
+  padding: 7px 8px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+/* El aviso de "revisalo y publicalo tu". Se ve distinto a proposito. */
+#rgpc-panel .rgpc-note-action {
+  border: 1px solid var(--rgpc-accent);
+  background: #fff8e6;
+  color: #4a3a12;
+  font-weight: 700;
+}
+
+#rgpc-panel .rgpc-note-ok {
+  border: 1px solid #bfe0c9;
+  background: #eef7f0;
+  color: #1f4a2f;
+}
+
+#rgpc-panel .rgpc-note-warn {
+  border: 1px solid #f0c8c0;
+  background: #fff2f0;
+  color: #7a2e1e;
+}
+
+#rgpc-panel .rgpc-note-info {
+  border: 1px solid #d3dae6;
+  background: #eef1f6;
+  color: #33414f;
+}
+
+/* =====================================================================
+   POPUP (popup.html). Nada de esto puede matchear en facebook.com: todo
+   cuelga de body.rgpc-popup, y esa clase solo existe en el popup.
+   ===================================================================== */
+body.rgpc-popup {
+  --rgpc-primary: #1a3a2a;
+  --rgpc-primary-soft: #2d5a3f;
+  --rgpc-accent: #c8a45e;
+
+  width: 340px;
+  margin: 0;
+  padding: 0;
+  background: #f6f5f0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color: #22312a;
+}
+
+body.rgpc-popup * {
+  box-sizing: border-box;
+}
+
+.rgpc-popup .rgpc-pop-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--rgpc-primary);
+  color: #ffffff;
+}
+
+.rgpc-popup .rgpc-pop-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.rgpc-popup .rgpc-pop-sub {
+  margin: 2px 0 0;
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.rgpc-popup .rgpc-pop-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+}
+
+.rgpc-popup .rgpc-card {
+  padding: 10px;
+  border: 1px solid #e3e0d4;
+  border-radius: 9px;
+  background: #ffffff;
+}
+
+.rgpc-popup h2 {
+  margin: 0 0 7px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--rgpc-primary);
+}
+
+.rgpc-popup label {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #55645b;
+}
+
+.rgpc-popup input[type="text"],
+.rgpc-popup input[type="password"] {
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 7px 8px;
+  border: 1px solid #d5d2c6;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 12px;
+  font-family: inherit;
+  color: #22312a;
+}
+
+.rgpc-popup input:focus {
+  border-color: var(--rgpc-accent);
+  outline: none;
+}
+
+.rgpc-popup .rgpc-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: #55645b;
+}
+
+.rgpc-popup .rgpc-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rgpc-popup button {
+  padding: 7px 11px;
+  border: 0;
+  border-radius: 7px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.rgpc-popup .rgpc-primary {
+  flex: 1 1 auto;
+  background: var(--rgpc-primary);
+  color: #ffffff;
+}
+
+.rgpc-popup .rgpc-ghost {
+  border: 1px solid #d8ddd6;
+  background: #eef1ec;
+  color: var(--rgpc-primary);
+}
+
+.rgpc-popup .rgpc-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.rgpc-popup .rgpc-dot {
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: #b9b9b9;
+}
+
+.rgpc-popup .rgpc-dot-ok {
+  background: #2f8a4e;
+}
+
+.rgpc-popup .rgpc-dot-warn {
+  background: var(--rgpc-accent);
+}
+
+.rgpc-popup .rgpc-dot-bad {
+  background: #c0472e;
+}
+
+.rgpc-popup .rgpc-plan {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rgpc-popup .rgpc-plan li {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #f0eee6;
+}
+
+.rgpc-popup .rgpc-plan li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.rgpc-popup .rgpc-badge {
+  flex: 0 0 auto;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--rgpc-accent);
+  color: #14261c;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.rgpc-popup .rgpc-plan-group {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 12px;
+}
+
+.rgpc-popup .rgpc-plan-prop {
+  display: block;
+  color: #667a6d;
+  font-size: 11px;
+}
+
+.rgpc-popup a {
+  color: var(--rgpc-primary-soft);
+  font-weight: 600;
+  font-size: 11.5px;
+}
+
+.rgpc-popup .rgpc-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 12px 12px;
+  font-size: 11px;
+  color: #6b7a71;
+}
+
+.rgpc-popup .rgpc-msg {
+  margin-top: 8px;
+  padding: 7px 8px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+
+.rgpc-popup .rgpc-msg-ok {
+  border: 1px solid #bfe0c9;
+  background: #eef7f0;
+  color: #1f4a2f;
+}
+
+.rgpc-popup .rgpc-msg-bad {
+  border: 1px solid #f0c8c0;
+  background: #fff2f0;
+  color: #7a2e1e;
+}
+
+.rgpc-popup .rgpc-note {
+  font-size: 11px;
+  line-height: 1.45;
+  color: #6b7a71;
+}

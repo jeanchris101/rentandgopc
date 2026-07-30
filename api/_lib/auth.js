@@ -1,4 +1,4 @@
-import { createHmac, timingSafeEqual } from 'node:crypto';
+import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
 
 // Single-owner panel auth: one password (PANEL_PASSWORD) exchanged for a signed
 // cookie (PANEL_SECRET). No user table, no sessions to store.
@@ -85,6 +85,78 @@ export function requireAuth(req, res) {
   }
   if (!verifyToken(readCookie(req, COOKIE_NAME))) {
     res.status(401).json({ error: 'Unauthorized' });
+    return false;
+  }
+  return true;
+}
+
+/* ------------------------------------------------------------------ *
+ * Token de la extension de Chrome
+ *
+ * La cookie del panel es SameSite=Strict a proposito, asi que NO viaja en una
+ * peticion que sale desde facebook.com ni desde el service worker de la
+ * extension. Para eso existe EXTENSION_TOKEN: un secreto aparte, solo para los
+ * dos endpoints de grupos, que el dueno pega una vez en el popup.
+ *
+ * Es un secreto distinto de PANEL_PASSWORD a proposito: vive en el disco de una
+ * extension de Chrome, y si se filtra se rota solo (cambiar el env) sin tocar la
+ * clave del panel ni cerrar la sesion del navegador.
+ * ------------------------------------------------------------------ */
+
+/**
+ * Un token corto es un token adivinable. 24 caracteres es el minimo que
+ * aceptamos; lo recomendado es `openssl rand -hex 32` (64 chars).
+ */
+const EXTENSION_TOKEN_MIN_LENGTH = 24;
+
+/** `Authorization: Bearer xxx` -> "xxx". null si no vino la cabecera. */
+function readBearer(req) {
+  const header = req?.headers?.authorization;
+  if (typeof header !== 'string') return null;
+  const m = /^Bearer[ \t]+(.+)$/i.exec(header.trim());
+  return m ? m[1].trim() : null;
+}
+
+/** Fail-closed: sin EXTENSION_TOKEN (o demasiado corto) este camino no existe. */
+export function isExtensionConfigured() {
+  const token = process.env.EXTENSION_TOKEN;
+  return typeof token === 'string' && token.trim().length >= EXTENSION_TOKEN_MIN_LENGTH;
+}
+
+/**
+ * Comparacion en tiempo constante. Se compara el sha256 de cada lado y no las
+ * cadenas: timingSafeEqual exige la misma longitud, y chequear longitudes antes
+ * filtraria el largo del secreto. Los digests siempre miden 32 bytes.
+ */
+export function verifyExtensionToken(given) {
+  if (!isExtensionConfigured() || typeof given !== 'string' || !given) return false;
+  const a = createHash('sha256').update(given, 'utf8').digest();
+  const b = createHash('sha256').update(process.env.EXTENSION_TOKEN.trim(), 'utf8').digest();
+  return timingSafeEqual(a, b);
+}
+
+/**
+ * Gate de los endpoints que tambien usa la extension:
+ * `if (!requirePanelOrExtensionAuth(req, res)) return;`
+ *
+ * Con cabecera Authorization manda el token y NO se cae a la cookie: un Bearer
+ * invalido es un intento explicito y se responde 401 en vez de dejarlo seguir
+ * probando por otra puerta. Sin cabecera, es la cookie del panel de siempre.
+ */
+export function requirePanelOrExtensionAuth(req, res) {
+  const bearer = readBearer(req);
+  if (bearer === null) return requireAuth(req, res);
+
+  if (!isExtensionConfigured()) {
+    console.error(
+      '[auth] EXTENSION_TOKEN no esta configurado (o mide menos de %d caracteres): se rechaza el Bearer.',
+      EXTENSION_TOKEN_MIN_LENGTH
+    );
+    res.status(503).json({ error: 'EXTENSION_TOKEN no configurado en el servidor' });
+    return false;
+  }
+  if (!verifyExtensionToken(bearer)) {
+    res.status(401).json({ error: 'Token de extension invalido' });
     return false;
   }
   return true;
