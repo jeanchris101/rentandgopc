@@ -1,0 +1,50 @@
+name: WhatsApp Health Check
+
+# Si WAHA se cae, los mensajes entrantes dejan de llegar al panel y nadie se
+# entera: WhatsApp le sigue mostrando al lead que su mensaje se entrego. Este
+# chequeo corre cada hora y falla ruidosamente, que en GitHub significa un
+# correo al dueno. Un lead perdido cuesta mas que un correo de mas.
+on:
+  schedule:
+    # Cada hora en punto. Solo dispara alerta cuando algo esta mal.
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: waha-health
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      # Sin la contrasena el diagnostico solo puede revisar lo publico, y un
+      # chequeo que no puede fallar no sirve de alarma. Mejor decirlo y parar.
+      - name: Check the panel password is configured
+        id: creds
+        env:
+          PANEL_PASSWORD: ${{ secrets.PANEL_PASSWORD }}
+        run: |
+          if [ -z "$PANEL_PASSWORD" ]; then
+            echo "has_creds=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Health check dormant::PANEL_PASSWORD secret not set — nothing is being monitored. Add it to enable the hourly check."
+          else
+            echo "has_creds=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run the end-to-end diagnostic
+        if: ${{ steps.creds.outputs.has_creds == 'true' }}
+        env:
+          PANEL_PASSWORD: ${{ secrets.PANEL_PASSWORD }}
+        run: python -u automation/waha_check.py --site https://www.rentandgopc.com
