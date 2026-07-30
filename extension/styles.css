@@ -44,6 +44,22 @@
 }
 
 #rgpc-panel {
+  /* Escalas opticas de Segoe UI Variable (Windows 11): "Small" esta disenada
+     para <12px y "Display" para titulos. Usar la variante correcta es lo que
+     hace que las etiquetas chicas dejen de verse embarradas; plain "Segoe UI"
+     a 10px en negrita es exactamente el problema que teniamos. */
+  --rgpc-ui: "Segoe UI Variable Text", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --rgpc-ui-small: "Segoe UI Variable Small", var(--rgpc-ui);
+  --rgpc-ui-display: "Segoe UI Variable Display", var(--rgpc-ui);
+  --rgpc-mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+
+  /* Escala fija en vez de 10/11/11.5/12/13/14 puestos a ojo. */
+  --rgpc-t-micro: 10.5px;
+  --rgpc-t-sm: 12px;
+  --rgpc-t-base: 13px;
+  --rgpc-t-md: 14px;
+  --rgpc-t-lg: 15.5px;
+
   --rgpc-primary: #1a3a2a;
   --rgpc-primary-soft: #2d5a3f;
   --rgpc-accent: #c8a45e;
@@ -64,9 +80,14 @@
   border-radius: 12px;
   background: #ffffff;
   box-shadow: 0 10px 28px rgba(12, 26, 18, 0.28);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 13px;
+  font-family: var(--rgpc-ui);
+  font-size: var(--rgpc-t-base);
+  font-weight: 400;
   color: var(--rgpc-ink);
+  /* Sin sintesis: si un peso no existe, Windows lo finge engordando los trazos
+     y a 11px eso se ve sucio. Mejor que caiga al peso real mas cercano. */
+  font-synthesis: none;
+  font-optical-sizing: auto;
 }
 
 #rgpc-panel.rgpc-collapsed {
@@ -96,15 +117,20 @@
   border-radius: 999px;
   background: var(--rgpc-accent);
   color: #14261c;
-  font-size: 11px;
-  font-weight: 700;
+  font-family: var(--rgpc-ui-small);
+  font-size: var(--rgpc-t-micro);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
 }
 
 #rgpc-panel .rgpc-name {
   flex: 1 1 auto;
   overflow: hidden;
-  font-size: 12px;
+  font-family: var(--rgpc-ui-display);
+  font-size: var(--rgpc-t-md);
   font-weight: 600;
+  letter-spacing: -0.01em;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -119,7 +145,7 @@
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.16);
   color: #ffffff;
-  font-size: 14px;
+  font-size: var(--rgpc-t-md);
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
@@ -147,14 +173,17 @@
 }
 
 #rgpc-panel .rgpc-prop {
-  font-size: 13px;
-  font-weight: 700;
+  font-family: var(--rgpc-ui-display);
+  font-size: var(--rgpc-t-lg);
+  font-weight: 600;
+  letter-spacing: -0.015em;
   color: var(--rgpc-primary);
 }
 
 #rgpc-panel .rgpc-price {
-  font-size: 12px;
+  font-size: var(--rgpc-t-sm);
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
   color: #7a6320;
 }
 
@@ -163,8 +192,10 @@
   border-radius: 999px;
   background: #eef1ec;
   color: var(--rgpc-dim);
-  font-size: 10px;
+  font-family: var(--rgpc-ui-small);
+  font-size: var(--rgpc-t-micro);
   font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
@@ -176,8 +207,10 @@
   border-left: 3px solid var(--rgpc-accent);
   border-radius: 6px;
   background: #f8f6ef;
-  font-size: 12px;
-  line-height: 1.5;
+  font-size: var(--rgpc-t-base);
+  font-weight: 400;
+  line-height: 1.58;
+  color: #2c3a32;
   white-space: pre-wrap;
   word-break: break-word;
 }
@@ -201,7 +234,7 @@
   justify-content: center;
   padding: 7px 11px;
   border-radius: 7px;
-  font-size: 12px;
+  font-size: var(--rgpc-t-sm);
   font-weight: 600;
   cursor: pointer;
 }
@@ -244,20 +277,22 @@
 
 /* -------------------------------- textos ------------------------------ */
 #rgpc-panel .rgpc-hint {
-  font-size: 11.5px;
-  line-height: 1.45;
+  font-size: var(--rgpc-t-sm);
+  line-height: 1.5;
   color: var(--rgpc-dim);
 }
 
 #rgpc-panel .rgpc-ref {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-family: var(--rgpc-mono);
+  font-size: var(--rgpc-t-sm);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
   color: #8a7434;
 }
 
 #rgpc-panel .rgpc-ok {
-  font-size: 12px;
+  font-size: var(--rgpc-t-sm);
   font-weight: 600;
   color: var(--rgpc-primary-soft);
 }
@@ -267,7 +302,7 @@
   border: 1px solid #ecd9a8;
   border-radius: 6px;
   background: #fdf7e6;
-  font-size: 12px;
+  font-size: var(--rgpc-t-sm);
   color: #6b551d;
 }
 
@@ -287,14 +322,14 @@
 
 #rgpc-panel .rgpc-dim {
   color: var(--rgpc-dim);
-  font-size: 11.5px;
+  font-size: var(--rgpc-t-sm);
 }
 
 #rgpc-panel .rgpc-note {
   padding: 7px 8px;
   border-radius: 6px;
-  font-size: 11.5px;
-  line-height: 1.45;
+  font-size: var(--rgpc-t-sm);
+  line-height: 1.5;
 }
 
 /* El aviso de "revisalo y publicalo tu". Se ve distinto a proposito. */
@@ -302,7 +337,7 @@
   border: 1px solid var(--rgpc-accent);
   background: #fff8e6;
   color: #4a3a12;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 #rgpc-panel .rgpc-note-ok {
@@ -332,13 +367,27 @@ body.rgpc-popup {
   --rgpc-primary-soft: #2d5a3f;
   --rgpc-accent: #c8a45e;
 
+  /* Repetidos a proposito: el popup es otro documento y no hereda del panel. */
+  --rgpc-ui: "Segoe UI Variable Text", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --rgpc-ui-small: "Segoe UI Variable Small", var(--rgpc-ui);
+  --rgpc-ui-display: "Segoe UI Variable Display", var(--rgpc-ui);
+  --rgpc-mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+  --rgpc-t-micro: 10.5px;
+  --rgpc-t-sm: 12px;
+  --rgpc-t-base: 13px;
+  --rgpc-t-md: 14px;
+  --rgpc-t-lg: 15.5px;
+
   width: 340px;
   margin: 0;
   padding: 0;
   background: #f6f5f0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 13px;
+  font-family: var(--rgpc-ui);
+  font-size: var(--rgpc-t-base);
+  font-weight: 400;
   color: #22312a;
+  font-synthesis: none;
+  font-optical-sizing: auto;
 }
 
 body.rgpc-popup * {
@@ -357,13 +406,15 @@ body.rgpc-popup * {
 
 .rgpc-popup .rgpc-pop-title {
   margin: 0;
-  font-size: 13px;
-  font-weight: 700;
+  font-family: var(--rgpc-ui-display);
+  font-size: var(--rgpc-t-md);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .rgpc-popup .rgpc-pop-sub {
   margin: 2px 0 0;
-  font-size: 11px;
+  font-size: var(--rgpc-t-micro);
   opacity: 0.85;
 }
 
@@ -383,7 +434,7 @@ body.rgpc-popup * {
 
 .rgpc-popup h2 {
   margin: 0 0 7px;
-  font-size: 11px;
+  font-size: var(--rgpc-t-micro);
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -393,7 +444,7 @@ body.rgpc-popup * {
 .rgpc-popup label {
   display: block;
   margin-bottom: 3px;
-  font-size: 11px;
+  font-size: var(--rgpc-t-micro);
   font-weight: 600;
   color: #55645b;
 }
@@ -406,7 +457,7 @@ body.rgpc-popup * {
   border: 1px solid #d5d2c6;
   border-radius: 6px;
   background: #fff;
-  font-size: 12px;
+  font-size: var(--rgpc-t-sm);
   font-family: inherit;
   color: #22312a;
 }
@@ -421,7 +472,7 @@ body.rgpc-popup * {
   align-items: center;
   gap: 6px;
   margin-bottom: 8px;
-  font-size: 11px;
+  font-size: var(--rgpc-t-micro);
   color: #55645b;
 }
 
@@ -436,7 +487,7 @@ body.rgpc-popup * {
   border: 0;
   border-radius: 7px;
   font-family: inherit;
-  font-size: 12px;
+  font-size: var(--rgpc-t-sm);
   font-weight: 600;
   cursor: pointer;
 }
@@ -457,7 +508,7 @@ body.rgpc-popup * {
   display: flex;
   align-items: flex-start;
   gap: 7px;
-  font-size: 12px;
+  font-size: var(--rgpc-t-sm);
   line-height: 1.45;
 }
 
@@ -510,26 +561,26 @@ body.rgpc-popup * {
   border-radius: 999px;
   background: var(--rgpc-accent);
   color: #14261c;
-  font-size: 10px;
+  font-size: var(--rgpc-t-micro);
   font-weight: 700;
 }
 
 .rgpc-popup .rgpc-plan-group {
   flex: 1 1 auto;
   min-width: 0;
-  font-size: 12px;
+  font-size: var(--rgpc-t-sm);
 }
 
 .rgpc-popup .rgpc-plan-prop {
   display: block;
   color: #667a6d;
-  font-size: 11px;
+  font-size: var(--rgpc-t-micro);
 }
 
 .rgpc-popup a {
   color: var(--rgpc-primary-soft);
   font-weight: 600;
-  font-size: 11.5px;
+  font-size: var(--rgpc-t-sm);
 }
 
 .rgpc-popup .rgpc-foot {
@@ -537,7 +588,7 @@ body.rgpc-popup * {
   justify-content: space-between;
   gap: 8px;
   padding: 0 12px 12px;
-  font-size: 11px;
+  font-size: var(--rgpc-t-micro);
   color: #6b7a71;
 }
 
@@ -545,7 +596,7 @@ body.rgpc-popup * {
   margin-top: 8px;
   padding: 7px 8px;
   border-radius: 6px;
-  font-size: 11.5px;
+  font-size: var(--rgpc-t-sm);
   line-height: 1.4;
 }
 
@@ -562,7 +613,7 @@ body.rgpc-popup * {
 }
 
 .rgpc-popup .rgpc-note {
-  font-size: 11px;
+  font-size: var(--rgpc-t-micro);
   line-height: 1.45;
   color: #6b7a71;
 }
