@@ -558,10 +558,53 @@ def assert_images_public(urls: list[str]) -> str | None:
     return None
 
 
+# Cached Page access token. Resolved once per process by publish_token().
+_PAGE_TOKEN: str | None = None
+
+
+def publish_token() -> str:
+    """The token to publish with, which is NOT always the configured one.
+
+    A System User token is a *user*-level token. It can read the Page, list the
+    Pages it manages, and pass every check in verify_token() — and then Graph
+    rejects POST /{page-id}/feed with "(#200) publish_actions ... deprecated",
+    which names a permission removed years ago and hides the real cause:
+    publishing needs the *Page* access token.
+
+    GET /{page-id}?fields=access_token exchanges one for the other. If the
+    configured token already is a Page token, the call simply returns it back,
+    so this is safe either way.
+    """
+    global _PAGE_TOKEN
+    if _PAGE_TOKEN:
+        return _PAGE_TOKEN
+
+    try:
+        resp = requests.get(
+            f"{GRAPH_API_BASE}/{FB_PAGE_ID}",
+            params={"fields": "access_token", "access_token": FB_PAGE_ACCESS_TOKEN},
+            timeout=10,
+        )
+        if resp.status_code == 200:
+            token = (resp.json() or {}).get("access_token")
+            if token:
+                _PAGE_TOKEN = token
+                log.info("Using the Page access token derived from the configured token.")
+                return _PAGE_TOKEN
+        else:
+            log.warning("Could not derive a Page token (%s); using the configured one.",
+                        _parse_graph_error(resp).get("message") or resp.status_code)
+    except requests.RequestException as e:
+        log.warning("Could not derive a Page token (%s); using the configured one.", e)
+
+    _PAGE_TOKEN = FB_PAGE_ACCESS_TOKEN
+    return _PAGE_TOKEN
+
+
 def fb_post_text(message: str) -> dict:
     """POST /{page-id}/feed — text only."""
     url = f"{GRAPH_API_BASE}/{FB_PAGE_ID}/feed"
-    payload = {"message": message, "access_token": FB_PAGE_ACCESS_TOKEN}
+    payload = {"message": message, "access_token": publish_token()}
     resp = requests.post(url, data=payload, timeout=30)
     _log_usage_header(resp)
     graph_error = _parse_graph_error(resp)
@@ -574,7 +617,7 @@ def fb_post_text(message: str) -> dict:
 def fb_post_photo(message: str, image_url: str) -> dict:
     """POST /{page-id}/photos — image from URL with caption."""
     url = f"{GRAPH_API_BASE}/{FB_PAGE_ID}/photos"
-    payload = {"message": message, "url": image_url, "access_token": FB_PAGE_ACCESS_TOKEN}
+    payload = {"message": message, "url": image_url, "access_token": publish_token()}
     resp = requests.post(url, data=payload, timeout=60)
     _log_usage_header(resp)
     graph_error = _parse_graph_error(resp)
@@ -587,7 +630,7 @@ def fb_post_photo(message: str, image_url: str) -> dict:
 def fb_post_link(message: str, link: str) -> dict:
     """POST /{page-id}/feed — text with link attachment."""
     url = f"{GRAPH_API_BASE}/{FB_PAGE_ID}/feed"
-    payload = {"message": message, "link": link, "access_token": FB_PAGE_ACCESS_TOKEN}
+    payload = {"message": message, "link": link, "access_token": publish_token()}
     resp = requests.post(url, data=payload, timeout=30)
     _log_usage_header(resp)
     graph_error = _parse_graph_error(resp)
