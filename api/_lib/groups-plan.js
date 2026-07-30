@@ -7,7 +7,7 @@
  * es llevar la cuenta — que grupo recibio que propiedad y cuando — para que a
  * los 30 dias el ref diga que grupos dan compradores de verdad.
  *
- * DOS MODOS (los decide api/groups/settings.js):
+ * DOS MODOS (los decide api/_lib/groups-settings.js):
  *
  *   "spread"    El de siempre. Propiedades DISTINTAS el mismo dia, una por
  *               grupo, tope MAX_GROUPS_PER_DAY. Reglas 1-5 tal cual.
@@ -46,15 +46,16 @@
  * llamada. Cero I/O en cold start.
  * -------------------------------------------------------------------------
  *
- * Este archivo tambien es el store del historial: api/groups/mark.js importa de
- * aqui (mismo patron que api/lead/list.js -> api/lead/capture.js).
+ * Este archivo tambien es el store del historial: api/_lib/groups-mark.js importa de
+ * aqui (mismo patron que api/_lib/lead-list.js -> api/_lib/lead-capture.js).
  */
 import { put, list } from '@vercel/blob';
 
-import { requirePanelOrExtensionAuth } from '../_lib/auth.js';
-// La dependencia va en un solo sentido: settings.js no importa nada de aqui, asi
-// que no hay ciclo de modulos que dependa del orden de evaluacion de esbuild.
-import { normalizeSettings, readSettings, settingsWarning } from './settings.js';
+import { requirePanelOrExtensionAuth } from './auth.js';
+// La dependencia va en un solo sentido: groups-settings.js no importa nada de
+// aqui, asi que no hay ciclo de modulos que dependa del orden de evaluacion de
+// esbuild.
+import { normalizeSettings, readSettings, settingsWarning } from './groups-settings.js';
 import groupsFile from '../../automation/data/group-assist-config.json' with { type: 'json' };
 import propertiesFile from '../../automation/data/properties.json' with { type: 'json' };
 import templatesFile from '../../automation/data/post-templates.json' with { type: 'json' };
@@ -561,7 +562,7 @@ export function imageLastUsedFrom(entries) {
  * `forced` solo lo manda el modo campana: alli el estilo y la foto los reparte
  * la campana (uno distinto por slot), no la rotacion por grupo.
  *
- * Ojo con la foto en campana: api/groups/mark.js graba en el historial la que
+ * Ojo con la foto en campana: api/_lib/groups-mark.js graba en el historial la que
  * devuelve selectImage() — la cabeza del LRU — sin saber de que slot vino la
  * marca, asi que para el slot 2 en adelante lo grabado no coincide con lo que
  * salio. Eso solo mueve el orden del LRU de la siguiente campana; el cooldown,
@@ -1260,7 +1261,7 @@ function campaignReason({ prop, slots, pending, groups, capped, ctx, nextFree, s
  * Handler
  * ------------------------------------------------------------------ */
 
-export default async function handler(req, res) {
+export async function plan(req, res) {
   // Dos puertas: la cookie del panel (group-queue.html) y el Bearer de la
   // extension de Chrome, que no puede mandar la cookie por ser SameSite=Strict.
   if (!requirePanelOrExtensionAuth(req, res)) return;

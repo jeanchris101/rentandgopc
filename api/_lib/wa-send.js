@@ -6,9 +6,9 @@
  */
 import { randomUUID } from 'node:crypto';
 
-import { requireAuth } from '../_lib/auth.js';
-import { getThread, appendMessage, isOptedOut, STAGES } from '../_lib/wa-store.js';
-import { sendText } from '../_lib/waha.js';
+import { requireAuth } from './auth.js';
+import { getThread, appendMessage, isOptedOut, STAGES } from './wa-store.js';
+import { sendText } from './waha.js';
 
 const MAX_LEN = 4096; // limite practico de un mensaje de WhatsApp
 
@@ -47,7 +47,7 @@ function parseBody(req) {
   return b && typeof b === 'object' ? b : {};
 }
 
-export default async function handler(req, res) {
+export async function send(req, res) {
   if (!requireAuth(req, res)) return;
 
   res.setHeader('Cache-Control', 'no-store, private');

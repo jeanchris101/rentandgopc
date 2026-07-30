@@ -7,10 +7,10 @@
  * QR desde el servidor (con la key, que nunca sale de Vercel) y devuelve los
  * bytes ya autenticados, detras de la misma cookie que protege el panel.
  */
-import { requireAuth } from '../_lib/auth.js';
-import { fetchQr } from '../_lib/waha.js';
+import { requireAuth } from './auth.js';
+import { fetchQr } from './waha.js';
 
-export default async function handler(req, res) {
+export async function qr(req, res) {
   if (!requireAuth(req, res)) return;
 
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });

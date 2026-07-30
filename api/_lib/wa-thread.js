@@ -5,9 +5,9 @@
  * el idioma del lead y listos para que el dueno los revise y le de enviar. El
  * paso que toca va primero.
  */
-import { requireAuth } from '../_lib/auth.js';
-import { getThread } from '../_lib/wa-store.js';
-import { renderStep, findPlaybook, getProperty } from '../_lib/classify.js';
+import { requireAuth } from './auth.js';
+import { getThread } from './wa-store.js';
+import { renderStep, findPlaybook, getProperty } from './classify.js';
 
 /**
  * Que paso toca ahora: el siguiente al ultimo enviado. Si nunca se envio nada,
@@ -24,7 +24,7 @@ function pickSuggestedStep(steps, lead) {
   return steps[0].id;
 }
 
-export default async function handler(req, res) {
+export async function thread(req, res) {
   if (!requireAuth(req, res)) return;
 
   res.setHeader('Cache-Control', 'no-store, private');

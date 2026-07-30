@@ -12,9 +12,10 @@
  *   mode: "spread"    El comportamiento historico: propiedades DISTINTAS el
  *                     mismo dia, una por grupo, tope MAX_GROUPS_PER_DAY.
  *
- * El plan (./plan.js) importa de aqui. La dependencia va en un solo sentido a
- * proposito: este archivo no importa nada de plan.js, asi que no hay ciclo de
- * modulos que dependa del orden de evaluacion de esbuild en Vercel.
+ * El plan (./groups-plan.js) importa de aqui. La dependencia va en un solo
+ * sentido a proposito: este archivo no importa nada de groups-plan.js, asi que
+ * no hay ciclo de modulos que dependa del orden de evaluacion de esbuild en
+ * Vercel.
  *
  * Retrocompatible: si el blob `groups/settings.json` no existe, readSettings()
  * devuelve DEFAULT_SETTINGS y todo sigue funcionando sin haber guardado nada.
@@ -25,7 +26,7 @@
  */
 import { put, list } from '@vercel/blob';
 
-import { requirePanelOrExtensionAuth } from '../_lib/auth.js';
+import { requirePanelOrExtensionAuth } from './auth.js';
 import propertiesFile from '../../automation/data/properties.json' with { type: 'json' };
 
 /* ------------------------------------------------------------------ *
@@ -233,7 +234,7 @@ export function settingsWarning(settings) {
 
 /**
  * put() sirve detras de un CDN: sin ?t= y no-store se lee una copia vieja.
- * Mismo apano que api/_lib/wa-store.js y api/groups/plan.js.
+ * Mismo apano que api/_lib/wa-store.js y api/_lib/groups-plan.js.
  */
 async function readJson(key, fallback) {
   try {
@@ -290,7 +291,7 @@ function payload(settings) {
   };
 }
 
-export default async function handler(req, res) {
+export async function settings(req, res) {
   // Las dos puertas de siempre: cookie del panel o Bearer de la extension.
   if (!requirePanelOrExtensionAuth(req, res)) return;
 

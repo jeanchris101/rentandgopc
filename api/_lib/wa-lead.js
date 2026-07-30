@@ -7,9 +7,9 @@
  * `confidence: 'high'`: a partir de ahi el clasificador ya no toca ese hilo.
  * La persona que hablo con el cliente sabe mas que el matcher de palabras.
  */
-import { requireAuth } from '../_lib/auth.js';
-import { getThread, saveThread, STAGES } from '../_lib/wa-store.js';
-import { findPlaybook } from '../_lib/classify.js';
+import { requireAuth } from './auth.js';
+import { getThread, saveThread, STAGES } from './wa-store.js';
+import { findPlaybook } from './classify.js';
 
 // Los guiones solo existen en estos dos idiomas (playbooks.json).
 const LANGUAGES = ['es', 'en'];
@@ -27,7 +27,7 @@ function parseBody(req) {
   return b && typeof b === 'object' ? b : {};
 }
 
-export default async function handler(req, res) {
+export async function lead(req, res) {
   if (!requireAuth(req, res)) return;
 
   res.setHeader('Cache-Control', 'no-store, private');

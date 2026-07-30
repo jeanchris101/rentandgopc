@@ -8,14 +8,14 @@
  * del indice (wa/index.json), que traen los campos del lead aplanados y solo el
  * ultimo mensaje. Aqui los volvemos a armar con la forma que espera el panel.
  */
-import { requireAuth } from '../_lib/auth.js';
+import { requireAuth } from './auth.js';
 import {
   listThreads,
   getConfig,
   countAutoRepliesToday,
   DEFAULT_CONFIG,
-} from '../_lib/wa-store.js';
-import { sessionStatus } from '../_lib/waha.js';
+} from './wa-store.js';
+import { sessionStatus } from './waha.js';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -76,7 +76,7 @@ function summarize(entry) {
   };
 }
 
-export default async function handler(req, res) {
+export async function threads(req, res) {
   if (!requireAuth(req, res)) return;
 
   // vercel.json pone `public, max-age=3600` a TODO. Sin esto la bandeja se

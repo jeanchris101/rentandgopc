@@ -11,8 +11,8 @@
  * is hydrated from the individual lead blobs, in parallel. That is the reason
  * the default page is small: each entry costs one read.
  */
-import { requireAuth } from '../_lib/auth.js';
-import { listLeads, readLead } from './capture.js';
+import { requireAuth } from './auth.js';
+import { listLeads, readLead } from './lead-capture.js';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 // Small on purpose: every returned lead is one blob read (PII is not in the
@@ -36,7 +36,7 @@ function attributed(slug) {
   return Boolean(slug) && !NOT_A_LISTING.has(String(slug).toLowerCase());
 }
 
-export default async function handler(req, res) {
+export async function list(req, res) {
   if (!requireAuth(req, res)) return;
 
   // vercel.json puts `public, max-age=3600` on everything. Without this the

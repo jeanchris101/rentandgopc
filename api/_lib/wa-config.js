@@ -6,8 +6,8 @@
  * dailyCap          tope de auto-respuestas por dia (1-100)
  * quietHours        ventana en que SI se contesta, hora dominicana: [start, end)
  */
-import { requireAuth } from '../_lib/auth.js';
-import { getConfig, saveConfig } from '../_lib/wa-store.js';
+import { requireAuth } from './auth.js';
+import { getConfig, saveConfig } from './wa-store.js';
 
 const CAP_MIN = 1;
 const CAP_MAX = 100;
@@ -29,7 +29,7 @@ function isHour(n) {
   return Number.isInteger(n) && n >= 0 && n <= 23;
 }
 
-export default async function handler(req, res) {
+export async function config(req, res) {
   if (!requireAuth(req, res)) return;
 
   res.setHeader('Cache-Control', 'no-store, private');

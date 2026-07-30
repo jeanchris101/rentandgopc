@@ -4,10 +4,10 @@
  * La pantalla de emparejamiento pregunta aca cada pocos segundos hasta que el
  * estado pasa a WORKING.
  */
-import { requireAuth } from '../_lib/auth.js';
-import { sessionStatus } from '../_lib/waha.js';
+import { requireAuth } from './auth.js';
+import { sessionStatus } from './waha.js';
 
-export default async function handler(req, res) {
+export async function session(req, res) {
   if (!requireAuth(req, res)) return;
 
   // El QR cambia cada pocos segundos: cachearlo seria justo lo contrario de util.

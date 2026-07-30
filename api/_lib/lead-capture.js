@@ -13,7 +13,7 @@
  *   leads/{YYYY-MM}/{ts}-{rand}.json   one blob per lead
  *   leads/index.json                   summary of every lead, so the panel reads once
  *
- * api/lead/list.js imports the read helpers from here on purpose: the two
+ * api/_lib/lead-list.js imports the read helpers from here on purpose: the two
  * routes are the only consumers, and a third _lib file for 40 lines would just
  * add a place for the shape of an index entry to drift.
  */
@@ -90,7 +90,7 @@ async function writeJson(key, data) {
 // leaks counts and property interest, not a contact list of real buyers.
 //
 // The full record, PII included, stays in the per-lead blob and is read by
-// api/lead/list.js, which is behind the panel cookie.
+// api/_lib/lead-list.js, which is behind the panel cookie.
 export function indexEntry(record) {
   return {
     id: record.id,
@@ -131,7 +131,7 @@ async function writeIndex(leads, total) {
 /**
  * Read one full lead record — PII included — by the key stored in the index.
  *
- * Only api/lead/list.js calls this, and only behind the panel cookie. Contact
+ * Only api/_lib/lead-list.js calls this, and only behind the panel cookie. Contact
  * details deliberately live here and not in the index; see indexEntry().
  */
 export async function readLead(key) {
@@ -311,7 +311,7 @@ function getWaitUntil() {
 
 /* ------------------------------------------------------------------ handler */
 
-export default async function handler(req, res) {
+export async function capture(req, res) {
   const sameOrigin = applyCors(req, res);
 
   // vercel.json puts `public, max-age=3600` on everything.

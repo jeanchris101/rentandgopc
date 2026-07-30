@@ -16,10 +16,10 @@
  * segunda marca actualiza la entrada, asi que "lo salte" -> "no, si lo publique"
  * funciona sin dejar dos filas contradictorias en el historial.
  *
- * El store (blob, normalizacion, seleccion de imagen) vive en ./plan.js, mismo
- * patron que api/lead/list.js importando de api/lead/capture.js.
+ * El store (blob, normalizacion, seleccion de imagen) vive en ./groups-plan.js, mismo
+ * patron que api/_lib/lead-list.js importando de api/_lib/lead-capture.js.
  */
-import { requirePanelOrExtensionAuth } from '../_lib/auth.js';
+import { requirePanelOrExtensionAuth } from './auth.js';
 import {
   GROUPS,
   GROUP_COOLDOWN_DAYS,
@@ -32,7 +32,7 @@ import {
   selectImage,
   todayInTz,
   writeHistory,
-} from './plan.js';
+} from './groups-plan.js';
 
 /** El historial es la memoria del negocio: se poda alto y por los mas viejos. */
 const MAX_ENTRIES = 4000;
@@ -54,8 +54,8 @@ function parseBody(req) {
   return b && typeof b === 'object' ? b : {};
 }
 
-export default async function handler(req, res) {
-  // Igual que plan.js: cookie del panel o Bearer de la extension de Chrome.
+export async function mark(req, res) {
+  // Igual que groups-plan.js: cookie del panel o Bearer de la extension de Chrome.
   if (!requirePanelOrExtensionAuth(req, res)) return;
 
   // vercel.json le pone `public, max-age=3600` a todo.

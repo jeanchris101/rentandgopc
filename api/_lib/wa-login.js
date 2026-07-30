@@ -5,7 +5,7 @@
  */
 import { createHash, timingSafeEqual } from 'node:crypto';
 
-import { makeToken, setAuthCookie } from '../_lib/auth.js';
+import { makeToken, setAuthCookie } from './auth.js';
 
 const WINDOW_MS = 60_000;
 const MAX_ATTEMPTS = 5;
@@ -70,7 +70,7 @@ function parseBody(req) {
   return b && typeof b === 'object' ? b : {};
 }
 
-export default async function handler(req, res) {
+export async function login(req, res) {
   res.setHeader('Cache-Control', 'no-store, private');
 
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
