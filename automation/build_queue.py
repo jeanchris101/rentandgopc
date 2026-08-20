@@ -24,6 +24,21 @@ Rules:
     style when the day's property is not allowed. All figures come from
     properties.json placeholders. CONFOTUR highlights are dropped unless the
     property has confotur == true.
+  - Wording: the style's template is a SKELETON. Opener, closer, CTA and
+    hashtag set come from styles[].parts[lang], and which two highlights show
+    up, in what order and in what visual layout is picked too — all with a
+    deterministic seed of date + property slug + style id. Same date, same
+    text, always (the queue item must match what actually gets published).
+    api/_lib/groups-plan.js runs the exact same algorithm for the group queue;
+    its seed only adds the group code, so a Page post and a group post of the
+    same property on the same day never come out with the same wording. If you
+    change hash32/variant_seed/compose_template/pick_highlights here, change
+    them there in the same commit or the two bots drift apart.
+  - Language: this bot reads config.json content.languages. That key controls
+    the PAGE only. The group queue has its own switch (`languages` in the
+    groups settings blob, api/_lib/groups-settings.js): two different controls
+    on purpose, because the Page is one general audience and the groups are 18
+    audiences each with its own language.
   - Image: rotates inside the property's post_images[]; the same image is not
     reused for the same property within 30 days (state in image-rotation.json,
     updated when the item is queued — accepted tradeoff: an item that later
@@ -88,8 +103,21 @@ WA_PREFILL = {
     "fr": "Bonjour! Je m'interesse a {short_name} ({price}). (Ref: {ref})",
 }
 
-ALLOWED_PLACEHOLDERS = {"name", "price", "neighborhood", "highlight_1", "highlight_2", "wa_link"}
+# Placeholders a SKELETON (styles[].templates[lang]) may use. The five
+# composition slots are filled from styles[].parts[lang] before any data
+# placeholder is touched.
+COMPOSITION_SLOTS = {"opener", "highlights", "closer", "hashtags", "cta"}
+DATA_PLACEHOLDERS = {"name", "price", "neighborhood", "highlight_1", "highlight_2"}
+ALLOWED_PLACEHOLDERS = DATA_PLACEHOLDERS | COMPOSITION_SLOTS | {"wa_link"}
+# What a PART (opener/closer/cta) may reference. No {wa_link} and no
+# composition slot: a part is a leaf, it never nests another part.
+ALLOWED_PART_PLACEHOLDERS = DATA_PLACEHOLDERS
+PART_POOLS = ("openers", "closers", "ctas", "hashtag_sets")
 PLACEHOLDER_RE = re.compile(r"\{([a-zA-Z0-9_]+)\}")
+
+# Fallback if post-templates.json ever loses highlight_layouts. Matches the
+# fallback in api/_lib/groups-plan.js.
+DEFAULT_HIGHLIGHT_LAYOUTS = [{"id": "dash", "prefix": "- ", "join": "\n"}]
 
 # Load config.json if it exists
 _config = {}
@@ -217,47 +245,231 @@ def build_wa_link(prop: dict, lang: str, ref: str, wa_number: str) -> str:
 # ---------------------------------------------------------------------------
 
 
-def load_templates() -> list[dict]:
-    """Load and validate post-templates.json. Exits on any invalid template."""
+def load_templates() -> tuple[list[dict], list[dict]]:
+    """Load and validate post-templates.json.
+
+    Returns (styles, highlight_layouts). Exits on anything invalid: a broken
+    template has to fail here, loudly, and not three steps later as a post
+    with a literal "{opener}" on top of it.
+    """
     data = load_json(TEMPLATES_FILE, {})
-    styles = data.get("styles", []) if isinstance(data, dict) else []
+    if not isinstance(data, dict):
+        data = {}
+    styles = data.get("styles", [])
     if not styles:
         log.error("No styles found in %s", TEMPLATES_FILE)
         sys.exit(1)
 
+    layouts = data.get("highlight_layouts") or DEFAULT_HIGHLIGHT_LAYOUTS
+    if not isinstance(layouts, list) or not layouts:
+        log.error("highlight_layouts in %s must be a non-empty list", TEMPLATES_FILE)
+        sys.exit(1)
+
     for style in styles:
+        sid = style.get("id")
         for lang, text in style.get("templates", {}).items():
             found = set(PLACEHOLDER_RE.findall(text))
             unknown = found - ALLOWED_PLACEHOLDERS
             if unknown:
                 log.error("Style %r (%s) uses unknown placeholders: %s",
-                          style.get("id"), lang, ", ".join(sorted(unknown)))
+                          sid, lang, ", ".join(sorted(unknown)))
                 sys.exit(1)
             if "wa_link" not in found:
-                log.error("Style %r (%s) is missing the {wa_link} placeholder",
-                          style.get("id"), lang)
+                log.error("Style %r (%s) is missing the {wa_link} placeholder", sid, lang)
                 sys.exit(1)
-    return styles
+            missing_slots = COMPOSITION_SLOTS - found
+            if missing_slots:
+                log.error("Style %r (%s) skeleton is missing the slot(s): %s",
+                          sid, lang, ", ".join("{%s}" % s for s in sorted(missing_slots)))
+                sys.exit(1)
+
+            # Every skeleton must end with {cta} then {wa_link}, each on its own
+            # line. The group queue drops the {wa_link} line (rule 5: the link
+            # goes in the first comment) and prints "details in the first
+            # comment" in its place; if the CTA shared that line it would be
+            # dropped with it and the group posts would lose the CTA entirely.
+            tail = text.rstrip().split("\n")[-2:]
+            if tail != ["{cta}", "{wa_link}"]:
+                log.error("Style %r (%s) must end with {cta} and {wa_link} on separate lines; got %r",
+                          sid, lang, tail)
+                sys.exit(1)
+
+            parts = (style.get("parts") or {}).get(lang)
+            if not isinstance(parts, dict):
+                log.error("Style %r has no parts for language %r", sid, lang)
+                sys.exit(1)
+            for pool in PART_POOLS:
+                items = parts.get(pool)
+                if not isinstance(items, list) or not items:
+                    log.error("Style %r (%s) has an empty or missing %r pool", sid, lang, pool)
+                    sys.exit(1)
+                for item in items:
+                    if pool == "hashtag_sets":
+                        if not isinstance(item, list) or not item:
+                            log.error("Style %r (%s): each hashtag_set must be a non-empty list",
+                                      sid, lang)
+                            sys.exit(1)
+                        continue
+                    bad = set(PLACEHOLDER_RE.findall(str(item))) - ALLOWED_PART_PLACEHOLDERS
+                    if bad:
+                        log.error("Style %r (%s) %s uses placeholders not allowed in a part: %s",
+                                  sid, lang, pool, ", ".join(sorted(bad)))
+                        sys.exit(1)
+    return styles, layouts
 
 
-def pick_highlights(prop: dict, target_date: date, lang: str) -> tuple[str, str]:
-    """Two date-rotated highlights in the post's language.
+# ---------------------------------------------------------------------------
+# Message randomizer (deterministic)
+#
+# Repeated content is what Facebook flags as spam. Style x image alone is not
+# enough variation, so every post also picks an opener, a closer, a CTA, a
+# hashtag set, WHICH two highlights it shows, in what order, and in what visual
+# layout.
+#
+# Deterministic on purpose: the seed is date + property slug + style id, so the
+# same date always renders the same text. The queue item is written once and
+# published later; if this rolled real dice, the log and the post would disagree.
+#
+# api/_lib/groups-plan.js has the byte-identical twin of every function below
+# (hash32, variantSeed, pickVariant, composeTemplate, pickHighlights). Its seed
+# additionally carries the group code. Keep the two in sync.
+# ---------------------------------------------------------------------------
+
+
+def hash32(text: str) -> int:
+    """32-bit FNV-1a plus a final avalanche (MurmurHash3's fmix32).
+
+    Same arithmetic, bit for bit, as hash32() in api/_lib/groups-plan.js.
+
+    The avalanche is not decoration: in plain FNV-1a the lowest output bit is
+    literally the XOR of the lowest input bits (the prime ends in 1), and this
+    hash is only ever used modulo 3 or 4 — i.e. the low bits alone. Without
+    mixing, near-identical seeds land on the same opener and the same closer far
+    too often, which is the exact problem this randomizer exists to avoid.
+    """
+    h = 2166136261
+    for ch in str(text):
+        h ^= ord(ch)
+        h = (h * 16777619) & 0xFFFFFFFF
+    h ^= h >> 16
+    h = (h * 0x85EBCA6B) & 0xFFFFFFFF
+    h ^= h >> 13
+    h = (h * 0xC2B2AE35) & 0xFFFFFFFF
+    h ^= h >> 16
+    return h & 0xFFFFFFFF
+
+
+def variant_seed(date_str: str, slug: str, style_id: str, group_code: str = "") -> str:
+    """Base seed for a post. The Page bot has no group, hence the '-' slot."""
+    return "|".join([str(date_str), str(group_code or "-"), str(slug), str(style_id or "")])
+
+
+def pick_variant(items: list, seed: str, salt: str):
+    """One item from `items`, chosen by (seed + salt).
+
+    The salt is what stops the opener and the closer from moving together:
+    without it every field would land on the same index and the real variation
+    would be 4, not 4 x 4 x 4 x 3.
+    """
+    if not items:
+        return None
+    return items[hash32(f"{seed}|{salt}") % len(items)]
+
+
+def render_highlights(highlights: list[str], seed: str, layouts: list[dict]) -> str:
+    """The two highlights with their visual layout applied."""
+    layout = pick_variant(layouts, seed, "layout") or layouts[0]
+    prefix = str(layout.get("prefix", ""))
+    join = str(layout.get("join", "\n"))
+    return join.join(prefix + h for h in highlights)
+
+
+def compose_template(style: dict, lang: str, highlights: list[str], seed: str,
+                     layouts: list[dict]) -> str:
+    """The style skeleton with its interchangeable pieces filled in.
+
+    What is left afterwards are the data placeholders ({name}, {price},
+    {neighborhood}, {wa_link}), which fill() resolves.
+    """
+    skeleton = style.get("templates", {}).get(lang)
+    parts = (style.get("parts") or {}).get(lang) or {}
+    opener = pick_variant(parts.get("openers"), seed, "opener")
+    closer = pick_variant(parts.get("closers"), seed, "closer")
+    cta = pick_variant(parts.get("ctas"), seed, "cta")
+    tags = pick_variant(parts.get("hashtag_sets"), seed, "hashtags")
+    if skeleton is None or None in (opener, closer, cta, tags):
+        log.error("Style %r is missing a piece for language %r", style.get("id"), lang)
+        sys.exit(1)
+
+    hashtags = " ".join(tags) if isinstance(tags, list) else str(tags)
+    # .replace(x, y, 1) mirrors String.replace(str, str) in JS, which also only
+    # replaces the first occurrence.
+    return (
+        skeleton
+        .replace("{opener}", opener, 1)
+        .replace("{closer}", closer, 1)
+        .replace("{cta}", cta, 1)
+        .replace("{hashtags}", hashtags, 1)
+        .replace("{highlights}", render_highlights(highlights, seed, layouts), 1)
+    )
+
+
+def fill(template: str, values: dict) -> str:
+    """Replace {key} with values[key]; leave unknown placeholders untouched.
+
+    Not str.format(): same semantics as fill() in groups-plan.js, and a stray
+    brace in a highlight cannot raise here the way format() would.
+    """
+    return PLACEHOLDER_RE.sub(
+        lambda m: str(values[m.group(1)]) if m.group(1) in values else m.group(0),
+        template,
+    )
+
+
+def highlight_count(n: int, seed: str) -> int:
+    """How many highlights the post carries: 2 or 3.
+
+    Always 2 when fewer than 4 are available (with 3 in total, showing 3 would
+    mean showing them all every time and the rotation would be over). Not just
+    visual variety: it multiplies the combination space by 5 without a single
+    new line of copy.
+    """
+    if n < 4:
+        return 2
+    return 2 + (hash32(f"{seed}|hcount") % 2)
+
+
+def pick_highlights(prop: dict, lang: str, seed: str) -> list[str]:
+    """The post's highlights in its language: how many, which ones, what order.
 
     Uses highlights_<lang> (a parallel translation of highlights) when
     present, falling back to the English list, so es/fr posts never carry
-    English bullets. CONFOTUR lines only if confotur == true.
+    English bullets. CONFOTUR lines only if confotur == true — that filter is
+    the single gate keeping CONFOTUR out of the four properties that do not
+    have it, and it is never relaxed.
+
+    The selection is a seeded PARTIAL Fisher-Yates: the space is the ORDERED
+    arrangements of n taken 2 and 3 at a time (with 6 highlights: 30 + 120 =
+    150), not the n fixed rotations it used to be. "Terrace + parking" does not
+    read like "parking + terrace", and that difference now counts.
     """
     source = prop.get(f"highlights_{lang}") or prop.get("highlights", [])
     highlights = [
         h for h in source
         if prop.get("confotur") is True or "confotur" not in h.lower()
     ]
-    if len(highlights) < 2:
+    n = len(highlights)
+    if n < 2:
         log.error("Property %s needs at least 2 usable highlights (lang=%s)",
                   prop.get("slug"), lang)
         sys.exit(1)
-    i = target_date.toordinal() % len(highlights)
-    return highlights[i], highlights[(i + 1) % len(highlights)]
+
+    count = highlight_count(n, seed)
+    idx = list(range(n))
+    for k in range(count):
+        j = k + (hash32(f"{seed}|h{k}") % (n - k))
+        idx[k], idx[j] = idx[j], idx[k]
+    return [highlights[i] for i in idx[:count]]
 
 
 def select_style(styles: list[dict], prop: dict, target_date: date) -> dict:
@@ -402,7 +614,7 @@ def cmd_build(target_date: date, dry_run: bool = False) -> None:
         log.error("properties.json must define site_base_url and whatsapp_number")
         sys.exit(1)
 
-    styles = load_templates()
+    styles, layouts = load_templates()
     queue = load_queue()
     post_log = load_post_log()
     rotation = load_json(IMAGE_ROTATION_FILE, {})
@@ -444,8 +656,7 @@ def cmd_build(target_date: date, dry_run: bool = False) -> None:
     # the property type are skipped, see select_style).
     lang = LANGUAGES[target_date.toordinal() % len(LANGUAGES)]
     style = select_style(styles, prop, target_date)
-    template = style.get("templates", {}).get(lang)
-    if not template:
+    if not style.get("templates", {}).get(lang):
         log.error("Style %r has no template for language %r", style.get("id"), lang)
         sys.exit(1)
 
@@ -454,16 +665,32 @@ def cmd_build(target_date: date, dry_run: bool = False) -> None:
 
     ref = build_ref(prop["slug"], target_date)
     wa_link = build_wa_link(prop, lang, ref, wa_number)
-    highlight_1, highlight_2 = pick_highlights(prop, target_date, lang)
 
-    message = template.format(
-        name=prop["name"],
-        price=prop["price_display"],
-        neighborhood=prop.get(f"neighborhood_{lang}") or prop["neighborhood"],
-        highlight_1=highlight_1,
-        highlight_2=highlight_2,
-        wa_link=wa_link,
+    # Seed first: the highlights, the wording pieces and the visual layout all
+    # hang off it. No group code — that is what keeps this post different from
+    # the group posts of the same property on the same day.
+    seed = variant_seed(date_str, prop["slug"], style.get("id"))
+    highlights = pick_highlights(prop, lang, seed)
+
+    message = fill(
+        compose_template(style, lang, highlights, seed, layouts),
+        {
+            "name": prop["name"],
+            "price": prop["price_display"],
+            "neighborhood": prop.get(f"neighborhood_{lang}") or prop["neighborhood"],
+            # {highlights} ya se resolvio en compose_template; estos dos siguen
+            # disponibles por si una pieza los usa.
+            "highlight_1": highlights[0],
+            "highlight_2": highlights[1],
+            "wa_link": wa_link,
+        },
     )
+
+    leftover = set(PLACEHOLDER_RE.findall(message))
+    if leftover:
+        log.error("Rendered message still has unfilled placeholders: %s",
+                  ", ".join("{%s}" % p for p in sorted(leftover)))
+        sys.exit(1)
 
     item = {
         "id": f"post-{date_str}-{prop['slug']}-{lang}",

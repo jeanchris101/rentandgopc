@@ -391,6 +391,11 @@ test('las validaciones de cuerpo siguen dando 400 con su mensaje', async () => {
     ['api/wa', 'config', 'POST', { dailyCap: 999 }, /dailyCap/],
     ['api/groups', 'mark', 'POST', {}, /Grupo desconocido/],
     ['api/groups', 'settings', 'POST', { groupsPerDay: 99 }, /fuera de rango/],
+    // Filtro de idiomas: sin idiomas no queda ningun grupo al que publicar, asi
+    // que se rechaza en vez de guardar una cola que no puede dar trabajo nunca.
+    ['api/groups', 'settings', 'POST', { languages: [] }, /al menos uno/],
+    ['api/groups', 'settings', 'POST', { languages: ['de'] }, /no es un idioma valido/],
+    ['api/groups', 'settings', 'POST', { languages: ['es', 'es'] }, /repetido/],
   ];
   for (const [prefix, action, method, body, pattern] of cases) {
     const res = await call(prefix, { action, method, body, cookie: COOKIE });
@@ -521,6 +526,39 @@ test('GET /api/groups/settings devuelve ajustes, limites y propiedades', async (
   assert.ok(res.body.settings);
   assert.ok(res.body.limits);
   assert.ok(Array.isArray(res.body.properties));
+
+  // Filtro de idiomas: los ajustes traen la lista encendida y el catalogo de
+  // las tres casillas con cuantos grupos se lleva cada una (apagar el frances
+  // son 4 grupos fuera del plan, no una casilla menos).
+  assert.deepEqual(res.body.settings.languages, ['es', 'en'], 'fr sigue apagado por defecto');
+  assert.deepEqual(
+    res.body.languages.map((l) => [l.code, l.groupCount]),
+    [['es', 5], ['en', 9], ['fr', 4]]
+  );
+});
+
+test('el plan salta los grupos cuyo idioma esta apagado y lo explica', async () => {
+  const { buildPlan, GROUPS } = await load('api/_lib/groups-plan.js');
+
+  // Solo espanol: los 9 en ingles y los 4 en frances quedan fuera del plan.
+  const soloEs = buildPlan('2026-09-01', [], { mode: 'campaign', groupsPerDay: 5, languages: ['es'] });
+  assert.ok(soloEs.assignments.length > 0);
+  assert.deepEqual([...new Set(soloEs.assignments.map((a) => a.lang))], ['es']);
+  assert.equal(soloEs.stats.groupsOffLanguage, GROUPS.filter((g) => g.lang !== 'es').length);
+
+  // Todos los grupos es/en publicaron anteayer: los unicos libres son los 4 en
+  // frances, que esta apagado. El plan sale vacio pero DICE por que.
+  const history = GROUPS.filter((g) => g.lang !== 'fr').map((g) => ({
+    date: '2026-09-08',
+    groupCode: g.code,
+    propertySlug: 'cocotal-2bdr',
+    lang: g.lang,
+    skipped: false,
+  }));
+  const bloqueado = buildPlan('2026-09-10', history, { mode: 'campaign', languages: ['es', 'en'] });
+  assert.equal(bloqueado.assignments.length, 0);
+  assert.match(bloqueado.reason, /frances/i);
+  assert.match(bloqueado.reason, /Ajustes/);
 });
 
 test('GET /api/lead/list devuelve la bandeja con cookie valida', async () => {

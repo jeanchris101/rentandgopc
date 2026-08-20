@@ -12,6 +12,11 @@
  *   mode: "spread"    El comportamiento historico: propiedades DISTINTAS el
  *                     mismo dia, una por grupo, tope MAX_GROUPS_PER_DAY.
  *
+ * Y el filtro de idiomas (`languages`): un grupo cuyo `lang` no este encendido
+ * se queda FUERA del plan, no se le publica en otro idioma. Es un control
+ * DISTINTO al `content.languages` de automation/config.json, que manda sobre el
+ * bot de la Pagina. Ver SETTING_LANGS mas abajo.
+ *
  * El plan (./groups-plan.js) importa de aqui. La dependencia va en un solo
  * sentido a proposito: este archivo no importa nada de groups-plan.js, asi que
  * no hay ciclo de modulos que dependa del orden de evaluacion de esbuild en
@@ -27,6 +32,7 @@
 import { put, list } from '@vercel/blob';
 
 import { requirePanelOrExtensionAuth } from './auth.js';
+import groupsFile from '../../automation/data/group-assist-config.json' with { type: 'json' };
 import propertiesFile from '../../automation/data/properties.json' with { type: 'json' };
 
 /* ------------------------------------------------------------------ *
@@ -39,6 +45,24 @@ const PUT_OPTS = { access: 'public', addRandomSuffix: false, contentType: 'appli
 
 export const MODES = ['campaign', 'spread'];
 
+/**
+ * Los idiomas que el dueno puede encender o apagar para los GRUPOS.
+ *
+ * OJO, SON DOS CONTROLES DISTINTOS:
+ *   - `content.languages` de automation/config.json manda sobre el bot de la
+ *     PAGINA (build_queue.py: un post al dia, el idioma rota por fecha).
+ *   - `languages` de aqui manda sobre la COLA DE GRUPOS: un grupo cuyo `lang`
+ *     no este encendido se queda FUERA del plan. No se le publica en otro
+ *     idioma — publicar en ingles en un grupo francofono es peor que no
+ *     publicar.
+ * Tocar uno no toca el otro, a proposito: la Pagina es publico general, los
+ * grupos son 18 audiencias con idioma propio.
+ */
+export const SETTING_LANGS = ['es', 'en', 'fr'];
+
+/** Como se nombran en el 400 del POST y en el motivo del plan. */
+export const LANG_LABEL = Object.freeze({ es: 'espanol', en: 'ingles', fr: 'frances' });
+
 /** Los defaults SON la configuracion valida cuando no hay blob. */
 export const DEFAULT_SETTINGS = Object.freeze({
   mode: 'campaign',
@@ -48,6 +72,11 @@ export const DEFAULT_SETTINGS = Object.freeze({
   autoRotateProperty: true,
   activePropertySlug: null,
   campaignSpansDays: 1,
+  // fr apagado hoy por la misma razon que en config.json: los guiones de
+  // respuesta de WhatsApp solo existen en es/en y no se traen leads que no se
+  // puedan atender en su idioma. Las plantillas fr siguen en post-templates.json
+  // listas para el dia que se encienda.
+  languages: Object.freeze(['es', 'en']),
 });
 
 /**
@@ -68,6 +97,17 @@ const FIELD_LABEL = {
   startHour: 'Hora de inicio',
   campaignSpansDays: 'Dias de campana',
 };
+
+/** Lista legible: ["es","en"] -> "espanol e ingles". */
+export function langList(langs) {
+  const names = (Array.isArray(langs) ? langs : []).map((l) => LANG_LABEL[l] || l);
+  if (!names.length) return 'ninguno';
+  if (names.length === 1) return names[0];
+  const last = names[names.length - 1];
+  // "e ingles", no "y ingles": la y delante de i- suena mal y el dueno lo lee.
+  const conj = /^i/.test(last) ? ' e ' : ' y ';
+  return names.slice(0, -1).join(', ') + conj + last;
+}
 
 /**
  * A partir de aqui se avisa, pero NO se bloquea. Un admin puede estar en varios
@@ -105,6 +145,31 @@ export const SETTINGS_PROPERTIES = (Array.isArray(propertiesFile?.properties) ? 
 const SLUGS = new Set(SETTINGS_PROPERTIES.map((p) => p.slug));
 
 /* ------------------------------------------------------------------ *
+ * Catalogo de idiomas (para las casillas de la UI)
+ *
+ * El conteo de grupos por idioma sale de group-assist-config.json, igual que en
+ * plan.js. Se lee el JSON directo — no plan.js — para no crear el ciclo, y el
+ * numero importa: apagar el frances no es "una casilla menos", son 4 de los 18
+ * grupos fuera del plan, y el dueno tiene que verlo antes de guardar.
+ * ------------------------------------------------------------------ */
+
+const GROUP_LANGS = (Array.isArray(groupsFile?.groups) ? groupsFile.groups : [])
+  .filter((g) => g && g.code && g.url)
+  // Misma regla que normalizeLang() de groups-plan.js: un `lang` que no
+  // reconocemos cuenta como ingles alli, asi que tiene que contar como ingles
+  // aqui o el numero de la UI mentiria.
+  .map((g) => {
+    const l = String(g.lang || '').toLowerCase().slice(0, 2);
+    return SETTING_LANGS.includes(l) ? l : 'en';
+  });
+
+export const SETTINGS_LANGUAGES = SETTING_LANGS.map((code) => ({
+  code,
+  label: LANG_LABEL[code],
+  groupCount: GROUP_LANGS.filter((l) => l === code).length,
+}));
+
+/* ------------------------------------------------------------------ *
  * Coercion y normalizacion (tolerante: nunca lanza)
  * ------------------------------------------------------------------ */
 
@@ -125,6 +190,28 @@ function clamp(n, range) {
 }
 
 /**
+ * Lo que sea -> una lista de idiomas usable. Tolerante como el resto de
+ * normalizeSettings(): tira lo que no reconoce, quita duplicados y si no queda
+ * nada vuelve a los defaults. Un blob con `languages: []` no puede dejar la cola
+ * sin grupos en silencio; el que SI rechaza una lista vacia es el POST
+ * (validateSettings), que es donde el dueno la escribio a proposito.
+ */
+function coerceLangs(value, fallback) {
+  const raw = Array.isArray(value)
+    ? value
+    : typeof value === 'string'
+      ? value.split(',')
+      : null;
+  if (!raw) return [...fallback];
+  const out = [];
+  for (const item of raw) {
+    const lang = String(item || '').trim().toLowerCase().slice(0, 2);
+    if (SETTING_LANGS.includes(lang) && !out.includes(lang)) out.push(lang);
+  }
+  return out.length ? out : [...fallback];
+}
+
+/**
  * Lo que sea que haya en el blob -> una config usable. Recorta en vez de
  * rechazar: un blob editado a mano con groupsPerDay 99 no puede dejar la cola
  * sin plan, solo se lee como 8.
@@ -142,6 +229,7 @@ export function normalizeSettings(raw) {
     autoRotateProperty: coerceBool(r.autoRotateProperty, DEFAULT_SETTINGS.autoRotateProperty),
     activePropertySlug: SLUGS.has(slug) ? slug : null,
     campaignSpansDays: clamp(coerceInt(r.campaignSpansDays, DEFAULT_SETTINGS.campaignSpansDays), LIMITS.campaignSpansDays),
+    languages: coerceLangs(r.languages, DEFAULT_SETTINGS.languages),
   };
 
   // Rotacion apagada sin propiedad fija valida = campana sin propiedad. Se
@@ -195,6 +283,48 @@ export function validateSettings(patch, base) {
     next.autoRotateProperty = coerceBool(p.autoRotateProperty, current.autoRotateProperty);
   }
 
+  // Idiomas: aqui NO se recorta en silencio. Si el dueno desmarca los tres, lo
+  // que quiere no es "publicar en todos", es que no publiquemos — y eso se
+  // apaga con el modo, no vaciando la lista. Se responde 400 y se explica.
+  if (p.languages !== undefined) {
+    const raw = Array.isArray(p.languages)
+      ? p.languages
+      : typeof p.languages === 'string'
+        ? p.languages.split(',')
+        : null;
+    if (raw === null) {
+      errors.push('Idiomas: manda una lista, por ejemplo ["es","en"].');
+    } else {
+      const seen = [];
+      const unknown = [];
+      const dupes = [];
+      for (const item of raw) {
+        const lang = String(item ?? '').trim().toLowerCase();
+        if (!SETTING_LANGS.includes(lang)) {
+          unknown.push(String(item ?? ''));
+          continue;
+        }
+        if (seen.includes(lang)) dupes.push(lang);
+        else seen.push(lang);
+      }
+      if (unknown.length) {
+        errors.push(
+          `Idiomas: "${unknown.join('", "')}" no es un idioma valido. ` +
+            `Solo ${SETTING_LANGS.map((l) => `"${l}" (${LANG_LABEL[l]})`).join(', ')}.`
+        );
+      } else if (dupes.length) {
+        errors.push(`Idiomas: "${dupes.join('", "')}" viene repetido. Manda cada idioma una sola vez.`);
+      } else if (!seen.length) {
+        errors.push(
+          'Idiomas: tienes que dejar al menos uno encendido. Con los tres apagados no queda ningun ' +
+            'grupo al que publicar. Si lo que quieres es parar unos dias, no publiques: no vacies la lista.'
+        );
+      } else {
+        next.languages = seen;
+      }
+    }
+  }
+
   if (p.activePropertySlug !== undefined) {
     const slug = p.activePropertySlug === null || p.activePropertySlug === '' ? null : String(p.activePropertySlug);
     if (slug !== null && !SLUGS.has(slug)) {
@@ -218,14 +348,34 @@ export function validateSettings(patch, base) {
  */
 export function settingsWarning(settings) {
   const s = normalizeSettings(settings);
-  if (s.mode !== 'campaign') return null;
-  if (s.groupsPerDay <= CROWDED_GROUPS_PER_DAY) return null;
-  return (
-    `Vas a publicar la misma propiedad en ${s.groupsPerDay} grupos el mismo dia. ` +
-    `Mas de ${CROWDED_GROUPS_PER_DAY} sube el riesgo de que un admin que este en varios de esos grupos ` +
-    'vea el mismo anuncio repetido y lo marque como spam, aunque el texto y la foto cambien. ' +
-    'No te lo bloqueo: es tu decision, pero tenlo presente.'
+  const bits = [];
+
+  // El filtro de idiomas deja menos grupos de los que pide la campana: no es un
+  // error (nadie escribio un numero fuera de rango) pero el cupo es imposible
+  // desde el minuto cero y eso se dice antes, no cuando la cola sale corta.
+  const reach = SETTINGS_LANGUAGES.filter((l) => s.languages.includes(l.code)).reduce(
+    (n, l) => n + l.groupCount,
+    0
   );
+  if (s.mode === 'campaign' && reach < s.groupsPerDay) {
+    bits.push(
+      `Con ${langList(s.languages)} encendido${s.languages.length > 1 ? 's' : ''} solo hay ` +
+        `${reach} ${reach === 1 ? 'grupo' : 'grupos'} de los ${GROUP_LANGS.length}, y pides ` +
+        `${s.groupsPerDay} al dia: la campana nunca va a llegar a ${s.groupsPerDay}. ` +
+        'Enciende otro idioma o baja los grupos por dia.'
+    );
+  }
+
+  if (s.mode === 'campaign' && s.groupsPerDay > CROWDED_GROUPS_PER_DAY) {
+    bits.push(
+      `Vas a publicar la misma propiedad en ${s.groupsPerDay} grupos el mismo dia. ` +
+        `Mas de ${CROWDED_GROUPS_PER_DAY} sube el riesgo de que un admin que este en varios de esos grupos ` +
+        'vea el mismo anuncio repetido y lo marque como spam, aunque el texto y la foto cambien. ' +
+        'No te lo bloqueo: es tu decision, pero tenlo presente.'
+    );
+  }
+
+  return bits.length ? bits.join(' ') : null;
 }
 
 /* ------------------------------------------------------------------ *
@@ -288,6 +438,10 @@ function payload(settings) {
     crowdedFrom: CROWDED_GROUPS_PER_DAY,
     warning: settingsWarning(settings),
     properties: SETTINGS_PROPERTIES,
+    // Las tres casillas de idioma, con cuantos grupos se lleva cada una: apagar
+    // el frances son 4 grupos fuera del plan, no una casilla menos.
+    languages: SETTINGS_LANGUAGES,
+    totalGroups: GROUP_LANGS.length,
   };
 }
 

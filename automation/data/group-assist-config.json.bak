@@ -1,0 +1,101 @@
+{
+  "groups": [
+    {
+      "id": "312506675935209",
+      "name": "Punta Cana Expats",
+      "url": "https://www.facebook.com/groups/312506675935209"
+    },
+    {
+      "id": "1502081570566337",
+      "name": "Dominican Expats Buy, Sell or Rent",
+      "url": "https://www.facebook.com/groups/1502081570566337"
+    },
+    {
+      "id": "264786824583749",
+      "name": "Punta Cana Travel",
+      "url": "https://www.facebook.com/groups/264786824583749"
+    },
+    {
+      "id": "CocotalGolfandCountryClub",
+      "name": "Gente que vive en Cocotal",
+      "url": "https://www.facebook.com/groups/CocotalGolfandCountryClub"
+    },
+    {
+      "id": "3474701412856852",
+      "name": "Quebecois a Punta Cana, Republique Dominicaine",
+      "url": "https://www.facebook.com/groups/3474701412856852"
+    },
+    {
+      "id": "CanadiansLivingInDominicanRepublic",
+      "name": "Canadians Living in the Dominican Republic",
+      "url": "https://www.facebook.com/groups/CanadiansLivingInDominicanRepublic"
+    },
+    {
+      "id": "snowbirdsquebecoisrepubliquedominicaine",
+      "name": "Les Snowbirds Quebecois de la Republique Dominicaine",
+      "url": "https://www.facebook.com/groups/snowbirdsquebecoisrepubliquedominicaine"
+    },
+    {
+      "id": "604142596286067",
+      "name": "Expats living in The Dominican Republic",
+      "url": "https://www.facebook.com/groups/604142596286067"
+    },
+    {
+      "id": "587885753186026",
+      "name": "Punta Cana Airbnb (owners/renters)",
+      "url": "https://www.facebook.com/groups/587885753186026"
+    },
+    {
+      "id": "240857305389274",
+      "name": "Gente que vive en Cocotal, Residents of Cocotal",
+      "url": "https://www.facebook.com/groups/240857305389274"
+    },
+    {
+      "id": "339282416279056",
+      "name": "Expats Punta Cana / Bavaro",
+      "url": "https://www.facebook.com/groups/339282416279056"
+    },
+    {
+      "id": "670552130398142",
+      "name": "Los Buenos Vecinos de Cocotal",
+      "url": "https://www.facebook.com/groups/670552130398142"
+    },
+    {
+      "id": "1838130369633274",
+      "name": "Expats in Bavaro",
+      "url": "https://www.facebook.com/groups/1838130369633274"
+    },
+    {
+      "id": "135915263778647",
+      "name": "Residentes de Costa Bavaro (IFA Villas Bavaro)",
+      "url": "https://www.facebook.com/groups/135915263778647"
+    },
+    {
+      "id": "878923082826821",
+      "name": "Real Estate Dominican Republic",
+      "url": "https://www.facebook.com/groups/878923082826821"
+    },
+    {
+      "id": "895913871631541",
+      "name": "Québécois en République Dominicaine",
+      "url": "https://www.facebook.com/groups/895913871631541"
+    },
+    {
+      "id": "271641656703550",
+      "name": "Residentes Bávaro - Punta Cana",
+      "url": "https://www.facebook.com/groups/271641656703550"
+    },
+    {
+      "id": "429272671315684",
+      "name": "Canadien et Québécois en République Dominicaine",
+      "url": "https://www.facebook.com/groups/429272671315684"
+    }
+  ],
+  "settings": {
+    "scans_per_day": 2,
+    "delay_between_groups_min": 15,
+    "delay_between_groups_max": 30,
+    "max_posts_per_group": 100,
+    "scroll": false
+  }
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 300px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #e0e0e0;
+    }
+
+    .header {
+      padding: 16px 20px 12px;
+      border-bottom: 1px solid #2a2a4a;
+    }
+
+    .header h1 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #c8a45e;
+    }
+
+    .header p {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 2px;
+    }
+
+    .content {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      width: 100%;
+    }
+
+    .btn:hover { opacity: 0.9; }
+    .btn:active { transform: scale(0.98); }
+
+    .btn-export {
+      background: #c8a45e;
+      color: #1a1a2e;
+    }
+
+    .btn-copy {
+      background: #2a2a4a;
+      color: #c8a45e;
+      border: 1px solid #3a3a5a;
+    }
+
+    .status {
+      text-align: center;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      background: #2a2a4a;
+    }
+
+    .status.ready { color: #888; }
+    .status.success { color: #4caf50; background: #1a2e1a; }
+    .status.error { color: #ef5350; background: #2e1a1a; }
+
+    .info {
+      font-size: 10px;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .last-export {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>FB Cookie Export</h1>
+    <p>Export Facebook cookies for scraper</p>
+  </div>
+
+  <div class="content">
+    <div class="status ready" id="status">Ready</div>
+
+    <button class="btn btn-export" id="exportBtn">Export Cookies</button>
+    <button class="btn btn-copy" id="copyBtn">Copy to Clipboard</button>
+
+    <div class="last-export" id="lastExport"></div>
+
+    <div class="info">
+      Cookies saved to Downloads as fb-cookies.json<br>
+      Scraper reads from: automation/data/fb-cookies.json
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

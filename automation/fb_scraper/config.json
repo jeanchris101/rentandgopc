@@ -1,0 +1,52 @@
+{
+  "accounts": [
+    {
+      "email": "qchulomarketplace@gmail.com",
+      "password": "Wk2GgCxghFPEaNrNRiKz",
+      "label": "burner1",
+      "proxy": {
+        "server": "http://95.170.29.120:12323",
+        "username": "14a969ad25b25",
+        "password": "c579e41ed6"
+      },
+      "disabled": false
+    }
+  ],
+  "groups": [
+    {
+      "url": "https://www.facebook.com/groups/realestatepuntacana/",
+      "name": "Punta Cana Real Estate Listings",
+      "max_scrolls": 50,
+      "max_posts": 200
+    },
+    {
+      "url": "https://www.facebook.com/groups/fsbodr/",
+      "name": "For Sale/Rent By Owner DR",
+      "max_scrolls": 50,
+      "max_posts": 200
+    },
+    {
+      "url": "https://www.facebook.com/groups/432695243880566/",
+      "name": "Everything in Punta Cana DR",
+      "max_scrolls": 50,
+      "max_posts": 200
+    },
+    {
+      "url": "https://www.facebook.com/groups/312506675935209/",
+      "name": "Punta Cana Expats",
+      "max_scrolls": 50,
+      "max_posts": 200
+    }
+  ],
+  "headless": true,
+  "viewport_width": 1366,
+  "viewport_height": 768,
+  "scroll_delay_min": 2.0,
+  "scroll_delay_max": 4.0,
+  "between_groups_delay_min": 30.0,
+  "between_groups_delay_max": 60.0,
+  "max_posts_per_group": 200,
+  "waha_url": "http://waha-whatsapp.railway.internal:3000",
+  "waha_session": "default",
+  "whatsapp_groups": []
+}

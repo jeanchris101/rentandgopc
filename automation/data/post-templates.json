@@ -1,50 +1,488 @@
 {
-  "_comment": "Deterministic post templates for build_queue.py. Adapted from the styles in new-post-templates.js (resort, trybeforebuy, roi, lifestyle2, rental) with all hardcoded figures removed: every number must come from properties.json through placeholders. Allowed placeholders: {name} {price} {neighborhood} {highlight_1} {highlight_2} {wa_link}. The {wa_link} placeholder must be the last line of every template (the wa.me link travels inside the message, never in the 'link' field). Style order defines the date-based rotation. Optional 'types' restricts a style to those property types (e.g. daily_life makes no sense for development land); build_queue advances to the next style when the day's property type is not allowed.",
+  "_comment": "Deterministic post templates for build_queue.py (Page bot) and api/_lib/groups-plan.js (group queue). Adapted from the styles in new-post-templates.js (resort, trybeforebuy, roi, lifestyle2, rental) with all hardcoded figures removed: every number must come from properties.json through placeholders. Style order defines the date-based rotation. Optional 'types' restricts a style to those property types (e.g. daily_life makes no sense for development land); the rotation advances to the next style when the day's property type is not allowed.",
+  "_skeleton_comment": "styles[].templates[lang] is a SKELETON, not the finished post. It carries the fixed connective tissue of the style plus five composition slots that the renderer fills from styles[].parts[lang]: {opener} {highlights} {closer} {hashtags} {cta}. Placeholders allowed in a skeleton: {name} {price} {neighborhood} {opener} {highlights} {closer} {hashtags} {cta} {wa_link}. The skeleton must end with {cta} on its own line followed by {wa_link} on the next line: the Page bot prints the link there, and the group queue drops that line (the wa.me link goes in the first comment, never in the body) and prints 'details in the first comment' in its place, so the CTA survives in both.",
+  "_parts_comment": "parts[lang] holds the interchangeable pieces: openers/closers/ctas (5 each) and hashtag_sets (3 each, as arrays of tags). The renderer picks one of each with a deterministic seed derived from date + group code + property slug + style id (the Page bot uses date + slug + style, it has no group). Same request twice = same text, always; different day, group or property = different text. Placeholders allowed inside a part: {name} {price} {neighborhood} {highlight_1} {highlight_2}. NEVER write a figure into a part: numbers come from properties.json only. Banned vocabulary in every language: lujo, paraiso, sueno, exclusivo, oportunidad unica, luxury, paradise, dream, exclusive (and their French twins reve, luxe, paradis, exclusif). CONFOTUR is NEVER mentioned in a part either: it can only reach a post through a highlight of a property whose confotur field is exactly true (today only cocotal-2bdr), and the renderer strips CONFOTUR highlights from every other property.",
+  "_layout_comment": "highlight_layouts rotates the visual mold of the highlights so the posts do not all share the same shape. Each layout renders as prefix + highlight, joined by 'join'. How MANY highlights show (2 or 3), which ones and in what order is picked from the same seed, in code (pickHighlights / pick_highlights). Both renderers (JS and Python) read this list, so adding a layout here adds it in both.",
+  "highlight_layouts": [
+    { "id": "dash", "prefix": "- ", "join": "\n" },
+    { "id": "inline", "prefix": "", "join": " · " },
+    { "id": "dot", "prefix": "· ", "join": "\n" }
+  ],
   "styles": [
     {
       "id": "daily_life",
       "source": "resort (new-post-templates.js)",
       "types": ["condo"],
       "templates": {
-        "en": "This is what daily life looks like at {name}:\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}. {price}.\n\nThis isn't a vacation. This is your everyday.\n\n#PuntaCana #RealEstate #Caribbean\n\nWhatsApp me to see it: {wa_link}",
-        "es": "Asi se ve el dia a dia en {name}:\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}. {price}.\n\nEsto no son unas vacaciones. Es tu dia a dia.\n\n#PuntaCana #BienesRaices #Caribe\n\nEscribeme por WhatsApp para verlo: {wa_link}",
-        "fr": "Voici a quoi ressemble le quotidien a {name}:\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}. {price}.\n\nC'est pas des vacances. C'est ta vie de tous les jours.\n\n#PuntaCana #Immobilier #Caraibes\n\nEcris-moi sur WhatsApp pour le voir: {wa_link}"
+        "en": "{opener}\n\n{highlights}\n\n{neighborhood}. {price}.\n\n{closer}\n\n{hashtags}\n\n{cta}\n{wa_link}",
+        "es": "{opener}\n\n{highlights}\n\n{neighborhood}. {price}.\n\n{closer}\n\n{hashtags}\n\n{cta}\n{wa_link}",
+        "fr": "{opener}\n\n{highlights}\n\n{neighborhood}. {price}.\n\n{closer}\n\n{hashtags}\n\n{cta}\n{wa_link}"
+      },
+      "parts": {
+        "en": {
+          "openers": [
+            "This is what daily life looks like at {name}:",
+            "A normal Tuesday at {name} looks like this:",
+            "Forget the brochure. Here is the day-to-day at {name}:",
+            "What you actually get, week after week, at {name}:",
+            "The unglamorous version of {name}, which is the one that matters:"
+          ],
+          "closers": [
+            "This isn't a vacation. This is your everyday.",
+            "No countdown to a return flight. You just live here.",
+            "The novelty wears off. The morning coffee on that terrace does not.",
+            "Two weeks a year is a trip. This is the other fifty.",
+            "Most days here are ordinary. That's the point."
+          ],
+          "ctas": [
+            "WhatsApp me to see it:",
+            "Want to walk through it? Message me on WhatsApp:",
+            "Ask me anything about it on WhatsApp:",
+            "I can send you the rest of the photos on WhatsApp:",
+            "Two minutes on WhatsApp and you'll know if it fits:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#RealEstate", "#Caribbean"],
+            ["#Bavaro", "#PuntaCana", "#CaribbeanLiving"],
+            ["#DominicanRepublic", "#PuntaCana", "#CondoLife"]
+          ]
+        },
+        "es": {
+          "openers": [
+            "Asi se ve el dia a dia en {name}:",
+            "Un martes cualquiera en {name} se ve asi:",
+            "Olvidate del brochure. Esto es el dia a dia en {name}:",
+            "Lo que de verdad recibes, semana tras semana, en {name}:",
+            "La version sin brillo de {name}, que es la que importa:"
+          ],
+          "closers": [
+            "Esto no son unas vacaciones. Es tu dia a dia.",
+            "Sin cuenta regresiva para el vuelo de regreso. Aqui simplemente vives.",
+            "La novedad se pasa. El cafe de la manana en esa terraza no.",
+            "Dos semanas al ano son un viaje. Esto son las otras cincuenta.",
+            "Casi todos los dias aqui son normales. De eso se trata."
+          ],
+          "ctas": [
+            "Escribeme por WhatsApp para verlo:",
+            "Quieres recorrerlo? Mandame un mensaje por WhatsApp:",
+            "Preguntame lo que sea por WhatsApp:",
+            "Te mando el resto de las fotos por WhatsApp:",
+            "Dos minutos por WhatsApp y sabes si te sirve:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#BienesRaices", "#Caribe"],
+            ["#Bavaro", "#PuntaCana", "#VivirEnElCaribe"],
+            ["#RepublicaDominicana", "#PuntaCana", "#Apartamentos"]
+          ]
+        },
+        "fr": {
+          "openers": [
+            "Voici a quoi ressemble le quotidien a {name}:",
+            "Un mardi ordinaire a {name}, ca ressemble a ca:",
+            "Oublie la brochure. Voici le vrai quotidien a {name}:",
+            "Ce que tu obtiens vraiment, semaine apres semaine, a {name}:",
+            "La version sans paillettes de {name}, celle qui compte vraiment:"
+          ],
+          "closers": [
+            "C'est pas des vacances. C'est ta vie de tous les jours.",
+            "Pas de compte a rebours avant le vol de retour. Tu vis ici, c'est tout.",
+            "La nouveaute passe. Le cafe du matin sur cette terrasse, non.",
+            "Deux semaines par annee, c'est un voyage. Ca, c'est les cinquante autres.",
+            "La plupart des journees ici sont ordinaires. C'est justement le but."
+          ],
+          "ctas": [
+            "Ecris-moi sur WhatsApp pour le voir:",
+            "Tu veux le visiter? Envoie-moi un message sur WhatsApp:",
+            "Pose-moi n'importe quelle question sur WhatsApp:",
+            "Je t'envoie le reste des photos sur WhatsApp:",
+            "Deux minutes sur WhatsApp et tu sauras si ca te convient:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#Immobilier", "#Caraibes"],
+            ["#Bavaro", "#PuntaCana", "#VivreAuxCaraibes"],
+            ["#RepubliqueDominicaine", "#PuntaCana", "#Condo"]
+          ]
+        }
       }
     },
     {
       "id": "try_before_buy",
       "source": "trybeforebuy (new-post-templates.js)",
       "templates": {
-        "en": "Not sure about buying in Punta Cana? Come see it first.\n\nVisit {name} in person:\n- {highlight_1}\n- {highlight_2}\n\nWalk the area, ask every question, meet the attorney who handles closings. No pressure, no gimmicks.\n\n{neighborhood}. {price}.\n\n#PuntaCana #DominicanRepublic #RealEstate\n\nPlan your visit on WhatsApp: {wa_link}",
-        "es": "No estas seguro de comprar en Punta Cana? Ven a verlo primero.\n\nVisita {name} en persona:\n- {highlight_1}\n- {highlight_2}\n\nCamina la zona, pregunta todo lo que quieras, conoce al abogado que maneja los cierres. Sin presion.\n\n{neighborhood}. {price}.\n\n#PuntaCana #RepublicaDominicana #BienesRaices\n\nPlanifica tu visita por WhatsApp: {wa_link}",
-        "fr": "Pas certain d'acheter a Punta Cana? Viens voir avant.\n\nVisite {name} en personne:\n- {highlight_1}\n- {highlight_2}\n\nMarche le secteur, pose toutes tes questions, rencontre l'avocat qui gere les transactions. Zero pression.\n\n{neighborhood}. {price}.\n\n#PuntaCana #RepubliqueDominicaine #Immobilier\n\nOrganise ta visite sur WhatsApp: {wa_link}"
+        "en": "{opener}\n\n{highlights}\n\n{closer}\n\n{neighborhood}. {price}.\n\n{hashtags}\n\n{cta}\n{wa_link}",
+        "es": "{opener}\n\n{highlights}\n\n{closer}\n\n{neighborhood}. {price}.\n\n{hashtags}\n\n{cta}\n{wa_link}",
+        "fr": "{opener}\n\n{highlights}\n\n{closer}\n\n{neighborhood}. {price}.\n\n{hashtags}\n\n{cta}\n{wa_link}"
+      },
+      "parts": {
+        "en": {
+          "openers": [
+            "Not sure about buying in Punta Cana? Come see it first.\n\nVisit {name} in person:",
+            "Buying from photos is how people get burned. Come stand on the floor.\n\n{name}, in person:",
+            "You don't have to decide from another country.\n\nCome walk {name} first:",
+            "Before any deposit, come see it with your own eyes.\n\n{name}:",
+            "The people who regret buying here all have one thing in common: they never came.\n\n{name}, in person:"
+          ],
+          "closers": [
+            "Walk the area, ask every question, meet the attorney who handles closings. No pressure, no gimmicks.",
+            "Take your time in the area, ask the hard questions, meet the attorney who does the closing. Nobody is rushing you.",
+            "See the neighbors, hear the traffic, check the water pressure. Then decide. I'm not going anywhere.",
+            "Bring your list of questions. Meet the attorney. Leave without signing anything if that's what makes sense.",
+            "Come with questions, leave with answers. Nothing gets signed on a first visit."
+          ],
+          "ctas": [
+            "Plan your visit on WhatsApp:",
+            "Tell me when you're on the island and we'll set it up. WhatsApp:",
+            "Message me on WhatsApp to book a walkthrough:",
+            "WhatsApp me and we'll find a time:",
+            "Set it up on WhatsApp, at your pace:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#DominicanRepublic", "#RealEstate"],
+            ["#PuntaCana", "#Bavaro", "#PropertyTour"],
+            ["#DominicanRepublic", "#BuyingAbroad", "#PuntaCana"]
+          ]
+        },
+        "es": {
+          "openers": [
+            "No estas seguro de comprar en Punta Cana? Ven a verlo primero.\n\nVisita {name} en persona:",
+            "Comprar por fotos es como la gente sale quemada. Ven a pararte en el piso.\n\n{name}, en persona:",
+            "No tienes que decidir desde otro pais.\n\nVen a caminar {name} primero:",
+            "Antes de cualquier deposito, ven a verlo con tus propios ojos.\n\n{name}:",
+            "Los que se arrepienten de comprar aqui tienen algo en comun: nunca vinieron.\n\n{name}, en persona:"
+          ],
+          "closers": [
+            "Camina la zona, pregunta todo lo que quieras, conoce al abogado que maneja los cierres. Sin presion.",
+            "Tomate tu tiempo en la zona, haz las preguntas incomodas, conoce al abogado que hace el cierre. Nadie te apura.",
+            "Ve a los vecinos, escucha el trafico, revisa la presion del agua. Despues decides. Yo no me voy a ningun lado.",
+            "Trae tu lista de preguntas. Conoce al abogado. Vete sin firmar nada si eso es lo que tiene sentido.",
+            "Ven con preguntas, vete con respuestas. En una primera visita no se firma nada."
+          ],
+          "ctas": [
+            "Planifica tu visita por WhatsApp:",
+            "Dime cuando estas en la isla y lo cuadramos. WhatsApp:",
+            "Escribeme por WhatsApp para agendar el recorrido:",
+            "Escribeme por WhatsApp y buscamos la hora:",
+            "Cuadralo por WhatsApp, a tu ritmo:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#RepublicaDominicana", "#BienesRaices"],
+            ["#PuntaCana", "#Bavaro", "#VisitaGuiada"],
+            ["#RepublicaDominicana", "#ComprarEnRD", "#PuntaCana"]
+          ]
+        },
+        "fr": {
+          "openers": [
+            "Pas certain d'acheter a Punta Cana? Viens voir avant.\n\nVisite {name} en personne:",
+            "Acheter sur photos, c'est comme ca que le monde se fait avoir. Viens mettre les pieds dedans.\n\n{name}, en personne:",
+            "Tu n'as pas a decider depuis un autre pays.\n\nViens marcher {name} d'abord:",
+            "Avant tout depot, viens le voir de tes propres yeux.\n\n{name}:",
+            "Ceux qui regrettent leur achat ici ont tous un point commun: ils ne sont jamais venus.\n\n{name}, en personne:"
+          ],
+          "closers": [
+            "Marche le secteur, pose toutes tes questions, rencontre l'avocat qui gere les transactions. Zero pression.",
+            "Prends ton temps dans le secteur, pose les questions qui derangent, rencontre l'avocat qui fait la transaction. Personne ne te presse.",
+            "Vois les voisins, ecoute le trafic, verifie la pression d'eau. Ensuite tu decides. Je ne pars nulle part.",
+            "Apporte ta liste de questions. Rencontre l'avocat. Repars sans rien signer si c'est ce qui a du sens.",
+            "Viens avec des questions, repars avec des reponses. On ne signe rien lors d'une premiere visite."
+          ],
+          "ctas": [
+            "Organise ta visite sur WhatsApp:",
+            "Dis-moi quand tu es sur l'ile et on organise ca. WhatsApp:",
+            "Ecris-moi sur WhatsApp pour reserver la visite:",
+            "Ecris-moi sur WhatsApp et on trouve un moment:",
+            "Organise ca sur WhatsApp, a ton rythme:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#RepubliqueDominicaine", "#Immobilier"],
+            ["#PuntaCana", "#Bavaro", "#VisiteGuidee"],
+            ["#RepubliqueDominicaine", "#AcheterEnRD", "#PuntaCana"]
+          ]
+        }
       }
     },
     {
       "id": "real_numbers",
       "source": "roi (new-post-templates.js)",
       "templates": {
-        "en": "Let's keep it simple. No hype, just the facts on {name}:\n\nPrice: {price}\nLocation: {neighborhood}\n- {highlight_1}\n- {highlight_2}\n\nWant me to run the numbers for YOUR scenario? Send me a message.\n\n#PuntaCana #Investment #RealEstate\n\nWhatsApp: {wa_link}",
-        "es": "Vamos al grano. Sin hype, solo los datos de {name}:\n\nPrecio: {price}\nUbicacion: {neighborhood}\n- {highlight_1}\n- {highlight_2}\n\nQuieres que haga los numeros para TU caso? Escribeme.\n\n#PuntaCana #Inversiones #BienesRaices\n\nWhatsApp: {wa_link}",
-        "fr": "Allons droit au but. Pas de hype, juste les faits sur {name}:\n\nPrix: {price}\nEmplacement: {neighborhood}\n- {highlight_1}\n- {highlight_2}\n\nTu veux que je fasse les chiffres pour TON scenario? Ecris-moi.\n\n#PuntaCana #Investissement #Immobilier\n\nWhatsApp: {wa_link}"
+        "en": "{opener}\n\nPrice: {price}\nLocation: {neighborhood}\n\n{highlights}\n\n{closer}\n\n{hashtags}\n\n{cta}\n{wa_link}",
+        "es": "{opener}\n\nPrecio: {price}\nUbicacion: {neighborhood}\n\n{highlights}\n\n{closer}\n\n{hashtags}\n\n{cta}\n{wa_link}",
+        "fr": "{opener}\n\nPrix: {price}\nEmplacement: {neighborhood}\n\n{highlights}\n\n{closer}\n\n{hashtags}\n\n{cta}\n{wa_link}"
+      },
+      "parts": {
+        "en": {
+          "openers": [
+            "Let's keep it simple. No hype, just the facts on {name}:",
+            "Straight to the numbers on {name}:",
+            "No adjectives. Here is what {name} actually is:",
+            "The short version of {name}, without the sales pitch:",
+            "Here is {name} on one screen, nothing dressed up:"
+          ],
+          "closers": [
+            "Want me to run the numbers for YOUR scenario? Send me a message.",
+            "If the math has to work for you, tell me your budget and I'll be honest about whether this fits.",
+            "Every buyer's math is different. Send me yours and I'll walk through it with you.",
+            "I'd rather tell you it doesn't fit than sell you something that doesn't.",
+            "What I don't know, I'll tell you I don't know. That's the whole pitch."
+          ],
+          "ctas": [
+            "WhatsApp:",
+            "Numbers and questions, straight to WhatsApp:",
+            "Send me your scenario on WhatsApp:",
+            "The full breakdown is one WhatsApp away:",
+            "I'll answer on WhatsApp, numbers included:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#Investment", "#RealEstate"],
+            ["#PuntaCana", "#RealEstateInvesting", "#DominicanRepublic"],
+            ["#Bavaro", "#PuntaCana", "#PropertyNumbers"]
+          ]
+        },
+        "es": {
+          "openers": [
+            "Vamos al grano. Sin hype, solo los datos de {name}:",
+            "Directo a los numeros de {name}:",
+            "Sin adjetivos. Esto es lo que es {name}:",
+            "La version corta de {name}, sin discurso de venta:",
+            "{name} en una sola pantalla, sin maquillaje:"
+          ],
+          "closers": [
+            "Quieres que haga los numeros para TU caso? Escribeme.",
+            "Si las cuentas te tienen que cuadrar, dime tu presupuesto y te digo con honestidad si esto encaja.",
+            "Cada comprador tiene sus propias cuentas. Mandame las tuyas y las repasamos juntos.",
+            "Prefiero decirte que no te sirve antes que venderte algo que no te sirve.",
+            "Lo que no se, te digo que no lo se. Ese es todo el discurso."
+          ],
+          "ctas": [
+            "WhatsApp:",
+            "Numeros y preguntas, directo por WhatsApp:",
+            "Mandame tu caso por WhatsApp:",
+            "El desglose completo esta a un WhatsApp:",
+            "Te respondo por WhatsApp, con numeros:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#Inversiones", "#BienesRaices"],
+            ["#PuntaCana", "#InversionInmobiliaria", "#RepublicaDominicana"],
+            ["#Bavaro", "#PuntaCana", "#NumerosReales"]
+          ]
+        },
+        "fr": {
+          "openers": [
+            "Allons droit au but. Pas de hype, juste les faits sur {name}:",
+            "Directement aux chiffres de {name}:",
+            "Sans adjectifs. Voici ce que {name} est vraiment:",
+            "La version courte de {name}, sans discours de vente:",
+            "{name} sur un seul ecran, sans maquillage:"
+          ],
+          "closers": [
+            "Tu veux que je fasse les chiffres pour TON scenario? Ecris-moi.",
+            "Si les chiffres doivent fonctionner pour toi, dis-moi ton budget et je te dirai honnetement si ca convient.",
+            "Chaque acheteur a ses propres chiffres. Envoie-moi les tiens et on les regarde ensemble.",
+            "Je prefere te dire que ca ne te convient pas plutot que de te vendre quelque chose qui ne te convient pas.",
+            "Ce que je ne sais pas, je te dis que je ne le sais pas. C'est tout le discours."
+          ],
+          "ctas": [
+            "WhatsApp:",
+            "Chiffres et questions, directement sur WhatsApp:",
+            "Envoie-moi ton scenario sur WhatsApp:",
+            "Le detail complet est a un WhatsApp d'ici:",
+            "Je te reponds sur WhatsApp, chiffres inclus:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#Investissement", "#Immobilier"],
+            ["#PuntaCana", "#InvestissementImmobilier", "#RepubliqueDominicaine"],
+            ["#Bavaro", "#PuntaCana", "#ChiffresReels"]
+          ]
+        }
       }
     },
     {
       "id": "honest_answer",
       "source": "lifestyle2 (new-post-templates.js)",
       "templates": {
-        "en": "People ask me what's actually worth a look in Punta Cana right now.\n\nMy honest answer: {name}.\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}. {price}.\n\nReady to take a closer look? Message me.\n\n#PuntaCana #Caribbean #RealEstate\n\nWhatsApp: {wa_link}",
-        "es": "La gente me pregunta que vale la pena ver en Punta Cana ahora mismo.\n\nMi respuesta honesta: {name}.\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}. {price}.\n\nListo para verlo de cerca? Escribeme.\n\n#PuntaCana #Caribe #BienesRaices\n\nWhatsApp: {wa_link}",
-        "fr": "Le monde me demande ce qui vaut vraiment le detour a Punta Cana en ce moment.\n\nMa reponse honnete: {name}.\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}. {price}.\n\nPret a regarder ca de plus pres? Ecris-moi.\n\n#PuntaCana #Caraibes #Immobilier\n\nWhatsApp: {wa_link}"
+        "en": "{opener}\n\n{neighborhood}. {price}.\n\n{highlights}\n\n{closer}\n\n{hashtags}\n\n{cta}\n{wa_link}",
+        "es": "{opener}\n\n{neighborhood}. {price}.\n\n{highlights}\n\n{closer}\n\n{hashtags}\n\n{cta}\n{wa_link}",
+        "fr": "{opener}\n\n{neighborhood}. {price}.\n\n{highlights}\n\n{closer}\n\n{hashtags}\n\n{cta}\n{wa_link}"
+      },
+      "parts": {
+        "en": {
+          "openers": [
+            "People ask me what's actually worth a look in Punta Cana right now.\n\nMy honest answer: {name}.",
+            "I get asked for one recommendation, not a catalog.\n\nToday it's {name}.",
+            "If a friend asked me where to start looking in Punta Cana this month, I'd say {name}.",
+            "Out of everything on my list right now, this is the one I keep sending people: {name}.",
+            "Not every listing is worth your time. This one I'd defend:\n\n{name}."
+          ],
+          "closers": [
+            "Ready to take a closer look? Message me.",
+            "If it's not what you're after, tell me what is and I'll point you elsewhere.",
+            "Happy to show you the parts the photos don't cover.",
+            "I'll tell you the drawbacks too, on the call.",
+            "If you want the version with the flaws included, just ask."
+          ],
+          "ctas": [
+            "Message me on WhatsApp:",
+            "A closer look starts on WhatsApp:",
+            "Message me on WhatsApp and I'll send the rest:",
+            "Questions? WhatsApp is the fastest way to reach me:",
+            "Straight answers on WhatsApp:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#Caribbean", "#RealEstateDR"],
+            ["#PuntaCana", "#Bavaro", "#HomeSearch"],
+            ["#DominicanRepublic", "#Caribbean", "#PuntaCana"]
+          ]
+        },
+        "es": {
+          "openers": [
+            "La gente me pregunta que vale la pena ver en Punta Cana ahora mismo.\n\nMi respuesta honesta: {name}.",
+            "Me piden una recomendacion, no un catalogo.\n\nHoy es {name}.",
+            "Si un amigo me preguntara por donde empezar a buscar en Punta Cana este mes, le diria {name}.",
+            "De todo lo que tengo en la lista ahora mismo, este es el que sigo mandando: {name}.",
+            "No todo listado vale tu tiempo. Este si lo defiendo:\n\n{name}."
+          ],
+          "closers": [
+            "Listo para verlo de cerca? Escribeme.",
+            "Si no es lo que buscas, dime que si es y te apunto para otro lado.",
+            "Con gusto te muestro las partes que las fotos no cubren.",
+            "En la llamada te cuento tambien las desventajas.",
+            "Si quieres la version con los defectos incluidos, pidemela."
+          ],
+          "ctas": [
+            "Escribeme por WhatsApp:",
+            "Verlo de cerca empieza por WhatsApp:",
+            "Escribeme por WhatsApp y te mando el resto:",
+            "Preguntas? Por WhatsApp es como mas rapido me llegas:",
+            "Respuestas directas por WhatsApp:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#Caribe", "#BienesRaicesRD"],
+            ["#PuntaCana", "#Bavaro", "#BuscandoCasa"],
+            ["#RepublicaDominicana", "#Caribe", "#PuntaCana"]
+          ]
+        },
+        "fr": {
+          "openers": [
+            "Le monde me demande ce qui vaut vraiment le detour a Punta Cana en ce moment.\n\nMa reponse honnete: {name}.",
+            "On me demande une recommandation, pas un catalogue.\n\nAujourd'hui c'est {name}.",
+            "Si un ami me demandait par ou commencer a chercher a Punta Cana ce mois-ci, je dirais {name}.",
+            "De tout ce que j'ai sur la liste en ce moment, c'est celui que je continue d'envoyer: {name}.",
+            "Tous les listings ne valent pas ton temps. Celui-ci, je le defends:\n\n{name}."
+          ],
+          "closers": [
+            "Pret a regarder ca de plus pres? Ecris-moi.",
+            "Si ce n'est pas ce que tu cherches, dis-moi ce que c'est et je te pointerai ailleurs.",
+            "Je te montre volontiers les parties que les photos ne couvrent pas.",
+            "Je te dirai aussi les inconvenients, pendant l'appel.",
+            "Si tu veux la version avec les defauts inclus, demande-la."
+          ],
+          "ctas": [
+            "Ecris-moi sur WhatsApp:",
+            "Regarder ca de plus pres commence sur WhatsApp:",
+            "Ecris-moi sur WhatsApp et je t'envoie le reste:",
+            "Des questions? WhatsApp, c'est le plus rapide pour me joindre:",
+            "Des reponses directes sur WhatsApp:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#Caraibes", "#ImmobilierRD"],
+            ["#PuntaCana", "#Bavaro", "#RechercheMaison"],
+            ["#RepubliqueDominicaine", "#Caraibes", "#PuntaCana"]
+          ]
+        }
       }
     },
     {
       "id": "works_for_you",
       "source": "rental (new-post-templates.js)",
       "templates": {
-        "en": "Looking for an asset in Punta Cana that works for you?\n\n{name} - {price}\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}.\n\nWant the full details and photos? One message away.\n\n#PuntaCana #Investment #DominicanRepublic\n\nWhatsApp: {wa_link}",
-        "es": "Buscas un activo en Punta Cana que trabaje para ti?\n\n{name} - {price}\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}.\n\nQuieres todos los detalles y las fotos? Estan a un mensaje.\n\n#PuntaCana #Inversiones #RepublicaDominicana\n\nWhatsApp: {wa_link}",
-        "fr": "Tu cherches un actif a Punta Cana qui travaille pour toi?\n\n{name} - {price}\n\n- {highlight_1}\n- {highlight_2}\n\n{neighborhood}.\n\nTu veux tous les details et les photos? Un message suffit.\n\n#PuntaCana #Investissement #RepubliqueDominicaine\n\nWhatsApp: {wa_link}"
+        "en": "{opener}\n\n{name} - {price}\n\n{highlights}\n\n{neighborhood}.\n\n{closer}\n\n{hashtags}\n\n{cta}\n{wa_link}",
+        "es": "{opener}\n\n{name} - {price}\n\n{highlights}\n\n{neighborhood}.\n\n{closer}\n\n{hashtags}\n\n{cta}\n{wa_link}",
+        "fr": "{opener}\n\n{name} - {price}\n\n{highlights}\n\n{neighborhood}.\n\n{closer}\n\n{hashtags}\n\n{cta}\n{wa_link}"
+      },
+      "parts": {
+        "en": {
+          "openers": [
+            "Looking for an asset in Punta Cana that works for you?",
+            "An asset that pays part of its own way, in Punta Cana:",
+            "If you want the property to earn while you're not in it:",
+            "For the buyer who wants the place to do some work too:",
+            "Not every property in Punta Cana pulls its weight. This one has a case:"
+          ],
+          "closers": [
+            "Want the full details and photos? One message away.",
+            "The full file (photos, fees, what I know and what I still have to confirm) is one message away.",
+            "I'll send the whole set of photos and tell you straight what's still unconfirmed.",
+            "Ask me for the numbers and I'll send what I have, including the gaps.",
+            "Tell me how you'd use it and I'll tell you if the numbers hold up."
+          ],
+          "ctas": [
+            "Let's talk it over on WhatsApp:",
+            "Ask for the full file on WhatsApp:",
+            "WhatsApp me for the photos and the fine print:",
+            "One message on WhatsApp and I'll send it over:",
+            "Let's go through it on WhatsApp:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#Investment", "#DominicanRepublic"],
+            ["#PuntaCana", "#RentalIncome", "#Caribbean"],
+            ["#Bavaro", "#PuntaCana", "#IncomeProperty"]
+          ]
+        },
+        "es": {
+          "openers": [
+            "Buscas un activo en Punta Cana que trabaje para ti?",
+            "Un activo que se paga parte solo, en Punta Cana:",
+            "Si quieres que la propiedad produzca mientras no estas en ella:",
+            "Para el comprador que quiere que el lugar tambien trabaje:",
+            "No toda propiedad en Punta Cana se gana su lugar. Esta tiene argumentos:"
+          ],
+          "closers": [
+            "Quieres todos los detalles y las fotos? Estan a un mensaje.",
+            "El expediente completo (fotos, cuotas, lo que se y lo que me falta confirmar) esta a un mensaje.",
+            "Te mando todas las fotos y te digo claro que falta por confirmar.",
+            "Pideme los numeros y te mando lo que tengo, incluidos los huecos.",
+            "Dime como la usarias y te digo si los numeros aguantan."
+          ],
+          "ctas": [
+            "Hablamos por WhatsApp:",
+            "Pideme el expediente completo por WhatsApp:",
+            "Escribeme por WhatsApp por las fotos y la letra chica:",
+            "Un mensaje por WhatsApp y te lo mando:",
+            "Lo repasamos por WhatsApp:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#Inversiones", "#RepublicaDominicana"],
+            ["#PuntaCana", "#RentaVacacional", "#Caribe"],
+            ["#Bavaro", "#PuntaCana", "#PropiedadDeRenta"]
+          ]
+        },
+        "fr": {
+          "openers": [
+            "Tu cherches un actif a Punta Cana qui travaille pour toi?",
+            "Un actif qui se paie en partie tout seul, a Punta Cana:",
+            "Si tu veux que la propriete rapporte pendant que tu n'y es pas:",
+            "Pour l'acheteur qui veut que l'endroit travaille aussi:",
+            "Toutes les proprietes a Punta Cana ne justifient pas leur prix. Celle-ci a des arguments:"
+          ],
+          "closers": [
+            "Tu veux tous les details et les photos? Un message suffit.",
+            "Le dossier complet (photos, frais, ce que je sais et ce qu'il me reste a confirmer) est a un message.",
+            "Je t'envoie toutes les photos et je te dis clairement ce qui reste a confirmer.",
+            "Demande-moi les chiffres et je t'envoie ce que j'ai, trous compris.",
+            "Dis-moi comment tu l'utiliserais et je te dirai si les chiffres tiennent."
+          ],
+          "ctas": [
+            "On en parle sur WhatsApp:",
+            "Demande le dossier complet sur WhatsApp:",
+            "Ecris-moi sur WhatsApp pour les photos et les details:",
+            "Un message sur WhatsApp et je te l'envoie:",
+            "On regarde ca ensemble sur WhatsApp:"
+          ],
+          "hashtag_sets": [
+            ["#PuntaCana", "#Investissement", "#RepubliqueDominicaine"],
+            ["#PuntaCana", "#LocationVacances", "#Caraibes"],
+            ["#Bavaro", "#PuntaCana", "#ProprieteLocative"]
+          ]
+        }
       }
     }
   ]

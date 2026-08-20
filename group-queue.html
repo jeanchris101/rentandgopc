@@ -168,6 +168,16 @@ a { color: var(--primary-soft); }
 .set-check { display: flex; align-items: flex-start; gap: 9px; font-size: 0.85rem; margin: 14px 0 4px; }
 .set-check input { width: 18px; height: 18px; margin-top: 2px; flex: 0 0 auto; }
 .set-err { color: var(--red); font-size: 0.82rem; margin-top: 11px; line-height: 1.45; }
+/* Idiomas: tres casillas en linea, cada una con su conteo de grupos. */
+.set-langs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.set-lang {
+  display: flex; align-items: center; gap: 7px; font-size: 0.84rem; cursor: pointer;
+  border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; background: #fff;
+  min-height: 42px;
+}
+.set-lang input { width: 17px; height: 17px; flex: 0 0 auto; }
+.set-lang .lang-n { font-size: 0.72rem; color: var(--text-light); }
+.set-warn { color: var(--red); font-size: 0.76rem; margin-top: 6px; line-height: 1.4; }
 
 /* ---------- Assignment card ---------- */
 .card {
@@ -901,6 +911,9 @@ function settingsSummary(s) {
     bits.push(s.autoRotateProperty ? 'propiedad rotando' : 'propiedad fija');
     if (s.campaignSpansDays > 1) bits.push(`${s.campaignSpansDays} dias por propiedad`);
   }
+  // El idioma manda en los dos modos: va siempre en el resumen.
+  const langs = Array.isArray(s.languages) ? s.languages : [];
+  bits.push(langs.length ? langs.map((l) => LANG_NAME[l] || l).join('/') : 'sin idiomas');
   return bits.join(' · ');
 }
 
@@ -996,6 +1009,54 @@ function renderSettings() {
     '1 = una propiedad cada dia. Mas de 1 = la misma propiedad sigue en los dias siguientes hasta cubrir sus dias.'));
   body.appendChild(grid);
 
+  /* ---- Idiomas: en que idiomas se publica a los grupos ----
+     Un grupo cuyo idioma este desmarcado se SALTA, no se le publica en otro
+     idioma. Por eso cada casilla dice cuantos grupos se lleva: desmarcar
+     Francais no es una casilla menos, son 4 de los 18 grupos fuera del plan. */
+  const langOpts = Array.isArray(state.meta.languages) && state.meta.languages.length
+    ? state.meta.languages
+    : [{ code: 'es' }, { code: 'en' }, { code: 'fr' }];
+  const current = Array.isArray(s.languages) ? s.languages : [];
+  const langBoxes = {};
+  const langsWrap = el('div', 'set-langs');
+  const langWarn = el('p', 'set-warn');
+  langWarn.hidden = true;
+  langWarn.textContent =
+    'Con los tres idiomas apagados no queda ningun grupo al que publicar y no se puede guardar. ' +
+    'Si quieres parar unos dias, simplemente no publiques.';
+
+  const syncLangWarn = () => {
+    langWarn.hidden = Object.values(langBoxes).some((b) => b.checked);
+  };
+
+  for (const opt of langOpts) {
+    const box = document.createElement('input');
+    box.type = 'checkbox';
+    box.id = 'setLang_' + opt.code;
+    box.checked = current.includes(opt.code);
+    box.addEventListener('change', syncLangWarn);
+    langBoxes[opt.code] = box;
+
+    const row = el('label', 'set-lang');
+    row.setAttribute('for', box.id);
+    row.appendChild(box);
+    row.appendChild(el('span', null, LANG_NAME[opt.code] || opt.code));
+    if (typeof opt.groupCount === 'number') {
+      row.appendChild(el('span', 'lang-n', `${opt.groupCount} ${plural(opt.groupCount, 'grupo', 'grupos')}`));
+    }
+    langsWrap.appendChild(row);
+  }
+  const langField = el('div', 'set-field');
+  const langLabel = el('label', null, 'Idiomas en los que publicas');
+  langField.appendChild(langLabel);
+  langField.appendChild(langsWrap);
+  langField.appendChild(el('div', 'hint',
+    'Un grupo en un idioma apagado se salta: no se le publica traducido. Esto es solo para los ' +
+    'grupos; el bot de la Pagina tiene su propio idioma en automation/config.json.'));
+  langField.appendChild(langWarn);
+  body.appendChild(langField);
+  syncLangWarn();
+
   const auto = document.createElement('input');
   auto.type = 'checkbox';
   auto.id = 'setAuto';
@@ -1030,7 +1091,7 @@ function renderSettings() {
   cancel.type = 'button';
   cancel.addEventListener('click', toggleSettings);
   save.addEventListener('click', () => saveSettings({
-    mode: modeSel, perDay, interval, start, spans, auto, prop: propSel,
+    mode: modeSel, perDay, interval, start, spans, auto, prop: propSel, langBoxes,
   }, save));
   row.appendChild(save);
   row.appendChild(cancel);
@@ -1050,13 +1111,20 @@ function renderGroups() {
   const plan = state.plan;
   if (!plan || !Array.isArray(plan.groups) || !plan.groups.length) return;
 
+  // groupsFree ya descuenta los que tienen el idioma apagado: sumarlos aparte
+  // seria contarlos dos veces, y el dueno tiene que ver que son un grupo
+  // distinto de "en cooldown" — se arreglan marcando una casilla, no esperando.
+  const offLang = plan.stats.groupsOffLanguage || 0;
   host.appendChild(el('div', 'section-title',
-    `Los ${plan.groups.length} grupos - ${plan.stats.groupsFree} libres, ${plan.stats.groupsInCooldown} en cooldown`));
+    `Los ${plan.groups.length} grupos - ${plan.stats.groupsFree} libres, ${plan.stats.groupsInCooldown} en cooldown` +
+    (offLang ? `, ${offLang} con el idioma apagado` : '')));
 
   const panel = el('div', 'panel');
   const sorted = plan.groups.slice().sort((a, b) => {
     // Primero los libres (los que llevan mas tiempo sin nada), despues los que
-    // estan en cooldown ordenados por cuando se liberan.
+    // estan en cooldown ordenados por cuando se liberan. Los que tienen el
+    // idioma apagado van al final: hoy no son trabajo.
+    if (a.offLanguage !== b.offLanguage) return a.offLanguage ? 1 : -1;
     if (a.cooldown !== b.cooldown) return a.cooldown ? 1 : -1;
     if (a.cooldown) return String(a.freeOn).localeCompare(String(b.freeOn));
     return String(a.lastPostedDate || '').localeCompare(String(b.lastPostedDate || ''));
@@ -1076,6 +1144,9 @@ function renderGroups() {
       row.appendChild(el('span', 'row-tag tag-today', 'Publicado hoy'));
     } else if (g.skippedToday) {
       row.appendChild(el('span', 'row-tag tag-skip', 'Saltado hoy'));
+    } else if (g.offLanguage) {
+      row.appendChild(el('span', 'row-tag tag-skip',
+        `${LANG_NAME[g.lang] || g.lang} apagado en Ajustes`));
     } else if (g.cooldown) {
       row.appendChild(el('span', 'row-tag tag-cool',
         `${daysLeft(g.daysUntilFree)} - libre el ${dayLabel(g.freeOn)}`));
@@ -1247,6 +1318,20 @@ async function toggleSettings() {
 
 async function saveSettings(inputs, btn) {
   if (state.savingSettings) return;
+
+  // El servidor tambien lo rechaza (400), pero avisar aqui evita el viaje y le
+  // dice al dueno lo mismo que le dira el backend.
+  const languages = Object.entries(inputs.langBoxes || {})
+    .filter(([, box]) => box.checked)
+    .map(([code]) => code);
+  if (!languages.length) {
+    state.settingsError =
+      'Deja al menos un idioma encendido. Con los tres apagados no queda ningun grupo al que publicar.';
+    toast('No se pudo guardar: sin idiomas no hay grupos.', 'warn');
+    render();
+    return;
+  }
+
   state.savingSettings = true;
   state.settingsError = null;
   btn.disabled = true;
@@ -1262,6 +1347,7 @@ async function saveSettings(inputs, btn) {
         intervalHours: Number(inputs.interval.value),
         startHour: Number(inputs.start.value),
         campaignSpansDays: Number(inputs.spans.value),
+        languages,
         autoRotateProperty: inputs.auto.checked,
         // Con la rotacion encendida el slug no se manda: no lo borramos por si
         // el dueno vuelve a apagarla.

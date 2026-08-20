@@ -28,8 +28,16 @@
  *   3. En spread, nunca la misma propiedad en dos grupos el mismo dia. En
  *      campana es justo lo contrario y a proposito, por eso cambia TODO lo
  *      demas de cada post (estilo, foto, idioma, hora).
- *   4. El idioma lo decide el `lang` del grupo, no la fecha.
+ *   4. El idioma lo decide el `lang` del grupo, no la fecha. Y si ese idioma no
+ *      esta encendido en los ajustes (`languages`), el grupo se SALTA: no se le
+ *      publica en otro idioma, porque un post en ingles en un grupo francofono
+ *      no lo lee nadie y encima parece spam automatico. Cuando el filtro deja el
+ *      dia vacio, el plan lo dice con nombre y apellido (langBlockedNote).
  *   5. El link de wa.me va en el PRIMER COMENTARIO, jamas en el cuerpo del post.
+ *   6. Dos posts no se leen igual. Ademas del estilo y la foto, cada post elige
+ *      opener, closer, cta, hashtags, QUE dos highlights salen, en que orden y
+ *      con que molde visual — todo con una semilla determinista de (fecha +
+ *      grupo + propiedad + estilo). Ver "ALEATORIZADOR DE MENSAJES" mas abajo.
  *
  * La rotacion (propiedad, estilo, highlights, imagen) replica
  * automation/build_queue.py: mismo ordinal de fecha, mismo desempate, mismo
@@ -55,7 +63,7 @@ import { requirePanelOrExtensionAuth } from './auth.js';
 // La dependencia va en un solo sentido: groups-settings.js no importa nada de
 // aqui, asi que no hay ciclo de modulos que dependa del orden de evaluacion de
 // esbuild.
-import { normalizeSettings, readSettings, settingsWarning } from './groups-settings.js';
+import { LANG_LABEL, langList, normalizeSettings, readSettings, settingsWarning } from './groups-settings.js';
 import groupsFile from '../../automation/data/group-assist-config.json' with { type: 'json' };
 import propertiesFile from '../../automation/data/properties.json' with { type: 'json' };
 import templatesFile from '../../automation/data/post-templates.json' with { type: 'json' };
@@ -173,6 +181,16 @@ export const PROPERTIES = (Array.isArray(propertiesFile?.properties) ? propertie
   .filter((p) => p && p.slug && p.active !== false && REF_CODES[p.slug]);
 
 const STYLES = Array.isArray(templatesFile?.styles) ? templatesFile.styles : [];
+
+/**
+ * Los moldes visuales de los dos highlights. Salen del JSON para que agregar uno
+ * los agregue en los DOS renderizadores (aqui y build_queue.py) de una vez.
+ * Cada uno pinta prefix + highlight y los une con `join`.
+ */
+const HIGHLIGHT_LAYOUTS =
+  Array.isArray(templatesFile?.highlight_layouts) && templatesFile.highlight_layouts.length
+    ? templatesFile.highlight_layouts
+    : [{ id: 'dash', prefix: '- ', join: '\n' }];
 
 const SITE_BASE = String(propertiesFile?.site_base_url || '').replace(/\/+$/, '');
 const WA_NUMBER = String(propertiesFile?.whatsapp_number || '').replace(/\D/g, '');
@@ -330,20 +348,154 @@ function fill(template, values) {
   );
 }
 
+/* ------------------------------------------------------------------ *
+ * ALEATORIZADOR DE MENSAJES (determinista)
+ *
+ * El problema real no es que los posts se vean poco variados: es que el
+ * contenido repetido es lo que Facebook marca como spam y lo que hace que un
+ * admin de grupo te reporte. Antes la variacion era 5 estilos x N fotos. Ahora
+ * cada estilo trae piezas intercambiables por idioma (openers, closers, ctas,
+ * hashtag_sets en post-templates.json), y ademas rota QUE dos highlights salen,
+ * en que orden, y con que molde visual.
+ *
+ * DETERMINISTA A PROPOSITO. La semilla es (fecha + codigo de grupo + slug +
+ * estilo): el mismo plan pedido dos veces da el mismo texto. Si fuera azar de
+ * verdad, el dueno copiaria una cosa, recargaria, y el sistema registraria otra.
+ *
+ * build_queue.py implementa esto mismo byte a byte, con la unica diferencia de
+ * que su semilla no lleva codigo de grupo (la Pagina no tiene grupos).
+ * ------------------------------------------------------------------ */
+
 /**
- * Dos highlights rotados por fecha, en el idioma del grupo. Copia de
- * pick_highlights() de build_queue.py: highlights_<lang> con fallback al ingles
- * (un post en es no lleva bullets en ingles) y las lineas de CONFOTUR solo si la
- * propiedad tiene confotur === true.
+ * FNV-1a de 32 bits + avalancha final (fmix32 de MurmurHash3). Elegido por una
+ * razon: se replica exacto en Python con enteros y una mascara, sin
+ * dependencias ni float. Math.imul mantiene la multiplicacion en 32 bits (a*b
+ * normal se pasa a double y pierde los bits bajos).
+ *
+ * LA AVALANCHA NO ES ADORNO. En FNV-1a el bit mas bajo del resultado es
+ * literalmente la XOR de los bits mas bajos de la entrada (el primo termina en
+ * 1), y aqui el hash se usa con `% 3` y `% 4` — o sea, SOLO los bits bajos. Sin
+ * mezclar, dos semillas parecidas ("...|G04|..." y "...|G10|...") caian en el
+ * mismo opener y el mismo closer demasiado seguido, que es exactamente el
+ * problema que este modulo existe para evitar.
  */
-export function pickHighlights(prop, dateStr, lang) {
+export function hash32(text) {
+  let h = 2166136261;
+  const s = String(text);
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  h ^= h >>> 16;
+  h = Math.imul(h, 2246822507); // 0x85ebca6b
+  h ^= h >>> 13;
+  h = Math.imul(h, 3266489909); // 0xc2b2ae35
+  h ^= h >>> 16;
+  return h >>> 0;
+}
+
+/**
+ * La semilla base de un post. `groupCode` vacio = post de la Pagina (asi lo
+ * llama build_queue.py), y por eso el texto de la Pagina no coincide con el de
+ * ningun grupo aunque sea el mismo dia y la misma propiedad.
+ */
+export function variantSeed(dateStr, groupCode, slug, styleId) {
+  return [String(dateStr), String(groupCode || '-'), String(slug), String(styleId || '')].join('|');
+}
+
+/**
+ * Un elemento de `list`, elegido por (semilla + sal). La sal es lo que hace que
+ * el opener y el closer no se muevan juntos: sin ella, todos los campos
+ * elegirian siempre el mismo indice y la variacion real seria 4, no 4x4x4x3.
+ */
+export function pickVariant(list, seed, salt) {
+  if (!Array.isArray(list) || !list.length) return null;
+  return list[hash32(`${seed}|${salt}`) % list.length];
+}
+
+/** Los dos highlights, con su molde visual ya aplicado. */
+function renderHighlights(highlights, seed) {
+  const layout = pickVariant(HIGHLIGHT_LAYOUTS, seed, 'layout') || HIGHLIGHT_LAYOUTS[0];
+  const prefix = String(layout.prefix ?? '');
+  const join = String(layout.join ?? '\n');
+  return highlights.map((h) => prefix + h).join(join);
+}
+
+/**
+ * El esqueleto del estilo con las piezas ya puestas: {opener} {highlights}
+ * {closer} {hashtags} {cta}. Lo que queda despues son los placeholders de datos
+ * ({name}, {price}, {neighborhood}, {wa_link}), que rellena fill().
+ *
+ * Devuelve null si al estilo le falta una pieza en ese idioma. No se inventa un
+ * relleno: un post con "{opener}" literal encima es peor que un slot menos, y el
+ * plan ya sabe decir por que falta.
+ */
+export function composeTemplate(style, lang, highlights, seed) {
+  const skeleton = style?.templates?.[lang];
+  if (!skeleton) return null;
+  const parts = style?.parts?.[lang];
+  const opener = pickVariant(parts?.openers, seed, 'opener');
+  const closer = pickVariant(parts?.closers, seed, 'closer');
+  const cta = pickVariant(parts?.ctas, seed, 'cta');
+  const tags = pickVariant(parts?.hashtag_sets, seed, 'hashtags');
+  if (opener === null || closer === null || cta === null || tags === null) return null;
+
+  // Reemplazo con FUNCION, no con string: String.replace(str, str) interpreta
+  // $&, $1, $$ dentro del reemplazo, y aqui pasan textos con "$" (los precios
+  // son "US$310,000"). Con la funcion el texto entra literal, igual que el
+  // str.replace de Python en build_queue.py.
+  const put = (text, slot, value) => text.replace(slot, () => value);
+
+  return [
+    ['{opener}', opener],
+    ['{closer}', closer],
+    ['{cta}', cta],
+    ['{hashtags}', Array.isArray(tags) ? tags.join(' ') : String(tags)],
+    ['{highlights}', renderHighlights(highlights, seed)],
+  ].reduce((text, [slot, value]) => put(text, slot, value), String(skeleton));
+}
+
+/**
+ * Cuantos highlights lleva el post: 2 o 3. Con menos de 4 disponibles siempre 2
+ * (con 3 en total, mostrar 3 seria mostrarlos todos siempre y se acabo la
+ * rotacion). No es solo variedad visual: multiplica por 5 el espacio de
+ * combinaciones sin escribir una linea de copy nueva.
+ */
+function highlightCount(n, seed) {
+  if (n < 4) return 2;
+  return 2 + (hash32(`${seed}|hcount`) % 2);
+}
+
+/**
+ * Los highlights del post en el idioma del grupo: cuantos, cuales y en que
+ * orden, todo de la semilla. Copia exacta de pick_highlights() de
+ * build_queue.py: highlights_<lang> con fallback al ingles (un post en es no
+ * lleva bullets en ingles) y las lineas de CONFOTUR solo si la propiedad tiene
+ * confotur === true — ese filtro es la unica puerta que mantiene CONFOTUR fuera
+ * de las cuatro propiedades que no lo tienen, y no se relaja nunca.
+ *
+ * La seleccion es un Fisher-Yates PARCIAL sembrado: el espacio son las
+ * variaciones ORDENADAS de n tomadas de 2 y de 3 (con 6 highlights: 30 + 120 =
+ * 150), no las n rotaciones fijas de antes. "Terraza + parqueos" no se lee
+ * igual que "parqueos + terraza", y esa diferencia ahora cuenta.
+ */
+export function pickHighlights(prop, lang, seed) {
   const source = prop[`highlights_${lang}`] || prop.highlights || [];
   const highlights = source.filter(
     (h) => prop.confotur === true || !String(h).toLowerCase().includes('confotur')
   );
-  if (highlights.length < 2) return null;
-  const i = ordinalOf(dateStr) % highlights.length;
-  return [highlights[i], highlights[(i + 1) % highlights.length]];
+  const n = highlights.length;
+  if (n < 2) return null;
+
+  const count = highlightCount(n, seed);
+  const idx = highlights.map((_, i) => i);
+  for (let k = 0; k < count; k++) {
+    const j = k + (hash32(`${seed}|h${k}`) % (n - k));
+    const tmp = idx[k];
+    idx[k] = idx[j];
+    idx[j] = tmp;
+  }
+  return idx.slice(0, count).map((i) => highlights[i]);
 }
 
 /**
@@ -436,10 +588,19 @@ export function selectImage(prop, imageLastUsed, dateStr) {
 }
 
 /**
- * El cuerpo del POST: la plantilla sin la linea del {wa_link} y con la linea de
- * "detalles en el comentario" en su lugar. Regla 5.
+ * El cuerpo del POST: el esqueleto del estilo con sus piezas puestas, sin la
+ * linea del {wa_link} y con la linea de "detalles en el comentario" en su lugar.
+ * Regla 5.
+ *
+ * La linea del {cta} SI se queda (el esqueleto la pone aparte, encima del
+ * {wa_link}), asi que el post del grupo termina en "Escribeme por WhatsApp para
+ * verlo: / Detalles en el primer comentario." — la invitacion tambien varia,
+ * que antes se perdia entera al descartar la linea del link.
  */
-function renderPostText(template, prop, lang, highlights) {
+function renderPostText(style, prop, lang, highlights, seed) {
+  const composed = composeTemplate(style, lang, highlights, seed);
+  if (composed === null) return null;
+
   const values = {
     name: prop.name,
     price: prop.price_display,
@@ -449,7 +610,7 @@ function renderPostText(template, prop, lang, highlights) {
   };
 
   const kept = [];
-  for (const raw of String(template).split('\n')) {
+  for (const raw of composed.split('\n')) {
     if (raw.includes('{wa_link}')) continue; // regla 5: el link va al comentario
     const line = fill(raw, values);
     if (LINK_RE.test(line)) {
@@ -460,7 +621,8 @@ function renderPostText(template, prop, lang, highlights) {
   }
 
   const body = kept.join('\n').replace(/\n{3,}/g, '\n\n').trim();
-  return `${body}\n\n${POST_CTA[lang] || POST_CTA.en}`;
+  // Un solo salto: ocupa exactamente el renglon donde iba el link, debajo del cta.
+  return `${body}\n${POST_CTA[lang] || POST_CTA.en}`;
 }
 
 /** El PRIMER COMENTARIO: lead-in + wa.me con el ref del grupo. */
@@ -571,15 +733,28 @@ export function imageLastUsedFrom(entries) {
  */
 function assignmentOf(group, prop, dateStr, imageLastUsed, recorded, forced) {
   const lang = group.lang;
-  const highlights = pickHighlights(prop, dateStr, lang);
+  // El estilo va PRIMERO: entra en la semilla, y de la semilla salen los
+  // highlights, las piezas del texto y el molde visual.
+  const style = forced?.style || selectStyle(prop, dateStr, group.index);
+  if (!style?.templates?.[lang]) {
+    console.error('[groups/plan] sin plantilla para %s en %s', prop.slug, lang);
+    return null;
+  }
+
+  const seed = variantSeed(dateStr, group.code, prop.slug, style.id);
+  const highlights = pickHighlights(prop, lang, seed);
   if (!highlights) {
     console.error('[groups/plan] %s no tiene 2 highlights usables en %s', prop.slug, lang);
     return null;
   }
-  const style = forced?.style || selectStyle(prop, dateStr, group.index);
-  const template = style?.templates?.[lang];
-  if (!template) {
-    console.error('[groups/plan] sin plantilla para %s en %s', prop.slug, lang);
+
+  const postText = renderPostText(style, prop, lang, highlights, seed);
+  if (postText === null) {
+    console.error(
+      '[groups/plan] al estilo %s le falta alguna pieza (openers/closers/ctas/hashtag_sets) en %s',
+      style.id,
+      lang
+    );
     return null;
   }
 
@@ -600,7 +775,7 @@ function assignmentOf(group, prop, dateStr, imageLastUsed, recorded, forced) {
     imagePath: image,
     imageFilename: image ? image.split('/').pop() : null,
     styleId: style.id || null,
-    postText: renderPostText(template, prop, lang, highlights),
+    postText,
     commentText: renderCommentText(prop, lang, ref),
     ref,
     alreadyPosted: Boolean(recorded && !recorded.skipped),
@@ -645,8 +820,18 @@ function indexHistory(entries, dateStr) {
   return { lastPostedByGroup, lastPropByGroup, lastByGroupProp, lastPostedByProp, postsLast7Days, totalPosts };
 }
 
+/**
+ * FILTRO DE IDIOMAS. Un grupo cuyo `lang` no este encendido en los ajustes queda
+ * FUERA del plan, en los dos modos. No se le publica en otro idioma a proposito:
+ * publicar en ingles en un grupo francofono es peor que no publicar — no lo lee
+ * nadie y encima parece spam automatico.
+ */
+function langOn(group, cfg) {
+  return cfg.languages.includes(group.lang);
+}
+
 /** Estado por grupo: lo que el panel pinta como cooldown. */
-function groupStatuses(index, dateStr, postedTodayCodes, skippedTodayCodes) {
+function groupStatuses(index, dateStr, postedTodayCodes, skippedTodayCodes, cfg) {
   return GROUPS.map((g) => {
     const last = index.lastPostedByGroup.get(g.code) || null;
     const daysSince = last ? daysBetween(last, dateStr) : null;
@@ -656,6 +841,9 @@ function groupStatuses(index, dateStr, postedTodayCodes, skippedTodayCodes) {
       name: g.name,
       url: g.url,
       lang: g.lang,
+      // Fuera del plan por idioma, no por cooldown: son dos motivos distintos y
+      // el panel los pinta distinto.
+      offLanguage: !langOn(g, cfg),
       lastPostedDate: last,
       lastPropertySlug: index.lastPropByGroup.get(g.code)?.slug || null,
       lastPropertyName: index.lastPropByGroup.get(g.code)?.name || null,
@@ -695,7 +883,12 @@ function historyPage(history) {
 /** El primero que se libera, para los textos de "vuelve el ...". */
 function nextFreeOf(groups) {
   const cooling = groups.filter((g) => g.cooldown).sort((a, b) => a.freeOn.localeCompare(b.freeOn));
-  return { cooling, nextFree: cooling.length ? cooling[0] : null };
+  // `cooling` los cuenta a todos (es el stat que pinta el panel), pero el
+  // "proximo que se libera" solo mira los de un idioma encendido: apuntar a un
+  // grupo al que hoy no se le publica seria mandar al dueno a esperar por algo
+  // que no va a pasar.
+  const publishable = cooling.filter((g) => !g.offLanguage);
+  return { cooling, nextFree: publishable.length ? publishable[0] : null };
 }
 
 /**
@@ -733,15 +926,45 @@ function rankProperties(group, dateStr, lastByGroupProp) {
  */
 export function buildPlan(dateStr, entries, settings) {
   const cfg = normalizeSettings(settings);
-  const plan = cfg.mode === 'campaign' ? buildCampaignPlan(dateStr, entries, cfg) : buildSpreadPlan(dateStr, entries);
+  const plan =
+    cfg.mode === 'campaign' ? buildCampaignPlan(dateStr, entries, cfg) : buildSpreadPlan(dateStr, entries, cfg);
   return { ...plan, mode: cfg.mode, settings: cfg, settingsWarning: settingsWarning(cfg) };
+}
+
+/**
+ * El texto de "no hay grupo hoy, y es por el filtro de idiomas". Se arma con los
+ * grupos que SI estaban libres y se cayeron solo por idioma, porque ese es el
+ * dato accionable: son 4 casillas de distancia, no una semana de espera.
+ *
+ * Devuelve null cuando el idioma no es la causa (no hay grupos apagados libres),
+ * para que el motivo de siempre — cooldown, saltados — siga siendo el que se ve.
+ */
+function langBlockedNote(offLangFree, cfg) {
+  if (!offLangFree.length) return null;
+
+  const byLang = new Map();
+  for (const g of offLangFree) byLang.set(g.lang, (byLang.get(g.lang) || 0) + 1);
+  const parts = [...byLang.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .map(([lang, n]) => `${n} en ${LANG_LABEL[lang] || lang}`);
+
+  const total = offLangFree.length;
+  const grupos = `${total} ${total === 1 ? 'grupo libre esta' : 'grupos libres estan'}`;
+  const cuales = byLang.size === 1 ? `${grupos} en ${LANG_LABEL[[...byLang.keys()][0]]}` : `${grupos} en idiomas apagados (${parts.join(', ')})`;
+
+  return (
+    `${cuales} y hoy solo esta encendido ${langList(cfg.languages)} en Ajustes. ` +
+    'No se les publica en otro idioma a proposito: un post en el idioma equivocado no lo lee nadie y ' +
+    'parece spam automatico. Enciende el idioma en Ajustes o espera a que se libere un grupo de los que si publicas.'
+  );
 }
 
 /**
  * MODO SPREAD — el comportamiento historico, sin cambios de logica: propiedades
  * distintas el mismo dia, una por grupo, tope MAX_GROUPS_PER_DAY.
  */
-export function buildSpreadPlan(dateStr, entries) {
+export function buildSpreadPlan(dateStr, entries, settings) {
+  const cfg = normalizeSettings(settings);
   const history = (Array.isArray(entries) ? entries : []).filter(Boolean);
 
   const index = indexHistory(history, dateStr);
@@ -754,7 +977,7 @@ export function buildSpreadPlan(dateStr, entries) {
   const skippedTodayCodes = new Set(skippedToday.map((e) => e.groupCode));
   const imageLastUsed = imageLastUsedFrom(history);
 
-  const groups = groupStatuses(index, dateStr, postedTodayCodes, skippedTodayCodes);
+  const groups = groupStatuses(index, dateStr, postedTodayCodes, skippedTodayCodes, cfg);
 
   // Ya publicado hoy: se muestra igual, marcado, con la foto y el ref que quedaron
   // grabados. Consume slot del dia.
@@ -773,8 +996,12 @@ export function buildSpreadPlan(dateStr, entries) {
   // mas tiempo sin recibir nada va primero; desempate rotado por fecha, como en
   // select_property() de build_queue.py.
   const ord = ordinalOf(dateStr);
-  const candidates = groups
-    .filter((g) => !g.cooldown && !g.skippedToday)
+  const free = groups.filter((g) => !g.cooldown && !g.skippedToday);
+  // Los que se caen SOLO por idioma: no entran al plan, pero el motivo tiene que
+  // poder decir cuantos eran y en que idioma.
+  const offLangFree = free.filter((g) => g.offLanguage);
+  const candidates = free
+    .filter((g) => !g.offLanguage)
     .map((g) => ({
       g,
       key0: g.lastPostedDate ? ordinalOf(g.lastPostedDate) : 0,
@@ -814,6 +1041,8 @@ export function buildSpreadPlan(dateStr, entries) {
       slotsLeft,
       skippedToday,
       nextFree,
+      offLangFree,
+      cfg,
     }),
     groups,
     stats: {
@@ -826,7 +1055,9 @@ export function buildSpreadPlan(dateStr, entries) {
       postedToday: postedToday.length,
       skippedToday: skippedToday.length,
       slotsLeft,
-      groupsFree: groups.filter((g) => !g.cooldown).length,
+      languages: [...cfg.languages],
+      groupsOffLanguage: groups.filter((g) => g.offLanguage).length,
+      groupsFree: groups.filter((g) => !g.cooldown && !g.offLanguage).length,
       groupsInCooldown: cooling.length,
       nextFreeDate: nextFree ? nextFree.freeOn : null,
       nextFreeGroup: nextFree ? nextFree.name : null,
@@ -842,7 +1073,7 @@ export function buildSpreadPlan(dateStr, entries) {
  * vacio tiene que ser honesto, no inventar tareas ni relajar el cooldown en
  * silencio.
  */
-function buildReason({ dateStr, pending, done, groups, candidates, slotsLeft, skippedToday, nextFree }) {
+function buildReason({ dateStr, pending, done, groups, candidates, slotsLeft, skippedToday, nextFree, offLangFree, cfg }) {
   if (!GROUPS.length) return 'No hay grupos en automation/data/group-assist-config.json.';
   if (!PROPERTIES.length) {
     return 'No hay propiedades activas con codigo de ref en properties.json. Revisa REF_CODES.';
@@ -859,8 +1090,16 @@ function buildReason({ dateStr, pending, done, groups, candidates, slotsLeft, sk
   }
 
   if (!candidates.length) {
+    // El idioma va PRIMERO: si los grupos libres existen y se cayeron por el
+    // filtro, ese es el motivo real y se arregla en dos clics. Decir "no queda
+    // grupo elegible" a secas seria mentir por omision.
+    const langNote = langBlockedNote(offLangFree, cfg);
+    if (langNote) return langNote;
+
     const cooling = groups.filter((g) => g.cooldown);
-    if (cooling.length === groups.length) {
+    // nextFree puede venir null si todos los que se liberan estan en un idioma
+    // apagado: se dice lo que se sabe en vez de reventar en `nextFree.name`.
+    if (cooling.length === groups.length && nextFree) {
       return `Los ${groups.length} grupos recibieron un post de listado en los ultimos ` +
         `${GROUP_COOLDOWN_DAYS} dias. El primero que se libera es ${nextFree.name} el ${humanDate(nextFree.freeOn)}. ` +
         'Hoy no toca publicar listados: es el momento de comentar y aportar valor (regla 1).';
@@ -1010,9 +1249,15 @@ function cappedMessage(by, ctx) {
     );
   }
   if (by === 'eligible_groups') {
+    const off = ctx.offLangFree?.length || 0;
     return (
       `Hoy solo ${eligibleCount} ${eligibleCount === 1 ? 'grupo esta' : 'grupos estan'} fuera del cooldown de ` +
-      `${GROUP_COOLDOWN_DAYS} dias, por eso la campana es de ${grupos} y no de ${wanted}. El cooldown no se relaja.`
+      `${GROUP_COOLDOWN_DAYS} dias y en un idioma encendido, por eso la campana es de ${grupos} y no de ${wanted}. ` +
+      'El cooldown no se relaja.' +
+      (off
+        ? ` Ademas ${off} ${off === 1 ? 'grupo libre quedo' : 'grupos libres quedaron'} fuera por idioma: ` +
+          `hoy solo publicas en ${langList(cfg.languages)}.`
+        : '')
     );
   }
   if (by === 'day_hours') {
@@ -1030,7 +1275,11 @@ function cappedMessage(by, ctx) {
  * Funcion pura: ni red, ni relojes salvo minutesNowInTz() para decir que slot
  * toca ahora.
  */
-export function buildCampaignPlan(dateStr, entries, cfg) {
+export function buildCampaignPlan(dateStr, entries, settings) {
+  // buildPlan() ya normaliza, pero esta funcion es exportada: sin esto, llamarla
+  // a pelo con {mode:'campaign'} dejaria cfg.languages undefined y el filtro de
+  // idiomas reventaria en vez de caer a los defaults.
+  const cfg = normalizeSettings(settings);
   const history = (Array.isArray(entries) ? entries : []).filter(Boolean);
   const before = history.filter((e) => e.date < dateStr);
 
@@ -1042,7 +1291,7 @@ export function buildCampaignPlan(dateStr, entries, cfg) {
 
   const fullIndex = indexHistory(history, dateStr);
   const pastIndex = indexHistory(before, dateStr);
-  const groups = groupStatuses(fullIndex, dateStr, postedTodayCodes, skippedTodayCodes);
+  const groups = groupStatuses(fullIndex, dateStr, postedTodayCodes, skippedTodayCodes, cfg);
 
   // Congelado para todo el dia: solo dias anteriores.
   const imageLastUsed = imageLastUsedFrom(before);
@@ -1057,10 +1306,16 @@ export function buildCampaignPlan(dateStr, entries, cfg) {
   // sigue en su slot (marcado como publicado) en vez de desaparecer y recolocar
   // las horas de los demas.
   const ord = ordinalOf(dateStr);
-  const eligible = GROUPS.filter((g) => {
+  const freeByCooldown = GROUPS.filter((g) => {
     const last = pastIndex.lastPostedByGroup.get(g.code) || null;
     return !last || daysBetween(last, dateStr) >= GROUP_COOLDOWN_DAYS;
-  })
+  });
+  // Los que se caen SOLO por el filtro de idiomas. Se guardan para el motivo:
+  // "los 4 grupos libres son en frances y el frances esta apagado" es
+  // accionable; "no hay campana hoy" no.
+  const offLangFree = freeByCooldown.filter((g) => !langOn(g, cfg));
+  const eligible = freeByCooldown
+    .filter((g) => langOn(g, cfg))
     .map((g) => {
       const last = pastIndex.lastPostedByGroup.get(g.code) || null;
       return { g, key0: last ? ordinalOf(last) : 0, key1: mod(g.index - ord, GROUPS.length) };
@@ -1130,6 +1385,7 @@ export function buildCampaignPlan(dateStr, entries, cfg) {
     eligibleCount: eligible.length,
     slotRoom,
     cfg,
+    offLangFree,
   };
 
   return {
@@ -1155,6 +1411,9 @@ export function buildCampaignPlan(dateStr, entries, cfg) {
       styleCount: styles.length,
       photoCount: photos.length,
       eligibleCount: eligible.length,
+      // Grupos que estaban libres y se cayeron SOLO por el filtro de idiomas.
+      offLanguageCount: offLangFree.length,
+      languages: [...cfg.languages],
       slotRoom,
       startHour: cfg.startHour,
       intervalHours: cfg.intervalHours,
@@ -1184,7 +1443,7 @@ export function buildCampaignPlan(dateStr, entries, cfg) {
       isNext: s.isNext,
       postedPropertyName: s.postedPropertyName,
     })),
-    reason: campaignReason({ prop, slots, pending, groups, capped, ctx, nextFree, skippedToday }),
+    reason: campaignReason({ prop, slots, pending, groups, capped, ctx, nextFree, skippedToday, offLangFree, cfg }),
     groups,
     stats: {
       date: dateStr,
@@ -1196,7 +1455,9 @@ export function buildCampaignPlan(dateStr, entries, cfg) {
       postedToday: postedToday.length,
       skippedToday: skippedToday.length,
       slotsLeft: pending.length,
-      groupsFree: groups.filter((g) => !g.cooldown).length,
+      languages: [...cfg.languages],
+      groupsOffLanguage: groups.filter((g) => g.offLanguage).length,
+      groupsFree: groups.filter((g) => !g.cooldown && !g.offLanguage).length,
       groupsInCooldown: cooling.length,
       nextFreeDate: nextFree ? nextFree.freeOn : null,
       nextFreeGroup: nextFree ? nextFree.name : null,
@@ -1209,7 +1470,7 @@ export function buildCampaignPlan(dateStr, entries, cfg) {
 }
 
 /** El equivalente de buildReason() para el modo campana. */
-function campaignReason({ prop, slots, pending, groups, capped, ctx, nextFree, skippedToday }) {
+function campaignReason({ prop, slots, pending, groups, capped, ctx, nextFree, skippedToday, offLangFree, cfg }) {
   if (!GROUPS.length) return 'No hay grupos en automation/data/group-assist-config.json.';
   if (!PROPERTIES.length) {
     return 'No hay propiedades activas con codigo de ref en properties.json. Revisa REF_CODES.';
@@ -1221,6 +1482,12 @@ function campaignReason({ prop, slots, pending, groups, capped, ctx, nextFree, s
 
   if (!slots.length) {
     if (!ctx.eligibleCount) {
+      // Primero el idioma: si habia grupos libres y se cayeron por el filtro, el
+      // dia vacio no es culpa del cooldown y decirlo asi manda al dueno a
+      // esperar una semana cuando lo que necesita es marcar una casilla.
+      const langNote = langBlockedNote(offLangFree, cfg);
+      if (langNote) return langNote;
+
       const cooling = groups.filter((g) => g.cooldown);
       if (cooling.length === groups.length && nextFree) {
         return (

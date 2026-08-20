@@ -96,6 +96,7 @@
   "content": {
     "languages": ["en", "es"],
     "_languages_note": "fr desactivado 2026-07-23 por decision del owner: los playbooks de respuesta solo existen en es/en, no atraer leads que no podemos atender en su idioma. Las plantillas fr quedan en post-templates.json listas para reactivar.",
+    "_languages_scope": "OJO, SON DOS CONTROLES DISTINTOS. Esta clave manda SOLO sobre el bot de la PAGINA (automation/build_queue.py): un post al dia, el idioma rota por fecha entre los de esta lista. Los GRUPOS de Facebook tienen el suyo, independiente: el campo `languages` de los ajustes de la cola (api/_lib/groups-settings.js, guardado en el blob groups/settings.json, editable en las tres casillas de group-queue.html). Alli el idioma NO rota: lo decide el campo `lang` de cada grupo, y un grupo cuyo idioma este apagado se SALTA en vez de recibir el post traducido. Tocar una lista no toca la otra, y es a proposito: la Pagina es un publico general, los grupos son 18 audiencias con idioma propio. Si el owner reactiva el frances, hay que encenderlo en LOS DOS sitios.",
     "post_types": ["property_spotlight", "neighborhood_guide", "market_insight", "lifestyle", "testimonial", "roi_breakdown"],
     "max_posts_per_day": 1,
     "image_required": true,

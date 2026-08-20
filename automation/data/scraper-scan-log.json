@@ -1,0 +1,280 @@
+[
+  {
+    "timestamp": "2026-03-16T16:22:02.834076",
+    "groups_scanned": 4,
+    "posts_found": 3,
+    "duration_seconds": 122.6
+  },
+  {
+    "timestamp": "2026-03-16T16:26:31.151868",
+    "groups_scanned": 4,
+    "posts_found": 22,
+    "duration_seconds": 149.2
+  },
+  {
+    "timestamp": "2026-03-16T16:43:00.665622",
+    "groups_scanned": 4,
+    "posts_found": 27,
+    "duration_seconds": 292.5
+  },
+  {
+    "timestamp": "2026-03-16T17:28:17.135404",
+    "groups_scanned": 14,
+    "posts_found": 152,
+    "duration_seconds": 1089.7
+  },
+  {
+    "timestamp": "2026-03-20T11:20:27.453854",
+    "groups_scanned": 18,
+    "posts_found": 223,
+    "duration_seconds": 1773.2,
+    "per_group": {
+      "Punta Cana Expats": 12,
+      "Dominican Expats Buy, Sell or Rent": 11,
+      "Punta Cana Travel": 4,
+      "Gente que vive en Cocotal": 14,
+      "Quebecois a Punta Cana, Republique Dominicaine": 4,
+      "Canadians Living in the Dominican Republic": 23,
+      "Les Snowbirds Quebecois de la Republique Dominicaine": 3,
+      "Expats living in The Dominican Republic": 11,
+      "Punta Cana Airbnb (owners/renters)": 19,
+      "Gente que vive en Cocotal, Residents of Cocotal": 15,
+      "Expats Punta Cana / Bavaro": 12,
+      "Los Buenos Vecinos de Cocotal": 15,
+      "Expats in Bavaro": 16,
+      "Real Estate Dominican Republic": 16,
+      "Québécois en République Dominicaine": 14,
+      "Residentes Bávaro - Punta Cana": 15,
+      "Canadien et Québécois en République Dominicaine": 19
+    }
+  },
+  {
+    "timestamp": "2026-03-21T11:32:15.100474",
+    "groups_scanned": 18,
+    "posts_found": 267,
+    "duration_seconds": 1827.5,
+    "per_group": {
+      "Punta Cana Expats": 3,
+      "Dominican Expats Buy, Sell or Rent": 19,
+      "Punta Cana Travel": 4,
+      "Gente que vive en Cocotal": 10,
+      "Quebecois a Punta Cana, Republique Dominicaine": 12,
+      "Canadians Living in the Dominican Republic": 9,
+      "Les Snowbirds Quebecois de la Republique Dominicaine": 17,
+      "Expats living in The Dominican Republic": 19,
+      "Punta Cana Airbnb (owners/renters)": 18,
+      "Gente que vive en Cocotal, Residents of Cocotal": 17,
+      "Expats Punta Cana / Bavaro": 17,
+      "Los Buenos Vecinos de Cocotal": 19,
+      "Expats in Bavaro": 11,
+      "Residentes de Costa Bavaro (IFA Villas Bavaro)": 12,
+      "Real Estate Dominican Republic": 21,
+      "Québécois en République Dominicaine": 16,
+      "Residentes Bávaro - Punta Cana": 26,
+      "Canadien et Québécois en République Dominicaine": 17
+    }
+  },
+  {
+    "timestamp": "2026-03-21T17:39:44.117878",
+    "groups_scanned": 18,
+    "posts_found": 279,
+    "duration_seconds": 3083.5,
+    "per_group": {
+      "Punta Cana Expats": 4,
+      "Dominican Expats Buy, Sell or Rent": 43,
+      "Punta Cana Travel": 3,
+      "Gente que vive en Cocotal": 10,
+      "Quebecois a Punta Cana, Republique Dominicaine": 18,
+      "Canadians Living in the Dominican Republic": 9,
+      "Les Snowbirds Quebecois de la Republique Dominicaine": 23,
+      "Expats living in The Dominican Republic": 48,
+      "Punta Cana Airbnb (owners/renters)": 3,
+      "Gente que vive en Cocotal, Residents of Cocotal": 17,
+      "Expats Punta Cana / Bavaro": 8,
+      "Los Buenos Vecinos de Cocotal": 15,
+      "Expats in Bavaro": 15,
+      "Residentes de Costa Bavaro (IFA Villas Bavaro)": 12,
+      "Real Estate Dominican Republic": 18,
+      "Québécois en République Dominicaine": 8,
+      "Residentes Bávaro - Punta Cana": 9,
+      "Canadien et Québécois en République Dominicaine": 16
+    }
+  },
+  {
+    "timestamp": "2026-03-22T07:48:45.636941",
+    "groups_scanned": 1,
+    "posts_found": 37,
+    "duration_seconds": 176.8,
+    "per_group": {
+      "Expats in Bavaro": 37
+    }
+  },
+  {
+    "timestamp": "2026-03-22T07:54:15.470658",
+    "groups_scanned": 1,
+    "posts_found": 2,
+    "duration_seconds": 185.4,
+    "per_group": {
+      "Expats in Bavaro": 2
+    }
+  },
+  {
+    "timestamp": "2026-03-22T07:57:58.586528",
+    "groups_scanned": 1,
+    "posts_found": 2,
+    "duration_seconds": 173.5,
+    "per_group": {
+      "Expats in Bavaro": 2
+    }
+  },
+  {
+    "timestamp": "2026-03-22T08:01:08.347826",
+    "groups_scanned": 1,
+    "posts_found": 2,
+    "duration_seconds": 153.3,
+    "per_group": {
+      "Expats in Bavaro": 2
+    }
+  },
+  {
+    "timestamp": "2026-03-22T08:05:06.319111",
+    "groups_scanned": 1,
+    "posts_found": 0,
+    "duration_seconds": 188.3,
+    "per_group": {}
+  },
+  {
+    "timestamp": "2026-03-22T08:09:29.370640",
+    "groups_scanned": 1,
+    "posts_found": 1,
+    "duration_seconds": 171.9,
+    "per_group": {
+      "Expats in Bavaro": 1
+    }
+  },
+  {
+    "timestamp": "2026-03-22T08:13:41.192745",
+    "groups_scanned": 1,
+    "posts_found": 0,
+    "duration_seconds": 169.3,
+    "per_group": {}
+  },
+  {
+    "timestamp": "2026-03-22T08:17:18.099554",
+    "groups_scanned": 1,
+    "posts_found": 0,
+    "duration_seconds": 159.8,
+    "per_group": {}
+  },
+  {
+    "timestamp": "2026-03-22T08:23:27.839866",
+    "groups_scanned": 1,
+    "posts_found": 6,
+    "duration_seconds": 169.9,
+    "per_group": {
+      "Expats in Bavaro": 6
+    }
+  },
+  {
+    "timestamp": "2026-03-22T08:29:56.079772",
+    "groups_scanned": 1,
+    "posts_found": 29,
+    "duration_seconds": 244.8,
+    "per_group": {
+      "Expats in Bavaro": 29
+    }
+  },
+  {
+    "timestamp": "2026-03-22T08:42:05.538977",
+    "groups_scanned": 1,
+    "posts_found": 26,
+    "duration_seconds": 223.1,
+    "per_group": {
+      "Expats in Bavaro": 26
+    }
+  },
+  {
+    "timestamp": "2026-03-22T08:46:25.955786",
+    "groups_scanned": 1,
+    "posts_found": 46,
+    "duration_seconds": 190.6,
+    "per_group": {
+      "Expats in Bavaro": 46
+    }
+  },
+  {
+    "timestamp": "2026-03-22T10:14:17.252049",
+    "groups_scanned": 18,
+    "posts_found": 758,
+    "duration_seconds": 4923.8,
+    "per_group": {
+      "Punta Cana Expats": 16,
+      "Dominican Expats Buy, Sell or Rent": 43,
+      "Punta Cana Travel": 94,
+      "Gente que vive en Cocotal": 39,
+      "Quebecois a Punta Cana, Republique Dominicaine": 45,
+      "Canadians Living in the Dominican Republic": 25,
+      "Les Snowbirds Quebecois de la Republique Dominicaine": 51,
+      "Expats living in The Dominican Republic": 46,
+      "Punta Cana Airbnb (owners/renters)": 66,
+      "Gente que vive en Cocotal, Residents of Cocotal": 32,
+      "Expats Punta Cana / Bavaro": 28,
+      "Los Buenos Vecinos de Cocotal": 44,
+      "Expats in Bavaro": 50,
+      "Residentes de Costa Bavaro (IFA Villas Bavaro)": 38,
+      "Québécois en République Dominicaine": 47,
+      "Residentes Bávaro - Punta Cana": 44,
+      "Canadien et Québécois en République Dominicaine": 50
+    }
+  },
+  {
+    "timestamp": "2026-03-22T11:17:10.426436",
+    "groups_scanned": 1,
+    "posts_found": 23,
+    "duration_seconds": 279.1,
+    "per_group": {
+      "Expats in Bavaro": 23
+    }
+  },
+  {
+    "timestamp": "2026-03-22T11:22:20.835199",
+    "groups_scanned": 1,
+    "posts_found": 23,
+    "duration_seconds": 266.0,
+    "per_group": {
+      "Expats in Bavaro": 23
+    }
+  },
+  {
+    "timestamp": "2026-03-22T11:29:11.489914",
+    "groups_scanned": 1,
+    "posts_found": 21,
+    "duration_seconds": 282.5,
+    "per_group": {
+      "Expats in Bavaro": 21
+    }
+  },
+  {
+    "timestamp": "2026-03-22T12:45:15.687727",
+    "groups_scanned": 18,
+    "posts_found": 799,
+    "duration_seconds": 4514.5,
+    "per_group": {
+      "Punta Cana Expats": 40,
+      "Dominican Expats Buy, Sell or Rent": 35,
+      "Punta Cana Travel": 86,
+      "Gente que vive en Cocotal": 22,
+      "Quebecois a Punta Cana, Republique Dominicaine": 52,
+      "Canadians Living in the Dominican Republic": 62,
+      "Les Snowbirds Quebecois de la Republique Dominicaine": 61,
+      "Expats living in The Dominican Republic": 58,
+      "Punta Cana Airbnb (owners/renters)": 79,
+      "Gente que vive en Cocotal, Residents of Cocotal": 47,
+      "Expats Punta Cana / Bavaro": 51,
+      "Los Buenos Vecinos de Cocotal": 48,
+      "Expats in Bavaro": 57,
+      "Residentes de Costa Bavaro (IFA Villas Bavaro)": 42,
+      "Real Estate Dominican Republic": 59
+    }
+  }
+]
