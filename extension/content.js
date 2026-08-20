@@ -860,6 +860,18 @@
     state.plan = res.plan;
     state.stale = Boolean(res.stale);
     state.group = findGroup(res.plan, state.groupKey);
+
+    // Sin coincidencia el panel no aparece, y hasta ahora no decia por que.
+    // Facebook a veces sirve el ID numerico donde la config guarda el nombre
+    // (G04, G06 y G07 usan nombre), asi que la clave real puede no ser la
+    // esperada. Dejarlo en consola convierte una falla muda en una pista.
+    if (!state.group && res && res.plan) {
+      console.info(
+        '[Rent & Go] Este grupo no esta en tu lista de 18. Clave detectada: "%s". ' +
+        'Si SI deberia estar, pasa esa clave para agregarla a group-assist-config.json.',
+        state.groupKey
+      );
+    }
     state.assignment = state.group ? findAssignment(res.plan, state.group.code) : null;
     // isNext/isPast los re-sella background.js con el reloj de ahora al servir el
     // plan, cacheado o no, asi que aqui no hace falta ningun temporizador.
