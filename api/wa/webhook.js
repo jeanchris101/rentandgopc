@@ -26,7 +26,14 @@ import { classify, renderStep, findPlaybook, getProperty } from '../_lib/classif
 
 // Necesitamos el body crudo, byte por byte, para que el HMAC cuadre.
 // Cualquier re-serializacion (orden de llaves, espacios) rompe la firma.
-export const config = { api: { bodyParser: false } };
+// Formato Web (Request -> Response), NO el de Node (req, res).
+//
+// Es la unica forma fiable de leer el cuerpo SIN PARSEAR, que es sobre lo que
+// WAHA calcula el HMAC. Antes esto era `export const config = { api: {
+// bodyParser: false } }`, pero esa es sintaxis de Next.js: este proyecto no usa
+// Next, Vercel la ignoraba, parseaba el JSON, y el handler respondia
+// "Raw body unavailable" a CADA mensaje entrante. Re-serializar el objeto no
+// sirve: cambia bytes y la firma deja de cuadrar.
 
 // El auto-reply duerme hasta 120s dentro de waitUntil; sin esto la invocacion
 // se corta a la mitad y el mensaje nunca sale.
@@ -48,20 +55,6 @@ const TYPING_MS = 3000;
  * ------------------------------------------------------------------ */
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-async function readRawBody(req) {
-  // Si algo aguas arriba ya consumio el stream, todavia podemos firmar sobre el
-  // texto original. Un objeto ya parseado NO sirve: re-serializarlo cambia bytes.
-  if (Buffer.isBuffer(req.body)) return req.body;
-  if (typeof req.body === 'string') return Buffer.from(req.body, 'utf8');
-  if (req.body && typeof req.body === 'object') return null;
-
-  const chunks = [];
-  for await (const chunk of req) {
-    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
-  }
-  return Buffer.concat(chunks);
-}
 
 // WAHA signs the raw body with SHA-512 (not SHA-256) and sends it hex-encoded
 // in X-Webhook-Hmac. Getting the algorithm wrong rejects every real message
@@ -418,39 +411,41 @@ async function processMessage({ chatId, phone, name, body, hasMedia, mediaType, 
  * Handler
  * ------------------------------------------------------------------ */
 
-export default async function handler(req, res) {
-  res.setHeader('Cache-Control', 'no-store');
+export default async function handler(request) {
+  const json = (status, body) =>
+    new Response(JSON.stringify(body), {
+      status,
+      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
+    });
 
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (request.method !== 'POST') return json(405, { error: 'Method not allowed' });
 
   const secret = process.env.WAHA_WEBHOOK_SECRET;
   if (!secret) {
     // Fail-closed: sin secreto no hay forma de saber quien nos escribe.
     console.error('[wa/webhook] WAHA_WEBHOOK_SECRET no esta configurado — rechazando');
-    return res.status(503).json({ error: 'Not configured' });
+    return json(503, { error: 'Not configured' });
   }
 
-  let raw;
+  let rawText;
   try {
-    raw = await readRawBody(req);
+    rawText = await request.text();
   } catch (err) {
     console.error('[wa/webhook] no pude leer el body:', err.message);
-    return res.status(400).json({ error: 'Invalid body' });
+    return json(400, { error: 'Invalid body' });
   }
-  if (!raw) {
-    console.error('[wa/webhook] el body llego ya parseado; no puedo verificar el HMAC');
-    return res.status(400).json({ error: 'Raw body unavailable' });
-  }
+  const raw = Buffer.from(rawText || '', 'utf8');
+  if (!raw.length) return json(400, { error: 'Empty body' });
 
-  if (!verifyHmac(raw, req.headers['x-webhook-hmac'], secret)) {
-    return res.status(401).json({ error: 'Invalid signature' });
+  if (!verifyHmac(raw, request.headers.get('x-webhook-hmac'), secret)) {
+    return json(401, { error: 'Invalid signature' });
   }
 
   let event;
   try {
-    event = JSON.parse(raw.toString('utf8'));
+    event = JSON.parse(rawText);
   } catch {
-    return res.status(400).json({ error: 'Invalid JSON' });
+    return json(400, { error: 'Invalid JSON' });
   }
 
   const payload = (event && event.payload) || {};
@@ -461,7 +456,7 @@ export default async function handler(req, res) {
   // contestar solo dentro de un grupo es un reporte por spam asegurado.
   const chatId = typeof payload.from === 'string' ? payload.from : '';
   if (event.event !== 'message' || payload.fromMe !== false || !chatId.endsWith('@c.us')) {
-    return res.status(200).json({ ok: true, ignored: true });
+    return json(200, { ok: true, ignored: true });
   }
 
   const data = {
@@ -487,14 +482,15 @@ export default async function handler(req, res) {
     type: payload.type || 'chat',
   };
 
-  // 200 primero: WAHA no espera el minuto de delay del auto-reply.
-  res.status(200).json({ ok: true });
-
   const work = processMessage(data).catch((err) => {
     console.error('[wa/webhook] error procesando mensaje:', err);
   });
 
+  // Responder ya: WAHA no espera el minuto de delay del auto-reply. waitUntil
+  // mantiene viva la invocacion mientras el trabajo termina en segundo plano.
   const waitUntil = await getWaitUntil();
   if (waitUntil) waitUntil(work);
-  else await work; // sin @vercel/functions: mantenemos viva la invocacion a mano
+  else await work; // sin @vercel/functions: se completa antes de responder
+
+  return json(200, { ok: true });
 }
