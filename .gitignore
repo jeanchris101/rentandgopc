@@ -22,3 +22,10 @@ automation/data/group-questions.json
 
 # Python bytecode
 __pycache__/
+
+# Scripts de scraping con credenciales personales de Facebook.
+# Se commitearon por accidente el 2026-08-20 con una contrasena en claro.
+# Este repo es PUBLICO: nada de esto vuelve a entrar.
+automation/fb_scraper/
+automation/data/*.db
+fb-extension/
