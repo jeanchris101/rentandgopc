@@ -411,86 +411,92 @@ async function processMessage({ chatId, phone, name, body, hasMedia, mediaType, 
  * Handler
  * ------------------------------------------------------------------ */
 
-export default async function handler(request) {
-  const json = (status, body) =>
-    new Response(JSON.stringify(body), {
-      status,
-      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
+// Objeto con `fetch`, que es la forma documentada del Web Handler en Vercel.
+// Con `export default async function handler(request)` Vercel lo toma por el
+// handler de Node, lo invoca como (req, res), ignora el Response devuelto y
+// nadie cierra la respuesta: la peticion se queda colgada hasta el timeout.
+export default {
+  async fetch(request) {
+    const json = (status, body) =>
+      new Response(JSON.stringify(body), {
+        status,
+        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
+      });
+
+    if (request.method !== 'POST') return json(405, { error: 'Method not allowed' });
+
+    const secret = process.env.WAHA_WEBHOOK_SECRET;
+    if (!secret) {
+      // Fail-closed: sin secreto no hay forma de saber quien nos escribe.
+      console.error('[wa/webhook] WAHA_WEBHOOK_SECRET no esta configurado — rechazando');
+      return json(503, { error: 'Not configured' });
+    }
+
+    let rawText;
+    try {
+      rawText = await request.text();
+    } catch (err) {
+      console.error('[wa/webhook] no pude leer el body:', err.message);
+      return json(400, { error: 'Invalid body' });
+    }
+    const raw = Buffer.from(rawText || '', 'utf8');
+    if (!raw.length) return json(400, { error: 'Empty body' });
+
+    if (!verifyHmac(raw, request.headers.get('x-webhook-hmac'), secret)) {
+      return json(401, { error: 'Invalid signature' });
+    }
+
+    let event;
+    try {
+      event = JSON.parse(rawText);
+    } catch {
+      return json(400, { error: 'Invalid JSON' });
+    }
+
+    const payload = (event && event.payload) || {};
+
+    // Solo nos interesan mensajes entrantes 1 a 1. Todo lo demas (acks, presencia,
+    // llamadas, grupos, estados) se ignora con 200 para que WAHA no reintente.
+    // Los grupos quedan fuera a proposito: el panel gestiona leads privados y
+    // contestar solo dentro de un grupo es un reporte por spam asegurado.
+    const chatId = typeof payload.from === 'string' ? payload.from : '';
+    if (event.event !== 'message' || payload.fromMe !== false || !chatId.endsWith('@c.us')) {
+      return json(200, { ok: true, ignored: true });
+    }
+
+    const data = {
+      chatId,
+      phone: chatId.split('@')[0],
+      name:
+        (payload._data && (payload._data.notifyName || payload._data.pushName)) ||
+        payload.notifyName ||
+        payload.pushName ||
+        (payload.chat && payload.chat.name) ||
+        '',
+      body: String(payload.body || payload.caption || ''),
+      hasMedia: payload.hasMedia === true,
+      mediaType:
+        (payload.media && payload.media.mimetype) ||
+        (payload._data && payload._data.mimetype) ||
+        payload.type ||
+        null,
+      // El id sostiene la deduplicacion de wa-store ante los reintentos de WAHA,
+      // asi que tiene que ser una cadena estable.
+      msgId: payload.id ? String(payload.id) : randomUUID(),
+      ts: tsToMs(payload.timestamp) || Date.now(),
+      type: payload.type || 'chat',
+    };
+
+    const work = processMessage(data).catch((err) => {
+      console.error('[wa/webhook] error procesando mensaje:', err);
     });
 
-  if (request.method !== 'POST') return json(405, { error: 'Method not allowed' });
+    // Responder ya: WAHA no espera el minuto de delay del auto-reply. waitUntil
+    // mantiene viva la invocacion mientras el trabajo termina en segundo plano.
+    const waitUntil = await getWaitUntil();
+    if (waitUntil) waitUntil(work);
+    else await work; // sin @vercel/functions: se completa antes de responder
 
-  const secret = process.env.WAHA_WEBHOOK_SECRET;
-  if (!secret) {
-    // Fail-closed: sin secreto no hay forma de saber quien nos escribe.
-    console.error('[wa/webhook] WAHA_WEBHOOK_SECRET no esta configurado — rechazando');
-    return json(503, { error: 'Not configured' });
-  }
-
-  let rawText;
-  try {
-    rawText = await request.text();
-  } catch (err) {
-    console.error('[wa/webhook] no pude leer el body:', err.message);
-    return json(400, { error: 'Invalid body' });
-  }
-  const raw = Buffer.from(rawText || '', 'utf8');
-  if (!raw.length) return json(400, { error: 'Empty body' });
-
-  if (!verifyHmac(raw, request.headers.get('x-webhook-hmac'), secret)) {
-    return json(401, { error: 'Invalid signature' });
-  }
-
-  let event;
-  try {
-    event = JSON.parse(rawText);
-  } catch {
-    return json(400, { error: 'Invalid JSON' });
-  }
-
-  const payload = (event && event.payload) || {};
-
-  // Solo nos interesan mensajes entrantes 1 a 1. Todo lo demas (acks, presencia,
-  // llamadas, grupos, estados) se ignora con 200 para que WAHA no reintente.
-  // Los grupos quedan fuera a proposito: el panel gestiona leads privados y
-  // contestar solo dentro de un grupo es un reporte por spam asegurado.
-  const chatId = typeof payload.from === 'string' ? payload.from : '';
-  if (event.event !== 'message' || payload.fromMe !== false || !chatId.endsWith('@c.us')) {
-    return json(200, { ok: true, ignored: true });
-  }
-
-  const data = {
-    chatId,
-    phone: chatId.split('@')[0],
-    name:
-      (payload._data && (payload._data.notifyName || payload._data.pushName)) ||
-      payload.notifyName ||
-      payload.pushName ||
-      (payload.chat && payload.chat.name) ||
-      '',
-    body: String(payload.body || payload.caption || ''),
-    hasMedia: payload.hasMedia === true,
-    mediaType:
-      (payload.media && payload.media.mimetype) ||
-      (payload._data && payload._data.mimetype) ||
-      payload.type ||
-      null,
-    // El id sostiene la deduplicacion de wa-store ante los reintentos de WAHA,
-    // asi que tiene que ser una cadena estable.
-    msgId: payload.id ? String(payload.id) : randomUUID(),
-    ts: tsToMs(payload.timestamp) || Date.now(),
-    type: payload.type || 'chat',
-  };
-
-  const work = processMessage(data).catch((err) => {
-    console.error('[wa/webhook] error procesando mensaje:', err);
-  });
-
-  // Responder ya: WAHA no espera el minuto de delay del auto-reply. waitUntil
-  // mantiene viva la invocacion mientras el trabajo termina en segundo plano.
-  const waitUntil = await getWaitUntil();
-  if (waitUntil) waitUntil(work);
-  else await work; // sin @vercel/functions: se completa antes de responder
-
-  return json(200, { ok: true });
-}
+    return json(200, { ok: true });
+  },
+};
