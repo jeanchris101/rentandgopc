@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://www.rentandgopc.com/costa-bavaro-garden.html">
     <title>Furnished 2BR in Costa Bavaro Garden | For Sale | Rent &amp; Go PC</title>
     <meta name="description" content="Fully-furnished 2-bedroom, 2.5-bath apartment in Costa Bavaro Garden, Bavaro. 86 m2, balcony over the pool, gym, coworking room and kids pool. 7 minutes to the beach. For sale.">
 
@@ -10,9 +11,7 @@
     <meta property="og:title" content="Furnished 2BR in Costa Bavaro Garden, For Sale">
     <meta property="og:description" content="86 m2, 2 bedrooms and 2.5 baths, fully furnished. Balcony over the pool, gym, coworking room and playground. 7 minutes to the beach in Bavaro.">
     <meta property="og:type" content="article">
-    <!-- pool-view.png y no pool-wide.jpg: es la unica que esta en el repo hoy, y una
-         meta no admite respaldo. Cuando pool-wide.jpg este subida, se puede cambiar. -->
-    <meta property="og:image" content="https://www.rentandgopc.com/images/costa-garden/pool-view.png">
+    <meta property="og:image" content="https://www.rentandgopc.com/images/costa-garden/pool-wide.jpg">
     <meta property="og:url" content="https://www.rentandgopc.com/costa-bavaro-garden.html">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,8 +44,7 @@
     </header>
 
     <!-- Gallery Slideshow
-         Las fotos viven en images/costa-garden/ (misma carpeta que pool-view.png,
-         la foto que ya usaba la ficha de alquiler en index.html).
+         Las fotos viven en images/costa-garden/.
 
          El carril arranca VACIO a proposito: el script del final de la pagina
          precarga la lista, descarta la que no exista y arma solo las que si.
@@ -259,11 +257,9 @@
 
     var ok = found.filter(Boolean);
     if (!ok.length) {
-      // Ninguna de las 19 esta subida todavia. Queda pool-view.png, que es la
-      // misma piscina en menor resolucion y lleva en el repo desde la ficha de
-      // alquiler. En cuanto entre la primera foto de verdad, este respaldo
-      // desaparece solo.
-      ok = [{ f: 'pool-view.png', a: 'Resort-style pool at Costa Bavaro Garden', l: 'Pool' }];
+      var box = document.getElementById('slideshow');
+      if (box) box.style.display = 'none';
+      return;
     }
 
     ok.forEach(function (p) {

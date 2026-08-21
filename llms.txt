@@ -36,17 +36,17 @@ We operate in the following Punta Cana neighborhoods:
 
 ## Free Tools
 
-- [ROI Calculator](https://puntacana-properties.vercel.app/roi-calculator.html): Calculate rental income, ROI, and break-even timeline for any Punta Cana property.
-- [CONFOTUR Calculator](https://puntacana-properties.vercel.app/confotur-calculator.html): Estimate your tax savings under the CONFOTUR law.
-- [Neighborhood Guide](https://puntacana-properties.vercel.app/neighborhoods.html): Compare 6 Punta Cana zones with an interactive quiz.
-- [Buying Guide 2026](https://puntacana-properties.vercel.app/buying-guide-2026.html): Complete guide to buying property in the Dominican Republic.
-- [Cost of Living Comparison](https://puntacana-properties.vercel.app/cost-of-living.html): Compare Punta Cana vs Miami, NYC, Montreal, Madrid, and more.
-- [ROI Guide](https://puntacana-properties.vercel.app/blog-roi-calculator.html): Learn how to calculate your return on investment for rental properties.
+- [ROI Calculator](https://www.rentandgopc.com/roi-calculator.html): Calculate rental income, ROI, and break-even timeline for any Punta Cana property.
+- [CONFOTUR Calculator](https://www.rentandgopc.com/confotur-calculator.html): Estimate your tax savings under the CONFOTUR law.
+- [Neighborhood Guide](https://www.rentandgopc.com/neighborhoods.html): Compare 6 Punta Cana zones with an interactive quiz.
+- [Buying Guide 2026](https://www.rentandgopc.com/buying-guide-2026.html): Complete guide to buying property in the Dominican Republic.
+- [Cost of Living Comparison](https://www.rentandgopc.com/cost-of-living.html): Compare Punta Cana vs Miami, NYC, Montreal, Madrid, and more.
+- [ROI Guide](https://www.rentandgopc.com/blog-roi-calculator.html): Learn how to calculate your return on investment for rental properties.
 
 ## Blog & Guides
 
-- [Complete Buying Guide](https://puntacana-properties.vercel.app/blog.html): Laws, taxes, process, CONFOTUR, residency, and FAQ for property buyers.
-- [ROI Calculator Guide](https://puntacana-properties.vercel.app/blog-roi-calculator.html): How to calculate ROI on Punta Cana rental properties with real examples.
+- [Complete Buying Guide](https://www.rentandgopc.com/blog.html): Laws, taxes, process, CONFOTUR, residency, and FAQ for property buyers.
+- [ROI Calculator Guide](https://www.rentandgopc.com/blog-roi-calculator.html): How to calculate ROI on Punta Cana rental properties with real examples.
 
 ## Contact
 
@@ -54,7 +54,7 @@ We operate in the following Punta Cana neighborhoods:
 - **WhatsApp**: +1 (809) 486-5386
 - **Location**: Punta Cana, Dominican Republic
 - **Languages**: English, Spanish, French
-- **Website**: https://puntacana-properties.vercel.app
+- **Website**: https://www.rentandgopc.com
 
 ## Key Facts for AI Search
 

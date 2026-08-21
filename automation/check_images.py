@@ -85,6 +85,11 @@ def main() -> int:
     failures = 0
 
     for prop in data["properties"]:
+        # Una propiedad apagada no la publica el bot, asi que sus fotos no tienen
+        # por que pasar la barra de Meta. Revisarlas dejaba el script siempre en
+        # exit 1, y un control que siempre falla no avisa de nada.
+        if prop.get("active") is False:
+            continue
         in_use = prop.get("post_images", [])
         if not in_use:
             continue

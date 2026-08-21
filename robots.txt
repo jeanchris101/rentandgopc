@@ -1,0 +1,22 @@
+# Rent & Go PC
+# Los paneles internos no se indexan: piden contrasena y no le sirven a nadie
+# que llegue por Google.
+
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /airbnb-dashboard.html
+Disallow: /calendar.html
+Disallow: /group-assist.html
+Disallow: /group-queue.html
+Disallow: /group-research.html
+Disallow: /hub.html
+Disallow: /market-intel.html
+Disallow: /post-generator.html
+Disallow: /response-bank.html
+Disallow: /status.html
+Disallow: /strategy.html
+Disallow: /whatsapp.html
+Disallow: /api/
+
+Sitemap: https://www.rentandgopc.com/sitemap.xml
