@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Estado del Sistema | Punta Cana Rent &amp; Go</title>
+<!--
+  Panel de estado del sistema. Una sola pantalla que contesta "esta todo bien?"
+  y, cuando algo falla, dice que tocar.
+
+  Todo lo dinamico se pinta con createElement/textContent. Ni un solo innerHTML
+  con datos: el detalle de una pieza puede traer el mensaje de error de WAHA o
+  del Blob, o el nombre de una propiedad del catalogo, y nada de eso se inyecta
+  como HTML.
+
+  El color NO es la unica senal: cada estado lleva su propia forma (circulo,
+  triangulo, cuadrado, aro) y su palabra escrita.
+-->
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --primary: #1a3a2a;
+  --primary-soft: #2d5a3f;
+  --accent: #c8a45e;
+  --bg: #f5f5f0;
+  --card: #ffffff;
+  --text: #2c2c2c;
+  --text-light: #666;
+  --border: #e8e5df;
+  --green: #22c55e;
+  --green-ink: #14532d;
+  --green-bg: #dcfce7;
+  --amber: #f59e0b;
+  --amber-ink: #92400e;
+  --amber-bg: #fef3c7;
+  --red: #ef4444;
+  --red-ink: #991b1b;
+  --red-bg: #fee2e2;
+  --gray: #9ca3af;
+  --gray-ink: #4b5563;
+  --gray-bg: #f1f1ee;
+  --radius: 12px;
+}
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.5;
+}
+button, input { font-family: inherit; font-size: inherit; color: inherit; }
+button { cursor: pointer; }
+button[disabled] { cursor: not-allowed; opacity: 0.6; }
+a { color: var(--primary-soft); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+[hidden] { display: none !important; }
+
+/* ---------- Login (identico al del panel de WhatsApp) ---------- */
+.login-screen {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--primary); padding: 20px;
+}
+.login-box {
+  background: var(--card); padding: 40px; border-radius: 16px; width: 100%; max-width: 380px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center;
+}
+.login-box img { height: 60px; margin-bottom: 20px; }
+.login-box h2 { font-size: 1.2rem; margin-bottom: 6px; color: var(--primary); }
+.login-box p.sub { font-size: 0.85rem; color: var(--text-light); margin-bottom: 20px; }
+.login-box input {
+  width: 100%; padding: 12px 16px; border: 2px solid var(--border); border-radius: 10px;
+  margin-bottom: 12px; outline: none; transition: border-color 0.2s;
+}
+.login-box input:focus { border-color: var(--accent); }
+.login-box button {
+  width: 100%; padding: 13px; background: var(--primary); color: #fff; border: none;
+  border-radius: 10px; font-weight: 600; transition: background 0.2s;
+}
+.login-box button:hover { background: var(--primary-soft); }
+.login-error { color: var(--red); font-size: 0.85rem; margin-top: 10px; }
+
+/* ---------- Barra de arriba ---------- */
+.topbar {
+  background: var(--primary); color: #fff; padding: 12px 18px;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  position: sticky; top: 0; z-index: 40;
+}
+.topbar h1 { font-size: 1rem; font-weight: 600; }
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.refresh-btn {
+  background: rgba(255,255,255,0.16); border: none; color: #fff; border-radius: 20px;
+  padding: 7px 16px; font-size: 0.85rem; font-weight: 600; white-space: nowrap;
+}
+.refresh-btn:hover:not([disabled]) { background: rgba(255,255,255,0.28); }
+
+.wrap { max-width: 1100px; margin: 0 auto; padding: 18px 16px 48px; }
+
+/* ---------- Aviso de red ---------- */
+.neterror {
+  background: var(--red-bg); color: var(--red-ink); border: 1px solid #fca5a5;
+  border-radius: var(--radius); padding: 12px 16px; font-size: 0.9rem; margin-bottom: 16px;
+}
+
+/* ---------- Formas de estado ----------
+   Cada estado tiene forma propia, no solo color: circulo lleno = bien,
+   triangulo = revisar, cuadrado = caido, aro vacio = apagado. */
+.mark { display: block; width: 16px; height: 16px; flex: 0 0 auto; background: var(--gray); border-radius: 50%; }
+.mark.ok { background: var(--green); border-radius: 50%; }
+.mark.warn { background: var(--amber); border-radius: 0; clip-path: polygon(50% 0%, 100% 100%, 0% 100%); }
+.mark.down { background: var(--red); border-radius: 4px; }
+.mark.off { background: transparent; border: 3px solid var(--gray); border-radius: 50%; }
+
+/* ---------- Semaforo grande ---------- */
+.beacon-card {
+  background: var(--card); border-radius: 16px; padding: 22px;
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  border-left: 8px solid var(--gray); box-shadow: 0 2px 14px rgba(0,0,0,0.06); margin-bottom: 20px;
+}
+.beacon-card.tone-ok { border-left-color: var(--green); }
+.beacon-card.tone-warn { border-left-color: var(--amber); }
+.beacon-card.tone-down { border-left-color: var(--red); }
+.beacon { width: 58px; height: 58px; }
+.beacon.warn { clip-path: polygon(50% 0%, 100% 100%, 0% 100%); }
+.beacon.down { border-radius: 10px; }
+.beacon.off { border-width: 8px; }
+.beacon-text { flex: 1 1 240px; min-width: 0; }
+.beacon-text h2 { font-size: 1.5rem; line-height: 1.25; color: var(--primary); }
+.beacon-text .counts { font-size: 0.95rem; color: var(--text-light); margin-top: 6px; }
+.beacon-text .stamp { font-size: 0.82rem; color: var(--text-light); margin-top: 10px; }
+
+/* ---------- Rejilla de piezas ---------- */
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.card {
+  background: var(--card); border: 1px solid var(--border); border-top: 4px solid var(--gray);
+  border-radius: var(--radius); padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;
+}
+.card.ok { border-top-color: var(--green); }
+.card.warn { border-top-color: var(--amber); }
+.card.down { border-top-color: var(--red); }
+.card.off { border-top-color: var(--gray); }
+.card-head { display: flex; align-items: center; gap: 10px; }
+.card-head h3 { font-size: 1rem; font-weight: 700; color: var(--primary); flex: 1 1 auto; min-width: 0; }
+.tag {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px; background: var(--gray-bg); color: var(--gray-ink); white-space: nowrap;
+}
+.tag.ok { background: var(--green-bg); color: var(--green-ink); }
+.tag.warn { background: var(--amber-bg); color: var(--amber-ink); }
+.tag.down { background: var(--red-bg); color: var(--red-ink); }
+.detail { font-size: 0.92rem; color: var(--text); overflow-wrap: anywhere; }
+.fix {
+  background: var(--gray-bg); border-radius: 10px; padding: 11px 13px; border-left: 3px solid var(--accent);
+}
+.fix strong {
+  display: block; font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--primary); margin-bottom: 4px;
+}
+.fix p { font-size: 0.88rem; color: var(--text); overflow-wrap: anywhere; }
+
+/* ---------- Enlaces rapidos ---------- */
+.quick { margin-top: 26px; }
+.quick h3 { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-light); margin-bottom: 10px; }
+.quick-links { display: flex; gap: 10px; flex-wrap: wrap; }
+.quick-links a {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 11px 16px; font-size: 0.9rem; font-weight: 600; text-decoration: none; color: var(--primary);
+}
+.quick-links a:hover { border-color: var(--accent); }
+
+@media (max-width: 560px) {
+  .wrap { padding: 14px 12px 40px; }
+  /* Dedo, no raton: el boton tiene que ser tocable sin apuntar. */
+  .refresh-btn { padding: 11px 18px; }
+  .beacon-card { padding: 18px; gap: 14px; }
+  .beacon { width: 44px; height: 44px; }
+  .beacon-text h2 { font-size: 1.25rem; }
+  .grid { grid-template-columns: 1fr; }
+  .quick-links a { flex: 1 1 100%; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ 1. LOGIN ============ -->
+<div class="login-screen" id="screenLogin" hidden>
+  <div class="login-box">
+    <img src="images/logo.png" alt="Punta Cana Rent &amp; Go">
+    <h2>Estado del Sistema</h2>
+    <p class="sub">La misma contrase&ntilde;a del panel de WhatsApp.</p>
+    <input type="password" id="loginPass" placeholder="Contrase&ntilde;a" autocomplete="current-password">
+    <button id="loginBtn" type="button">Entrar</button>
+    <div class="login-error" id="loginError" hidden></div>
+  </div>
+</div>
+
+<!-- ============ 2. PANEL ============ -->
+<div id="app" hidden>
+  <header class="topbar">
+    <h1>Estado del Sistema</h1>
+    <div class="topbar-right">
+      <button id="refreshBtn" class="refresh-btn" type="button">Refrescar</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="neterror" id="netError" hidden></div>
+
+    <section class="beacon-card" id="beaconCard" role="status" aria-live="polite">
+      <div class="mark beacon" id="beacon"></div>
+      <div class="beacon-text">
+        <h2 id="beaconTitle">Revisando el sistema...</h2>
+        <p class="counts" id="beaconCounts"></p>
+        <p class="stamp" id="beaconStamp"></p>
+      </div>
+    </section>
+
+    <div class="grid" id="grid"></div>
+
+    <nav class="quick">
+      <h3>Ir a</h3>
+      <div class="quick-links">
+        <a href="whatsapp.html">Panel de WhatsApp</a>
+        <a href="group-queue.html">Cola de Grupos</a>
+        <a href="index.html">Ver el sitio</a>
+      </div>
+    </nav>
+  </main>
+</div>
+
+<script>
+/* =========================================================================
+   AYUDANTES DE DOM
+   Nada de innerHTML: todo el texto entra por textContent.
+   ========================================================================= */
+function $(id) { return document.getElementById(id); }
+
+function el(tag, cls, text) {
+  var n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text !== undefined && text !== null) n.textContent = String(text);
+  return n;
+}
+
+function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+
+/* =========================================================================
+   CAPA DE API (misma que whatsapp.html)
+   ========================================================================= */
+class ApiError extends Error {
+  constructor(message, status) { super(message); this.status = status; }
+}
+
+async function api(path, options) {
+  var opts = Object.assign({ credentials: 'same-origin', headers: {} }, options || {});
+  if (opts.body !== undefined && typeof opts.body !== 'string') {
+    opts.headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(opts.body);
+    opts.method = opts.method || 'POST';
+  }
+  var res;
+  try {
+    res = await fetch(path, opts);
+  } catch (e) {
+    throw new ApiError('No hay conexion con el servidor.', 0);
+  }
+  if (res.status === 401 || res.status === 403) {
+    throw new ApiError('La sesion del panel se vencio.', res.status);
+  }
+  var data = null;
+  try { data = await res.json(); } catch (e) { data = null; }
+  if (!res.ok) {
+    var msg = (data && (data.error || data.message)) || ('El servidor respondio ' + res.status + '.');
+    if (res.status === 503) {
+      msg = 'El panel no esta configurado en el servidor: faltan PANEL_PASSWORD y PANEL_SECRET en Vercel.';
+    }
+    throw new ApiError(String(msg), res.status);
+  }
+  return data || {};
+}
+
+/* =========================================================================
+   ESTADO DE LA PANTALLA
+   ========================================================================= */
+var REFRESH_MS = 30000;
+
+var STATES = ['ok', 'warn', 'down', 'off'];
+var TAG_WORD = { ok: 'Bien', warn: 'Revisar', down: 'Caido', off: 'Apagado' };
+
+var state = { screen: 'login', timer: null, loading: false, hasData: false };
+
+function showScreen(name) {
+  state.screen = name;
+  $('screenLogin').hidden = name !== 'login';
+  $('app').hidden = name !== 'app';
+}
+
+/* =========================================================================
+   LOGIN
+   ========================================================================= */
+async function doLogin() {
+  var pass = $('loginPass').value;
+  var errBox = $('loginError');
+  errBox.hidden = true;
+  if (!pass) {
+    errBox.textContent = 'Escribe la contrasena.';
+    errBox.hidden = false;
+    return;
+  }
+  $('loginBtn').disabled = true;
+  try {
+    await api('/api/wa/login', { method: 'POST', body: { password: pass } });
+    $('loginPass').value = '';
+    if (await refresh()) startAuto();
+  } catch (e) {
+    errBox.textContent = (e.status === 401 || e.status === 403) ? 'Contrasena incorrecta.' : e.message;
+    errBox.hidden = false;
+  } finally {
+    $('loginBtn').disabled = false;
+  }
+}
+
+/* =========================================================================
+   TEXTOS
+   ========================================================================= */
+function safeState(value) {
+  return STATES.indexOf(value) >= 0 ? value : 'off';
+}
+
+function titleFor(overall, counts) {
+  if (overall === 'down') return 'Algo importante esta caido';
+  if (overall === 'warn') {
+    var pending = counts.warn + counts.down;
+    if (pending === 0) return 'Hay algo que revisar';
+    return pending === 1 ? 'Hay una cosa que revisar' : 'Hay ' + pending + ' cosas que revisar';
+  }
+  return 'Todo funcionando';
+}
+
+function countsLine(counts) {
+  var parts = [];
+  if (counts.ok) parts.push(counts.ok + ' bien');
+  if (counts.warn) parts.push(counts.warn + ' para revisar');
+  if (counts.down) parts.push(counts.down + (counts.down === 1 ? ' caida' : ' caidas'));
+  if (counts.off) parts.push(counts.off + (counts.off === 1 ? ' apagada' : ' apagadas'));
+  return parts.join('  ·  ');
+}
+
+/* Hora dominicana siempre, mire desde donde mire el telefono. */
+function clockText(iso) {
+  var ms = Date.parse(iso);
+  if (!isFinite(ms)) return 'Ultimo chequeo: ahora mismo.';
+  var hhmm;
+  try {
+    hhmm = new Date(ms).toLocaleTimeString('es-DO', {
+      timeZone: 'America/Santo_Domingo', hour: '2-digit', minute: '2-digit', second: '2-digit'
+    });
+  } catch (e) {
+    hhmm = new Date(ms).toISOString().slice(11, 19);
+  }
+  return 'Ultimo chequeo a las ' + hhmm + ', hora dominicana. Se revisa solo cada 30 segundos.';
+}
+
+/* =========================================================================
+   PINTADO
+   ========================================================================= */
+function renderBeacon(data, pieces) {
+  var counts = { ok: 0, warn: 0, down: 0, off: 0 };
+  for (var i = 0; i < pieces.length; i++) counts[safeState(pieces[i].state)]++;
+
+  var overall = ['ok', 'warn', 'down'].indexOf(data.overall) >= 0 ? data.overall : 'warn';
+
+  $('beaconCard').className = 'beacon-card tone-' + overall;
+  $('beacon').className = 'mark beacon ' + overall;
+  $('beaconTitle').textContent = titleFor(overall, counts);
+  $('beaconCounts').textContent = countsLine(counts);
+  $('beaconStamp').textContent = clockText(data.checkedAt);
+}
+
+function renderCard(p) {
+  var st = safeState(p.state);
+  var card = el('article', 'card ' + st);
+
+  var head = el('div', 'card-head');
+  head.appendChild(el('span', 'mark ' + st));
+  head.appendChild(el('h3', null, p.label || p.id || 'Pieza'));
+  head.appendChild(el('span', 'tag ' + st, TAG_WORD[st]));
+  card.appendChild(head);
+
+  card.appendChild(el('p', 'detail', p.detail || ''));
+
+  // El "que hacer" solo aparece cuando hay algo que hacer: el servidor manda
+  // `fix` en null salvo que la pieza este en revisar o caida.
+  if (p.fix) {
+    var fix = el('div', 'fix');
+    fix.appendChild(el('strong', null, 'Que hacer'));
+    fix.appendChild(el('p', null, p.fix));
+    card.appendChild(fix);
+  }
+
+  return card;
+}
+
+function render(data) {
+  var pieces = Array.isArray(data.pieces) ? data.pieces : [];
+  renderBeacon(data, pieces);
+
+  var grid = $('grid');
+  clear(grid);
+  for (var i = 0; i < pieces.length; i++) grid.appendChild(renderCard(pieces[i]));
+}
+
+/* Primera carga que no llego a ninguna respuesta. Sin esto la pantalla se
+   quedaria en blanco justo cuando el servidor esta caido, que es el momento en
+   que el dueno mas necesita ver algo. */
+function renderBlank() {
+  $('beaconCard').className = 'beacon-card tone-down';
+  $('beacon').className = 'mark beacon down';
+  $('beaconTitle').textContent = 'No pudimos revisar el sistema';
+  $('beaconCounts').textContent = 'El panel no logro hablar con el servidor, asi que no sabemos como esta cada pieza.';
+  $('beaconStamp').textContent = 'Vuelve a intentar con el boton Refrescar.';
+  clear($('grid'));
+}
+
+function setError(msg) {
+  var box = $('netError');
+  if (!msg) {
+    box.hidden = true;
+    box.textContent = '';
+    return;
+  }
+  box.textContent = state.hasData
+    ? msg + ' Lo que ves abajo es del ultimo chequeo que si funciono.'
+    : msg;
+  box.hidden = false;
+}
+
+/* =========================================================================
+   REFRESCO
+   Devuelve false solo cuando hay que volver al login: asi el que llama sabe
+   si tiene sentido seguir consultando.
+   ========================================================================= */
+async function refresh() {
+  if (state.loading) return true;
+  state.loading = true;
+  var btn = $('refreshBtn');
+  btn.disabled = true;
+  btn.textContent = 'Revisando...';
+  try {
+    var data = await api('/api/wa/status');
+    render(data);
+    state.hasData = true;
+    setError(null);
+    showScreen('app');
+    return true;
+  } catch (e) {
+    if (e.status === 401 || e.status === 403) {
+      stopAuto();
+      // "Se vencio" solo si de verdad habia una sesion. En la primera visita la
+      // pantalla de login sale limpia, sin un error que no ocurrio.
+      var expired = state.screen === 'app';
+      showScreen('login');
+      $('loginError').textContent = expired ? 'La sesion se vencio. Entra otra vez.' : '';
+      $('loginError').hidden = !expired;
+      return false;
+    }
+    // El endpoint entero caido es en si mismo una noticia, pero no borramos lo
+    // ultimo que si respondio: sigue siendo la mejor foto que tenemos.
+    setError(e.message);
+    if (!state.hasData) renderBlank();
+    showScreen('app');
+    return true;
+  } finally {
+    state.loading = false;
+    btn.disabled = false;
+    btn.textContent = 'Refrescar';
+  }
+}
+
+/* =========================================================================
+   AUTO-REFRESCO — parado mientras la pestana no se ve
+   ========================================================================= */
+function startAuto() {
+  stopAuto();
+  state.timer = setInterval(function () {
+    if (document.hidden) return;
+    refresh();
+  }, REFRESH_MS);
+}
+
+function stopAuto() {
+  if (state.timer) clearInterval(state.timer);
+  state.timer = null;
+}
+
+document.addEventListener('visibilitychange', function () {
+  if (state.screen !== 'app') return;
+  if (document.hidden) {
+    stopAuto();
+    return;
+  }
+  // Al volver, lo primero es un dato fresco: lo que hay en pantalla puede tener
+  // media hora y este panel existe justo para no confiar en eso.
+  refresh();
+  startAuto();
+});
+
+/* =========================================================================
+   EVENTOS
+   ========================================================================= */
+$('refreshBtn').addEventListener('click', function () { refresh(); });
+$('loginBtn').addEventListener('click', doLogin);
+$('loginPass').addEventListener('keydown', function (e) { if (e.key === 'Enter') doLogin(); });
+
+/* =========================================================================
+   ARRANQUE
+   Si la cookie sigue viva se entra directo; si no, a la pantalla de login.
+   ========================================================================= */
+(async function init() {
+  if (await refresh()) startAuto();
+})();
+</script>
+</body>
+</html>

@@ -65,33 +65,126 @@ button[disabled] { cursor: not-allowed; opacity: 0.5; }
 
 /* ---------- Pairing ---------- */
 .pair-screen {
-  min-height: 100vh; display: flex; align-items: center; justify-content: center;
-  background: var(--bg); padding: 24px;
+  min-height: 100vh; display: flex; align-items: flex-start; justify-content: center;
+  background: var(--bg); padding: 24px 16px;
 }
 .pair-box {
-  background: var(--card); border-radius: 16px; padding: 32px; max-width: 520px; width: 100%;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08); text-align: center;
+  background: var(--card); border-radius: 16px; padding: 28px; max-width: 780px; width: 100%;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08); text-align: center; margin: auto;
 }
 .pair-box h2 { color: var(--primary); font-size: 1.25rem; margin-bottom: 8px; }
-.pair-box .pair-sub { color: var(--text-light); font-size: 0.9rem; margin-bottom: 22px; }
+.pair-box .pair-sub {
+  color: var(--text-light); font-size: 0.9rem; margin: 0 auto 18px; max-width: 560px;
+}
+
+/* Que esta pasando ahora mismo: la linea que antes faltaba y por la que el
+   dueno se quedaba mirando un "preparando el codigo" que no terminaba nunca. */
+.pair-state {
+  display: flex; gap: 12px; align-items: flex-start; text-align: left;
+  background: #f2f5f3; border: 1px solid var(--border); border-radius: 12px;
+  padding: 12px 14px; margin-bottom: 14px;
+}
+.pair-state.bad { background: #fee2e2; border-color: #fca5a5; }
+.pair-state.ok { background: #dcfce7; border-color: #86efac; }
+.pair-spin {
+  width: 16px; height: 16px; border-radius: 50%; flex: 0 0 auto; margin-top: 3px;
+  border: 2px solid var(--border); border-top-color: var(--accent);
+  animation: pair-spin 0.9s linear infinite;
+}
+@keyframes pair-spin { to { transform: rotate(360deg); } }
+.pair-state-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pair-state-text b { font-size: 0.92rem; color: var(--primary); }
+.pair-state.bad .pair-state-text b { color: #991b1b; }
+.pair-state.ok .pair-state-text b { color: #14532d; }
+.pair-state-text span { font-size: 0.85rem; color: var(--text-light); }
+.pair-state.bad .pair-state-text span { color: #7f1d1d; }
+
+.pair-checks {
+  text-align: left; background: #fffbeb; border: 1px solid #fcd34d; border-radius: 12px;
+  padding: 12px 14px; margin-bottom: 16px; font-size: 0.86rem; color: #92400e;
+}
+.pair-checks ul { margin: 6px 0 0; padding-left: 20px; }
+.pair-checks li { margin: 4px 0; }
+
+/* Las dos opciones, lado a lado en pantalla ancha y una debajo de otra en el
+   telefono (que es donde el dueno la va a abrir mientras escanea con el otro). */
+.pair-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+.pair-card {
+  border: 1px solid var(--border); border-radius: 14px; padding: 16px;
+  text-align: left; display: flex; flex-direction: column;
+}
+.pair-card h3 {
+  font-size: 0.98rem; color: var(--primary); margin-bottom: 4px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.pair-card-sub { font-size: 0.82rem; color: var(--text-light); margin-bottom: 14px; }
+.pair-badge {
+  font-size: 0.64rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  background: var(--accent); color: #3d2c07; border-radius: 20px; padding: 3px 9px;
+}
+.pair-engine-note {
+  grid-column: 1 / -1; font-size: 0.85rem; color: var(--text-light);
+  background: #f2f5f3; border: 1px solid var(--border); border-radius: 12px;
+  padding: 12px 14px; text-align: left;
+}
+
 .qr-frame {
-  width: 264px; height: 264px; margin: 0 auto 22px; border: 2px solid var(--border);
-  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  width: 100%; max-width: 244px; aspect-ratio: 1 / 1; margin: 0 auto 16px;
+  border: 2px solid var(--border); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
   background: #fff; padding: 8px;
 }
 .qr-frame img { width: 100%; height: 100%; object-fit: contain; }
-.qr-waiting { color: var(--text-light); font-size: 0.88rem; padding: 20px; }
-.pair-steps { text-align: left; max-width: 380px; margin: 0 auto 20px; }
+.qr-waiting { color: var(--text-light); font-size: 0.86rem; padding: 16px; text-align: center; }
+
+/* Pedir el codigo por numero */
+.pair-label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--primary); margin-bottom: 6px; }
+.pair-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.pair-row input {
+  flex: 1 1 150px; min-width: 0; padding: 11px 13px; border: 2px solid var(--border);
+  border-radius: 10px; outline: none; transition: border-color 0.2s; letter-spacing: 0.03em;
+}
+.pair-row input:focus { border-color: var(--accent); }
+.pair-ask {
+  flex: 0 0 auto; padding: 11px 16px; background: var(--primary); color: #fff; border: none;
+  border-radius: 10px; font-weight: 600; font-size: 0.88rem; transition: background 0.2s;
+}
+.pair-ask:hover:not([disabled]) { background: var(--primary-soft); }
+.pair-hint { font-size: 0.78rem; color: var(--text-light); margin: 7px 0 12px; }
+.pair-error { font-size: 0.85rem; color: #991b1b; background: #fee2e2; border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; }
+.pair-error ul { margin: 6px 0 0; padding-left: 20px; }
+.pair-error li { margin: 3px 0; }
+
+.code-box {
+  background: var(--primary); border-radius: 12px; padding: 14px 12px;
+  text-align: center; margin: 2px 0 12px;
+}
+.code-label { display: block; font-size: 0.74rem; color: rgba(255,255,255,0.75); }
+.code-value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(1.6rem, 7vw, 2.1rem); font-weight: 700; color: #fff;
+  letter-spacing: 0.14em; margin: 6px 0 5px; word-break: break-all;
+}
+.code-timer { font-size: 0.78rem; font-weight: 600; color: var(--accent); }
+.code-timer.expired { color: #fca5a5; }
+
+.pair-steps { text-align: left; margin: auto 0 0; }
 .pair-steps li {
-  list-style: none; display: flex; gap: 12px; align-items: flex-start;
-  padding: 9px 0; font-size: 0.92rem; border-bottom: 1px solid var(--border);
+  list-style: none; display: flex; gap: 10px; align-items: flex-start;
+  padding: 8px 0; font-size: 0.88rem; border-bottom: 1px solid var(--border);
 }
 .pair-steps li:last-child { border-bottom: none; }
 .pair-num {
-  flex: 0 0 24px; height: 24px; border-radius: 50%; background: var(--primary); color: #fff;
-  font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  flex: 0 0 22px; height: 22px; border-radius: 50%; background: var(--primary); color: #fff;
+  font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
 }
-.pair-note { font-size: 0.82rem; color: var(--text-light); }
+.pair-note { font-size: 0.82rem; color: var(--text-light); margin-top: 18px; }
+
+@media (max-width: 700px) {
+  .pair-screen { padding: 14px 10px; }
+  .pair-box { padding: 20px 16px; border-radius: 14px; }
+  .pair-cols { grid-template-columns: 1fr; }
+}
 
 /* ---------- Banners ---------- */
 .banner {
@@ -474,15 +567,74 @@ kbd {
 <div class="pair-screen" id="screenPair" hidden>
   <div class="pair-box">
     <h2>Conecta tu WhatsApp</h2>
-    <p class="pair-sub">Escanea este c&oacute;digo con el tel&eacute;fono donde tienes el WhatsApp del negocio.</p>
-    <div class="qr-frame" id="qrFrame"></div>
-    <ol class="pair-steps">
-      <li><span class="pair-num">1</span><span>Abre WhatsApp en tu tel&eacute;fono.</span></li>
-      <li><span class="pair-num">2</span><span>Entra al men&uacute; y toca <b>Dispositivos vinculados</b>.</span></li>
-      <li><span class="pair-num">3</span><span>Toca <b>Vincular un dispositivo</b>.</span></li>
-      <li><span class="pair-num">4</span><span>Apunta la c&aacute;mara a este c&oacute;digo.</span></li>
-    </ol>
-    <p class="pair-note" id="pairNote">Esta pantalla se actualiza sola cada 5 segundos. En cuanto conecte, entra directo al panel.</p>
+    <p class="pair-sub">
+      Ten a mano el tel&eacute;fono del <b>+1 809 486 5386</b>, que es donde vive el WhatsApp del negocio.
+      Tienes dos maneras de vincularlo: escaneas el c&oacute;digo, o pides un c&oacute;digo para tu n&uacute;mero.
+    </p>
+
+    <!-- Que esta pasando ahora mismo. Nunca se queda en blanco. -->
+    <div class="pair-state" id="pairState">
+      <span class="pair-spin" id="pairSpin" aria-hidden="true"></span>
+      <div class="pair-state-text">
+        <b id="pairMessage">Preguntando al servidor c&oacute;mo va&hellip;</b>
+        <span id="pairExpect">Un momento.</span>
+      </div>
+    </div>
+
+    <!-- Que revisar. Solo sale cuando de verdad hay algo que revisar. -->
+    <div class="pair-checks" id="pairChecksBox" hidden>
+      <b>Rev&iacute;same esto:</b>
+      <ul id="pairChecks"></ul>
+    </div>
+
+    <div class="pair-cols">
+
+      <!-- ---------- Opcion 1: QR (la de siempre) ---------- -->
+      <section class="pair-card" aria-labelledby="pairQrTitle">
+        <h3 id="pairQrTitle">Con el c&oacute;digo QR <span class="pair-badge">M&aacute;s f&aacute;cil</span></h3>
+        <p class="pair-card-sub">Si tienes el tel&eacute;fono en la mano, esta es la r&aacute;pida.</p>
+        <div class="qr-frame" id="qrFrame"></div>
+        <ol class="pair-steps">
+          <li><span class="pair-num">1</span><span>Abre WhatsApp en el tel&eacute;fono del negocio.</span></li>
+          <li><span class="pair-num">2</span><span>Toca los tres puntitos y entra a <b>Dispositivos vinculados</b>.</span></li>
+          <li><span class="pair-num">3</span><span>Toca <b>Vincular un dispositivo</b>.</span></li>
+          <li><span class="pair-num">4</span><span>Ap&uacute;ntale la c&aacute;mara a este c&oacute;digo.</span></li>
+        </ol>
+      </section>
+
+      <!-- ---------- Opcion 2: codigo por numero ---------- -->
+      <section class="pair-card" id="pairPhoneCard" aria-labelledby="pairCodeTitle">
+        <h3 id="pairCodeTitle">Con tu n&uacute;mero</h3>
+        <p class="pair-card-sub">Si la c&aacute;mara no coge el c&oacute;digo, pide uno de ocho letras y escr&iacute;belo en el tel&eacute;fono.</p>
+
+        <label class="pair-label" for="pairPhone">N&uacute;mero de WhatsApp, con el 1 delante</label>
+        <div class="pair-row">
+          <input id="pairPhone" type="tel" inputmode="numeric" autocomplete="tel" value="18094865386" aria-describedby="pairPhoneHint">
+          <button class="pair-ask" id="pairAsk" type="button">Pedir c&oacute;digo</button>
+        </div>
+        <p class="pair-hint" id="pairPhoneHint">Viene puesto el del negocio. Si vas a vincular otro tel&eacute;fono, c&aacute;mbialo aqu&iacute;.</p>
+
+        <div class="code-box" id="codeBox" hidden>
+          <span class="code-label">Escribe este c&oacute;digo en el tel&eacute;fono</span>
+          <div class="code-value" id="codeValue"></div>
+          <div class="code-timer" id="codeTimer"></div>
+        </div>
+
+        <div class="pair-error" id="pairError" role="alert" hidden></div>
+
+        <ol class="pair-steps">
+          <li><span class="pair-num">1</span><span>En el tel&eacute;fono, entra a <b>Dispositivos vinculados</b>.</span></li>
+          <li><span class="pair-num">2</span><span>Toca <b>Vincular un dispositivo</b> y despu&eacute;s <b>Vincular con n&uacute;mero de tel&eacute;fono</b>.</span></li>
+          <li><span class="pair-num">3</span><span>Escribe ah&iacute; el c&oacute;digo que sale arriba.</span></li>
+        </ol>
+      </section>
+
+      <!-- Se muestra solo si el motor de WAHA no sabe vincular por numero. -->
+      <p class="pair-engine-note" id="pairEngineNote" hidden></p>
+
+    </div>
+
+    <p class="pair-note" id="pairNote">Esta pantalla se revisa sola cada 5 segundos. En cuanto conecte, entras directo al panel.</p>
   </div>
 </div>
 
@@ -1092,7 +1244,14 @@ const isTouch = window.matchMedia && window.matchMedia('(pointer: coarse)').matc
    CAPA DE API
    ========================================================================= */
 class ApiError extends Error {
-  constructor(message, status) { super(message); this.status = status; }
+  /* `checks` es la lista de "que revisar" que manda el backend en los errores
+     que el dueno puede arreglar solo (WAHA caido, sesion que no arranca). Sin
+     arrastrarla hasta aca, el panel se quedaria con el titular y sin el como. */
+  constructor(message, status, checks) {
+    super(message);
+    this.status = status;
+    this.checks = Array.isArray(checks) ? checks : [];
+  }
 }
 async function api(path, options) {
   const opts = Object.assign({ credentials: 'same-origin', headers: {} }, options || {});
@@ -1114,7 +1273,7 @@ async function api(path, options) {
   try { data = await res.json(); } catch (e) { data = null; }
   if (!res.ok) {
     const msg = (data && (data.error || data.message)) || ('El servidor respondio ' + res.status + '.');
-    throw new ApiError(String(msg), res.status);
+    throw new ApiError(String(msg), res.status, data && data.checks);
   }
   return data || {};
 }
@@ -1170,30 +1329,232 @@ async function bootAfterLogin() {
   if (ok) startPolling();
 }
 
-/* ---------- Emparejamiento ---------- */
-function renderPairing(session) {
+/* =========================================================================
+   EMPAREJAMIENTO
+
+   Regla de esta pantalla: NUNCA se queda girando sin decir nada. En todo
+   momento hay una frase de que esta pasando y otra de que se espera, y si pasa
+   demasiado tiempo sin codigo, la ruedita se apaga y sale la lista de que
+   revisar. Una espera infinita no es una espera: es un error escondido.
+   ========================================================================= */
+
+/* Telefono del dueno. Sale precargado, pero es editable. */
+const PAIR_DEFAULT_PHONE = '18094865386';
+
+/* Sin QR ni codigo pasado este tiempo, dejamos de prometer y empezamos a
+   explicar. WAHA con el motor NOWEB no levanta navegador, asi que de STARTING a
+   SCAN_QR_CODE son segundos; 45 es de sobra. */
+const PAIR_STALL_MS = 45000;
+
+/* Cada cuanto se refresca la cuenta atras del codigo. */
+let codeTimer = null;
+
+const pairState = {
+  blankSince: 0,   // desde cuando llevamos sin nada que ensenar
+  asking: false,   // hay un "pedir codigo" en vuelo
+  code: null,
+  codeUntil: 0,
+  polling: false
+};
+
+function pairSetState(kind, message, expect) {
+  const box = $('pairState');
+  box.className = 'pair-state' + (kind ? ' ' + kind : '');
+  $('pairSpin').hidden = kind === 'bad' || kind === 'ok';
+  $('pairMessage').textContent = message;
+  $('pairExpect').textContent = expect || '';
+}
+
+function pairSetChecks(items) {
+  const box = $('pairChecksBox');
+  const list = $('pairChecks');
+  clear(list);
+  const rows = Array.isArray(items) ? items.filter((t) => typeof t === 'string' && t.trim()) : [];
+  rows.forEach((text) => list.appendChild(el('li', null, text)));
+  box.hidden = rows.length === 0;
+}
+
+function pairShowError(message, checks) {
+  const box = $('pairError');
+  clear(box);
+  if (!message) { box.hidden = true; return; }
+  box.appendChild(el('div', null, message));
+  const rows = Array.isArray(checks) ? checks.filter((t) => typeof t === 'string' && t.trim()) : [];
+  if (rows.length) {
+    const list = el('ul');
+    rows.forEach((text) => list.appendChild(el('li', null, text)));
+    box.appendChild(list);
+  }
+  box.hidden = false;
+}
+
+/* ---------- Cuenta atras del codigo ---------- */
+function stopCodeTimer() {
+  if (codeTimer) { clearInterval(codeTimer); codeTimer = null; }
+}
+
+function renderCodeTimer() {
+  const box = $('codeTimer');
+  const left = Math.max(0, Math.ceil((pairState.codeUntil - Date.now()) / 1000));
+  if (left <= 0) {
+    box.className = 'code-timer expired';
+    box.textContent = 'Este codigo ya vencio. Dale a "Pedir codigo" para sacar otro.';
+    stopCodeTimer();
+    return;
+  }
+  const min = Math.floor(left / 60);
+  const sec = left % 60;
+  box.className = 'code-timer';
+  box.textContent = 'Te quedan ' + (min > 0 ? min + ' min ' : '') + sec + ' s para escribirlo.';
+}
+
+function showPairCode(code, seconds) {
+  pairState.code = code;
+  pairState.codeUntil = Date.now() + (Number(seconds) || 180) * 1000;
+  $('codeValue').textContent = code;
+  $('codeBox').hidden = false;
+  $('pairAsk').textContent = 'Pedir otro codigo';
+  stopCodeTimer();
+  renderCodeTimer();
+  codeTimer = setInterval(renderCodeTimer, 1000);
+}
+
+/* ---------- Pintado de la pantalla ---------- */
+function renderPairing(s) {
+  const data = s || {};
+  const status = String(data.status || '').toUpperCase();
+  const qr = safeImageUrl(data.qrUrl);
   const frame = $('qrFrame');
+
+  /* Cuanto llevamos sin nada util en pantalla. Se reinicia en cuanto aparece
+     un QR o un codigo vigente. */
+  const hasCode = pairState.code && pairState.codeUntil > Date.now();
+  if (qr || hasCode) pairState.blankSince = 0;
+  else if (!pairState.blankSince) pairState.blankSince = Date.now();
+  const stalled = !qr && !hasCode && pairState.blankSince > 0
+    && (Date.now() - pairState.blankSince) > PAIR_STALL_MS;
+
   clear(frame);
-  const url = safeImageUrl(session && session.qrUrl);
-  if (url) {
+  if (qr) {
     const img = document.createElement('img');
     img.alt = 'Codigo QR para vincular WhatsApp';
-    img.setAttribute('src', url);
+    img.setAttribute('src', qr);
     frame.appendChild(img);
-    $('pairNote').textContent = 'Esta pantalla se actualiza sola cada 5 segundos. En cuanto conecte, entra directo al panel.';
+  } else if (stalled) {
+    frame.appendChild(el('div', 'qr-waiting', 'No llego ningun codigo. Mira abajo que revisar, o prueba a vincular con tu numero.'));
+  } else if (status === 'UNREACHABLE') {
+    frame.appendChild(el('div', 'qr-waiting', 'Sin codigo: el servidor de WhatsApp no responde.'));
   } else {
-    frame.appendChild(el('div', 'qr-waiting', 'Preparando el codigo. Espera unos segundos.'));
-    $('pairNote').textContent = 'El servidor todavia no genero el codigo. Se sigue intentando cada 5 segundos.';
+    frame.appendChild(el('div', 'qr-waiting', 'Armando el codigo, unos segundos.'));
   }
+
+  /* La frase de estado la manda el servidor. Si viniera vacia (por ejemplo
+     porque el estado llego desde /api/wa/threads, que no la trae) ponemos una
+     de respaldo, pero nunca dejamos la caja muda. */
+  const message = typeof data.message === 'string' && data.message
+    ? data.message
+    : 'Esperando a que WhatsApp este listo.';
+  const expect = typeof data.expect === 'string' ? data.expect : '';
+
+  if (status === 'UNREACHABLE') {
+    pairSetState('bad', message, expect);
+  } else if (stalled) {
+    const secs = Math.round((Date.now() - pairState.blankSince) / 1000);
+    pairSetState('bad',
+      'Llevo ' + secs + ' segundos esperando el codigo y no llega.',
+      'Ya no tiene sentido seguir esperando sin mas: revisa lo de abajo o vincula con tu numero.');
+  } else {
+    pairSetState(null, message, expect);
+  }
+
+  /* Que revisar. Cuando la cosa se atasco y el servidor no mando lista propia,
+     ponemos la de siempre: son los tres fallos que se repiten. */
+  let checks = Array.isArray(data.checks) ? data.checks : [];
+  if (stalled && checks.length === 0) {
+    checks = [
+      'Que el servidor de WhatsApp (Railway) este prendido.',
+      'Que WAHA_URL en Vercel apunte a ese servidor.',
+      'Que la API key sea la misma en Vercel y en Railway.'
+    ];
+  }
+  pairSetChecks(checks);
+
+  /* Vincular por numero: solo si el motor lo soporta. Un boton que no funciona
+     es peor que no tener boton. */
+  const canPhone = data.canPairByPhone !== false;
+  $('pairPhoneCard').hidden = !canPhone;
+  const note = $('pairEngineNote');
+  if (canPhone) {
+    note.hidden = true;
+    note.textContent = '';
+  } else {
+    note.textContent = 'Con el motor de WhatsApp que tienes montado'
+      + (data.engine ? ' (' + String(data.engine) + ')' : '')
+      + ' solo se puede vincular escaneando el codigo QR.';
+    note.hidden = false;
+  }
+
+  $('pairNote').textContent = status === 'UNREACHABLE'
+    ? 'Sigo intentando cada 5 segundos. En cuanto el servidor conteste, esto se actualiza solo.'
+    : 'Esta pantalla se revisa sola cada 5 segundos. En cuanto conecte, entras directo al panel.';
 }
 
 async function pollSession() {
+  if (pairState.polling) return;
+  pairState.polling = true;
   try {
     const s = await api('/api/wa/session');
     applySession(s);
   } catch (e) {
     if (e.status === 401 || e.status === 403) { showScreen('login'); return; }
-    $('pairNote').textContent = 'No se pudo hablar con el servidor: ' + e.message + ' Reintentando.';
+    /* Aca el que no contesta es NUESTRO servidor (o no hay internet), no WAHA:
+       la lista de que revisar es otra. */
+    const offline = e.status === 0;
+    renderPairing({
+      status: 'UNREACHABLE',
+      message: offline ? 'No hay conexion con el sitio.' : 'El sitio respondio con un error.',
+      expect: offline
+        ? 'Sigo intentando cada 5 segundos. En cuanto vuelva, esto se actualiza solo.'
+        : e.message,
+      checks: e.checks && e.checks.length ? e.checks : (offline
+        ? ['Que el telefono o la computadora tengan internet.',
+           'Que estes en rentandgopc.com y no en una copia vieja de la pagina.']
+        : ['Los registros de Vercel, para ver por que fallo la peticion.'])
+    });
+  } finally {
+    pairState.polling = false;
+  }
+}
+
+/* ---------- Pedir el codigo por numero ---------- */
+async function askPairCode() {
+  if (pairState.asking) return;
+  const input = $('pairPhone');
+  const phone = String(input.value || '').trim() || PAIR_DEFAULT_PHONE;
+
+  pairState.asking = true;
+  const btn = $('pairAsk');
+  const label = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Pidiendo...';
+  pairShowError(null);
+
+  try {
+    const data = await api('/api/wa/pair', { method: 'POST', body: { phoneNumber: phone } });
+    if (data && data.phoneNumber) input.value = String(data.phoneNumber);
+    if (data && data.code) {
+      showPairCode(String(data.code), data.expiresInSeconds);
+      toast('Codigo listo. Escribelo en el telefono.');
+    } else {
+      pairShowError('El servidor no devolvio ningun codigo. Usa el codigo QR.');
+    }
+  } catch (e) {
+    if (e.status === 401 || e.status === 403) { showScreen('login'); return; }
+    pairShowError(e.message, e.checks);
+  } finally {
+    pairState.asking = false;
+    btn.disabled = false;
+    btn.textContent = pairState.code ? 'Pedir otro codigo' : label;
   }
 }
 
@@ -1237,14 +1598,41 @@ function applySession(session) {
 
   renderGlobalBanner();
 
-  /* WORKING y UNREACHABLE se quedan en el inbox. Cualquier otro estado
-     (SCAN_QR_CODE, STARTING, STOPPED, FAILED) manda a emparejar. */
-  if (status === 'WORKING' || status === 'UNREACHABLE') {
+  /* A donde mandar al dueno.
+
+     WORKING: al inbox, y se apaga la cuenta atras del codigo (ya vinculo).
+
+     UNREACHABLE: si YA estaba emparejando, se queda ahi — sacarlo a mitad de un
+     escaneo para ensenarle un banner rojo es perder el hilo justo cuando esta
+     con el telefono en la mano. Desde cualquier otra pantalla, al inbox con el
+     banner, que es donde puede seguir leyendo lo ya descargado.
+
+     Todo lo demas (SCAN_QR_CODE, STARTING, STOPPED, FAILED, NOT_FOUND) es
+     "hay que vincular": a la pantalla de emparejar. */
+  const wasPair = state.screen === 'pair';
+
+  if (status === 'WORKING') {
+    stopCodeTimer();
+    pairState.code = null;
+    pairState.blankSince = 0;
     if (state.screen !== 'app') showScreen('app');
-  } else {
-    showScreen('pair');
-    renderPairing(session);
+    return;
   }
+
+  if (status === 'UNREACHABLE' && !wasPair) {
+    if (state.screen !== 'app') showScreen('app');
+    return;
+  }
+
+  showScreen('pair');
+  renderPairing(session);
+
+  /* El estado que llega dentro de /api/wa/threads no trae las frases ni el QR:
+     es solo el bloque crudo de WAHA. Si acabamos de aterrizar aqui por esa via,
+     pedimos el estado completo en el acto en vez de esperar 5 segundos con la
+     pantalla a medias. No hay recursion posible: a la vuelta, `wasPair` ya es
+     true y `pairState.polling` corta el reentrante. */
+  if (!wasPair && !session.message) pollSession();
 }
 
 /* =========================================================================
@@ -2042,6 +2430,9 @@ document.addEventListener('visibilitychange', () => {
    ========================================================================= */
 $('loginBtn').addEventListener('click', doLogin);
 $('loginPass').addEventListener('keydown', (e) => { if (e.key === 'Enter') doLogin(); });
+
+$('pairAsk').addEventListener('click', askPairCode);
+$('pairPhone').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); askPairCode(); } });
 
 $('search').addEventListener('input', () => { state.filter = $('search').value; renderThreadList(); });
 $('backBtn').addEventListener('click', () => { document.body.classList.remove('thread-open'); });

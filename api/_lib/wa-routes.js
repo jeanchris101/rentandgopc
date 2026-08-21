@@ -14,7 +14,8 @@ import { lead } from './wa-lead.js';
 import { login } from './wa-login.js';
 import { qr } from './wa-qr.js';
 import { send } from './wa-send.js';
-import { session } from './wa-session.js';
+import { session, pair } from './wa-session.js';
+import { status } from './wa-status.js';
 import { thread } from './wa-thread.js';
 import { threads } from './wa-threads.js';
 
@@ -26,5 +27,7 @@ export const waRoutes = {
   config, // GET/POST /api/wa/config — ajustes del auto-reply
   login, // POST /api/wa/login    — reparte la cookie del panel
   session, // GET  /api/wa/session  — estado de la sesion de WhatsApp
+  pair, // POST /api/wa/pair     — codigo de emparejamiento por numero
+  status, // GET  /api/wa/status   — estado de TODO el sistema (status.html)
   qr, // GET  /api/wa/qr       — proxy del QR (devuelve BYTES, no JSON)
 };

@@ -354,6 +354,7 @@ test('metodo equivocado devuelve 405 (con cookie valida, para pasar el auth)', a
     ['api/wa', 'lead', 'GET'],
     ['api/wa', 'config', 'DELETE'],
     ['api/wa', 'session', 'POST'],
+    ['api/wa', 'status', 'POST'],
     ['api/wa', 'qr', 'POST'],
     ['api/groups', 'plan', 'POST'],
     ['api/groups', 'mark', 'GET'],
@@ -559,6 +560,93 @@ test('el plan salta los grupos cuyo idioma esta apagado y lo explica', async () 
   assert.equal(bloqueado.assignments.length, 0);
   assert.match(bloqueado.reason, /frances/i);
   assert.match(bloqueado.reason, /Ajustes/);
+});
+
+/* ------------------------------------------------------------------ *
+ * /api/wa/status — el panel de estado del sistema (status.html)
+ * ------------------------------------------------------------------ */
+
+const STATUS_PIECES = [
+  'whatsapp',
+  'webhook',
+  'storage',
+  'autoreply',
+  'inbox',
+  'groups',
+  'leads',
+  'catalog',
+  'facebook',
+];
+
+test('GET /api/wa/status pide cookie', async () => {
+  configureAuth();
+  const res = await wa({ action: 'status' });
+  assert.equal(res.statusCode, 401);
+  assert.equal(res.body.error, 'Unauthorized');
+});
+
+test('GET /api/wa/status reporta las 9 piezas y no filtra ningun secreto', async () => {
+  // Valores centinela: si alguno aparece en la respuesta, el endpoint esta
+  // devolviendo el CONTENIDO de una variable y no solo si esta configurada.
+  process.env.WAHA_WEBHOOK_SECRET = 'centinela-del-webhook-no-debe-salir';
+  process.env.FB_PAGE_ID = '1234567890';
+  process.env.FB_PAGE_ACCESS_TOKEN = 'centinela-del-token-de-facebook';
+  try {
+    const res = await wa({ action: 'status', cookie: COOKIE });
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.getHeader('Cache-Control'), 'no-store, private');
+
+    assert.ok(['ok', 'warn', 'down'].includes(res.body.overall), 'overall');
+    assert.ok(Number.isFinite(Date.parse(res.body.checkedAt)), 'checkedAt');
+
+    assert.deepEqual(res.body.pieces.map((p) => p.id), STATUS_PIECES);
+    for (const p of res.body.pieces) {
+      assert.deepEqual(Object.keys(p), ['id', 'label', 'state', 'detail', 'fix'], p.id);
+      assert.ok(['ok', 'warn', 'down', 'off'].includes(p.state), `${p.id}: ${p.state}`);
+      assert.ok(p.detail.length > 0, `${p.id} sin detalle`);
+      // El "que hacer" solo existe cuando hay algo que hacer: el panel lo pinta
+      // con un `if (piece.fix)` y no deberia tener que decidir nada mas.
+      if (p.state === 'ok' || p.state === 'off') assert.equal(p.fix, null, `${p.id}`);
+      else assert.ok(p.fix, `${p.id} en ${p.state} tendria que decir que hacer`);
+    }
+
+    const serialized = JSON.stringify(res.body);
+    assert.ok(!serialized.includes('centinela-del-webhook'), 'se filtro WAHA_WEBHOOK_SECRET');
+    assert.ok(!serialized.includes('centinela-del-token'), 'se filtro FB_PAGE_ACCESS_TOKEN');
+    // Configurado != revelado: el webhook tiene que verse sano igual.
+    assert.equal(res.body.pieces.find((p) => p.id === 'webhook').state, 'ok');
+  } finally {
+    delete process.env.WAHA_WEBHOOK_SECRET;
+    delete process.env.FB_PAGE_ID;
+    delete process.env.FB_PAGE_ACCESS_TOKEN;
+  }
+});
+
+test('una pieza caida no tumba el reporte de status', async () => {
+  // El puerto 1 de localhost rechaza al instante: es un WAHA inalcanzable de
+  // verdad, sin esperar el timeout de 15s del cliente.
+  process.env.WAHA_URL = 'http://127.0.0.1:1';
+  try {
+    const res = await wa({ action: 'status', cookie: COOKIE });
+    // Lo que se esta probando: sigue siendo 200 y siguen viniendo las 9 piezas.
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.body.pieces.length, STATUS_PIECES.length);
+
+    const whatsapp = res.body.pieces.find((p) => p.id === 'whatsapp');
+    assert.equal(whatsapp.state, 'down');
+    assert.match(whatsapp.detail, /no alcanza/i);
+    assert.ok(whatsapp.fix, 'una pieza caida tiene que decir que hacer');
+
+    // Y las que no dependen de WAHA siguen calculandose: el catalogo se lee del
+    // repo, asi que reporta las 5 propiedades activas pase lo que pase.
+    const catalog = res.body.pieces.find((p) => p.id === 'catalog');
+    assert.match(catalog.detail, /5 propiedades activas/);
+
+    // WhatsApp es una pieza critica: el semaforo general se pone en rojo.
+    assert.equal(res.body.overall, 'down');
+  } finally {
+    delete process.env.WAHA_URL;
+  }
 });
 
 test('GET /api/lead/list devuelve la bandeja con cookie valida', async () => {
