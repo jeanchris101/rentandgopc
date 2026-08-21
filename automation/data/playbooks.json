@@ -210,8 +210,8 @@
           "id": "step1_immediate",
           "label_es": "Primer contacto (menos de 5 min)",
           "send_photos": true,
-          "es": "Hola, si, sigue disponible.\n\nTe doy lo concreto: es 1 habitacion, 1 bano, 78 m2, en US$155,000. Viene amueblado completo, listo para entrar, y es planta baja con terraza privada que da a los jardines. La playa de Bavaro te queda a 5 minutos caminando y el aeropuerto a 25 minutos.\n\nTe dejo un par de fotos aqui. Si quieres te mando el set completo con la terraza, la piscina y el gimnasio.",
-          "en": "Hi, yes, it's still available.\n\nStraight to it: 1 bedroom, 1 bath, 78 m2 (about 840 sq ft), at US$155,000. It comes fully furnished and move-in ready, ground floor with its own private terrace facing the gardens. Bavaro Beach is a 5-minute walk and the airport is 25 minutes away.\n\nSending you a couple of photos here. I can send the full set with the terrace, the pool and the gym if you want."
+          "es": "Hola, si, sigue disponible.\n\nTe doy lo concreto: es 1 habitacion, 1 bano, 67 m2, en US$155,000. Obra nueva, amueblado completo y listo para entrar, planta baja con terraza privada que da a los jardines. La playa de Bavaro te queda a 10 minutos y el aeropuerto a 25 minutos.\n\nTe dejo un par de fotos aqui. Si quieres te mando el set completo con la terraza, la piscina y el gimnasio.",
+          "en": "Hi, yes, it's still available.\n\nStraight to it: 1 bedroom, 1 bath, 67 m2 (about 720 sq ft), at US$155,000. Brand-new construction, fully furnished and move-in ready, ground floor with its own private terrace facing the gardens. Bavaro Beach is 10 minutes away and the airport 25.\n\nSending you a couple of photos here. I can send the full set with the terrace, the pool and the gym if you want."
         },
         {
           "id": "step2_qualify",
@@ -238,8 +238,8 @@
           "id": "step3b_personal",
           "label_es": "Si responde USO PERSONAL (1 de 2: entorno)",
           "send_photos": false,
-          "es": "Entonces lo que te sirve saber es como se vive ahi.\n\nLos Corales es de los pocos sitios de Bavaro donde no dependes del carro: sales del complejo y tienes restaurantes, colmados y supermercado caminando, y la playa a 5 minutos a pie. Tambien es zona de bares y vida nocturna a pie, asi que si te preocupa el ruido dimelo y te grabo un video de la terraza a distintas horas.",
-          "en": "Then what actually matters to you is what daily life looks like there.\n\nLos Corales is one of the few spots in Bavaro where you don't depend on a car: you walk out of the complex and you have restaurants, shops and a supermarket on foot, and the beach is a 5-minute walk. It's also a bar and nightlife area on foot, so if noise is a concern for you, tell me and I'll record you a video from the terrace at different hours."
+          "es": "Entonces lo que te sirve saber es como se vive ahi.\n\nLos Corales es de los pocos sitios de Bavaro donde no dependes del carro: sales del complejo y tienes restaurantes, colmados y supermercado caminando, y la playa a 10 minutos. Tambien es zona de bares y vida nocturna a pie, asi que si te preocupa el ruido dimelo y te grabo un video de la terraza a distintas horas.",
+          "en": "Then what actually matters to you is what daily life looks like there.\n\nLos Corales is one of the few spots in Bavaro where you don't depend on a car: you walk out of the complex and you have restaurants, shops and a supermarket on foot, and the beach is 10 minutes away. It's also a bar and nightlife area on foot, so if noise is a concern for you, tell me and I'll record you a video from the terrace at different hours."
         },
         {
           "id": "step3b_personal_amenities",
@@ -290,12 +290,15 @@
         "155,000",
         "155K",
         "$155k apartamento Bavaro",
-        "78 m2",
-        "78 metros cuadrados",
-        "78 m² planta baja",
+        "67 m2",
+        "67m2",
+        "67 metros cuadrados",
+        "67 m² planta baja",
+        "obra nueva",
+        "brand new construction",
         "amueblado planta baja con terraza privada",
-        "5 minutos caminando a la playa de Bavaro",
-        "5-minute walk to Bavaro Beach",
+        "10 minutos de la playa de Bavaro",
+        "10 minutes to Bavaro Beach",
         "25 minutos del aeropuerto PUJ",
         "el mas barato de tu portafolio",
         "lowest price apartment",

@@ -116,21 +116,25 @@
       "slug": "karen-los-corales",
       "active": true,
       "name": "Modern 1BR Apartment in Los Corales",
+      "name_es": "Apartamento moderno de 1 habitacion en Los Corales",
+      "name_fr": "Appartement moderne d'une chambre a Los Corales",
       "short_name": "Los Corales 1BR",
       "type": "condo",
       "price_usd": 155000,
       "price_display": "US$155,000",
       "bedrooms": 1,
       "bathrooms": 1,
-      "size_m2": 78,
+      "size_m2": 67,
+      "_size_note": "67 m2 sale del anuncio del propietario (agosto 2026). La ficha publicaba 78 m2 desde el commit 81b09f3, sin fuente conocida. Si Jean confirma que 78 era el bueno, hay que revertir aqui, en playbooks.json, en karen-los-corales.html y en index.html a la vez.",
+      "new_construction": true,
       "neighborhood": "Los Corales, Bavaro",
       "confotur": false,
       "furnished": true,
       "parking": 1,
       "audience": "buyer",
       "highlights": [
-        "Fully furnished and move-in ready",
-        "5-minute walk to Bavaro Beach",
+        "Brand-new construction, fully furnished and move-in ready",
+        "10 minutes to Bavaro Beach",
         "Private ground-floor terrace with outdoor lounge",
         "On-site gym, resort-style pool, covered BBQ area",
         "In-unit washer and dryer, full kitchen appliances",
@@ -138,8 +142,8 @@
         "Lowest entry price of the portfolio"
       ],
       "highlights_es": [
-        "Totalmente amueblado y listo para mudarse",
-        "A 5 minutos a pie de Playa Bavaro",
+        "Obra nueva, totalmente amueblada y lista para mudarse",
+        "A 10 minutos de Playa Bavaro",
         "Terraza privada en primer nivel con sala exterior",
         "Gimnasio, piscina estilo resort y area de BBQ techada",
         "Lavadora y secadora en la unidad, cocina completamente equipada",
@@ -147,8 +151,8 @@
         "El precio de entrada mas bajo del portafolio"
       ],
       "highlights_fr": [
-        "Entierement meuble et pret a habiter",
-        "A 5 minutes a pied de la plage de Bavaro",
+        "Construction neuve, entierement meublee et prete a habiter",
+        "A 10 minutes de la plage de Bavaro",
         "Terrasse privee au rez-de-chaussee avec salon exterieur",
         "Gym sur place, piscine style resort, espace BBQ couvert",
         "Laveuse et secheuse dans l'unite, cuisine entierement equipee",
@@ -159,11 +163,12 @@
       "post_images": [
         "images/karen-los-corales/pool-front.jpg",
         "images/karen-los-corales/living-kitchen.jpg",
-        "images/karen-los-corales/terrace-furniture.jpg",
+        "images/karen-los-corales/exterior-terrace2.jpg",
         "images/karen-los-corales/bedroom-daylight.jpg",
         "images/karen-los-corales/gardens-pool.jpg",
-        "images/karen-los-corales/terrace-side.jpg"
+        "images/karen-los-corales/living-tv-wall.jpg"
       ],
+      "_images_note": "Seis motivos distintos a proposito: piscina, apartamento completo, terraza, habitacion, jardines y sala. Antes habia dos fotos de la misma terraza de las seis. terrace-furniture.jpg y terrace-side.jpg siguen en la galeria del sitio.",
       "hoa_monthly_usd": null,
       "_hoa_note": "Cuota de mantenimiento: desconocida - confirmar con Jean antes de responder"
     },
