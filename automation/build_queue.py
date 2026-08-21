@@ -15,9 +15,9 @@ Rules:
     the run exits 0 without queueing anything. The cooldown is never relaxed
     silently.
   - Language: rotates en/es/fr by date (config.json content.languages).
-    Highlights and neighborhood come from the per-language fields in
-    properties.json (highlights_es/fr, neighborhood_es/fr) with fallback to
-    the English values, so es/fr posts never mix in English bullets.
+    Name, highlights and neighborhood come from the per-language fields in
+    properties.json (name_es/fr, highlights_es/fr, neighborhood_es/fr) with
+    fallback to the English values, so es/fr posts never mix in English text.
   - Style: deterministic templates in data/post-templates.json (no LLM),
     rotated by date. A style may restrict itself to property types via
     "types" (daily_life is condo-only); the rotation advances to the next
@@ -92,6 +92,7 @@ REF_CODES = {
     "cocotal-2bdr": "A301",
     "paseo-cocotal": "PB202",
     "karen-los-corales": "KLC1",
+    "costa-bavaro-garden": "CBG1",
     "land-autovia-este": "LAUT",
     "land-cepm-vistacana": "LCEP",
 }
@@ -675,7 +676,9 @@ def cmd_build(target_date: date, dry_run: bool = False) -> None:
     message = fill(
         compose_template(style, lang, highlights, seed, layouts),
         {
-            "name": prop["name"],
+            # Igual que en groups-plan.js: el nombre tambien se localiza si la
+            # propiedad trae name_es / name_fr, con respaldo al ingles.
+            "name": prop.get(f"name_{lang}") or prop["name"],
             "price": prop["price_display"],
             "neighborhood": prop.get(f"neighborhood_{lang}") or prop["neighborhood"],
             # {highlights} ya se resolvio en compose_template; estos dos siguen

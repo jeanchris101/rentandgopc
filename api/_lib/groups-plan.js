@@ -124,6 +124,7 @@ export const REF_CODES = {
   'cocotal-2bdr': 'A301',
   'paseo-cocotal': 'PB202',
   'karen-los-corales': 'KLC1',
+  'costa-bavaro-garden': 'CBG1',
   'land-autovia-este': 'LAUT',
   'land-cepm-vistacana': 'LCEP',
 };
@@ -602,7 +603,11 @@ function renderPostText(style, prop, lang, highlights, seed) {
   if (composed === null) return null;
 
   const values = {
-    name: prop.name,
+    // name_es / name_fr con respaldo al ingles, igual que neighborhood y
+    // highlights. Sin esto un post en espanol decia "Ven a caminar Furnished 2BR
+    // in Costa Bavaro Garden primero" en un grupo hispanohablante. Las
+    // propiedades que no traen name_es siguen dando exactamente el mismo texto.
+    name: prop[`name_${lang}`] || prop.name,
     price: prop.price_display,
     neighborhood: prop[`neighborhood_${lang}`] || prop.neighborhood || '',
     highlight_1: highlights[0],

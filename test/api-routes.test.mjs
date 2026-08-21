@@ -638,9 +638,14 @@ test('una pieza caida no tumba el reporte de status', async () => {
     assert.ok(whatsapp.fix, 'una pieza caida tiene que decir que hacer');
 
     // Y las que no dependen de WAHA siguen calculandose: el catalogo se lee del
-    // repo, asi que reporta las 5 propiedades activas pase lo que pase.
+    // repo, asi que reporta las propiedades activas pase lo que pase. El numero
+    // sale del propio properties.json y no de una constante: agregar un listing
+    // no tiene por que romper esta prueba.
+    const activas = JSON.parse(
+      fs.readFileSync(path.join(REPO, 'automation/data/properties.json'), 'utf8')
+    ).properties.filter((p) => p && p.slug && p.active !== false).length;
     const catalog = res.body.pieces.find((p) => p.id === 'catalog');
-    assert.match(catalog.detail, /5 propiedades activas/);
+    assert.match(catalog.detail, new RegExp(`${activas} propiedades activas`));
 
     // WhatsApp es una pieza critica: el semaforo general se pone en rojo.
     assert.equal(res.body.overall, 'down');

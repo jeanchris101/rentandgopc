@@ -170,7 +170,7 @@
     }
 
     // Property detail pages
-    if (href.includes('cocotal') || href.includes('paseo') || href.includes('karen') || href.includes('arboleda') || href.includes('costa-garden')) {
+    if (href.includes('cocotal') || href.includes('paseo') || href.includes('karen') || href.includes('arboleda') || href.includes('costa')) {
       track('property', text || href);
       return;
     }

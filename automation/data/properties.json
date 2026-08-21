@@ -1,5 +1,5 @@
 {
-  "_comment": "Single source of truth for the 5 active listings. Used by content_generator.py to write posts and by fb_autoposter.py to attach images and wa.me links. Keep prices in sync with the detail pages.",
+  "_comment": "Single source of truth for the 6 active listings. Used by content_generator.py to write posts and by fb_autoposter.py to attach images and wa.me links. Keep prices in sync with the detail pages.",
   "site_base_url": "https://www.rentandgopc.com",
   "whatsapp_number": "18094865386",
   "_whatsapp_note": "Numero del owner (el mismo publicado en el sitio). Formato wa.me: digitos con codigo de pais, sin + ni espacios.",
@@ -166,6 +166,67 @@
       ],
       "hoa_monthly_usd": null,
       "_hoa_note": "Cuota de mantenimiento: desconocida - confirmar con Jean antes de responder"
+    },
+    {
+      "slug": "costa-bavaro-garden",
+      "active": true,
+      "name": "Furnished 2BR in Costa Bavaro Garden",
+      "name_es": "Apartamento amueblado de 2 habitaciones en Costa Bavaro Garden",
+      "name_fr": "Appartement meuble de 2 chambres a Costa Bavaro Garden",
+      "short_name": "Costa Bavaro Garden 2BR",
+      "type": "condo",
+      "price_usd": 199000,
+      "price_display": "US$199,000",
+      "bedrooms": 2,
+      "bathrooms": 2.5,
+      "size_m2": 86,
+      "neighborhood": "Costa Bavaro Garden, Bavaro, Punta Cana",
+      "confotur": false,
+      "_confotur_note": "SIN CONFIRMAR. El anuncio no menciona CONFOTUR, asi que queda en false y el filtro de groups-plan.js lo mantiene fuera de todo el copy. Si Jean confirma que califica, cambiar a true; nunca al reves por suponer.",
+      "furnished": true,
+      "parking": null,
+      "_parking_note": "Parqueo: no aparece en el anuncio ni en las fotos - confirmar con Jean, no inventar",
+      "audience": "buyer",
+      "highlights": [
+        "Fully furnished and move-in ready",
+        "2 bedrooms and 2.5 bathrooms in 86 m2",
+        "Balcony overlooking the pool and gardens",
+        "Resort-style pool plus a separate kids pool",
+        "Fully equipped gym with cardio and free weights",
+        "On-site coworking room and childrens playground",
+        "7 minutes to the beach, 20 minutes from PUJ airport"
+      ],
+      "highlights_es": [
+        "Totalmente amueblado y listo para mudarse",
+        "2 habitaciones y 2.5 banos en 86 m2",
+        "Balcon con vista a la piscina y los jardines",
+        "Piscina estilo resort y piscina separada para ninos",
+        "Gimnasio completo con cardio y pesas libres",
+        "Sala de coworking y area de juegos para ninos",
+        "A 7 minutos de la playa, a 20 minutos del aeropuerto PUJ"
+      ],
+      "highlights_fr": [
+        "Entierement meuble et pret a habiter",
+        "2 chambres et 2.5 salles de bain dans 86 m2",
+        "Balcon donnant sur la piscine et les jardins",
+        "Piscine style resort et pataugeoire separee pour enfants",
+        "Salle de sport complete avec cardio et poids libres",
+        "Espace de coworking et aire de jeux pour enfants",
+        "A 7 minutes de la plage, a 20 minutes de l'aeroport PUJ"
+      ],
+      "hero_image": "images/costa-garden/pool-wide.jpg",
+      "post_images": [
+        "images/costa-garden/pool-wide.jpg",
+        "images/costa-garden/living-dining.jpg",
+        "images/costa-garden/kitchen-island.jpg",
+        "images/costa-garden/master-bedroom.jpg",
+        "images/costa-garden/pool-aerial.jpg",
+        "images/costa-garden/gym-wide.jpg"
+      ],
+      "_images_note": "Las fotos van en images/costa-garden/, la carpeta que ya existia con pool-view.png de la ficha de alquiler. Corre `npm test` o `python automation/check_images.py` despues de subirlas: el test falla mientras falte alguna.",
+      "hoa_monthly_usd": null,
+      "_hoa_note": "Cuota de mantenimiento: desconocida - confirmar con Jean antes de responder",
+      "_airbnb_note": "OJO: index.html ya publica este mismo complejo en la seccion de alquileres (airbnb.com/h/costagardencondo, 4.93 con 27 resenas). Si es LA MISMA unidad es el mejor argumento de venta que hay: llave en mano y ya produciendo. Falta que Jean lo confirme; hasta entonces ningun guion menciona ingresos ni ocupacion de esta unidad."
     },
     {
       "slug": "land-autovia-este",

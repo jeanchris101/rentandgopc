@@ -305,6 +305,112 @@
       ]
     },
     {
+      "slug": "costa-bavaro-garden",
+      "ref_code": "CBG1",
+      "keywords": [
+        "CBG1",
+        "costa-bavaro-garden",
+        "Costa Bavaro Garden",
+        "Costa Bavaro Gardens",
+        "Costa Garden",
+        "Furnished 2BR in Costa Bavaro Garden",
+        "apartamento Costa Bavaro Garden",
+        "US$199,000",
+        "199,000",
+        "199K",
+        "$199k apartamento",
+        "86 m2",
+        "86m2",
+        "86 metros cuadrados",
+        "2 habitaciones y 2.5 banos",
+        "2.5 banos",
+        "2.5 bathrooms",
+        "2BR 2.5 bath Bavaro",
+        "sala de coworking",
+        "coworking",
+        "piscina para ninos",
+        "kids pool",
+        "area de juegos para ninos",
+        "playground",
+        "7 minutos de la playa",
+        "7 minutes to the beach",
+        "20 minutos del aeropuerto PUJ",
+        "el 2 habitaciones mas economico"
+      ],
+      "steps": [
+        {
+          "id": "step1_immediate",
+          "label_es": "Primer contacto (menos de 5 min)",
+          "send_photos": true,
+          "es": "Hola, si, sigue disponible.\n\nTe doy lo concreto: 2 habitaciones, 2.5 banos, 86 m2, en US$199,000. Viene amueblado completo, listo para entrar, con balcon que da a la piscina y a los jardines.\n\nEl complejo tiene piscina grande, piscina aparte para ninos, gimnasio equipado, sala de coworking y area de juegos. La playa te queda a 7 minutos y el aeropuerto a 20.\n\nTe dejo unas fotos aqui. Si quieres te mando el set completo con el apartamento y las areas comunes.",
+          "en": "Hi, yes, it's still available.\n\nStraight to it: 2 bedrooms, 2.5 baths, 86 m2 (about 925 sq ft), at US$199,000. Fully furnished and move-in ready, with a balcony over the pool and gardens.\n\nThe complex has a large pool, a separate kids pool, an equipped gym, a coworking room and a playground. The beach is 7 minutes away and the airport 20.\n\nSending you some photos here. I can send the full set of the apartment and the common areas if you want."
+        },
+        {
+          "id": "step2_qualify",
+          "label_es": "Calificacion (uso + fecha de viaje)",
+          "send_photos": false,
+          "es": "Una pregunta para no llenarte de informacion que no te sirve: lo estas viendo para inversion, tipo Airbnb, o para uso propio o familiar? Y mas o menos cuando piensas venir a Punta Cana?",
+          "en": "One question so I don't bury you in info you don't need: are you looking at this as an investment (Airbnb) or for your own or your family's use? And roughly when are you planning to be in Punta Cana?"
+        },
+        {
+          "id": "step3a_investment",
+          "label_es": "Si responde INVERSION (1 de 2: por que este)",
+          "send_photos": false,
+          "es": "Perfecto, entonces vamos a lo que importa.\n\nNo te voy a tirar porcentajes de ocupacion ni de rendimiento de esta unidad, porque dependen de tu tarifa por noche, de quien te la administre y de tus gastos. Cualquiera que te de un numero cerrado sin saber eso te lo esta inventando.\n\nLo que si te puedo decir es que a US$199,000 este es el 2 habitaciones mas economico que tengo, y con 2.5 banos duermes 6 personas sin que nadie comparta bano. En alquiler corto eso te abre las familias, que es donde estan las estadias mas largas.",
+          "en": "Good, then let's go to what actually matters.\n\nI'm not going to quote you occupancy or yield percentages for this unit, because they depend on your nightly rate, on who manages it for you and on your expenses. Anyone giving you a hard number without knowing those is making it up.\n\nWhat I can tell you is that at US$199,000 this is the cheapest 2-bedroom I have, and with 2.5 baths it sleeps 6 without anyone sharing a bathroom. On short-term rental that opens up families, which is where the longer stays are."
+        },
+        {
+          "id": "step3a_investment_calc",
+          "label_es": "Si responde INVERSION (2 de 2: calculadora)",
+          "send_photos": false,
+          "es": "Mete el precio real, US$199,000, en la calculadora del sitio y corre tus propios supuestos: https://www.rentandgopc.com/roi-calculator.html\n\nDos cosas que no tengo confirmadas y que te van a mover el numero: la cuota de mantenimiento y si el apartamento trae parqueo asignado. Las estoy confirmando y te las paso, no te las voy a estimar.\n\nSi quieres damelo 15 minutos y revisamos tus numeros juntos, con tus supuestos, no con los mios.",
+          "en": "Put the real price, US$199,000, into the calculator on my site and run your own assumptions: https://www.rentandgopc.com/roi-calculator.html\n\nTwo things I don't have confirmed that will move your number: the monthly HOA fee and whether the unit comes with an assigned parking spot. I'm confirming both and I'll send them over, I'm not going to estimate them for you.\n\nGive me 15 minutes and we can go through your numbers together, using yours and not mine."
+        },
+        {
+          "id": "step3b_personal",
+          "label_es": "Si responde USO PERSONAL (1 de 2: como se vive)",
+          "send_photos": false,
+          "es": "Entonces lo que te sirve saber es como se vive ahi.\n\nCosta Bavaro Garden no es un edificio pegado a la avenida, es un residencial con areas verdes grandes, caminos internos y los edificios repartidos alrededor de la piscina. Se siente tranquilo, y esta pensado para gente que se queda, no para turismo de fin de semana: hay piscina para ninos aparte de la grande, area de juegos, y una sala de coworking dentro del residencial si trabajas remoto.\n\nLa playa te queda a 7 minutos y el aeropuerto a 20.",
+          "en": "Then what actually matters to you is what daily life looks like there.\n\nCosta Bavaro Garden isn't a building stuck on the main road, it's a residential complex with big green areas, internal walkways and the buildings spread around the pool. It feels quiet, and it's built for people who stay rather than weekend tourism: there's a separate kids pool next to the main one, a playground, and a coworking room inside the complex if you work remotely.\n\nThe beach is 7 minutes away and the airport 20."
+        },
+        {
+          "id": "step3b_personal_amenities",
+          "label_es": "Si responde USO PERSONAL (2 de 2: el apartamento y llegada)",
+          "send_photos": true,
+          "es": "Puertas adentro: 86 m2, sala y comedor de concepto abierto, cocina con estufa de gas de 6 hornillas, campana, nevera grande y topes claros. La habitacion principal tiene cama queen y la segunda tiene dos camas individuales con closet empotrado. 2.5 banos, o sea que la visita tiene su medio bano y nadie entra al tuyo.\n\nAire acondicionado en la sala y en las dos habitaciones, y balcon con vista a la piscina.\n\nLo que todavia no te puedo confirmar es la cuota de mantenimiento, el parqueo asignado y el piso exacto de esta unidad. Se lo estoy pidiendo al propietario y te lo paso tal cual me lo den.\n\nTe mando fotos de las areas comunes, el gimnasio y los jardines para que veas el entorno real?",
+          "en": "Inside: 86 m2, open-concept living and dining, kitchen with a 6-burner gas range, hood, a full-size fridge and light countertops. The master has a queen bed and the second bedroom has two twin beds with a built-in closet. 2.5 baths, which means guests get their own half bath and nobody walks into yours.\n\nA/C in the living room and both bedrooms, and a balcony facing the pool.\n\nWhat I still can't confirm is the monthly HOA fee, the assigned parking and the exact floor of this unit. I'm asking the owner and I'll pass it on exactly as I get it.\n\nWant me to send photos of the common areas, the gym and the gardens so you can see the real surroundings?"
+        },
+        {
+          "id": "step4_close",
+          "label_es": "Cierre: videollamada o visita",
+          "send_photos": false,
+          "es": "Te propongo algo facil. Videollamada de 15 minutos y te camino el apartamento en vivo: cuarto por cuarto, el balcon, la piscina, el gimnasio y los jardines, para que veas lo que las fotos no te dicen. Si ya vas a estar por aca, mejor lo vemos en persona.\n\nTe sirve manana a las 10 de la manana, o el jueves a las 6 de la tarde, hora de Punta Cana? Si ninguno te cuadra, dime tu horario y me acomodo yo.",
+          "en": "Let's make this easy. A 15-minute video call and I'll walk you through the place live: room by room, the balcony, the pool, the gym and the gardens, so you see what photos don't tell you. If you're going to be down here anyway, we do it in person instead.\n\nDoes tomorrow at 10am work, or Thursday at 6pm, Punta Cana time? If neither fits, tell me your window and I'll work around it."
+        },
+        {
+          "id": "followup_d2",
+          "label_es": "Seguimiento dia 2",
+          "send_photos": false,
+          "es": "Hola, te escribo por si esto se te quedo enterrado en el chat. El 2 habitaciones de Costa Bavaro Garden sigue disponible, en US$199,000 y amueblado.\n\nTe quedo alguna duda que pueda aclararte?",
+          "en": "Hey, just in case this got buried in your chats. The 2-bedroom in Costa Bavaro Garden is still available, US$199,000 and furnished.\n\nAnything you were left wondering about that I can clear up?"
+        },
+        {
+          "id": "followup_d5",
+          "label_es": "Seguimiento dia 5",
+          "send_photos": true,
+          "es": "Sin presion, solo para que sepas que sigue disponible.\n\nSi te sirve te paso mas fotos del apartamento y de las areas comunes, y las ves con calma cuando tengas chance.",
+          "en": "No pressure, just letting you know it's still available.\n\nHappy to send you more photos of the apartment and the common areas so you can look at them whenever you get a minute."
+        },
+        {
+          "id": "followup_d14",
+          "label_es": "Seguimiento dia 14 (salida digna)",
+          "send_photos": false,
+          "es": "Ultimo mensaje mio por aqui.\n\nSi mas adelante te vuelve la idea, escribeme y seguimos donde lo dejamos. Y si ya no te interesa, avisame y no te escribo mas, sin ningun problema.",
+          "en": "Last message from me on this.\n\nIf it comes back around later, just write me and we pick up where we left off. And if you're not interested anymore, tell me and I'll stop writing, no problem at all."
+        }
+      ]
+    },
+    {
       "slug": "land-autovia-este",
       "ref_code": "LAUT",
       "keywords": [
