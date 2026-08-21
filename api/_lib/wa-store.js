@@ -21,6 +21,12 @@ export const DEFAULT_CONFIG = {
   dailyCap: 20,
   quietHours: { start: 8, end: 21 },
   timezone: 'America/Santo_Domingo',
+  // Estricto por defecto: solo se auto-responde a quien llego por un link
+  // nuestro (trae ref RG-XXXX-XX). El clasificador tambien da confianza alta
+  // por un keyword unico, pero este es el numero PERSONAL del dueno: un
+  // conocido preguntando "sigue disponible el de Arboleda?" no puede recibir
+  // el pitch de un bot. Ponerlo en false vuelve al comportamiento anterior.
+  requireRefForAutoReply: true,
 };
 
 export const STAGES = ['new', 'awaiting_qualify', 'qualified', 'closing', 'cold'];
@@ -301,6 +307,12 @@ function mergeConfig(base, patch) {
   const merged = { ...base, ...p, quietHours: { ...base.quietHours, ...(p.quietHours || {}) } };
   merged.autoReplyEnabled = coerceBool(merged.autoReplyEnabled, DEFAULT_CONFIG.autoReplyEnabled);
   merged.killSwitch = coerceBool(merged.killSwitch, DEFAULT_CONFIG.killSwitch);
+  // Sin coerción, un "false" que llegue como cadena seria truthy y apagaria
+  // el modo estricto sin que nadie lo pidiera.
+  merged.requireRefForAutoReply = coerceBool(
+    merged.requireRefForAutoReply,
+    DEFAULT_CONFIG.requireRefForAutoReply,
+  );
   merged.dailyCap = Math.max(0, coerceInt(merged.dailyCap, DEFAULT_CONFIG.dailyCap));
   merged.quietHours = {
     start: coerceInt(merged.quietHours.start, DEFAULT_CONFIG.quietHours.start),

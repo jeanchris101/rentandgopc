@@ -220,6 +220,19 @@ async function evaluateRules({ cfg, classification, thread, chatId, playbook, st
   if (cfg.killSwitch === true) return denied(1, 'killSwitch activo', chatId);
 
   // REGLA 2 — el clasificador tiene que dar permiso (intencion y confianza).
+  // MODO ESTRICTO (por defecto): sin ref, no hay auto-respuesta.
+  //
+  // El clasificador tambien da confianza alta por un keyword unico ("A301",
+  // "Arboleda"), y eso alcanza para un numero de negocio. Este es el numero
+  // PERSONAL del dueno: un conocido que pregunte "sigue disponible el de
+  // Arboleda?" recibiria el pitch completo de un bot, y eso no se deshace.
+  // Exigir el ref significa: solo contesta solo a quien llego por un link
+  // nuestro (post, grupo o anuncio). El resto aparece en la bandeja y lo
+  // contesta el dueno.
+  if (cfg.requireRefForAutoReply !== false && !classification?.ref) {
+    return denied(2, 'modo estricto: el mensaje no trae ref de un link nuestro', chatId);
+  }
+
   if (!classification || classification.autoReplyAllowed !== true) {
     return denied(2, 'classify.autoReplyAllowed=false', chatId);
   }
