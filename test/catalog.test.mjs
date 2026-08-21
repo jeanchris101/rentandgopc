@@ -29,7 +29,15 @@ const readText = (rel) => fs.readFileSync(path.join(REPO, rel), 'utf8');
 const propertiesFile = readJson('automation/data/properties.json');
 const playbooksFile = readJson('automation/data/playbooks.json');
 
-const PROPERTIES = propertiesFile.properties.filter((p) => p && p.slug && p.active !== false);
+/**
+ * TODAS incluye las que estan en `active: false`. Apagar una propiedad la saca
+ * del bot de Facebook y de la cola de grupos, pero NO del panel de WhatsApp:
+ * si alguien pregunta por ella hay que saber contestarle. Por eso el guion y el
+ * codigo de ref se exigen sobre todas, y solo la ficha del sitio y las fotos de
+ * los posts se exigen sobre las activas.
+ */
+const TODAS = propertiesFile.properties.filter((p) => p && p.slug);
+const PROPERTIES = TODAS.filter((p) => p.active !== false);
 const PLAYBOOKS = playbooksFile.playbooks.filter((p) => p && p.slug);
 
 /**
@@ -59,8 +67,8 @@ const REF_PY = refCodesFrom('automation/build_queue.py', 'REF_CODES = {', '}');
  * Codigos de ref
  * ------------------------------------------------------------------ */
 
-test('cada propiedad activa tiene codigo de ref en los dos generadores', () => {
-  for (const prop of PROPERTIES) {
+test('cada propiedad tiene codigo de ref en los dos generadores', () => {
+  for (const prop of TODAS) {
     assert.ok(REF_JS[prop.slug], `${prop.slug} falta en REF_CODES de api/_lib/groups-plan.js`);
     assert.ok(REF_PY[prop.slug], `${prop.slug} falta en REF_CODES de automation/build_queue.py`);
     assert.equal(
@@ -82,8 +90,8 @@ test('los codigos de ref no se repiten', () => {
 test('el ref_code del playbook coincide con REF_CODES', () => {
   for (const pb of PLAYBOOKS) {
     assert.ok(
-      PROPERTIES.some((p) => p.slug === pb.slug),
-      `el playbook ${pb.slug} no corresponde a ninguna propiedad activa`
+      TODAS.some((p) => p.slug === pb.slug),
+      `el playbook ${pb.slug} no corresponde a ninguna propiedad de properties.json`
     );
     assert.equal(
       pb.ref_code,
@@ -93,8 +101,8 @@ test('el ref_code del playbook coincide con REF_CODES', () => {
   }
 });
 
-test('cada propiedad activa tiene playbook', () => {
-  for (const prop of PROPERTIES) {
+test('cada propiedad tiene playbook, este activa o no', () => {
+  for (const prop of TODAS) {
     assert.ok(
       PLAYBOOKS.some((pb) => pb.slug === prop.slug),
       `${prop.slug} no tiene guion en playbooks.json: el panel no sabria que contestar`

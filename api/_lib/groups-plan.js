@@ -125,6 +125,7 @@ export const REF_CODES = {
   'paseo-cocotal': 'PB202',
   'karen-los-corales': 'KLC1',
   'costa-bavaro-garden': 'CBG1',
+  'cocotal-2bdr-furnished': 'COCF',
   'land-autovia-este': 'LAUT',
   'land-cepm-vistacana': 'LCEP',
 };
@@ -1222,11 +1223,18 @@ function pickCampaignProperty(dateStr, cfg, index, run) {
     }
   }
 
-  const ord = ordinalOf(dateStr);
-  const n = PROPERTIES.length;
+  // key0: la que lleva mas tiempo sin publicarse va primero, y la que nunca se
+  // publico va antes que todas. Eso no cambia: es lo que reparte los turnos.
+  //
+  // key1 SI cambio. Antes desempataba con un offset que rotaba por fecha, para
+  // que no saliera siempre la misma en el dia 1. Ahora desempata por el orden de
+  // properties.json, que es la prioridad que fijo el dueno: primero Costa Bavaro,
+  // despues el Cocotal amueblado, y asi. Entre dos igual de "vencidas", gana la
+  // que este mas arriba en el catalogo. Reordenar properties.json reordena la
+  // prioridad, sin tocar codigo.
   const ranked = PROPERTIES.map((p) => {
     const last = index.lastPostedByProp.get(p.slug) || null;
-    return { p, key0: last ? ordinalOf(last) : 0, key1: mod(PROP_INDEX.get(p.slug) - ord, n) };
+    return { p, key0: last ? ordinalOf(last) : 0, key1: PROP_INDEX.get(p.slug) };
   }).sort((a, b) => a.key0 - b.key0 || a.key1 - b.key1);
 
   if (!ranked.length) return { prop: null, source: 'none', dayIndex: 0, startedOn: dateStr, note };

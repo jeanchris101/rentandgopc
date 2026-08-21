@@ -93,6 +93,7 @@ REF_CODES = {
     "paseo-cocotal": "PB202",
     "karen-los-corales": "KLC1",
     "costa-bavaro-garden": "CBG1",
+    "cocotal-2bdr-furnished": "COCF",
     "land-autovia-este": "LAUT",
     "land-cepm-vistacana": "LCEP",
 }

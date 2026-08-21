@@ -210,8 +210,8 @@
           "id": "step1_immediate",
           "label_es": "Primer contacto (menos de 5 min)",
           "send_photos": true,
-          "es": "Hola, si, sigue disponible.\n\nTe doy lo concreto: es 1 habitacion, 1 bano, 67 m2, en US$155,000. Obra nueva, amueblado completo y listo para entrar, planta baja con terraza privada que da a los jardines. La playa de Bavaro te queda a 10 minutos y el aeropuerto a 25 minutos.\n\nTe dejo un par de fotos aqui. Si quieres te mando el set completo con la terraza, la piscina y el gimnasio.",
-          "en": "Hi, yes, it's still available.\n\nStraight to it: 1 bedroom, 1 bath, 67 m2 (about 720 sq ft), at US$155,000. Brand-new construction, fully furnished and move-in ready, ground floor with its own private terrace facing the gardens. Bavaro Beach is 10 minutes away and the airport 25.\n\nSending you a couple of photos here. I can send the full set with the terrace, the pool and the gym if you want."
+          "es": "Hola, si, sigue disponible.\n\nTe doy lo concreto: es 1 habitacion, 1 bano, 67 m2, en US$170,000. Obra nueva, amueblado completo y listo para entrar, planta baja con terraza privada que da a los jardines. La playa de Bavaro te queda a 10 minutos y el aeropuerto a 25 minutos.\n\nTe dejo un par de fotos aqui. Si quieres te mando el set completo con la terraza, la piscina y el gimnasio.",
+          "en": "Hi, yes, it's still available.\n\nStraight to it: 1 bedroom, 1 bath, 67 m2 (about 720 sq ft), at US$170,000. Brand-new construction, fully furnished and move-in ready, ground floor with its own private terrace facing the gardens. Bavaro Beach is 10 minutes away and the airport 25.\n\nSending you a couple of photos here. I can send the full set with the terrace, the pool and the gym if you want."
         },
         {
           "id": "step2_qualify",
@@ -231,8 +231,8 @@
           "id": "step3a_investment_calc",
           "label_es": "Si responde INVERSION (2 de 2: calculadora)",
           "send_photos": false,
-          "es": "Mete el precio real, US$155,000, en la calculadora del sitio y corre tus propios supuestos: https://www.rentandgopc.com/roi-calculator.html\n\nSi quieres damelo 15 minutos y revisamos tus numeros juntos, con tus supuestos, no con los mios.",
-          "en": "Put the real price, US$155,000, into the calculator on my site and run it with your own assumptions: https://www.rentandgopc.com/roi-calculator.html\n\nGive me 15 minutes and we can go through your numbers together, using yours and not mine."
+          "es": "Mete el precio real, US$170,000, en la calculadora del sitio y corre tus propios supuestos: https://www.rentandgopc.com/roi-calculator.html\n\nSi quieres damelo 15 minutos y revisamos tus numeros juntos, con tus supuestos, no con los mios.",
+          "en": "Put the real price, US$170,000, into the calculator on my site and run it with your own assumptions: https://www.rentandgopc.com/roi-calculator.html\n\nGive me 15 minutes and we can go through your numbers together, using yours and not mine."
         },
         {
           "id": "step3b_personal",
@@ -259,8 +259,8 @@
           "id": "followup_d2",
           "label_es": "Seguimiento dia 2",
           "send_photos": false,
-          "es": "Hola, te escribo por si esto se te quedo enterrado en el chat. El 1BR de Los Corales sigue disponible, en US$155,000 y amueblado.\n\nTe quedo alguna duda que pueda aclararte?",
-          "en": "Hey, just in case this got buried in your chats. The 1BR in Los Corales is still available, US$155,000 and furnished.\n\nAnything you were left wondering about that I can clear up?"
+          "es": "Hola, te escribo por si esto se te quedo enterrado en el chat. El 1BR de Los Corales sigue disponible, en US$170,000 y amueblado.\n\nTe quedo alguna duda que pueda aclararte?",
+          "en": "Hey, just in case this got buried in your chats. The 1BR in Los Corales is still available, US$170,000 and furnished.\n\nAnything you were left wondering about that I can clear up?"
         },
         {
           "id": "followup_d5",
@@ -286,10 +286,10 @@
         "Modern 1BR Apartment in Los Corales",
         "Bavaro",
         "Bávaro",
-        "US$155,000",
-        "155,000",
-        "155K",
-        "$155k apartamento Bavaro",
+        "US$170,000",
+        "170,000",
+        "170K",
+        "$170k apartamento Bavaro",
         "67 m2",
         "67m2",
         "67 metros cuadrados",
@@ -403,6 +403,108 @@
           "send_photos": true,
           "es": "Sin presion, solo para que sepas que sigue disponible.\n\nSi te sirve te paso mas fotos del apartamento y de las areas comunes, y las ves con calma cuando tengas chance.",
           "en": "No pressure, just letting you know it's still available.\n\nHappy to send you more photos of the apartment and the common areas so you can look at them whenever you get a minute."
+        },
+        {
+          "id": "followup_d14",
+          "label_es": "Seguimiento dia 14 (salida digna)",
+          "send_photos": false,
+          "es": "Ultimo mensaje mio por aqui.\n\nSi mas adelante te vuelve la idea, escribeme y seguimos donde lo dejamos. Y si ya no te interesa, avisame y no te escribo mas, sin ningun problema.",
+          "en": "Last message from me on this.\n\nIf it comes back around later, just write me and we pick up where we left off. And if you're not interested anymore, tell me and I'll stop writing, no problem at all."
+        }
+      ]
+    },
+    {
+      "slug": "cocotal-2bdr-furnished",
+      "ref_code": "COCF",
+      "keywords": [
+        "COCF",
+        "cocotal-2bdr-furnished",
+        "Cocotal amueblado",
+        "Designer-Furnished 2BR in Cocotal",
+        "apartamento amueblado en Cocotal",
+        "US$365,000",
+        "365,000",
+        "365K",
+        "$365k Cocotal",
+        "138 m2",
+        "138m2",
+        "138 metros cuadrados",
+        "el 2 habitaciones mas amplio",
+        "vestidor en cedro",
+        "walk-in en cedro",
+        "cedar walk-in closet",
+        "mobiliario a medida",
+        "diseno a medida",
+        "custom furniture",
+        "llave en mano",
+        "turnkey",
+        "beneficios del hotel Melia",
+        "Melia hotel benefits",
+        "2 parqueos Cocotal"
+      ],
+      "steps": [
+        {
+          "id": "step1_immediate",
+          "label_es": "Primer contacto (menos de 5 min)",
+          "send_photos": true,
+          "es": "Hola, si, sigue disponible.\n\nTe doy lo concreto: 2 habitaciones, 138 m2, 2 parqueos, en US$365,000, dentro de Cocotal Golf & Country Club. Viene amueblado completo, pero no con muebles de catalogo: es diseno y mobiliario a medida, con vestidor walk-in forrado en cedro. Llave en mano.\n\nTiene CONFOTUR, que son 15 anos sin impuesto a la propiedad, y beneficios del hotel Melia.\n\nTe dejo unas fotos aqui. Si quieres te mando el set completo.",
+          "en": "Hi, yes, it's still available.\n\nStraight to it: 2 bedrooms, 138 m2 (about 1,485 sq ft), 2 parking spots, at US$365,000, inside Cocotal Golf & Country Club. Fully furnished, and not with catalogue furniture: it's custom design and millwork throughout, with a cedar-lined walk-in closet. Turnkey.\n\nIt carries CONFOTUR, which is 15 years with no property tax, plus Melia hotel benefits.\n\nSending you some photos here. I can send the full set if you want."
+        },
+        {
+          "id": "step2_qualify",
+          "label_es": "Calificacion (uso + fecha de viaje)",
+          "send_photos": false,
+          "es": "Una pregunta para no llenarte de informacion que no te sirve: lo estas viendo para inversion, tipo Airbnb, o para uso propio? Y mas o menos cuando piensas venir a Punta Cana?",
+          "en": "One question so I don't bury you in info you don't need: are you looking at this as an investment (Airbnb) or for your own use? And roughly when are you planning to be in Punta Cana?"
+        },
+        {
+          "id": "step3a_investment",
+          "label_es": "Si responde INVERSION (1 de 2: por que este)",
+          "send_photos": false,
+          "es": "Perfecto, entonces vamos a lo que importa.\n\nNo te voy a tirar porcentajes de ocupacion ni de rendimiento de esta unidad, porque dependen de tu tarifa por noche, de quien te la administre y de tus gastos.\n\nLo que si cambia el numero de verdad es el CONFOTUR: 15 anos sin impuesto a la propiedad, sin impuesto de transferencia en la compra y sin ganancias de capital al vender. Sobre US$365,000 eso no es un detalle, y es la razon principal por la que este apartamento se defiende frente a uno mas barato sin la exencion.",
+          "en": "Good, then let's go to what actually matters.\n\nI'm not going to quote you occupancy or yield percentages for this unit, because they depend on your nightly rate, on who manages it and on your expenses.\n\nWhat does move the number is CONFOTUR: 15 years with no property tax, no transfer tax on the purchase, and no capital gains when you sell. On US$365,000 that is not a detail, and it is the main reason this one holds up against a cheaper unit without the exemption."
+        },
+        {
+          "id": "step3a_investment_calc",
+          "label_es": "Si responde INVERSION (2 de 2: calculadora)",
+          "send_photos": false,
+          "es": "Corre tus propios numeros con el precio real, US$365,000: https://www.rentandgopc.com/roi-calculator.html\n\nY si quieres ver cuanto vale la exencion en tu caso: https://www.rentandgopc.com/confotur-calculator.html\n\nDos cosas que todavia no tengo confirmadas y que te van a mover el calculo: la cuota de mantenimiento y la cantidad exacta de banos. Las estoy confirmando y te las paso; no te las voy a estimar.",
+          "en": "Run your own numbers with the real price, US$365,000: https://www.rentandgopc.com/roi-calculator.html\n\nAnd if you want to see what the exemption is worth in your case: https://www.rentandgopc.com/confotur-calculator.html\n\nTwo things I don't have confirmed that will move your math: the monthly HOA fee and the exact bathroom count. I'm confirming both and I'll send them over. I'm not going to estimate them for you."
+        },
+        {
+          "id": "step3b_personal",
+          "label_es": "Si responde USO PERSONAL (1 de 2: como se vive)",
+          "send_photos": false,
+          "es": "Entonces lo que te sirve saber es como se vive ahi.\n\nCocotal es una comunidad de golf cerrada, con seguridad 24/7, calles arboladas y el campo por dentro. No es zona de turismo de paso: la gente que compra ahi se queda temporadas largas o vive todo el ano.\n\nY el apartamento no es el tipico amueblado de alquiler. La sala tiene un mueble de TV en madera hecho a medida con iluminacion integrada, el comedor es de travertino, y el vestidor esta forrado en cedro. Se entrega listo, no hay que comprar nada.",
+          "en": "Then what actually matters to you is what daily life looks like there.\n\nCocotal is a gated golf community with 24/7 security, tree-lined streets and the course running through it. It isn't a pass-through tourist area: people who buy there stay for long seasons or live there year-round.\n\nAnd this isn't the usual rental-grade furnished apartment. The living room has a custom wood TV wall with integrated lighting, the dining table is travertine, and the walk-in closet is lined in cedar. It hands over ready; you don't have to buy anything."
+        },
+        {
+          "id": "step3b_personal_amenities",
+          "label_es": "Si responde USO PERSONAL (2 de 2: el complejo y llegada)",
+          "send_photos": true,
+          "es": "Puertas afuera tienes el campo de golf, y con los beneficios del hotel Melia entras a la playa, los restaurantes y el spa. El apartamento trae 2 parqueos, que en Cocotal se agradece.\n\nLo que todavia no te puedo confirmar es la cuota de mantenimiento, la cantidad exacta de banos y el piso de esta unidad. Se lo estoy pidiendo al propietario y te lo paso tal cual me lo den.\n\nTe mando el resto de las fotos para que veas el nivel de terminacion?",
+          "en": "Outside the door you have the golf course, and the Melia hotel benefits get you into the beach, the restaurants and the spa. The unit comes with 2 parking spots, which in Cocotal you notice.\n\nWhat I still can't confirm is the monthly HOA fee, the exact bathroom count and which floor this unit is on. I'm asking the owner and I'll pass it on exactly as I get it.\n\nWant me to send the rest of the photos so you can see the level of finish?"
+        },
+        {
+          "id": "step4_close",
+          "label_es": "Cierre: videollamada o visita",
+          "send_photos": false,
+          "es": "Te propongo algo facil. Videollamada de 15 minutos y te camino el apartamento en vivo: cuarto por cuarto, el vestidor, el mueble de la sala y la vista, para que veas lo que las fotos no te dicen. Si ya vas a estar por aca, mejor lo vemos en persona.\n\nTe sirve manana a las 10 de la manana, o el jueves a las 6 de la tarde, hora de Punta Cana? Si ninguno te cuadra, dime tu horario y me acomodo yo.",
+          "en": "Let's make this easy. A 15-minute video call and I'll walk you through it live: room by room, the closet, the custom living room wall and the view, so you see what photos don't tell you. If you're going to be down here anyway, we do it in person instead.\n\nDoes tomorrow at 10am work, or Thursday at 6pm, Punta Cana time? If neither fits, tell me your window and I'll work around it."
+        },
+        {
+          "id": "followup_d2",
+          "label_es": "Seguimiento dia 2",
+          "send_photos": false,
+          "es": "Hola, te escribo por si esto se te quedo enterrado en el chat. El de Cocotal sigue disponible, en US$365,000, amueblado a medida y con CONFOTUR.\n\nTe quedo alguna duda que pueda aclararte?",
+          "en": "Hey, just in case this got buried in your chats. The Cocotal one is still available, US$365,000, custom furnished and with CONFOTUR.\n\nAnything you were left wondering about that I can clear up?"
+        },
+        {
+          "id": "followup_d5",
+          "label_es": "Seguimiento dia 5",
+          "send_photos": true,
+          "es": "Sin presion, solo para que sepas que sigue disponible.\n\nSi te sirve te paso el resto de las fotos y las ves con calma cuando tengas chance.",
+          "en": "No pressure, just letting you know it's still available.\n\nHappy to send you the rest of the photos so you can look at them whenever you get a minute."
         },
         {
           "id": "followup_d14",
