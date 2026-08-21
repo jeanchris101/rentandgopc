@@ -148,6 +148,10 @@ envio automatico.
 - **Grupo que no toca hoy**: te lista los que si tocan, con enlace.
 - **Ya publicaste hoy aqui**: te deja copiar el comentario y ya.
 - **Grupo que no esta en los 18**: el panel **no aparece**. Ni un pixel.
+- **Grupo que si es tuyo pero Facebook sirve con otra direccion**: te sale un
+  panel chico con los 18 en una lista. Lo eliges una vez, queda guardado, y
+  desde ahi se comporta como cualquier otro. Pasa sobre todo con los tres que
+  estan configurados por nombre y no por numero.
 
 El panel se contrae con el `−`, se cierra por hoy con la `×`, y se acuerda de
 como lo dejaste.
@@ -266,6 +270,12 @@ el `www`.
 **El panel salio con datos viejos** → Te lo dice: "Plan sin actualizar". Es el
 cache sirviendo la ultima copia buena porque la red fallo. Popup → Probar
 conexion.
+
+**Abri un grupo mio y no salio el panel** → Si en vez del panel normal sale uno
+que dice "Grupo sin identificar", es que Facebook esta sirviendo ese grupo con
+una direccion distinta a la que tiene la configuracion. Elige cual es en la
+lista y dale a "Recordar este grupo": se guarda y no vuelve a preguntar. Si no
+sale nada de nada, ese grupo no es de los 18.
 
 **Cerre el panel sin querer** → La `×` lo cierra **por hoy**. Recarga la pagina
 manana, o abre el popup y dale a Probar conexion despues de medianoche (hora de
