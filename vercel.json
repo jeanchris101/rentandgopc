@@ -1,31 +1,21 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-
-  "_comentario_cache": [
-    "Antes habia una sola regla: max-age=3600 para TODO. Eso hacia dos danos a la",
-    "vez. Las fotos, que son 2.9 MB en la portada y no cambian nunca, se volvian a",
-    "descargar cada hora en el celular de quien volvia. Y el HTML, que si cambia,",
-    "tardaba hasta una hora en mostrar un precio nuevo: hoy cambiamos dos precios y",
-    "esa hora es exactamente el problema.",
-    "",
-    "Ahora se separan. Las fotos aguantan una semana en el navegador y hasta un mes",
-    "sirviendose de cache mientras se revalidan por detras. El HTML NO lleva regla:",
-    "cae en el default de Vercel para estaticos (max-age=0, must-revalidate), asi",
-    "que un cambio de precio se ve al recargar. El CDN de Vercel igual lo sirve",
-    "desde el borde, y se purga solo en cada despliegue.",
-    "",
-    "OJO con las fotos: los nombres no llevan hash. Si se reemplaza una foto con el",
-    "mismo nombre, quien ya la tenia en cache puede seguir viendo la vieja hasta una",
-    "semana. Para que se vea al instante, cambiar el nombre del archivo."
-  ],
-
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        }
       ]
     },
     {
@@ -58,7 +48,10 @@
     {
       "source": "/(robots.txt|sitemap.xml|llms.txt)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
       ]
     }
   ]
