@@ -39,6 +39,9 @@
 
   const PANEL_ID = 'rgpc-panel';
   const UI_KEY = 'ui';
+  // clave de URL -> codigo de grupo, para los grupos que Facebook sirve con una
+  // direccion distinta a la que esta en group-assist-config.json
+  const ALIAS_KEY = 'groupAliases';
 
   const LANG_NAME = { en: 'Ingles', es: 'Espanol', fr: 'Frances' };
   const MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
@@ -55,6 +58,7 @@
     slot: null, // el slot de campana de ESTE grupo, si tiene uno
     nextSlot: null, // el slot que toca ahora en la campana del dia
     ui: { collapsed: false, dismissedDate: null },
+    aliases: {}, // clave de URL -> codigo, para grupos que Facebook sirve con otra direccion
     note: null, // { text, kind }
     busy: false,
     lastDownloadId: null,
@@ -122,6 +126,9 @@
     for (const g of plan.groups) {
       if (groupKeyFromUrl(g.url) === key) return g;
     }
+    // Sin coincidencia por URL, mira si ya dijiste a mano cual grupo es este.
+    const code = state.aliases[key];
+    if (code) return plan.groups.find((g) => g.code === code) || null;
     return null;
   }
 
@@ -475,10 +482,38 @@
   function render() {
     const today = state.plan ? state.plan.date : null;
 
-    // Nada de UI si el grupo no es de los 18, si no hay plan, o si cerraste el
-    // panel por hoy.
-    if (!state.group || !state.plan || (state.ui.dismissedDate && state.ui.dismissedDate === today)) {
+    // Nada de UI si no hay plan o si cerraste el panel por hoy.
+    if (!state.plan || (state.ui.dismissedDate && state.ui.dismissedDate === today)) {
       removePanel();
+      return;
+    }
+
+    // Estamos en un grupo, pero su direccion no cuadra con ninguno de los 18.
+    // En vez de no mostrar nada, preguntamos cual es.
+    if (!state.group) {
+      let caja = panelRoot();
+      if (!caja) {
+        caja = el('aside', 'rgpc-panel');
+        caja.id = PANEL_ID;
+        caja.setAttribute('role', 'complementary');
+        caja.setAttribute('aria-label', 'Asistente de grupos Rent & Go');
+        caja.setAttribute('dir', 'ltr');
+        document.documentElement.appendChild(caja);
+      }
+      caja.textContent = '';
+      caja.classList.remove('rgpc-collapsed');
+      const head = el('header', 'rgpc-head');
+      head.appendChild(el('span', 'rgpc-code', '?'));
+      head.appendChild(el('span', 'rgpc-name', 'Grupo sin identificar'));
+      const cerrar = button('rgpc-icon', '\u00d7', async () => {
+        state.ui.dismissedDate = today;
+        await saveUi();
+        removePanel();
+      });
+      cerrar.title = 'Ocultar por hoy';
+      head.appendChild(cerrar);
+      caja.appendChild(head);
+      caja.appendChild(buildUnknown());
       return;
     }
 
@@ -879,6 +914,51 @@
     state.nextSlot = findNextSlot(res.plan);
   }
 
+  async function saveAlias(key, code) {
+    state.aliases = { ...state.aliases, [key]: code };
+    try {
+      await chrome.storage.local.set({ [ALIAS_KEY]: state.aliases });
+    } catch (e) {
+      /* si no se puede guardar, al menos vale para esta pestana */
+    }
+  }
+
+  /**
+   * El panel que sale cuando la URL no cuadra con ninguno de los 18. Antes esto
+   * era silencio total: el usuario abria el grupo, no pasaba nada, y la pista
+   * estaba en la consola. Una lista y un boton lo resuelven de una vez.
+   */
+  function buildUnknown() {
+    const box = el('div', 'rgpc-body');
+    box.appendChild(el('p', 'rgpc-note',
+      'No reconozco este grupo por su direccion. Si es uno de tu lista, elegilo una vez y lo recuerdo.'));
+
+    const select = el('select', 'rgpc-select');
+    const vacia = el('option', null, 'Elegi el grupo...');
+    vacia.value = '';
+    select.appendChild(vacia);
+    for (const g of state.plan.groups) {
+      const opt = el('option', null, g.code + ' - ' + g.name);
+      opt.value = g.code;
+      select.appendChild(opt);
+    }
+    box.appendChild(select);
+
+    const guardar = button('rgpc-primary', 'Recordar este grupo', async () => {
+      if (!select.value) return;
+      await saveAlias(state.groupKey, select.value);
+      state.group = findGroup(state.plan, state.groupKey);
+      state.assignment = state.group ? findAssignment(state.plan, state.group.code) : null;
+      state.slot = state.group ? findSlot(state.plan, state.group.code) : null;
+      render();
+    });
+    box.appendChild(guardar);
+
+    const clave = el('p', 'rgpc-note', 'Clave detectada: ' + state.groupKey);
+    box.appendChild(clave);
+    return box;
+  }
+
   async function refresh(force) {
     state.groupKey = groupKeyFromUrl(location.href);
     if (!state.groupKey) {
@@ -893,10 +973,13 @@
 
   async function init() {
     try {
-      const stored = await chrome.storage.local.get([UI_KEY]);
+      const stored = await chrome.storage.local.get([UI_KEY, ALIAS_KEY]);
       if (stored && stored[UI_KEY] && typeof stored[UI_KEY] === 'object') {
         state.ui.collapsed = Boolean(stored[UI_KEY].collapsed);
         state.ui.dismissedDate = stored[UI_KEY].dismissedDate || null;
+      }
+      if (stored && stored[ALIAS_KEY] && typeof stored[ALIAS_KEY] === 'object') {
+        state.aliases = stored[ALIAS_KEY];
       }
     } catch (e) {
       /* valores por defecto */

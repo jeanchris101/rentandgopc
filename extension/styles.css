@@ -617,3 +617,26 @@ body.rgpc-popup * {
   line-height: 1.45;
   color: #6b7a71;
 }
+
+/* Selector de grupo. Solo aparece cuando la URL del grupo no cuadra con ninguno
+   de los 18: se elige una vez y queda guardado. */
+#rgpc-panel .rgpc-select {
+  width: 100%;
+  margin: 8px 0 10px;
+  padding: 8px 10px;
+  font-family: var(--rgpc-ui);
+  font-size: var(--rgpc-t-base);
+  color: var(--rgpc-ink);
+  background: #ffffff;
+  border: 1px solid #cfd4d9;
+  border-radius: 7px;
+}
+
+#rgpc-panel .rgpc-select:focus-visible {
+  outline: 2px solid var(--rgpc-primary-soft);
+  outline-offset: 1px;
+}
+.rgpc-select:focus-visible {
+  outline: 2px solid #2d5a3f;
+  outline-offset: 1px;
+}
