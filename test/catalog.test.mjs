@@ -120,7 +120,9 @@ test('todas las fotos de properties.json existen en el repo', () => {
   assert.deepEqual(
     missing,
     [],
-    `Faltan fotos por subir (el bot publicaria sin imagen y la ficha saldria rota):\n  ${missing.join('\n  ')}\n`
+    `Faltan fotos por subir. El sitio aguanta (la ficha descarta sola la lamina que no existe),\n` +
+      `pero el bot de Facebook no puede publicar sin imagen: esta propiedad no debe entrar en la\n` +
+      `cola de grupos hasta que esten.\n  ${missing.join('\n  ')}\n`
   );
 });
 

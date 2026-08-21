@@ -10,7 +10,9 @@
     <meta property="og:title" content="Furnished 2BR in Costa Bavaro Garden, For Sale">
     <meta property="og:description" content="86 m2, 2 bedrooms and 2.5 baths, fully furnished. Balcony over the pool, gym, coworking room and playground. 7 minutes to the beach in Bavaro.">
     <meta property="og:type" content="article">
-    <meta property="og:image" content="https://www.rentandgopc.com/images/costa-garden/pool-wide.jpg">
+    <!-- pool-view.png y no pool-wide.jpg: es la unica que esta en el repo hoy, y una
+         meta no admite respaldo. Cuando pool-wide.jpg este subida, se puede cambiar. -->
+    <meta property="og:image" content="https://www.rentandgopc.com/images/costa-garden/pool-view.png">
     <meta property="og:url" content="https://www.rentandgopc.com/costa-bavaro-garden.html">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,32 +47,16 @@
     <!-- Gallery Slideshow
          Las fotos viven en images/costa-garden/ (misma carpeta que pool-view.png,
          la foto que ya usaba la ficha de alquiler en index.html).
-         `npm test` falla mientras falte cualquiera de las de properties.json. -->
+
+         El carril arranca VACIO a proposito: el script del final de la pagina
+         precarga la lista, descarta la que no exista y arma solo las que si.
+         Asi una foto que falta se nota como una lamina menos y no como un icono
+         de imagen rota. `npm test` sigue avisando cuales faltan. -->
     <div class="slideshow" id="slideshow">
-        <div class="slideshow-track" id="slideshow-track">
-            <div class="slide"><img src="images/costa-garden/pool-wide.jpg" alt="Resort-style pool and gardens at Costa Bavaro Garden"><span class="slide-label">Pool</span></div>
-            <div class="slide"><img src="images/costa-garden/living-dining.jpg" alt="Open-concept living and dining room with wood slat accent wall"><span class="slide-label">Living &amp; Dining</span></div>
-            <div class="slide"><img src="images/costa-garden/living-balcony-open.jpg" alt="Living room with the balcony door open to the pool view"><span class="slide-label">Balcony Access</span></div>
-            <div class="slide"><img src="images/costa-garden/living-wide.jpg" alt="Living and dining area with ceiling fan and smart TV"><span class="slide-label">Living Room</span></div>
-            <div class="slide"><img src="images/costa-garden/living-entry.jpg" alt="Living room seating and entry door"><span class="slide-label">Living &amp; Entry</span></div>
-            <div class="slide"><img src="images/costa-garden/balcony-pool-view.jpg" alt="View from the balcony over the pool, palms and gardens"><span class="slide-label">Balcony View</span></div>
-            <div class="slide"><img src="images/costa-garden/kitchen-island.jpg" alt="Kitchen with peninsula, gas range and range hood"><span class="slide-label">Kitchen</span></div>
-            <div class="slide"><img src="images/costa-garden/kitchen-window.jpg" alt="Kitchen with double sink under the window"><span class="slide-label">Kitchen, Window</span></div>
-            <div class="slide"><img src="images/costa-garden/kitchen-fridge.jpg" alt="Kitchen with full-size stainless steel refrigerator"><span class="slide-label">Kitchen &amp; Fridge</span></div>
-            <div class="slide"><img src="images/costa-garden/master-bedroom.jpg" alt="Master bedroom with queen bed and natural light"><span class="slide-label">Master Bedroom</span></div>
-            <div class="slide"><img src="images/costa-garden/bedroom-twins.jpg" alt="Second bedroom with two twin beds and built-in closet"><span class="slide-label">Second Bedroom</span></div>
-            <div class="slide"><img src="images/costa-garden/bedroom-twins-bath.jpg" alt="Second bedroom with its own bathroom and full-length mirror"><span class="slide-label">Second Bedroom, Bath</span></div>
-            <div class="slide"><img src="images/costa-garden/pool-aerial.jpg" alt="Main pool and separate kids pool seen from above"><span class="slide-label">Pool &amp; Kids Pool</span></div>
-            <div class="slide"><img src="images/costa-garden/pool-loungers.jpg" alt="Shaded lounge chairs beside the pool"><span class="slide-label">Poolside Lounge</span></div>
-            <div class="slide"><img src="images/costa-garden/social-area.jpg" alt="Covered outdoor social area with tables overlooking the pool"><span class="slide-label">Social Area</span></div>
-            <div class="slide"><img src="images/costa-garden/gym-wide.jpg" alt="On-site gym with cardio machines facing the pool"><span class="slide-label">Gym</span></div>
-            <div class="slide"><img src="images/costa-garden/gym-machines.jpg" alt="Gym with cable machine, free weights and benches"><span class="slide-label">Gym Equipment</span></div>
-            <div class="slide"><img src="images/costa-garden/coworking.jpg" alt="Coworking room with shared desks inside the complex"><span class="slide-label">Coworking Room</span></div>
-            <div class="slide"><img src="images/costa-garden/playground.jpg" alt="Children's playground and lawns between the buildings"><span class="slide-label">Playground &amp; Gardens</span></div>
-        </div>
+        <div class="slideshow-track" id="slideshow-track"></div>
         <button class="slide-btn slide-prev" onclick="slideNav(-1)">&#8249;</button>
         <button class="slide-btn slide-next" onclick="slideNav(1)">&#8250;</button>
-        <div class="slide-counter" id="slide-counter">1 / 19</div>
+        <div class="slide-counter" id="slide-counter"></div>
         <div class="slide-dots" id="slide-dots"></div>
     </div>
 
@@ -80,7 +66,7 @@
         <button class="lightbox-prev" onclick="lightboxNav(-1)">&#8249;</button>
         <button class="lightbox-next" onclick="lightboxNav(1)">&#8250;</button>
         <img id="lightbox-img" src="" alt="">
-        <div class="lightbox-counter" id="lightbox-counter">1 / 19</div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
     </div>
 
     <!-- Detail Content -->
@@ -222,5 +208,91 @@
     <script src="translations.js"></script>
     <script src="script.js"></script>
 <script src="analytics.js" defer></script>
+<script>
+/* La galeria se arma aqui, no en el HTML: cada foto se precarga y solo entra la
+   que carga. Una foto que todavia no se ha subido resta una lamina en vez de
+   dejar un icono de imagen rota en medio de la ficha.
+
+   Este bloque va DESPUES de script.js a proposito, para que initGallery ya
+   exista. Si las laminas quedan puestas antes del DOMContentLoaded, el propio
+   script.js las recoge; si quedan puestas despues, las recogemos aqui. Nunca
+   las dos, que duplicaria los puntos de navegacion. */
+(function () {
+  var BASE = 'images/costa-garden/';
+  var PHOTOS = [
+    { f: "pool-wide.jpg", a: "Resort-style pool and gardens at Costa Bavaro Garden", l: "Pool" },
+    { f: "living-dining.jpg", a: "Open-concept living and dining room with wood slat accent wall", l: "Living & Dining" },
+    { f: "living-balcony-open.jpg", a: "Living room with the balcony door open to the pool view", l: "Balcony Access" },
+    { f: "living-wide.jpg", a: "Living and dining area with ceiling fan and smart TV", l: "Living Room" },
+    { f: "living-entry.jpg", a: "Living room seating and entry door", l: "Living & Entry" },
+    { f: "balcony-pool-view.jpg", a: "View from the balcony over the pool, palms and gardens", l: "Balcony View" },
+    { f: "kitchen-island.jpg", a: "Kitchen with peninsula, gas range and range hood", l: "Kitchen" },
+    { f: "kitchen-window.jpg", a: "Kitchen with double sink under the window", l: "Kitchen, Window" },
+    { f: "kitchen-fridge.jpg", a: "Kitchen with full-size stainless steel refrigerator", l: "Kitchen & Fridge" },
+    { f: "master-bedroom.jpg", a: "Master bedroom with queen bed and natural light", l: "Master Bedroom" },
+    { f: "bedroom-twins.jpg", a: "Second bedroom with two twin beds and built-in closet", l: "Second Bedroom" },
+    { f: "bedroom-twins-bath.jpg", a: "Second bedroom with its own bathroom and full-length mirror", l: "Second Bedroom, Bath" },
+    { f: "pool-aerial.jpg", a: "Main pool and separate kids pool seen from above", l: "Pool & Kids Pool" },
+    { f: "pool-loungers.jpg", a: "Shaded lounge chairs beside the pool", l: "Poolside Lounge" },
+    { f: "social-area.jpg", a: "Covered outdoor social area with tables overlooking the pool", l: "Social Area" },
+    { f: "gym-wide.jpg", a: "On-site gym with cardio machines facing the pool", l: "Gym" },
+    { f: "gym-machines.jpg", a: "Gym with cable machine, free weights and benches", l: "Gym Equipment" },
+    { f: "coworking.jpg", a: "Coworking room with shared desks inside the complex", l: "Coworking Room" },
+    { f: "playground.jpg", a: "Children's playground and lawns between the buildings", l: "Playground & Gardens" }
+  ];
+
+  var track = document.getElementById('slideshow-track');
+  if (!track) return;
+
+  var found = new Array(PHOTOS.length);
+  var pending = PHOTOS.length;
+
+  PHOTOS.forEach(function (p, i) {
+    var probe = new Image();
+    probe.onload = function () { found[i] = p; settle(); };
+    probe.onerror = function () { found[i] = null; settle(); };
+    probe.src = BASE + p.f;
+  });
+
+  function settle() {
+    if (--pending) return;
+
+    var ok = found.filter(Boolean);
+    if (!ok.length) {
+      // Ninguna de las 19 esta subida todavia. Queda pool-view.png, que es la
+      // misma piscina en menor resolucion y lleva en el repo desde la ficha de
+      // alquiler. En cuanto entre la primera foto de verdad, este respaldo
+      // desaparece solo.
+      ok = [{ f: 'pool-view.png', a: 'Resort-style pool at Costa Bavaro Garden', l: 'Pool' }];
+    }
+
+    ok.forEach(function (p) {
+      var slide = document.createElement('div');
+      slide.className = 'slide';
+      var img = document.createElement('img');
+      img.src = BASE + p.f;
+      img.alt = p.a;
+      var label = document.createElement('span');
+      label.className = 'slide-label';
+      label.textContent = p.l;
+      slide.appendChild(img);
+      slide.appendChild(label);
+      track.appendChild(slide);
+    });
+
+    var counter = document.getElementById('slide-counter');
+    if (counter) counter.textContent = '1 / ' + ok.length;
+
+    // Si el documento sigue cargando, script.js todavia no corrio initGallery:
+    // lo hara el con las laminas ya puestas. Llamarlo aqui tambien duplicaria.
+    if (document.readyState === 'loading') return;
+    if (typeof initGallery === 'function') {
+      initGallery();
+      goToSlide(0);
+    }
+  }
+})();
+</script>
+
 </body>
 </html>
