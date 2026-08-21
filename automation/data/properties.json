@@ -225,10 +225,10 @@
         "images/costa-garden/living-dining.jpg",
         "images/costa-garden/kitchen-island.jpg",
         "images/costa-garden/master-bedroom.jpg",
-        "images/costa-garden/pool-aerial.jpg",
-        "images/costa-garden/gym-wide.jpg"
+        "images/costa-garden/balcony-pool-view.jpg",
+        "images/costa-garden/gym-machines.jpg"
       ],
-      "_images_note": "Las fotos van en images/costa-garden/, la carpeta que ya existia con pool-view.png de la ficha de alquiler. Corre `npm test` o `python automation/check_images.py` despues de subirlas: el test falla mientras falte alguna.",
+      "_images_note": "Seis motivos distintos: piscina, el apartamento completo, cocina, habitacion principal, la vista desde el balcon y el gimnasio. gym-wide.jpg quedo fuera porque el original es 1080x780 y check_images.py exige 900px de lado corto; gym-machines.jpg es 1600x1168 y mas nitida. pool-aerial.jpg y social-area.jpg tampoco entran para no repetir piscina, pero siguen en la galeria del sitio.",
       "hoa_monthly_usd": null,
       "_hoa_note": "Cuota de mantenimiento: desconocida - confirmar con Jean antes de responder",
       "_airbnb_note": "OJO: index.html ya publica este mismo complejo en la seccion de alquileres (airbnb.com/h/costagardencondo, 4.93 con 27 resenas). Si es LA MISMA unidad es el mejor argumento de venta que hay: llave en mano y ya produciendo. Falta que Jean lo confirme; hasta entonces ningun guion menciona ingresos ni ocupacion de esta unidad."
